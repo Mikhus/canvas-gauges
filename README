@@ -4,115 +4,14 @@ Generic info
 This is tiny implementation of gauge using pure JavaScript and HTML5 canvas
 No need to use any library.
 
-Examples
+Why canvas gauge?
 =================
 
-<!DOCTYPE html>
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Gauge Test</title>
-<script src="gauge.js"></script>
-<script>
-window.onload = function() {
-  var gauge1 = new Gauge({
-		renderTo  : 'gauge1',
-		width     : 200,
-		height    : 200,
-		glow      : true,
-		units     : 'Mbps',
-		title     : 'Download'
-	});
+Because it is compatible with most morern browsers and with mobile devices.
+For example, SVG, does not work on Android 2.x by default, but canvas do work.
+BTW you can find your own reasons why to use canvas.
 
-	gauge1.onready = function() {
-		setInterval( function() {
-			gauge1.setValue( Math.random() * 100);
-		}, 1000);
-	};
+Documentation
+=================
 
-	gauge1.draw();
-
-	var gauge2 = new Gauge({
-		renderTo  : 'gauge2',
-		width     : 300,
-		height    : 300,
-		glow      : true,
-		units     : 'Mbps',
-		title     : 'Upload',
-		strokeTicks : false,
-		highlights : [{
-			from  : 40,
-			to    : 60,
-			color : 'PaleGreen'
-		}, {
-			from  : 60,
-			to    : 80,
-			color : 'Khaki'
-		}, {
-			from  : 80,
-			to    : 100,
-			color : 'LightSalmon'
-		}],
-		animation : {
-			delay : 10,
-			duration: 300,
-			fn : 'bounce'
-		}
-	});
-
-	gauge2.onready = function() {
-		setInterval( function() {
-			gauge2.setValue( Math.random() * 100);
-		}, 1000);
-	};
-
-	gauge2.draw();
-
-	var gauge3 = new Gauge({
-		renderTo   : 'gauge3',
-		width      : 400,
-		height     : 400,
-		maxValue   : 1000,
-		majorTicks : ['0','100','200','300','400','500','600','700','800','900','1000'],
-		glow       : true,
-		units      : 'ms',
-		title      : 'Ping',
-		highlights : false,
-		glow : false,
-		valueFormat : { int : 4, dec : 1 },
-		colors : {
-			needle : { start : 'lightgreen', end : 'navy' },
-			plate : 'lightyellow',
-			title : 'green',
-			units : 'lightgreen',
-			majorTicks : 'darkgreen',
-			minorTicks : 'lightgreen',
-			numbers : 'darkgreen'
-		},
-		animation : {
-			delay : 25,
-			duration: 500,
-			fn : 'elastic'
-		}
-	});
-
-	gauge3.onready = function() {
-		setInterval( function() {
-			gauge3.setValue( Math.random() * 1000);
-		}, 1000);
-	};
-
-	gauge3.draw();
-};
-</script>
-<style>
-body{padding:0;margin:0}
-</style>
-</head>
-<body>
-	<canvas id="gauge1"></canvas>
-	<canvas id="gauge2"></canvas>
-	<canvas id="gauge3"></canvas>
-	<div id="console"></div>
-</body>
-</html>
+Please, read wiki for more information.
