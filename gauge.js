@@ -131,12 +131,21 @@ var Gauge = function( config) {
 	canvas.height = config.height;
 
 	var
+		cache = canvas.cloneNode( true),
+		cctx = cache.getContext( '2d'),
 		CW  = canvas.width,
 		CH  = canvas.height,
 		CX  = CW / 2,
 		CY  = CH / 2,
 		max = CX < CY ? CX : CY
 	;
+
+	canvas.parentNode.appendChild( cache);
+	cache.i8d = false;
+
+	// translate cache to have 0, 0 in center
+	cctx.translate( CX, CY);
+	cctx.save();
 
 	// translate canvas to have 0,0 in center
 	ctx.translate( CX, CY);
@@ -149,7 +158,6 @@ var Gauge = function( config) {
 		cycle  : function( p) { return 1 - Math.sin( Math.acos( p)); },
 		bounce : function( p) {
 			return 1 - (function( p) {
-				//return Math.pow( p, 2);
 				for(var a = 0, b = 1; 1; a += b, b /= 2) {
 					if (p >= (7 - 4 * a) / 11) {
 						return -Math.pow((11 - 6 * a - 11 * p) / 4, 2) + Math.pow(b, 2);
@@ -220,17 +228,33 @@ var Gauge = function( config) {
 	 * @return {Gauge} this - returns the self Gauge object
 	 */
 	this.draw = function() {
+		if (!cache.i8d) {
+			// clear the cache
+			cctx.clearRect( -CX, -CY, CW, CH);
+			cctx.save();
+
+			var tmp = ctx;
+			ctx = cctx;
+
+			drawPlate();
+			drawHighlights();
+			drawMinorTicks();
+			drawMajorTicks();
+			drawNumbers();
+			drawTitle();
+			drawUnits();
+
+			cache.i8d = true;
+			ctx = tmp;
+			delete tmp;
+			cache.parentNode.removeChild( cache);
+		}
+
 		// clear the canvas
 		ctx.clearRect( -CX, -CY, CW, CH);
 		ctx.save();
 
-		drawPlate();
-		drawHighlights();
-		drawMinorTicks();
-		drawMajorTicks();
-		drawNumbers();
-		drawTitle();
-		drawUnits();
+		ctx.drawImage( cache, -CX, -CY, CW, CH);
 
 		if (!Gauge.initialized) {
 			var iv = setInterval(function() {
@@ -376,8 +400,6 @@ var Gauge = function( config) {
 	function drawNumbers() {
 		var r = max / 100 * 55;
 
-		ctx.save();
-
 		for (var i = 0; i < config.majorTicks.length; ++i) {
 			var 
 				a = 45 + i * (270 / (config.majorTicks.length - 1)),
@@ -503,7 +525,6 @@ var Gauge = function( config) {
 	
 			ctx.fillStyle = config.colors.plate;
 			ctx.fill();
-
 			ctx.save();
 		}
 	};
@@ -561,8 +582,6 @@ var Gauge = function( config) {
 
 		ctx.restore();
 
-		ctx.save();
-
 		shad();
 
 		ctx.beginPath();
@@ -576,8 +595,6 @@ var Gauge = function( config) {
 		ctx.arc( 0, 0, r2, 0, Math.PI * 2, true);
 		ctx.fillStyle = lgrad( "#e8e8e8", "#f5f5f5", r2);
 		ctx.fill();
-
-		ctx.save();
 	};
 
 	function roundRect( x, y, w, h, r) {
