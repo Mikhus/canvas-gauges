@@ -140,7 +140,6 @@ var Gauge = function( config) {
 		max = CX < CY ? CX : CY
 	;
 
-	canvas.parentNode.appendChild( cache);
 	cache.i8d = false;
 
 	// translate cache to have 0, 0 in center
@@ -247,7 +246,6 @@ var Gauge = function( config) {
 			cache.i8d = true;
 			ctx = tmp;
 			delete tmp;
-			cache.parentNode.removeChild( cache);
 		}
 
 		// clear the canvas
@@ -406,7 +404,7 @@ var Gauge = function( config) {
 				p = rpoint( r, radians( a))
 			;
 
-			ctx.font      = (0.7 * max / 100) + "em Arial";
+			ctx.font      = 20 * (max / 200) + "px Arial";
 			ctx.fillStyle = config.colors.numbers;
 			ctx.lineWidth = 0;
 			ctx.textAlign = "center";
@@ -421,7 +419,7 @@ var Gauge = function( config) {
 		}
 
 		ctx.save();
-		ctx.font = 0.9 * (max / 100) + "em Arial";
+		ctx.font = 24 * (max / 200) + "px Arial";
 		ctx.fillStyle = config.colors.title;
 		ctx.textAlign = "center";
 		ctx.fillText( config.title, 0, -max / 4.25);
@@ -435,7 +433,7 @@ var Gauge = function( config) {
 		}
 
 		ctx.save();
-		ctx.font = 0.8 * (max / 100) + "em Arial";
+		ctx.font = 22 * (max / 200) + "px Arial";
 		ctx.fillStyle = config.colors.units;
 		ctx.textAlign = "center";
 		ctx.fillText( config.units, 0, max / 3.25);
@@ -621,7 +619,7 @@ var Gauge = function( config) {
 	function drawValueBox() {
 		ctx.save();
 		
-		ctx.font = 1.2 * (max / 100) + "em Led";
+		ctx.font = 40 * (max / 200) + "px Led";
 
 		var
 			text = padValue( value),
