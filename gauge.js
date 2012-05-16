@@ -363,7 +363,7 @@ var Gauge = function( config) {
 			ctx.rotate( radians( 90));
 
 			ctx.beginPath();
-			ctx.arc( 0, 0, r, radians( 45), radians( 315));
+			ctx.arc( 0, 0, r, radians( 45), radians( 315), false);
 			ctx.stroke();
 			ctx.restore();
 	
@@ -492,7 +492,7 @@ var Gauge = function( config) {
 			ctx.beginPath();
 	
 			ctx.rotate( radians( 90));
-			ctx.arc( 0, 0, r1, sa, ea);
+			ctx.arc( 0, 0, r1, sa, ea, false);
 			ctx.restore();
 	
 			var
@@ -518,7 +518,7 @@ var Gauge = function( config) {
 	
 			ctx.beginPath();
 			ctx.rotate( radians( 90));
-			ctx.arc( 0, 0, r2, sa - 0.2, ea + 0.2);
+			ctx.arc( 0, 0, r2, sa - 0.2, ea + 0.2, false);
 			ctx.restore();
 	
 			ctx.closePath();
