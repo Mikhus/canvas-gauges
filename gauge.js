@@ -465,21 +465,35 @@ var Gauge = function( config) {
 	};
 
 	function padValue( val) {
-		var n = false;
+		var
+			cdec = config.valueFormat.dec,
+			cint = config.valueFormat.int
+		;
 		val = parseFloat( val);
 
-		if (val < 0) {
-			n = true;
-		}
+		var n = (val < 0);
 
 		val = Math.abs( val);
-		val = val.toFixed( config.valueFormat.dec).toString().split( '.');
 
-		for (var i = 0, s = config.valueFormat.int - val[0].length; i < s; ++i) {
-			val[0] = '0' + val[0];
+		if (cdec > 0) {
+			val = val.toFixed( cdec).toString().split( '.');
+	
+			for (var i = 0, s = cint - val[0].length; i < s; ++i) {
+				val[0] = '0' + val[0];
+			}
+
+			val = (n ? '-' : '') + val[0] + '.' + val[1];
+		} else {
+			val = Math.round( val).toString();
+
+			for (var i = 0, s = cint - val.length; i < s; ++i) {
+				val = '0' + val;
+			}
+
+			val = (n ? '-' : '') + val
 		}
 
-		return (n ? '-' : '') + val[0] + '.' + val[1];
+		return val;
 	};
 
 	function rpoint( r, a) {
