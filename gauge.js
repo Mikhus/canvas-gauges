@@ -530,6 +530,7 @@ var Gauge = function( config) {
 			ctx.rotate( radians( 90));
 			ctx.arc( 0, 0, r1, sa, ea, false);
 			ctx.restore();
+			ctx.save();
 	
 			var
 				ps = rpoint( r2, sa),
