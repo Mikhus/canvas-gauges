@@ -103,7 +103,7 @@ var Gauge = function( config) {
 	};
 
 	this.clear = function() {
-		value = fromValue = toValue = 0;
+		value = fromValue = toValue = this.config.minValue;
 		this.draw();
 	};
 
@@ -141,7 +141,7 @@ var Gauge = function( config) {
 
 	applyRecursive( this.config, config);
 	config = this.config;
-	value = config.minValue;
+	fromValue = value = config.minValue;
 
 	if (!config.renderTo) {
 		throw Error( "Canvas element was not specified when creating the Gauge object!");
@@ -589,6 +589,12 @@ var Gauge = function( config) {
 		ctx.save();
 
 		shad();
+		
+		if (fromValue < 0) {
+			fromValue = Math.abs(config.minValue - fromValue);
+		} else {
+			fromValue = Math.abs(config.minValue) + fromValue;
+		}
 
 		ctx.rotate( radians( 45 + fromValue / ((config.maxValue - config.minValue) / 270)));
 
