@@ -141,6 +141,7 @@ var Gauge = function( config) {
 
 	applyRecursive( this.config, config);
 	config = this.config;
+	value = config.minValue;
 
 	if (!config.renderTo) {
 		throw Error( "Canvas element was not specified when creating the Gauge object!");
