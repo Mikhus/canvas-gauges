@@ -73,7 +73,8 @@ var Gauge = function( config) {
 		value     = 0,
 		self      = this,
 		fromValue = 0,
-		toValue   = 0
+		toValue   = 0,
+		imready   = false
 	;
 
 	/**
@@ -290,11 +291,19 @@ var Gauge = function( config) {
 				drawValueBox();
 				drawNeedle();
 
-				self.onready && self.onready();
+				if (!imready) {
+					self.onready && self.onready();
+					imready = true;
+				}
 			}, 10);
 		} else {
 			drawValueBox();
 			drawNeedle();
+
+			if (!imready) {
+				self.onready && self.onready();
+				imready = true;
+			}
 		}
 
 		return this;
