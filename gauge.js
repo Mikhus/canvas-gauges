@@ -103,9 +103,14 @@ var Gauge = function( config) {
 		return this;
 	};
 
+	/**
+	 * Clears the value of the gauge
+	 * @return {Gauge}
+	 */
 	this.clear = function() {
 		value = fromValue = toValue = this.config.minValue;
 		this.draw();
+		return this;
 	};
 
 	/**
@@ -150,31 +155,48 @@ var Gauge = function( config) {
 
 	var
 		canvas = config.renderTo.tagName ? config.renderTo : document.getElementById( config.renderTo),
-		ctx = canvas.getContext( '2d')
+		ctx = canvas.getContext( '2d'),
+		cache, CW, CH, CX, CY, max
 	;
 
-	canvas.width  = config.width;
-	canvas.height = config.height;
+	function baseInit() {
+		canvas.width  = config.width;
+		canvas.height = config.height;
 
-	var
-		cache = canvas.cloneNode( true),
-		cctx = cache.getContext( '2d'),
-		CW  = canvas.width,
-		CH  = canvas.height,
-		CX  = CW / 2,
-		CY  = CH / 2,
-		max = CX < CY ? CX : CY
-	;
+		cache = canvas.cloneNode( true);
+		cctx = cache.getContext( '2d');
+		CW  = canvas.width;
+		CH  = canvas.height;
+		CX  = CW / 2;
+		CY  = CH / 2;
+		max = CX < CY ? CX : CY;
+		
+		cache.i8d = false;
 
-	cache.i8d = false;
+		// translate cache to have 0, 0 in center
+		cctx.translate( CX, CY);
+		cctx.save();
 
-	// translate cache to have 0, 0 in center
-	cctx.translate( CX, CY);
-	cctx.save();
+		// translate canvas to have 0,0 in center
+		ctx.translate( CX, CY);
+		ctx.save();
+	};
 
-	// translate canvas to have 0,0 in center
-	ctx.translate( CX, CY);
-	ctx.save();
+	// do basic initialization
+	baseInit();
+
+	/**
+	 * Updates the gauge config
+	 *
+	 * @param  {Object} config
+	 * @return {Gauge}
+	 */
+	this.updateConfig = function( config) {
+        applyRecursive( this.config, config);
+        baseInit();
+        this.draw();
+        return this;
+    };
 
 	var animateFx = {
 		linear : function( p) { return p; },
