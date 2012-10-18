@@ -21,6 +21,9 @@
  * COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
  * IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ * 
+ * @authors: Mykhailo Stadnyk <mikhus@gmail.com>
+ *           Chris Poile <poile@edwards.usask.ca>
  */
 var Gauge = function( config) {
 
@@ -133,7 +136,8 @@ var Gauge = function( config) {
 
 	function applyRecursive( dst, src) {
 		for (var i in src) {
-			if (typeof src[i] == "object" && !(src[i] instanceof Array)) {
+			// modification by Chris Poile, Oct 08, 2012. More correct check of an Array instance
+			if (typeof src[i] == "object" && !(Object.prototype.toString.call( src[i]) === '[object Array]')) {
 				if (typeof dst[i] != "object") {
 					dst[i] = {};
 				}
