@@ -627,6 +627,8 @@ var Gauge = function( config) {
 		
 		if (fromValue < 0) {
 			fromValue = Math.abs(config.minValue - fromValue);
+		} else if (config.minValue > 0) {
+			fromValue -= config.minValue
 		} else {
 			fromValue = Math.abs(config.minValue) + fromValue;
 		}
