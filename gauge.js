@@ -160,7 +160,7 @@ var Gauge = function( config) {
 	var
 		canvas = config.renderTo.tagName ? config.renderTo : document.getElementById( config.renderTo),
 		ctx = canvas.getContext( '2d'),
-		cache, CW, CH, CX, CY, max
+		cache, CW, CH, CX, CY, max, cctx
 	;
 
 	function baseInit() {
