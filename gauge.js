@@ -1,4 +1,4 @@
-/*
+/*!
  * HTML5 Canvas Gauge implementation
  * 
  * This code is subject to MIT license.
