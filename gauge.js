@@ -26,6 +26,7 @@
  *           Chris Poile <poile@edwards.usask.ca>
  */
 var Gauge = function( config) {
+	Gauge.Collection.push( this);
 
 	/**
 	 *  Default gauge configuration
@@ -137,7 +138,7 @@ var Gauge = function( config) {
 	function applyRecursive( dst, src) {
 		for (var i in src) {
 			// modification by Chris Poile, Oct 08, 2012. More correct check of an Array instance
-			if (typeof src[i] == "object" && !(Object.prototype.toString.call( src[i]) === '[object Array]')) {
+			if (typeof src[i] == "object" && !(Object.prototype.toString.call( src[i]) === '[object Array]') && i != 'renderTo') {
 				if (typeof dst[i] != "object") {
 					dst[i] = {};
 				}
@@ -820,3 +821,190 @@ Gauge.initialized = false;
 		}, 250);
 	}, 1);
 })();
+
+Gauge.Collection = [];
+Gauge.Collection.get = function( id) {
+	if (typeof(id) == 'string') {
+		for (var i = 0, s = this.length; i < s; i++) {
+			if (this[i].config.renderTo.getAttribute( 'id') == id) {
+				return this[i];
+			}
+		}
+	} else if (typeof(id) == 'number') {
+		return this[id];
+	} else {
+		return null;
+	}
+};
+
+function domReady( handler) {
+	if (window.addEventListener) {
+		window.addEventListener( 'DOMContentLoaded', handler, false);
+	} else {
+		window.attachEvent('onload', handler);
+	}
+}
+
+domReady( function() {
+	function toCamelCase( arr) {
+		var str = arr[0];
+		for (var i = 1, s = arr.length; i < s; i++) {
+			str += arr[i].substr(0, 1).toUpperCase() + arr[i].substr( 1, arr[i].length - 1);
+		}
+		return str;
+	};
+	
+	function trim( str) {
+		return str.replace( /^\s+|\s+$/g, '');
+	};
+	
+	var c = document.getElementsByTagName( 'canvas');
+	
+	for (var i = 0, s = c.length; i < s; i++) {
+		
+		if (c[i].getAttribute( 'data-type') == 'canv-gauge') {
+			var
+				gauge = c[i],
+				config = {},
+				prop,
+				w = parseInt( gauge.getAttribute('width')),
+				h = parseInt( gauge.getAttribute('height'))
+			;
+
+			config.renderTo = gauge;
+
+			if (w) {
+				config.width = w;
+			}
+
+			if (h) {
+				config.height = h;
+			}
+
+			for (var ii = 0, ss = gauge.attributes.length; ii < ss; ii++) {
+				prop = gauge.attributes.item( ii).nodeName;
+
+				if (prop != 'data-type' && prop.substr(0, 5) == 'data-') {
+					var
+						cfgProp = prop.substr( 5, prop.length - 5).toLowerCase().split( '-'),
+						attrValue = gauge.getAttribute( prop)
+					;
+
+					if (!attrValue) {
+						continue;
+					}
+
+					switch (cfgProp[0]) {
+						case 'colors' : {
+							if (cfgProp[1]) {
+								if (!config.colors) {
+									config.colors = {};
+								}
+
+								if (cfgProp[1] == 'needle') {
+									var parts = attrValue.split( /\s+/);
+
+									if (parts[0] && parts[1]) {
+										config.colors.needle = { start : parts[0], end : parts[1] };
+									}
+									else {
+										config.colors.needle = attrValue;
+									}
+								}
+								else {
+									cfgProp.shift();
+									cfgProp.shift();
+									config.colors[toCamelCase( cfgProp)] = attrValue;
+								}
+							}
+							break;
+						}
+						case 'highlights' : {
+							if (!config.highlights) {
+								config.highlights = [];
+							}
+
+							hls = attrValue.split( ',');
+
+							for (var j = 0, l = hls.length; j < l; j++) {
+								var
+									cfg = trim( hls[j]).split( /\s+/),
+									hlCfg = {}
+								;
+
+								if (cfg[0] && cfg[0] != '') {
+									hlCfg.from = cfg[0];
+								}
+
+								if (cfg[1] && cfg[1] != '') {
+									hlCfg.to = cfg[1];
+								}
+
+								if (cfg[2] && cfg[2] != '') {
+									hlCfg.color = cfg[2];
+								}
+
+								config.highlights.push( hlCfg);
+							}
+							break;
+						}
+						case 'animation' : {
+							if (cfgProp[1]) {
+								if (!config.animation) {
+									config.animation = {};
+								}
+
+								if (cfgProp[1] == 'fn' && /^\s*function\s*\(/.test( attrValue)) {
+									attrValue = eval('(' + attrValue + ')');
+								}
+
+								config.animation[cfgProp[1]] = attrValue;
+							}
+							break;
+						}
+						default : {
+							var cfgName = toCamelCase( cfgProp);
+							
+							if (cfgName == 'onready') {
+								continue;
+							}
+
+							if (cfgName == 'majorTicks') {
+								attrValue = attrValue.split( /\s+/);
+							}
+							else if (cfgName == 'strokeTicks' || cfgName == 'glow') {
+								attrValue = attrValue == 'true' ? true : false;
+							}
+							else if (cfgName == 'valueFormat') {
+								var val = attrValue.split( '.');
+								
+								if (val.length == 2) {
+									attrValue = {
+										int : parseInt( val[0]),
+										dec : parseInt( val[1])
+									}
+								}
+								else {
+									continue;
+								}
+							}
+
+							config[cfgName] = attrValue;
+							break;
+						}
+					}
+				}
+			}
+
+			var g = new Gauge( config);
+			
+			if (gauge.getAttribute( 'data-onready')) {
+				g.onready = function() {
+					eval( this.config.renderTo.getAttribute( 'data-onready'));
+				};
+			}
+			
+			g.draw();
+		}
+	}
+});
