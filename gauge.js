@@ -1004,6 +1004,14 @@ domReady( function() {
 				};
 			}
 			
+			if (gauge.getAttribute('data-value')) {
+				var r = g.onready;
+				g.onready = function() {
+					this.setValue( parseFloat( this.config.renderTo.getAttribute('data-value')));
+					r && r.call( this);
+				};
+			}
+			
 			g.draw();
 		}
 	}
