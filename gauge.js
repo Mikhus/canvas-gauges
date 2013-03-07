@@ -151,6 +151,10 @@ var Gauge = function( config) {
 	};
 
 	applyRecursive( this.config, config);
+	
+	this.config.minValue = parseFloat( this.config.minValue);
+        this.config.maxValue = parseFloat( this.config.maxValue);
+	
 	config = this.config;
 	fromValue = value = config.minValue;
 
