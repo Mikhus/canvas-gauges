@@ -106,6 +106,19 @@ var Gauge = function( config) {
 
 		return this;
 	};
+	
+	/**
+	 * Sets a new value to gauge and updates the gauge view without
+	 * any animation (even if configured)
+	 * 
+	 * @param {Number} val  - the new value to set to the gauge
+	 * @return {Gauge} this - returns self
+	 */
+	this.setRawValue = function( val) {
+		fromValue = value = val;
+		this.draw();
+		return this;
+	};
 
 	/**
 	 * Clears the value of the gauge
@@ -625,10 +638,10 @@ var Gauge = function( config) {
 				ctx.shadowColor   = 'rgba(188, 143, 143, 0.45)';
 			}
 		;
-
-		ctx.save();
-
+		
 		shad();
+		
+		ctx.save();
 		
 		if (fromValue < 0) {
 			fromValue = Math.abs(config.minValue - fromValue);
@@ -999,20 +1012,16 @@ domReady( function() {
 					}
 				}
 			}
-
+			
 			var g = new Gauge( config);
+			
+			if (gauge.getAttribute('data-value')) {
+				g.setRawValue( parseFloat( gauge.getAttribute('data-value')));
+			}
 			
 			if (gauge.getAttribute( 'data-onready')) {
 				g.onready = function() {
 					eval( this.config.renderTo.getAttribute( 'data-onready'));
-				};
-			}
-			
-			if (gauge.getAttribute('data-value')) {
-				var r = g.onready;
-				g.onready = function() {
-					this.setValue( parseFloat( this.config.renderTo.getAttribute('data-value')));
-					r && r.call( this);
 				};
 			}
 			
