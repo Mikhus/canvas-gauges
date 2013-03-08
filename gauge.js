@@ -24,6 +24,7 @@
  * 
  * @authors: Mykhailo Stadnyk <mikhus@gmail.com>
  *           Chris Poile <poile@edwards.usask.ca>
+ *           Luca Invernizzi <http://www.lucainvernizzi.net>
  */
 var Gauge = function( config) {
 	Gauge.Collection.push( this);
