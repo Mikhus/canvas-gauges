@@ -930,7 +930,6 @@ domReady( function() {
 								}
 								else {
 									cfgProp.shift();
-									cfgProp.shift();
 									config.colors[toCamelCase( cfgProp)] = attrValue;
 								}
 							}
