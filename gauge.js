@@ -284,7 +284,7 @@ var Gauge = function( config) {
 			delay    : cfg.delay,
 			duration : cfg.duration,
 			delta    : cfg.fn,
-			step     : function( delta) { fromValue = from + path * delta; self.draw(); }
+			step     : function( delta) { fromValue = parseFloat(from) + path * delta; self.draw(); }
 		});
 	};
 
