@@ -649,7 +649,7 @@ var Gauge = function( config) {
 		} else if (config.minValue > 0) {
 			fromValue -= config.minValue
 		} else {
-			fromValue = Math.abs(config.minValue) + parseFloat(fromValue);
+			fromValue = Math.abs(config.minValue) + fromValue;
 		}
 
 		ctx.rotate( radians( 45 + fromValue / ((config.maxValue - config.minValue) / 270)));
