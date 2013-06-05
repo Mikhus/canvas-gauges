@@ -95,7 +95,7 @@ var Gauge = function( config) {
 		var dv = (config.maxValue - config.minValue) / 100;
 
 		toValue = val > config.maxValue ?
-			toValue = config.maxValue + dv :
+			config.maxValue + dv :
 				val < config.minValue ?
 					config.minValue - dv : 
 						val
