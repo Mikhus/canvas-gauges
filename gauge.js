@@ -303,7 +303,7 @@ var Gauge = function( config) {
 			cctx.clearRect( -CX, -CY, CW, CH);
 			cctx.save();
 
-			var tmp = ctx;
+			var tmp = {ctx:ctx};
 			ctx = cctx;
 
 			drawPlate();
@@ -315,8 +315,8 @@ var Gauge = function( config) {
 			drawUnits();
 
 			cache.i8d = true;
-			ctx = tmp;
-			delete tmp;
+			ctx = tmp.ctx;
+			delete tmp.ctx;
 		}
 
 		// clear the canvas
@@ -379,9 +379,8 @@ var Gauge = function( config) {
 			r1 = max / 100 * 91,
 			d1 = max - r1,
 			r2 = max / 100 * 88,
-			d2 = max - r2;
-			r3 = max / 100 * 85
-		;
+			d2 = max - r2,
+			r3 = max / 100 * 85;
 
 		ctx.save();
 
