@@ -40,7 +40,7 @@ var Gauge = function( config) {
 		title       : false,
 		maxValue    : 100,
 		minValue    : 0,
-		majorTicks  : ['0', '20', '40', '60', '80', '100'],
+		majorTicks  : [],
 		minorTicks  : 10,
 		strokeTicks : true,
 		units       : false,
@@ -422,6 +422,16 @@ var Gauge = function( config) {
 		ctx.lineWidth = 2;
 		ctx.strokeStyle = config.colors.majorTicks;
 		ctx.save();
+
+        if(config.majorTicks.length === 0) {
+            var numberOfDefaultTicks = 5;
+            var tickSize = (config.maxValue - config.minValue)/numberOfDefaultTicks;
+
+            for(var i = 0; i < numberOfDefaultTicks; i++) {
+                config.majorTicks.push(config.minValue+(tickSize*i));
+            }
+            config.majorTicks.push(config.maxValue);
+        }
 
 		for (var i = 0; i < config.majorTicks.length; ++i) {
 			var a = 45 + i * (270 / (config.majorTicks.length - 1));
