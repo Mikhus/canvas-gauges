@@ -40,11 +40,12 @@ var Gauge = function( config) {
 		title       : false,
 		maxValue    : 100,
 		minValue    : 0,
-		majorTicks  : ['0', '20', '40', '60', '80', '100'],
+		majorTicks  : [],
 		minorTicks  : 10,
 		strokeTicks : true,
 		units       : false,
 		valueFormat : { int : 3, dec : 2 },
+        majorTicksFormat : {int : 1, dec: 0},
 		glow        : true,
 		animation   : {
 			delay    : 10,
@@ -415,6 +416,38 @@ var Gauge = function( config) {
 		ctx.save();
 	};
 
+    /**
+     * Formats a number for display on the dial's plate using the majorTicksFormat config option.
+     *
+     * @param {number} num The number to format
+     * @returns {string} The formatted number
+     */
+    function formatMajorTickNumber(num) {
+        var r, isDec = false;
+
+        // First, force the correct number of digits right of the decimal.
+        if(config.majorTicksFormat.dec === 0) {
+            r = Math.round(num).toString();
+        } else {
+            r = num.toFixed(config.majorTicksFormat.dec);
+        }
+
+        // Second, force the correct number of digits left of the decimal.
+        if(config.majorTicksFormat.int > 1) {
+            // Does this number have a decimal?
+            isDec = (r.indexOf('.') > -1);
+
+            // Is this number a negative number?
+            if(r.indexOf('-') > -1) {
+                return '-'+ Array(config.majorTicksFormat.int + config.majorTicksFormat.dec + 2 + (isDec?1:0) - r.length).join('0') + r.replace('-', '');
+            } else {
+                return Array(config.majorTicksFormat.int + config.majorTicksFormat.dec + 1 + (isDec?1:0) - r.length).join('0') + r;
+            }
+        } else {
+            return r;
+        }
+    }
+
 	// major ticks draw
 	function drawMajorTicks() {
 		var r = max / 100 * 81;
@@ -422,6 +455,16 @@ var Gauge = function( config) {
 		ctx.lineWidth = 2;
 		ctx.strokeStyle = config.colors.majorTicks;
 		ctx.save();
+
+        if(config.majorTicks.length === 0) {
+            var numberOfDefaultTicks = 5;
+            var tickSize = (config.maxValue - config.minValue)/numberOfDefaultTicks;
+
+            for(var i = 0; i < numberOfDefaultTicks; i++) {
+                config.majorTicks.push(formatMajorTickNumber(config.minValue+(tickSize*i)));
+            }
+            config.majorTicks.push(formatMajorTickNumber(config.maxValue));
+        }
 
 		for (var i = 0; i < config.majorTicks.length; ++i) {
 			var a = 45 + i * (270 / (config.majorTicks.length - 1));
