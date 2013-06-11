@@ -428,7 +428,11 @@ var Gauge = function( config) {
             var tickSize = (config.maxValue - config.minValue)/numberOfDefaultTicks;
 
             for(var i = 0; i < numberOfDefaultTicks; i++) {
-                config.majorTicks.push(config.minValue+(tickSize*i));
+                if(config.valueFormat.dec === 0) {
+                    config.majorTicks.push(Math.round(config.minValue+(tickSize*i)));
+                } else {
+                    config.majorTicks.push((config.minValue+(tickSize*i)).toFixed(config.valueFormat.dec));
+                }
             }
             config.majorTicks.push(config.maxValue);
         }
