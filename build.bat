@@ -1,0 +1,2 @@
+java -jar compiler.jar --warning_level VERBOSE --compilation_level SIMPLE_OPTIMIZATIONS --summary_detail_level 3 --create_source_map ./gauge.min.js.map --source_map_format=V3 --js gauge.js --js_output_file gauge.min.js
+echo done
