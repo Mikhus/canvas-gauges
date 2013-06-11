@@ -32,5 +32,14 @@
 		data-title="Hip-Hop"
 		data-onready="setInterval( function() { Gauge.Collection[2].setValue( Math.random() * 100);}, 1000);"
 	></canvas>
+
+
+    <canvas width="200" height="200"
+        data-type="canv-gauge"
+        data-title="Negative Values"
+        data-min-value="-50"
+        data-max-value="50"
+        data-onready="setInterval( function() { Gauge.Collection[3].setValue( (Math.random()*100) -50 );}, 1000);"
+        ></canvas>
 </body>
 </html>
