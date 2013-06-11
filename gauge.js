@@ -1,4 +1,5 @@
-/*!
+/**!
+ * @license
  * HTML5 Canvas Gauge implementation
  * 
  * This code is subject to MIT license.
@@ -27,27 +28,33 @@
  *           Luca Invernizzi <http://www.lucainvernizzi.net>
  *           Robert Blackburn <http://www.rwblackburn.com>
  */
+
+/**
+ * @param {Object} config
+ * @constructor
+ */
 var Gauge = function( config) {
 	Gauge.Collection.push( this);
 
 	/**
 	 *  Default gauge configuration
+     *  @struct
 	 */
 	this.config = {
-		renderTo    : null,
-		width       : 200,
-		height      : 200,
-		title       : false,
-		maxValue    : 100,
-		minValue    : 0,
-		majorTicks  : [],
-		minorTicks  : 10,
-		strokeTicks : true,
-		units       : false,
-		valueFormat : { int : 3, dec : 2 },
-        majorTicksFormat : {int : 1, dec: 0},
-		glow        : true,
-		animation   : {
+		renderTo         : null,
+		width            : 200,
+		height           : 200,
+		title            : false,
+		maxValue         : 100,
+		minValue         : 0,
+		majorTicks       : [],
+		minorTicks       : 10,
+		strokeTicks      : true,
+		units            : false,
+		valueFormat      : { "int" : 3, "dec" : 2 },
+        majorTicksFormat : { "int" : 1, "dec" : 0 },
+		glow             : true,
+		animation : {
 			delay    : 10,
 			duration : 250,
 			fn       : 'cycle'
@@ -87,7 +94,7 @@ var Gauge = function( config) {
 	/**
 	 * Sets a new value to gauge and updates the gauge view
 	 * 
-	 * @param {Number} val  - the new value to set to the gauge
+	 * @param {number} val  - the new value to set to the gauge
 	 * @return {Gauge} this - returns self
 	 */
 	this.setValue = function( val) {
@@ -114,7 +121,7 @@ var Gauge = function( config) {
 	 * Sets a new value to gauge and updates the gauge view without
 	 * any animation (even if configured)
 	 * 
-	 * @param {Number} val  - the new value to set to the gauge
+	 * @param {number} val  - the new value to set to the gauge
 	 * @return {Gauge} this - returns self
 	 */
 	this.setRawValue = function( val) {
@@ -136,7 +143,7 @@ var Gauge = function( config) {
 	/**
 	 * Returns the current value been set to the gauge
 	 * 
-	 * @return {Number} value - current gauge's value
+	 * @return {number} value - current gauge's value
 	 */
 	this.getValue = function() {
 		return value;
@@ -170,7 +177,7 @@ var Gauge = function( config) {
 	
 	this.config.minValue = parseFloat( this.config.minValue);
         this.config.maxValue = parseFloat( this.config.maxValue);
-	
+
 	config = this.config;
 	fromValue = value = config.minValue;
 
@@ -433,15 +440,19 @@ var Gauge = function( config) {
         }
 
         // Second, force the correct number of digits left of the decimal.
-        if(config.majorTicksFormat.int > 1) {
+        if(config.majorTicksFormat["int"] > 1) {
             // Does this number have a decimal?
             isDec = (r.indexOf('.') > -1);
 
             // Is this number a negative number?
             if(r.indexOf('-') > -1) {
-                return '-'+ Array(config.majorTicksFormat.int + config.majorTicksFormat.dec + 2 + (isDec?1:0) - r.length).join('0') + r.replace('-', '');
+                return '-' + [
+					config.majorTicksFormat["int"] + config.majorTicksFormat.dec + 2 + (isDec ? 1 : 0) - r.length
+				].join('0') + r.replace('-', '');
             } else {
-                return Array(config.majorTicksFormat.int + config.majorTicksFormat.dec + 1 + (isDec?1:0) - r.length).join('0') + r;
+                return [
+                	config.majorTicksFormat["int"] + config.majorTicksFormat.dec + 1 + (isDec ? 1 : 0) - r.length
+				].join('0') + r;
             }
         } else {
             return r;
@@ -564,8 +575,8 @@ var Gauge = function( config) {
 
 	function padValue( val) {
 		var
-			cdec = config.valueFormat.dec,
-			cint = config.valueFormat.int
+			cdec = config.valueFormat['dec'],
+			cint = config.valueFormat['int']
 		;
 		val = parseFloat( val);
 
@@ -885,14 +896,16 @@ Gauge.initialized = false;
 
 Gauge.Collection = [];
 Gauge.Collection.get = function( id) {
+	var self = this;
+
 	if (typeof(id) == 'string') {
-		for (var i = 0, s = this.length; i < s; i++) {
-			if (this[i].config.renderTo.getAttribute( 'id') == id) {
-				return this[i];
+		for (var i = 0, s = self.length; i < s; i++) {
+			if (self[i].config.renderTo.getAttribute( 'id') == id) {
+				return self[i];
 			}
 		}
 	} else if (typeof(id) == 'number') {
-		return this[id];
+		return self[id];
 	} else {
 		return null;
 	}
@@ -914,22 +927,22 @@ domReady( function() {
 		}
 		return str;
 	};
-	
+
 	function trim( str) {
 		return str.replace( /^\s+|\s+$/g, '');
 	};
-	
+
 	var c = document.getElementsByTagName( 'canvas');
-	
+
 	for (var i = 0, s = c.length; i < s; i++) {
-		
+
 		if (c[i].getAttribute( 'data-type') == 'canv-gauge') {
 			var
 				gauge = c[i],
 				config = {},
 				prop,
-				w = parseInt( gauge.getAttribute('width')),
-				h = parseInt( gauge.getAttribute('height'))
+				w = parseInt( gauge.getAttribute('width'), 10),
+				h = parseInt( gauge.getAttribute('height'), 10)
 			;
 
 			config.renderTo = gauge;
@@ -984,7 +997,7 @@ domReady( function() {
 								config.highlights = [];
 							}
 
-							hls = attrValue.split( ',');
+							var hls = attrValue.split( ',');
 
 							for (var j = 0, l = hls.length; j < l; j++) {
 								var
@@ -1024,7 +1037,7 @@ domReady( function() {
 						}
 						default : {
 							var cfgName = toCamelCase( cfgProp);
-							
+
 							if (cfgName == 'onready') {
 								continue;
 							}
@@ -1037,11 +1050,11 @@ domReady( function() {
 							}
 							else if (cfgName == 'valueFormat') {
 								var val = attrValue.split( '.');
-								
+
 								if (val.length == 2) {
 									attrValue = {
-										int : parseInt( val[0]),
-										dec : parseInt( val[1])
+										'int' : parseInt( val[0], 10),
+										'dec' : parseInt( val[1], 10)
 									}
 								}
 								else {
@@ -1055,20 +1068,22 @@ domReady( function() {
 					}
 				}
 			}
-			
+
 			var g = new Gauge( config);
-			
+
 			if (gauge.getAttribute('data-value')) {
 				g.setRawValue( parseFloat( gauge.getAttribute('data-value')));
 			}
-			
+
 			if (gauge.getAttribute( 'data-onready')) {
 				g.onready = function() {
 					eval( this.config.renderTo.getAttribute( 'data-onready'));
 				};
 			}
-			
+
 			g.draw();
 		}
 	}
 });
+
+window['Gauge'] = Gauge;
