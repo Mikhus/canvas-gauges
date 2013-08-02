@@ -839,7 +839,7 @@ Gauge.initialized = false;
 		d = document,
 		h = d.getElementsByTagName('head')[0],
 		ie = navigator.userAgent.toLocaleLowerCase().indexOf( 'msie') != -1,
-		url = 'http://smart-ip.net/styles/fonts/digital-7-mono.' + (ie ? 'eot' : 'ttf'),
+		url = 'fonts/digital-7-mono.' + (ie ? 'eot' : 'ttf'),
 		text = "@font-face {" +
 					"font-family: 'Led';" +
 					"src: url('" + url + "');" +
