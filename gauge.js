@@ -900,7 +900,8 @@ Gauge.Collection.get = function( id) {
 
 	if (typeof(id) == 'string') {
 		for (var i = 0, s = self.length; i < s; i++) {
-			if (self[i].config.renderTo.getAttribute( 'id') == id) {
+			var canvas = self[i].config.renderTo.tagName ? self[i].config.renderTo : document.getElementById( self[i].config.renderTo);
+			if (canvas.getAttribute('id') == id) {
 				return self[i];
 			}
 		}
