@@ -998,7 +998,7 @@ domReady( function() {
 								config.highlights = [];
 							}
 
-							var hls = attrValue.split( ',');
+							var hls = attrValue.match(/(?:(?:-?\d*\.)?(-?\d+){1,2} ){2}(?:(?:#|0x)?(?:[0-9A-F|a-f]){3,8}|rgba?\(.*?\))/g);
 
 							for (var j = 0, l = hls.length; j < l; j++) {
 								var
