@@ -300,11 +300,29 @@ var Gauge = function( config) {
 	// defaults
 	ctx.lineCap = "round";
 
+	this.isWaitingForInitialization = false;
+
+	this.drawWhenInitialized = function() {
+		if (!Gauge.initialized) {
+			this.isWaitingForInitialization = true;
+			return false;
+		}
+		this.isWaitingForInitialization = false;
+
+		drawValueBox();
+		drawNeedle();
+
+		if (!imready) {
+			self.onready && self.onready();
+			imready = true;
+		}
+
+		return true;
+	}
+
 	/**
-	 * Drows the gauge. Normally this function should be used to
-	 * initally draw the gauge
-	 * 
-	 * @return {Gauge} this - returns the self Gauge object
+	 * Draws the gauge. Normally this function should be used to
+	 * initially draw the gauge
 	 */
 	this.draw = function() {
 		if (!cache.i8d) {
@@ -334,33 +352,7 @@ var Gauge = function( config) {
 
 		ctx.drawImage( cache, -CX, -CY, CW, CH);
 
-		if (!Gauge.initialized) {
-			var iv = setInterval(function() {
-				if (!Gauge.initialized) {
-					return;
-				}
-
-				clearInterval( iv);
-
-				drawValueBox();
-				drawNeedle();
-
-				if (!imready) {
-					self.onready && self.onready();
-					imready = true;
-				}
-			}, 10);
-		} else {
-			drawValueBox();
-			drawNeedle();
-
-			if (!imready) {
-				self.onready && self.onready();
-				imready = true;
-			}
-		}
-
-		return this;
+		this.drawWhenInitialized();
 	};
 
 	/**
@@ -837,61 +829,86 @@ Gauge.initialized = false;
 (function(){
 	var
 		d = document,
-		h = d.getElementsByTagName('head')[0],
 		ie = navigator.userAgent.toLocaleLowerCase().indexOf( 'msie') != -1,
-		url = 'fonts/digital-7-mono.' + (ie ? 'eot' : 'ttf'),
-		text = "@font-face {" +
-					"font-family: 'Led';" +
-					"src: url('" + url + "');" +
-				"}",
-		ss,
-		r = d.createElement( 'style')
+		fontSrc = "url('fonts/digital-7-mono." + (ie ? 'eot' : 'ttf') + "')",
+		fontFamily = 'Led'
 	;
 
-	r.type = 'text/css';
-
-	if (ie) {
-		h.appendChild( r);
-		ss = r.styleSheet;
-		ss.cssText = text;
-    } else {
-    	try {
-    		r.appendChild( d.createTextNode( text));
-    	} catch (e) {
-    		r.cssText = text;
-    	}
-
-    	h.appendChild( r);
-
-    	ss = r.styleSheet ? r.styleSheet :
-    		(r.sheet || d.styleSheets[d.styleSheets.length - 1])
-    	;
+	function onFontLoadSuccess() {
+		Gauge.initialized = true;
+		for (var gaugeIndex = 0; gaugeIndex < Gauge.Collection.length; ++gaugeIndex)
+			if (Gauge.Collection[gaugeIndex].isWaitingForInitialization)
+				Gauge.Collection[gaugeIndex].drawWhenInitialized();
 	}
 
-	var iv = setInterval(function() {
-		if (!d.body) {
-			return;
+	function oldLoadFontFamily() {
+		var h = d.getElementsByTagName('head')[0],
+		text = "@font-face { font-family: '" + fontFamily + "'; src: " + fontSrc + "; }",
+		ss,
+		r = d.createElement( 'style');
+
+		r.type = 'text/css';
+
+		if (ie) {
+			h.appendChild( r);
+			ss = r.styleSheet;
+			ss.cssText = text;
+		} else {
+			try {
+				r.appendChild( d.createTextNode( text));
+			} catch (e) {
+				r.cssText = text;
+			}
+
+			h.appendChild( r);
+
+			ss = r.styleSheet ? r.styleSheet :
+				(r.sheet || d.styleSheets[d.styleSheets.length - 1])
+				;
 		}
 
-		clearInterval( iv);
+		var iv = setInterval(function() {
+			if (!d.body) {
+				return;
+			}
 
-		var dd = d.createElement( 'div');
+			clearInterval( iv);
 
-		dd.style.fontFamily = 'Led';
-		dd.style.position   = 'absolute';
-		dd.style.height     = dd.style.width = 0;
-		dd.style.overflow   = 'hidden';
+			var dd = d.createElement( 'div');
 
-		dd.innerHTML = '.';
+			dd.style.fontFamily = fontFamily;
+			dd.style.position   = 'absolute';
+			dd.style.height     = dd.style.width = 0;
+			dd.style.overflow   = 'hidden';
 
-		d.body.appendChild( dd);
+			dd.innerHTML = '.';
 
-		setTimeout(function() { // no other way to handle font is rendered by a browser
-			                    // just give the browser around 250ms to do that :(
-			Gauge.initialized = true;
-			dd.parentNode.removeChild( dd);
-		}, 250);
-	}, 1);
+			d.body.appendChild( dd);
+
+			setTimeout(function() { // no other way to handle font is rendered by a browser
+				// just give the browser around 250ms to do that :(
+				onFontLoadSuccess();
+				dd.parentNode.removeChild( dd);
+			}, 250);
+		}, 1);
+	}
+
+	if (document.fonts === undefined)
+		oldLoadFontFamily();
+
+	else {
+		var ledFontFace = new window.FontFace(fontFamily, fontSrc);
+		document.fonts.add(ledFontFace);
+
+		ledFontFace.load().then(function(fontFace) {
+			onFontLoadSuccess();
+
+		}, function(reason) {
+			if (window.console)
+				window.console.log(reason);
+			oldLoadFontFamily();
+		});
+	}
 })();
 
 Gauge.Collection = [];
