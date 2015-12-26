@@ -378,9 +378,7 @@ var Gauge = function( config) {
 			r0 = max / 100 * 93,
 			d0 = max -r0,
 			r1 = max / 100 * 91,
-			d1 = max - r1,
 			r2 = max / 100 * 88,
-			d2 = max - r2,
 			r3 = max / 100 * 85;
 
 		ctx.save();
@@ -463,13 +461,14 @@ var Gauge = function( config) {
             var numberOfDefaultTicks = 5;
             var tickSize = (config.maxValue - config.minValue)/numberOfDefaultTicks;
 
-            for(var i = 0; i < numberOfDefaultTicks; i++) {
+            var i;
+            for(i = 0; i < numberOfDefaultTicks; i++) {
                 config.majorTicks.push(formatMajorTickNumber(config.minValue+(tickSize*i)));
             }
             config.majorTicks.push(formatMajorTickNumber(config.maxValue));
         }
 
-		for (var i = 0; i < config.majorTicks.length; ++i) {
+		for (i = 0; i < config.majorTicks.length; ++i) {
 			var a = 45 + i * (270 / (config.majorTicks.length - 1));
 			ctx.rotate( radians( a));
 
@@ -576,10 +575,12 @@ var Gauge = function( config) {
 
 		val = Math.abs( val);
 
+		var i;
 		if (cdec > 0) {
 			val = val.toFixed( cdec).toString().split( '.');
 	
-			for (var i = 0, s = cint - val[0].length; i < s; ++i) {
+			var s = cint - val[0].length;
+			for (i = 0; i < s; ++i) {
 				val[0] = '0' + val[0];
 			}
 
@@ -587,7 +588,8 @@ var Gauge = function( config) {
 		} else {
 			val = Math.round( val).toString();
 
-			for (var i = 0, s = cint - val.length; i < s; ++i) {
+			var s = cint - val.length;
+			for (i = 0; i < s; ++i) {
 				val = '0' + val;
 			}
 
