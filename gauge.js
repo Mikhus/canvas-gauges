@@ -575,11 +575,11 @@ var Gauge = function( config) {
 
 		val = Math.abs( val);
 
-		var i;
+		var i, s;
 		if (cdec > 0) {
 			val = val.toFixed( cdec).toString().split( '.');
 	
-			var s = cint - val[0].length;
+			s = cint - val[0].length;
 			for (i = 0; i < s; ++i) {
 				val[0] = '0' + val[0];
 			}
@@ -588,7 +588,7 @@ var Gauge = function( config) {
 		} else {
 			val = Math.round( val).toString();
 
-			var s = cint - val.length;
+			s = cint - val.length;
 			for (i = 0; i < s; ++i) {
 				val = '0' + val;
 			}
