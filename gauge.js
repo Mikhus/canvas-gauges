@@ -1005,13 +1005,12 @@ Gauge.Collection.get = function( id) {
 };
 
 function domReady( handler) {
-
   // In AngularJS applications we can't use HTML markup to create
   // gauges if the handler function is not delayed a bit, probably
   // to let the app scope to know about later changes in the DOM.
   var
     delayReady = function () {
-      setTimeout(handler, 1);
+      setTimeout(handler, 50);
     };
 
 	if (window.addEventListener) {
