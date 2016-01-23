@@ -66,8 +66,49 @@ var Gauge = function( config) {
 			title      : '#888',
 			units      : '#888',
 			numbers    : '#444',
-			needle     : { start : 'rgba(240, 128, 128, 1)', end : 'rgba(255, 160, 122, .9)' }
+			needle     : {
+        start : 'rgba(240, 128, 128, 1)',
+        end   : 'rgba(255, 160, 122, .9)',
+        circle : {
+          outerStart : '#f0f0f0',
+          outerEnd   : '#ccc',
+          innerStart : '#e8e8e8',
+          innerEnd   : '#f5f5f5'
+        },
+        shadowUp   : 'rgba(2, 255, 255, 0.2)',
+        shadowDown : 'rgba(188, 143, 143, 0.45)'
+      },
+      valueBox : {
+        rectStart  : '#888',
+        rectEnd    : '#666',
+        background : '#babab2',
+        shadow     : 'rgba(0, 0, 0, 1)'
+      },
+      valueText : {
+        foreground : '#444',
+        shadow     : 'rgba(0, 0, 0, 0.3)'
+      },
+      circle : {
+        shadow      : 'rgba(0, 0, 0, 0.5)',
+        outerStart  : '#ddd',
+        outerEnd    : '#aaa',
+        middleStart : '#eee',
+        middleEnd   : '#f0f0f0',
+        innerStart  : '#fafafa',
+        innerEnd    : '#ccc'
+      }
 		},
+    circles : {
+      outerVisible : true,
+      middleVisible : true,
+      innerVisible : true
+    },
+    valueBox : {
+      visible : true
+    },
+    valueText : {
+      visible : true
+    },
 		highlights  : [{
 			from  : 20,
 			to    : 60,
@@ -387,25 +428,43 @@ var Gauge = function( config) {
 
 		if (config.glow) {
 			ctx.shadowBlur  = d0;
-			ctx.shadowColor = 'rgba(0, 0, 0, 0.5)';
+			ctx.shadowColor = config.colors.circle.shadow;
 		}
 
-		ctx.beginPath();
-		ctx.arc( 0, 0, r0, 0, Math.PI * 2, true);
-		ctx.fillStyle = lgrad( '#ddd', '#aaa', r0);
-		ctx.fill();
+    if (config.circles.outerVisible) {
+		  ctx.beginPath();
+		  ctx.arc( 0, 0, r0, 0, Math.PI * 2, true);
+		  ctx.fillStyle = lgrad(
+        config.colors.circle.outerStart,
+        config.colors.circle.outerEnd,
+        r0
+      );
+		  ctx.fill();
+    }
 
 		ctx.restore();
 
-		ctx.beginPath();
-		ctx.arc( 0, 0, r1, 0, Math.PI * 2, true);
-		ctx.fillStyle = lgrad( '#fafafa', '#ccc', r1);
-		ctx.fill();
+    if (config.circles.middleVisible) {
+		  ctx.beginPath();
+		  ctx.arc( 0, 0, r1, 0, Math.PI * 2, true);
+		  ctx.fillStyle = lgrad(
+        config.colors.circle.middleStart,
+        config.colors.circle.middleEnd,
+        r1
+      );
+		  ctx.fill();
+    }
 
-		ctx.beginPath();
-		ctx.arc( 0, 0, r2, 0, Math.PI * 2, true);
-		ctx.fillStyle = lgrad( '#eee', '#f0f0f0', r2);
-		ctx.fill();
+    if (config.circles.innerVisible) {
+		  ctx.beginPath();
+		  ctx.arc( 0, 0, r2, 0, Math.PI * 2, true);
+		  ctx.fillStyle = lgrad(
+        config.colors.circle.innerStart,
+        config.colors.circle.innerEnd,
+        r2
+      );
+		  ctx.fill();
+    }
 	
 		ctx.beginPath();
 		ctx.arc( 0, 0, r3, 0, Math.PI * 2, true);
@@ -682,7 +741,7 @@ var Gauge = function( config) {
 				ctx.shadowOffsetX = 2;
 				ctx.shadowOffsetY = 2;
 				ctx.shadowBlur    = 10;
-				ctx.shadowColor   = 'rgba(188, 143, 143, 0.45)';
+				ctx.shadowColor   = config.colors.needle.shadowDown;
 			}
 		;
 		
@@ -723,7 +782,7 @@ var Gauge = function( config) {
 		ctx.lineTo( -pad2, -rOut);
 		ctx.lineTo( pad2 / 2 - 2, -rOut);
 		ctx.closePath();
-		ctx.fillStyle = 'rgba(255, 255, 255, 0.2)';
+		ctx.fillStyle = config.colors.needle.shadowUp;
 		ctx.fill();
 
 		ctx.restore();
@@ -732,14 +791,22 @@ var Gauge = function( config) {
 
 		ctx.beginPath();
 		ctx.arc( 0, 0, r1, 0, Math.PI * 2, true);
-		ctx.fillStyle = lgrad( '#f0f0f0', '#ccc', r1);
+		ctx.fillStyle = lgrad(
+     config.colors.needle.circle.outerStart,
+     config.colors.needle.circle.outerEnd,
+     r1
+    );
 		ctx.fill();
 
 		ctx.restore();
 
 		ctx.beginPath();
 		ctx.arc( 0, 0, r2, 0, Math.PI * 2, true);
-		ctx.fillStyle = lgrad( "#e8e8e8", "#f5f5f5", r2);
+		ctx.fillStyle = lgrad(
+      config.colors.needle.circle.innerStart,
+      config.colors.needle.circle.innerEnd,
+      r2
+    );
 		ctx.fill();
 	};
 
@@ -765,27 +832,35 @@ var Gauge = function( config) {
 
 	// value box draw
 	function drawValueBox() {
+
+    if (!config.valueText.visible) {
+      return;
+    }
+
 		ctx.save();
 		
 		ctx.font = 40 * (max / 200) + "px Led";
 
 		var
-			text = padValue( value),
-			tw   = ctx.measureText( '-' + padValue( 0)).width,
+      text = padValue(value),
 			y = max - max / 100 * 33,
-			x = 0,
-			th = 0.12 * max
+			x = 0
 		;
 
 		ctx.save();
 
-		roundRect(
-			-tw / 2 - 0.025 * max,
-			y - th - 0.04 * max,
-			tw + 0.05 * max,
-			th + 0.07 * max,
-			0.025 * max
-		);
+    if (config.valueBox.visible) {
+      var
+			  th = 0.12 * max,
+			  tw   = ctx.measureText( '-' + padValue( 0)).width;
+		  roundRect(
+			  -tw / 2 - 0.025 * max,
+			  y - th - 0.04 * max,
+			  tw + 0.05 * max,
+			  th + 0.07 * max,
+			  0.025 * max
+		  );
+    }
 
 		var grd = ctx.createRadialGradient(
 			x,
@@ -796,17 +871,17 @@ var Gauge = function( config) {
 			max / 5
 		);
 
-		grd.addColorStop( 0, "#888");
-	    grd.addColorStop( 1, "#666");
+		grd.addColorStop( 0, config.colors.valueBox.rectStart);
+    grd.addColorStop( 1, config.colors.valueBox.rectEnd);
 
 		ctx.strokeStyle = grd;
 		ctx.lineWidth = 0.05 * max;
 		ctx.stroke();
 
 		ctx.shadowBlur  = 0.012 * max;
-		ctx.shadowColor = 'rgba(0, 0, 0, 1)';
+		ctx.shadowColor = config.colors.valueBox.shadow;
 
-		ctx.fillStyle = "#babab2";
+		ctx.fillStyle = config.colors.valueBox.background;
 		ctx.fill();
 		
 		ctx.restore();
@@ -814,9 +889,9 @@ var Gauge = function( config) {
 		ctx.shadowOffsetX = 0.004 * max;
 		ctx.shadowOffsetY = 0.004 * max;
 		ctx.shadowBlur    = 0.012 * max;
-		ctx.shadowColor   = 'rgba(0, 0, 0, 0.3)';
+		ctx.shadowColor   = config.colors.valueText.shadow;
 
-		ctx.fillStyle = "#444";
+		ctx.fillStyle = config.colors.valueText.foreground;
 		ctx.textAlign = "center";
 		ctx.fillText( text, -x, y);
 
@@ -930,10 +1005,19 @@ Gauge.Collection.get = function( id) {
 };
 
 function domReady( handler) {
+
+  // In AngularJS applications we can't use HTML markup to create
+  // gauges if the handler function is not delayed a bit, probably
+  // to let the app scope to know about later changes in the DOM.
+  var
+    delayReady = function () {
+      setTimeout(handler, 1);
+    };
+
 	if (window.addEventListener) {
-		window.addEventListener( 'DOMContentLoaded', handler, false);
+		window.addEventListener( 'DOMContentLoaded', delayReady, false);
 	} else {
-		window.attachEvent('onload', handler);
+		window.attachEvent('onload', delayReady);
 	}
 }
 
@@ -992,24 +1076,201 @@ domReady( function() {
 								if (!config.colors) {
 									config.colors = {};
 								}
+								if (!config.colors.needle) {
+								  config.colors.needle = {};
+                }
+                if (cfgProp[1] == 'needle') {
+                  // Maintain for compatibility with "data-colors-needle" attribute
+                  if (!cfgProp[2]) {
+									  var parts = attrValue.split( /\s+/);
 
-								if (cfgProp[1] == 'needle') {
-									var parts = attrValue.split( /\s+/);
+									  if (parts[0] && parts[1]) {
+										  config.colors.needle.start = parts[0];
+                      config.colors.needle.end = parts[1];
+									  }
+									  else {
+										  config.colors.needle.start = attrValue;
+									  }
+                  } else {
+                    // Now we also can use "data-colors-needle-start" and "data-colors-needle-end"
+                    switch (cfgProp[2]) {
+                      case 'start':
+                        config.colors.needle.start = attrValue;
+                        break;
+                      case 'end':
+                        config.colors.needle.end = attrValue;
+                        break;
+                    }
+                  }
+                  if (cfgProp[2]) {
+								    if (!config.colors.needle.circle) {
+								      config.colors.needle.circle = {};
+							      }
+                    switch (cfgProp[2]) {
+                      case 'circle': {
+                        switch (cfgProp[3]) {
+                          case 'outerstart': {
+                            config.colors.needle.circle.outerStart = attrValue;
+                            break;
+                          }
+                          case 'outerend': {
+                            config.colors.needle.circle.outerEnd = attrValue;
+                            break;
+                          }
+                          case 'innerstart': {
+                            config.colors.needle.circle.innerStart = attrValue;
+                            break;
+                          }
+                          case 'innerend': {
+                            config.colors.needle.circle.innerEnd = attrValue;
+                            break;
+                          }
+                        }
+                      }
+                      case 'shadowup': {
+                        config.colors.needle.shadowUp = attrValue;
+                        break;
+                      }
+                      case 'shadowdown': {
+                        config.colors.needle.shadowDown = attrValue;
+                        break;
+                      }
+                    }
+                  }
+                } else if (cfgProp[1] == 'valuebox') {
+                  if (!config.colors.valueBox) {
+                    config.colors.valueBox = {};
+                  }
+                  if (cfgProp[2]) {
+                    switch (cfgProp[2]) {
+                      case 'rectstart': {
+                        config.colors.valueBox.rectStart = attrValue;
+                        break;
+                      }
+                      case 'rectend': {
+                        config.colors.valueBox.rectEnd = attrValue;
+                        break;
+                      }
+                      case 'background': {
+                        config.colors.valueBox.background = attrValue;
+                        break;
+                      }
+                      case 'shadow': {
+                        config.colors.valueBox.shadow = attrValue;
+                        break;
+                      }
+                    }
+                  }
+                } else if (cfgProp[1] == 'valuetext') {
+                  if (!config.colors.valueText) {
+                    config.colors.valueText = {};
+                  }
+                  if (cfgProp[2]) {
+                    switch (cfgProp[2]) {
+                      case 'foreground': {
+                        config.colors.valueText.foreground = attrValue;
+                        break;
+                      }
+                      case 'shadow': {
+                        config.colors.valueText.shadow = attrValue;
+                        break;
+                      }
+                    }
+                  }
+                } else if (cfgProp[1] == 'circle') {
+                  if (!config.colors.circle) {
+                    config.colors.circle = {};
+                  }
+                  if (cfgProp[2]) {
+                    switch (cfgProp[2]) {
+                      case 'shadow': {
+                        config.colors.circle.shadow = attrValue;
+                        break;
+                      }
+                      case 'outerstart': {
+                        config.colors.circle.outerStart = attrValue;
+                        break;
+                      }
+                      case 'outerend': {
+                        config.colors.circle.outerEnd = attrValue;
+                        break;
+                      }
+                      case 'middlestart': {
+                        config.colors.circle.middleStart = attrValue;
+                        break;
+                      }
+                      case 'middleend': {
+                        config.colors.circle.middleEnd = attrValue;
+                        break;
+                      }
+                      case 'innerstart': {
+                        config.colors.circle.innerStart = attrValue;
+                        break;
+                      }
+                      case 'innerend': {
+                        config.colors.circle.innerEnd = attrValue;
+                        break;
+                      }
+                    }
+                  }
 
-									if (parts[0] && parts[1]) {
-										config.colors.needle = { start : parts[0], end : parts[1] };
-									}
-									else {
-										config.colors.needle = attrValue;
-									}
-								}
-								else {
+                } else {
 									cfgProp.shift();
 									config.colors[toCamelCase( cfgProp)] = attrValue;
 								}
 							}
 							break;
 						}
+            case 'circles' : {
+							if (!config.circles) {
+								config.circles = {};
+							}
+              if (cfgProp[1]) {
+                switch (cfgProp[1]) {
+                  case 'outervisible': {
+                    config.circles.outerVisible = attrValue.toLowerCase() === 'true';
+                    break;
+                  }
+                  case 'middlevisible': {
+                    config.circles.middleVisible = attrValue.toLowerCase() === 'true';
+                    break;
+                  }
+                  case 'innervisible': {
+                    config.circles.innerVisible = attrValue.toLowerCase() === 'true';
+                    break;
+                  }
+                }
+              }
+              break;
+            }
+            case 'valuebox' : {
+							if (!config.valueBox) {
+								config.valueBox = {};
+							}
+              if (cfgProp[1]) {
+                switch (cfgProp[1]) {
+                  case 'visible': {
+                    config.valueBox.visible = attrValue.toLowerCase() === 'true';
+                    break;
+                  }
+                }
+              }
+              break;
+            }
+            case 'valuetext' : {
+							if (!config.valueText) {
+								config.valueText = {};
+							}
+              if (cfgProp[1]) {
+                switch (cfgProp[1]) {
+                  case 'visible': {
+                    config.valueText.visible = attrValue.toLowerCase() === 'true';
+                    break;
+                  }
+                }
+              }
+              break;
+            }
 						case 'highlights' : {
 							if (!config.highlights) {
 								config.highlights = [];

@@ -3,7 +3,7 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>Gauge Test</title>
-	<script src="gauge.min.js"></script>
+	<script src="gauge.js"></script>
 	<style>body{padding:0;margin:0;background:#222}</style>
 </head>
 <body>
@@ -39,8 +39,49 @@ function showGauge() {
 			title      : '#fff',
 			units      : '#ccc',
 			numbers    : '#eee',
-			needle     : { start : 'rgba(240, 128, 128, 1)', end : 'rgba(255, 160, 122, .9)' }
-		}
+			needle     : {
+        start : 'rgba(240, 128, 128, 1)',
+        end   : 'rgba(255, 160, 122, .9)',
+        circle : {
+          outerStart : '#f0f0f0',
+          outerEnd   : '#ccc',
+          innerStart : '#e8e8e8',
+          innerEnd   : '#f5f5f5'
+        },
+        shadowUp   : 'rgba(2, 255, 255, 0.2)',
+        shadowDown : 'rgba(188, 143, 143, 0.45)'
+      },
+      valueBox : {
+        rectStart  : '#888',
+        rectEnd    : '#666',
+        background : '#babab2',
+        shadow     : 'rgba(0, 0, 0, 1)'
+      },
+      valueText : {
+        foreground : '#444',
+        shadow     : 'rgba(0, 0, 0, 0.3)'
+      },
+      circle : {
+        shadow      : 'rgba(0, 0, 0, 0.5)',
+        outerStart  : '#ddd',
+        outerEnd    : '#aaa',
+        middleStart : '#eee',
+        middleEnd   : '#f0f0f0',
+        innerStart  : '#fafafa',
+        innerEnd    : '#ccc'
+      }
+		},
+    circles : {
+      outerVisible : true,
+      middleVisible : true,
+      innerVisible : true
+    },
+    valueBox : {
+      visible : true
+    },
+    valueText : {
+      visible : true
+    }
 	});
 
 	gauge.onready = function() {
