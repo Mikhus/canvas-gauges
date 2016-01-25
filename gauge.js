@@ -1,4 +1,4 @@
-/**!
+/*!
  * @license
  * HTML5 Canvas Gauge implementation
  *
