@@ -1,6 +1,6 @@
 # Generic info
 
-This is tiny implementation of gauge using pure JavaScript and HTML5 canvas
+This is tiny implementation of gauge using pure JavaScript and HTML5 canvas.
 No need to use any library.
 
 ## Why canvas gauge?
