@@ -27,6 +27,7 @@
  *           Chris Poile <poile@edwards.usask.ca>
  *           Luca Invernizzi <http://www.lucainvernizzi.net>
  *           Robert Blackburn <http://www.rwblackburn.com>
+ *           David Esperalta <info@davidesperalta.com>
  */
 /**
  * @param {Object} config
