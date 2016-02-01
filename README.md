@@ -1,32 +1,32 @@
-Generic info
-=================
+# Generic info
 
 This is tiny implementation of gauge using pure JavaScript and HTML5 canvas
 No need to use any library.
 
-Why canvas gauge?
-=================
+## Why canvas gauge?
 
 Because it is compatible with most modern browsers and with mobile devices.
 For example, SVG, does not work on Android 2.x by default, but canvas do work.
 BTW you can find your own reasons why to use canvas.
 
-Documentation
-=================
+## Documentation
 
-Please, read wiki for more information at https://github.com/Mikhus/canv-gauge/wiki.
+Please, read [wiki](https://github.com/Mikhus/canv-gauge/wiki) for more information.
 
-Examples
-=================
+## AngularJS Support
 
-http://ru.smart-ip.net/gauge.html
-http://ru.smart-ip.net/gauge1.html
-http://ru.smart-ip.net/gauge2.html
-http://ru.smart-ip.net/gauge-html.html
-Real usage example: http://ru.smart-ip.net/speed-test
+AngularJS is now supported via [angular-canvas-gauge](https://github.com/dec/angular-canvas-gauge) directive. Big thanks to David Esperalta for amazing implementation! 
 
-License
-=================
+## Examples
+
+  * http://ru.smart-ip.net/gauge.html
+  * http://ru.smart-ip.net/gauge1.html
+  * http://ru.smart-ip.net/gauge2.html
+  * http://ru.smart-ip.net/gauge-html.html
+  * Real usage example: http://ru.smart-ip.net/speed-test
+
+## License
+
 This code is subject to MIT license.
 
 Copyright (c) 2012 Mykhailo Stadnyk <mikhus@gmail.com>
