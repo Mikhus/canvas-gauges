@@ -26,7 +26,11 @@
  * @authors: Mykhailo Stadnyk <mikhus@gmail.com>
  *           Chris Poile <poile@edwards.usask.ca>
  *           Luca Invernizzi <http://www.lucainvernizzi.net>
+ *           Rhys Lloyd <http://rhyslloyd.me>
  *           Robert Blackburn <http://www.rwblackburn.com>
+ *           Charles Galpin <https://github.com/cgalpin>
+ *           Luca Ghio <https://github.com/cassiodoroVicinetti>
+ *           Greg <https://github.com/gregroper>
  *           David Esperalta <info@davidesperalta.com>
  */
 /**
