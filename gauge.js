@@ -53,6 +53,8 @@ var Gauge = function (config) {
         minValue: 0,
         majorTicks: [],
         minorTicks: 10,
+        ticksAngle: 270,
+        startAngle: 45,
         strokeTicks: true,
         units: false,
         valueFormat: {
@@ -106,6 +108,17 @@ var Gauge = function (config) {
                 middleEnd: '#f0f0f0',
                 innerStart: '#fafafa',
                 innerEnd: '#ccc'
+            }
+        },
+        needle: {
+            type: 'arrow', // 'arrow' or 'line'
+            start: 0,
+            end: 77,
+            width: 4,
+            circle: {
+                size: 10,
+                inner: true,
+                outer: true
             }
         },
         circles: {
@@ -226,6 +239,18 @@ var Gauge = function (config) {
     }
 
     applyRecursive(this.config, config);
+
+    config.startAngle = parseInt(config.startAngle, 10);
+    config.ticksAngle = parseInt(config.ticksAngle, 10);
+
+    if (isNaN(config.startAngle)) config.startAngle = 45;
+    if (isNaN(config.ticksAngle)) config.ticksAngle = 270;
+
+    if (config.ticksAngle > 360) config.ticksAngle = 360;
+    if (config.ticksAngle < 0) config.ticksAngle = 0;
+
+    if (config.startAngle < 0) config.startAngle = 0;
+    if (config.startAngle > 360) config.startAngle = 360;
 
     this.config.minValue = parseFloat(this.config.minValue);
     this.config.maxValue = parseFloat(this.config.maxValue);
@@ -553,7 +578,7 @@ var Gauge = function (config) {
         }
 
         for (var i = 0; i < config.majorTicks.length; ++i) {
-            var a = 45 + i * (270 / (config.majorTicks.length - 1));
+            var a = config.startAngle + i * (config.ticksAngle / (config.majorTicks.length - 1));
             ctx.rotate(radians(a));
 
             ctx.beginPath();
@@ -569,7 +594,11 @@ var Gauge = function (config) {
             ctx.rotate(radians(90));
 
             ctx.beginPath();
-            ctx.arc(0, 0, r, radians(45), radians(315), false);
+            ctx.arc(0, 0, r,
+                radians(config.startAngle),
+                radians(config.startAngle + config.ticksAngle),
+                false
+            );
             ctx.stroke();
             ctx.restore();
 
@@ -589,7 +618,7 @@ var Gauge = function (config) {
         var len = config.minorTicks * (config.majorTicks.length - 1);
 
         for (var i = 0; i < len; ++i) {
-            var a = 45 + i * (270 / len);
+            var a = config.startAngle + i * (config.ticksAngle / len);
             ctx.rotate(radians(a));
 
             ctx.beginPath();
@@ -605,11 +634,21 @@ var Gauge = function (config) {
     // tick numbers draw
     function drawNumbers() {
         var r = max / 100 * 55;
+        var points = {};
 
         for (var i = 0; i < config.majorTicks.length; ++i) {
             var
-                a = 45 + i * (270 / (config.majorTicks.length - 1)),
+                a = config.startAngle + i *
+                    (config.ticksAngle / (config.majorTicks.length - 1)),
                 p = rpoint(r, radians(a));
+
+            if (a === 360) a = 0;
+
+            if (points[a]) {
+                continue; //already drawn at this place, skipping
+            }
+
+            points[a] = true;
 
             ctx.font = 20 * (max / 200) + "px Arial";
             ctx.fillStyle = config.colors.numbers;
@@ -705,9 +744,11 @@ var Gauge = function (config) {
         for (var i = 0, s = config.highlights.length; i < s; i++) {
             var
                 hlt = config.highlights[i],
-                vd = (config.maxValue - config.minValue) / 270,
-                sa = radians(45 + (hlt.from - config.minValue) / vd),
-                ea = radians(45 + (hlt.to - config.minValue) / vd);
+                vd = (config.maxValue - config.minValue) / config.ticksAngle,
+                sa = radians(config.startAngle +
+                    (hlt.from - config.minValue) / vd),
+                ea = radians(config.startAngle +
+                    (hlt.to - config.minValue) / vd);
 
             ctx.beginPath();
 
@@ -751,13 +792,15 @@ var Gauge = function (config) {
     // drows the gauge needle
     function drawNeedle() {
         var
-            r1 = max / 100 * 12,
-            r2 = max / 100 * 8,
+            r1 = max / 100 * config.needle.circle.size,
+            r2 = max / 100 * config.needle.circle.size * 0.75,
 
-            rIn = max / 100 * 77,
+            rIn = max / 100 * config.needle.end,
+            rStart = config.needle.start ?
+                max / 100 * config.needle.start : 0,
             rOut = max / 100 * 20,
-            pad1 = max / 100 * 4,
-            pad2 = max / 100 * 2,
+            pad1 = max / 100 * config.needle.width,
+            pad2 = max / 100 * config.needle.width / 2,
 
             shad = function () {
                 ctx.shadowOffsetX = 2;
@@ -780,59 +823,86 @@ var Gauge = function (config) {
 
         ctx.rotate(
             radians(
-                45 + fromValue / ((config.maxValue - config.minValue) / 270)
+                config.startAngle + fromValue /
+                ((config.maxValue - config.minValue) / config.ticksAngle)
             )
         );
 
-        ctx.beginPath();
-        ctx.moveTo(-pad2, -rOut);
-        ctx.lineTo(-pad1, 0);
-        ctx.lineTo(-1, rIn);
-        ctx.lineTo(1, rIn);
-        ctx.lineTo(pad1, 0);
-        ctx.lineTo(pad2, -rOut);
-        ctx.closePath();
+        if (config.needle.type === 'arrow') {
+            ctx.beginPath();
+            ctx.moveTo(-pad2, -rOut);
+            ctx.lineTo(-pad1, 0);
+            ctx.lineTo(-1, rIn);
+            ctx.lineTo(1, rIn);
+            ctx.lineTo(pad1, 0);
+            ctx.lineTo(pad2, -rOut);
+            ctx.closePath();
 
-        ctx.fillStyle = lgrad(
-            config.colors.needle.start,
-            config.colors.needle.end,
-            rIn - rOut
-        );
-        ctx.fill();
+            ctx.fillStyle = lgrad(
+                config.colors.needle.start,
+                config.colors.needle.end,
+                rIn - rOut
+            );
+            ctx.fill();
 
-        ctx.beginPath();
-        ctx.lineTo(-0.5, rIn);
-        ctx.lineTo(-1, rIn);
-        ctx.lineTo(-pad1, 0);
-        ctx.lineTo(-pad2, -rOut);
-        ctx.lineTo(pad2 / 2 - 2, -rOut);
-        ctx.closePath();
-        ctx.fillStyle = config.colors.needle.shadowUp;
-        ctx.fill();
+            ctx.beginPath();
+            ctx.lineTo(-0.5, rIn);
+            ctx.lineTo(-1, rIn);
+            ctx.lineTo(-pad1, 0);
+            ctx.lineTo(-pad2, -rOut);
+            ctx.lineTo(pad2 / 2 - 2, -rOut);
+            ctx.closePath();
+            ctx.fillStyle = config.colors.needle.shadowUp;
+            ctx.fill();
+        }
+
+        else { // simple line needle
+            ctx.beginPath();
+            ctx.moveTo(-pad2, rIn);
+            ctx.lineTo(-pad2, rStart);
+            ctx.lineTo(pad2, rStart);
+            ctx.lineTo(pad2, rIn);
+            ctx.closePath();
+
+            ctx.fillStyle = lgrad(
+                config.colors.needle.start,
+                config.colors.needle.end,
+                rIn - rOut
+            );
+            ctx.fill();
+        }
 
         ctx.restore();
 
-        shad();
 
-        ctx.beginPath();
-        ctx.arc(0, 0, r1, 0, Math.PI * 2, true);
-        ctx.fillStyle = lgrad(
-            config.colors.needle.circle.outerStart,
-            config.colors.needle.circle.outerEnd,
-            r1
-        );
-        ctx.fill();
+        if (config.needle.circle) {
+            shad();
 
-        ctx.restore();
+            if (config.needle.circle.outer) {
 
-        ctx.beginPath();
-        ctx.arc(0, 0, r2, 0, Math.PI * 2, true);
-        ctx.fillStyle = lgrad(
-            config.colors.needle.circle.innerStart,
-            config.colors.needle.circle.innerEnd,
-            r2
-        );
-        ctx.fill();
+                ctx.beginPath();
+                ctx.arc(0, 0, r1, 0, Math.PI * 2, true);
+                ctx.fillStyle = lgrad(
+                    config.colors.needle.circle.outerStart,
+                    config.colors.needle.circle.outerEnd,
+                    r1
+                );
+                ctx.fill();
+
+                ctx.restore();
+            }
+
+            if (config.needle.circle.inner) {
+                ctx.beginPath();
+                ctx.arc(0, 0, r2, 0, Math.PI * 2, true);
+                ctx.fillStyle = lgrad(
+                    config.colors.needle.circle.innerStart,
+                    config.colors.needle.circle.innerEnd,
+                    r2
+                );
+                ctx.fill();
+            }
+        }
     }
 
     function roundRect(x, y, w, h, r) {
@@ -1085,6 +1155,54 @@ domReady(function () {
                     }
 
                     switch (cfgProp[0]) {
+                        case 'needle': {
+                            if (!config.needle) {
+                                config.needle = {};
+                            }
+
+                            if (cfgProp[1] == 'circle') {
+                                if (!config.needle.circle) {
+                                    config.needle.circle = {};
+                                }
+
+                                if (cfgProp[2]) {
+                                    config.needle.circle[cfgProp[2]] =
+                                        attrValue === 'false' ?
+                                            false : attrValue;
+                                }
+
+                                else {
+                                    config.needle.circle =
+                                        attrValue == 'false' ?
+                                            false : attrValue;
+                                }
+                            }
+
+                            else {
+                                config.needle[cfgProp[1]] = attrValue;
+                            }
+                            break;
+                        }
+                        case 'ticksangle': {
+                            config.ticksAngle = parseInt(attrValue, 10);
+                            if (config.ticksAngle > 360) {
+                                config.ticksAngle = 360;
+                            }
+                            if (config.ticksAngle < 0) {
+                                config.ticksAngle = 0;
+                            }
+                            break;
+                        }
+                        case 'startangle': {
+                            config.startAngle = parseInt(attrValue, 10);
+                            if (config.startAngle > 360) {
+                                config.startAngle = 360;
+                            }
+                            if (config.startAngle < 0) {
+                                config.startAngle = 0;
+                            }
+                            break;
+                        }
                         case 'colors':
                         {
                             if (cfgProp[1]) {
@@ -1315,6 +1433,11 @@ domReady(function () {
                         }
                         case 'highlights':
                         {
+                            if (attrValue === 'false') {
+                                config.highlights = [];
+                                break;
+                            }
+
                             if (!config.highlights) {
                                 config.highlights = [];
                             }

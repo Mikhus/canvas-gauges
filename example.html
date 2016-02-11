@@ -1,97 +1,116 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<title>Gauge Test</title>
-	<script src="gauge.js"></script>
-	<style>body{padding:0;margin:0;background:#222}</style>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Gauge Test</title>
+    <script src="gauge.js"></script>
+    <style>body {
+        padding: 0;
+        margin: 0;
+        background: #222
+    }</style>
 </head>
 <body>
-	<p><input type="button" onclick="showGauge()" value="Show Gauge"></p>
-	<canvas id="gauge"></canvas>
-	<div id="console"></div>
+<canvas id="gauge"></canvas>
+<div id="console"></div>
 <script>
-function showGauge() {
+    window.onload = function () {
 
-	var gauge = new Gauge({
-		renderTo    : 'gauge',
-		width       : 400,
-		height      : 400,
-		glow        : true,
-		units       : 'Km/h',
-		title       : false,
-		minValue    : 0,
-		maxValue    : 220,
-		majorTicks  : ['0','20','40','60','80','100','120','140','160','180','200','220'],
-		minorTicks  : 2,
-		strokeTicks : false,
-		highlights  : [
-			{ from : 0,   to : 50, color : 'rgba(0,   255, 0, .15)' },
-			{ from : 50, to : 100, color : 'rgba(255, 255, 0, .15)' },
-			{ from : 100, to : 150, color : 'rgba(255, 30,  0, .25)' },
-			{ from : 150, to : 200, color : 'rgba(255, 0,  225, .25)' },
-			{ from : 200, to : 220, color : 'rgba(0, 0,  255, .25)' }
-		],
-		colors      : {
-			plate      : '#222',
-			majorTicks : '#f5f5f5',
-			minorTicks : '#ddd',
-			title      : '#fff',
-			units      : '#ccc',
-			numbers    : '#eee',
-			needle     : {
-        start : 'rgba(240, 128, 128, 1)',
-        end   : 'rgba(255, 160, 122, .9)',
-        circle : {
-          outerStart : '#f0f0f0',
-          outerEnd   : '#ccc',
-          innerStart : '#e8e8e8',
-          innerEnd   : '#f5f5f5'
-        },
-        shadowUp   : 'rgba(2, 255, 255, 0.2)',
-        shadowDown : 'rgba(188, 143, 143, 0.45)'
-      },
-      valueBox : {
-        rectStart  : '#888',
-        rectEnd    : '#666',
-        background : '#babab2',
-        shadow     : 'rgba(0, 0, 0, 1)'
-      },
-      valueText : {
-        foreground : '#444',
-        shadow     : 'rgba(0, 0, 0, 0.3)'
-      },
-      circle : {
-        shadow      : 'rgba(0, 0, 0, 0.5)',
-        outerStart  : '#ddd',
-        outerEnd    : '#aaa',
-        middleStart : '#eee',
-        middleEnd   : '#f0f0f0',
-        innerStart  : '#fafafa',
-        innerEnd    : '#ccc'
-      }
-		},
-    circles : {
-      outerVisible : true,
-      middleVisible : true,
-      innerVisible : true
-    },
-    valueBox : {
-      visible : true
-    },
-    valueText : {
-      visible : true
+        var gauge = new Gauge({
+            renderTo: 'gauge',
+            width: 400,
+            height: 400,
+            glow: false,
+            units: false,
+            title: false,
+            minValue: 0,
+            maxValue: 360,
+            majorTicks: ['S', 'SW', 'W', 'NW', 'N', 'NE', 'E', 'SE', 'S'],
+            minorTicks: 22,
+            ticksAngle: 360,
+            startAngle: 0,
+            strokeTicks: false,
+            highlights: false,
+            colors: {
+                plate: '#222',
+                majorTicks: '#f5f5f5',
+                minorTicks: '#ddd',
+                title: '#fff',
+                units: '#ccc',
+                numbers: '#eee',
+                needle: {
+                    start: 'rgba(240, 128, 128, 1)',
+                    end: 'rgba(255, 160, 122, .9)',
+                    circle: {
+                        outerStart: '#ccc',
+                        outerEnd: '#ccc',
+                        innerStart: '#222',
+                        innerEnd: '#222'
+                    },
+                    shadowUp: true,
+                    shadowDown: true
+                },
+                valueBox: {
+                    rectStart: '#888',
+                    rectEnd: '#666',
+                    background: '#babab2',
+                    shadow: 'rgba(0, 0, 0, 1)'
+                },
+                valueText: {
+                    foreground: '#444',
+                    shadow: 'rgba(0, 0, 0, 0.3)'
+                },
+                circle: {
+                    shadow: 'rgba(0, 0, 0, 0.5)',
+                    outerStart: '#ddd',
+                    outerEnd: '#aaa',
+                    middleStart: '#eee',
+                    middleEnd: '#f0f0f0',
+                    innerStart: '#fff',
+                    innerEnd: '#fff'
+                }
+            },
+            circles: {
+                outerVisible: false,
+                middleVisible: false,
+                innerVisible: true
+            },
+            needle: {
+                type: 'line',
+                end: 89,
+                start: 65,
+                width: 3,
+                circle: {
+                    size: 15,
+                    inner: false,
+                    outer: true
+                }
+            },
+            valueBox: {
+                visible: false
+            },
+            valueText: {
+                visible: false
+            },
+            animation: {
+                delay: 10,
+                duration: 1000,
+                fn: 'linear'
+            }
+        });
+
+        gauge.onready = function () {
+            setInterval(function () {
+                gauge.setValue(Math.random() * (195 - 165) + 165);
+            }, 1000);
+        };
+
+        gauge.setRawValue(180);
+
+        gauge.draw();
     }
-	});
-
-	gauge.onready = function() {
-		setInterval( function() {
-			gauge.setValue( Math.random() * 220);
-		}, 1000);
-	};
-
-	gauge.draw();
-};
+    ;
 </script>
 
 </html>
