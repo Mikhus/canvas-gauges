@@ -19,6 +19,7 @@ AngularJS is now supported via [angular-canvas-gauge](https://github.com/dec/ang
 
 ## Examples
 
+  * Compass-like: [JavaScript](http://smart-ip.net/canv-gauge/example.html), [HTML](http://smart-ip.net/canv-gauge/example-html.html)
   * http://ru.smart-ip.net/gauge.html
   * http://ru.smart-ip.net/gauge1.html
   * http://ru.smart-ip.net/gauge2.html
