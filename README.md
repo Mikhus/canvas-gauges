@@ -1,6 +1,6 @@
 # HTML Canvas Gauges
 
-![Canvas Gauges](https://raw.githubusercontent.com/Mikhus/blob/master/gauges.png)
+[![Canvas Gauges](https://raw.githubusercontent.com/Mikhus/blob/master/gauges.png)](http://smart-ip.net/canv-gauge/examples/all-in-one.html)
 
 This is tiny implementation of highly configurable gauge using pure JavaScript and HTML5 canvas.
 No need to use any library. 
