@@ -19,12 +19,13 @@ AngularJS is now supported via [angular-canvas-gauge](https://github.com/dec/ang
 
 ## Examples
 
-  * Compass-like: [JavaScript](http://smart-ip.net/canv-gauge/example.html), [HTML](http://smart-ip.net/canv-gauge/example-html.html)
-  * http://ru.smart-ip.net/gauge.html
-  * http://ru.smart-ip.net/gauge1.html
-  * http://ru.smart-ip.net/gauge2.html
-  * http://ru.smart-ip.net/gauge-html.html
-  * Real usage example: http://ru.smart-ip.net/speed-test
+  * Basic: http://smart-ip.net/gauge.html
+  * Compass-like: [JavaScript](http://smart-ip.net/canv-gauge/examples/example.html), [HTML](http://smart-ip.net/canv-gauge/examples/example-html.html)
+  * Alternate look: [No border](http://smart-ip.net/canv-gauge/examples/noborder.html) 
+  * http://smart-ip.net/gauge1.html
+  * http://smart-ip.net/gauge2.html
+  * http://smart-ip.net/gauge-html.html
+  * Real usage example: http://smart-ip.net/speed-test
 
 ## License
 
