@@ -1,5 +1,7 @@
 # Generic info
 
+![Canvas Gauges](https://raw.githubusercontent.com/Mikhus/blob/master/gauges.png)
+
 This is tiny implementation of highly configurable gauge using pure JavaScript and HTML5 canvas.
 No need to use any library. 
 
