@@ -22,13 +22,7 @@
         majorTicks  : ['0','20','40','60','80','100','120','140','160','180','200','220'],
         minorTicks  : 2,
         strokeTicks : true,
-        highlights  : [{ from : 160, to : 220, color : 'rgba(255, 0,  0, .25)' }],
-            /*{ from : 0,   to : 50, color : 'rgba(0,   255, 0, .15)' },
-            { from : 50, to : 100, color : 'rgba(255, 255, 0, .15)' },
-            { from : 100, to : 150, color : 'rgba(255, 30,  0, .25)' },
-            { from : 150, to : 200, color : 'rgba(255, 0,  225, .25)' },
-            { from : 200, to : 220, color : 'rgba(0, 0,  255, .25)' }
-        ],*/
+        highlights  : [{ from : 160, to : 220, color : 'rgba(200, 50, 50, .75)' }],
         colors      : {
             plate      : '#222',
             majorTicks : '#f5f5f5',
@@ -37,13 +31,13 @@
             units      : '#ccc',
             numbers    : '#eee',
             needle     : {
-                start : '#ff9966',
-                end : '#ff9966',
+                start : 'rgba(200, 50, 50, .75)',
+                end : 'rgba(200, 50, 50, .75)',
                 circle: {
-                    outerStart: '#ff9966',
-                    outerEnd: '#ff9966'
+                    outerStart: 'rgba(200, 200, 200, 1)',
+                    outerEnd: 'rgba(200, 200, 200, 1)'
                 },
-                shadowUp: false,
+                shadowUp: true,
                 shadowDown: false
             }
 
@@ -70,8 +64,8 @@
             }
         },
         animation: {
-            delay: 25,
-            duration: 2000,
+            delay: 10,
+            duration: 1500,
             fn: 'linear'
         }
     });
@@ -79,7 +73,7 @@
     gauge.onready = function() {
         setInterval( function() {
             gauge.setValue(Math.random() * (165 - 120) + 120);
-        }, 2000);
+        }, 1500);
     };
 
     gauge.draw();
