@@ -1,4 +1,4 @@
-# Generic info
+# HTML Canvas Gauges
 
 ![Canvas Gauges](https://raw.githubusercontent.com/Mikhus/blob/master/gauges.png)
 
