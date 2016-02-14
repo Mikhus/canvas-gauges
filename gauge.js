@@ -57,6 +57,7 @@ var Gauge = function (config) {
         startAngle: 45,
         strokeTicks: true,
         units: false,
+        updateValueOnAnimation: false,
         valueFormat: {
             "int": 3,
             "dec": 2
@@ -263,7 +264,8 @@ var Gauge = function (config) {
     }
 
     var
-        canvas = config.renderTo.tagName ? config.renderTo : document.getElementById(config.renderTo),
+        canvas = config.renderTo.tagName ?
+            config.renderTo : document.getElementById(config.renderTo),
         ctx = canvas.getContext('2d'),
         cache, CW, CH, CX, CY, max, cctx;
 
@@ -380,7 +382,9 @@ var Gauge = function (config) {
             delta: cfg.fn,
             step: function (delta) {
                 fromValue = parseFloat(from) + path * delta;
-                self.draw();
+                config.updateValueOnAnimation ?
+                    self.setRawValue(fromValue) :
+                    self.draw();
             }
         });
     }
@@ -998,7 +1002,7 @@ Gauge.initialized = false;
     var
         d = document,
         ie = navigator.userAgent.toLocaleLowerCase().indexOf('msie') != -1,
-        fontSrc = "url('fonts/digital-7-mono." + (ie ? 'eot' : 'ttf') + "')",
+        fontSrc = "url('" + (window.CANV_GAUGE_FONTS_PATH || 'fonts') + "/digital-7-mono." + (ie ? 'eot' : 'ttf') + "')",
         fontFamily = 'Led';
 
     function onFontLoadSuccess() {
