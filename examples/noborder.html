@@ -1,0 +1,95 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html style="width:100%;height:100%">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Gauge Test</title>
+    <script src="../gauge.min.js"></script>
+    <style>body{padding:0;margin:0;background:#222}</style>
+</head>
+<body style="width:100%;height:100%">
+<canvas id="gauge"></canvas>
+<div id="console"></div>
+<script>
+    var gauge = new Gauge({
+        renderTo    : 'gauge',
+        width       : document.body.offsetWidth,
+        height      : document.body.offsetHeight,
+        glow        : false,
+        units       : 'Km/h',
+        title       : false,
+        minValue    : 0,
+        maxValue    : 220,
+        majorTicks  : ['0','20','40','60','80','100','120','140','160','180','200','220'],
+        minorTicks  : 2,
+        strokeTicks : true,
+        highlights  : [{ from : 160, to : 220, color : 'rgba(255, 0,  0, .25)' }],
+            /*{ from : 0,   to : 50, color : 'rgba(0,   255, 0, .15)' },
+            { from : 50, to : 100, color : 'rgba(255, 255, 0, .15)' },
+            { from : 100, to : 150, color : 'rgba(255, 30,  0, .25)' },
+            { from : 150, to : 200, color : 'rgba(255, 0,  225, .25)' },
+            { from : 200, to : 220, color : 'rgba(0, 0,  255, .25)' }
+        ],*/
+        colors      : {
+            plate      : '#222',
+            majorTicks : '#f5f5f5',
+            minorTicks : '#ddd',
+            title      : '#fff',
+            units      : '#ccc',
+            numbers    : '#eee',
+            needle     : {
+                start : '#ff9966',
+                end : '#ff9966',
+                circle: {
+                    outerStart: '#ff9966',
+                    outerEnd: '#ff9966'
+                },
+                shadowUp: false,
+                shadowDown: false
+            }
+
+        },
+        valueBox: {
+            visible: false
+        },
+        valueText: {
+            visible: false
+        },
+        circles: {
+            outerVisible: false,
+            middleVisible: false,
+            innerVisible: false
+        },
+        needle: {
+            type: 'arrow',
+            width: 2,
+            end: 72,
+            circle: {
+                size: 7,
+                inner: false,
+                outer: true
+            }
+        },
+        animation: {
+            delay: 25,
+            duration: 2000,
+            fn: 'linear'
+        }
+    });
+
+    gauge.onready = function() {
+        setInterval( function() {
+            gauge.setValue(Math.random() * (165 - 120) + 120);
+        }, 2000);
+    };
+
+    gauge.draw();
+
+    window.onresize= function() {
+        gauge.updateConfig({
+            width  : document.body.offsetWidth,
+            height : document.body.offsetHeight
+        });
+    };
+</script>
+
+</html>
