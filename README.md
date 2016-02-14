@@ -1,6 +1,6 @@
 # HTML Canvas Gauges
 
-[![Canvas Gauges](https://raw.githubusercontent.com/Mikhus/blob/master/gauges.png)](http://smart-ip.net/canv-gauge/examples/all-in-one.html)
+[![Canvas Gauges](https://raw.githubusercontent.com/Mikhus/blob/master/gauges.png)](https://cdn.rawgit.com/Mikhus/canv-gauge/master/examples/all-in-one.html)
 
 This is tiny implementation of highly configurable gauge using pure JavaScript and HTML5 canvas.
 No need to use any library. 
@@ -21,13 +21,11 @@ AngularJS is now supported via [angular-canvas-gauge](https://github.com/dec/ang
 
 ## Examples
 
-  * Basic: http://smart-ip.net/gauge.html
-  * Compass-like: [JavaScript](http://smart-ip.net/canv-gauge/examples/example.html), [HTML](http://smart-ip.net/canv-gauge/examples/example-html.html)
-  * Alternate look: [No border](http://smart-ip.net/canv-gauge/examples/noborder.html) 
-  * http://smart-ip.net/gauge1.html
-  * http://smart-ip.net/gauge2.html
-  * http://smart-ip.net/gauge-html.html
-  * Real usage example: http://smart-ip.net/speed-test
+  * [Basic example](https://cdn.rawgit.com/Mikhus/canv-gauge/master/examples/example-resize.html)
+  * Compass-like: [JavaScript](https://cdn.rawgit.com/Mikhus/canv-gauge/master/examples/example.html), [HTML](https://cdn.rawgit.com/Mikhus/canv-gauge/master/examples/example-html.html)
+  * Alternate look: [No border](https://cdn.rawgit.com/Mikhus/canv-gauge/master/examples/noborder.html) 
+  * [More](http://smart-ip.net/gauge1.html) and [more](http://smart-ip.net/gauge2.html) and [more](http://smart-ip.net/gauge-html.html)...
+  * [Real usage example](http://smart-ip.net/speed-test)
 
 ## License
 
