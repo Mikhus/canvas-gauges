@@ -1507,6 +1507,8 @@ domReady(function () {
                                 } else {
                                     continue;
                                 }
+                            } else if (cfgName === 'updateValueOnAnimation') {
+                                attrValue = attrValue === 'true' ? true : false;
                             }
 
                             config[cfgName] = attrValue;
