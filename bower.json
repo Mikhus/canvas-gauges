@@ -18,6 +18,9 @@
     "bower_components",
     "test",
     "tests",
-    "examples"
+    "examples",
+    "build.bat",
+    "build.sh",
+    "compiler.jar"
   ]
 }
