@@ -1,0 +1,26 @@
+{
+  "name": "canv-gauge",
+  "homepage": "https://github.com/Mikhus/canv-gauge",
+  "authors": [
+    "Mykhailo Stadnyk <mikhus@gmail.com>"
+  ],
+  "description": "This is tiny implementation of highly configurable gauge using pure JavaScript and HTML5 canvas. No need to use any library.",
+  "main": "gauge.js",
+  "moduleType": [],
+  "keywords": [
+    "gauge",
+    "html5"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests",
+    "examples",
+    "build.bat",
+    "build.sh",
+    "compiler.jar"
+  ]
+}
