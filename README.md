@@ -11,6 +11,12 @@ Because it is compatible with most modern browsers and with mobile devices.
 For example, SVG, does not work on Android 2.x by default, but canvas do work.
 BTW you can find your own reasons why to use canvas.
 
+## Install
+
+Make it simple using bower:
+
+  $ bower install canv-gauge
+
 ## Documentation
 
 Please, read [wiki](https://github.com/Mikhus/canv-gauge/wiki) for more information.
