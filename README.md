@@ -15,7 +15,7 @@ BTW you can find your own reasons why to use canvas.
 
 Make it simple using bower:
 
-  $ bower install canv-gauge
+    $ bower install canv-gauge
 
 ## Documentation
 
