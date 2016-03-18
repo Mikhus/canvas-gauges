@@ -818,18 +818,10 @@ var Gauge = function (config) {
 
         ctx.save();
 
-        if (fromValue < 0) {
-            fromValue = Math.abs(config.minValue - fromValue);
-        } else if (config.minValue > 0) {
-            fromValue -= config.minValue
-        } else {
-            fromValue = Math.abs(config.minValue) + fromValue;
-        }
-
         ctx.rotate(
             radians(
-                config.startAngle + fromValue /
-                ((config.maxValue - config.minValue) / config.ticksAngle)
+                config.startAngle + (fromValue-config.minValue) /
+                (config.maxValue - config.minValue) * config.ticksAngle
             )
         );
 
