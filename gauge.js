@@ -33,6 +33,7 @@
  *           Greg <https://github.com/gregroper>
  *           David Esperalta <info@davidesperalta.com>
  *           Gwenaël (https://thegtricks.thegounet.fr)
+ *           migeruhito (https://github.com/migeruhito)
  */
 /**
  * @param {Object} config
