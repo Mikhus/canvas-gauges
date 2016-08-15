@@ -35,6 +35,141 @@
  *           Gwenaël (https://thegtricks.thegounet.fr)
  *           migeruhito (https://github.com/migeruhito)
  */
+(function(ns) {
+    'use strict';
+
+    function vendor(prop, from) {
+        if (!from) {
+            from = ns;
+        }
+
+        if (typeof from[prop] !== 'undefined') {
+            return from[prop];
+        }
+
+        var vendors = ['webkit', 'moz', 'ms', 'o'];
+        var i = 0;
+        var s = vendors.length;
+        var capitalized = prop.charAt(0).toUpperCase() + prop.substr(1);
+
+        for (; i < s; i++) {
+            var vendorProp = from[vendors[i] + capitalized];
+
+            if (typeof vendorProp !== 'undefined') {
+                return vendorProp;
+            }
+        }
+
+        return null;
+    }
+
+    ns.requestAnimationFrame = vendor('requestAnimationFrame') ||
+        function(callback) {
+            setTimeout(function() {
+                    callback(new Date().getTime());
+                },
+                1000 / 60);
+        };
+
+    var rules = {
+        linear: function (p) {
+            return p;
+        },
+        quad: function (p) {
+            return Math.pow(p, 2);
+        },
+        dequad: function (p) {
+            return 1 - rules.quad(1 - p);
+        },
+        quint: function (p) {
+            return Math.pow(p, 5);
+        },
+        dequint: function (p) {
+            return 1 - Math.pow(1 - p, 5);
+        },
+        cycle: function (p) {
+            return 1 - Math.sin(Math.acos(p));
+        },
+        decycle: function (p) {
+            return Math.sin(Math.acos(1 - p));
+        },
+        bounce: function (p) {
+            return 1 - rules.debounce(1 - p);
+        },
+        debounce: function (p) {
+            var a = 0, b = 1;
+            for (; 1; a += b, b /= 2) {
+                if (p >= (7 - 4 * a) / 11) {
+                    return -Math.pow((11 - 6 * a - 11 * p) / 4, 2) +
+                        Math.pow(b, 2);
+                }
+            }
+        },
+        elastic: function (p) {
+            return 1 - rules.delastic(1 - p);
+        },
+        delastic: function (p) {
+            var x = 1.5;
+            return Math.pow(2, 10 * (p - 1)) *
+                Math.cos(20 * Math.PI * x / 3 * p);
+        }
+    };
+
+    function step(time, draw, start, rule, duration, end) {
+        var progress = time - start;
+        var percent = progress / duration;
+
+        if (percent > 1) {
+            percent = 1;
+        }
+
+        draw && draw(percent === 1 ? percent : rule(percent));
+
+        if (progress < duration) {
+            requestAnimationFrame(function(time) {
+                step(time, draw, start, rule, duration, end);
+            });
+        }
+
+        else {
+            end && end();
+        }
+    }
+
+    function Animation(rule, duration, draw, end) {
+        if (!(this instanceof Animation)) {
+            return new Animation(rule, duration, draw, end);
+        }
+
+        this.duration = duration || 250;
+        this.rule = rules[rule] || rule || 'linear';
+        this.draw = draw || function() {};
+        this.end = end || function() {};
+
+        if (typeof this.rule !== 'function') {
+            throw new TypeError('Invalid animation rule:', rule);
+        }
+    }
+
+    Animation.prototype.animate = function(draw, end) {
+        var self = this;
+        var start = vendor('animationStartTime') ||
+        ns.performance && ns.performance.now ?
+            ns.performance.now() :
+            Date.now();
+
+        draw = draw || this.draw;
+        end = end || this.end;
+
+        requestAnimationFrame(function(time) {
+            step(time, draw, start, self.rule, self.duration, end);
+        });
+    };
+
+    Animation.rules = rules;
+
+    ns.Animation = Animation;
+}(window));
 /**
  * @param {Object} config
  * @constructor
@@ -70,7 +205,6 @@ var Gauge = function (config) {
         },
         glow: true,
         animation: {
-            delay: 10,
             duration: 250,
             fn: 'cycle'
         },
@@ -325,82 +459,20 @@ var Gauge = function (config) {
         return this;
     };
 
-    var animateFx = {
-        linear: function (p) {
-            return p;
-        },
-        quad: function (p) {
-            return Math.pow(p, 2);
-        },
-        quint: function (p) {
-            return Math.pow(p, 5);
-        },
-        cycle: function (p) {
-            return 1 - Math.sin(Math.acos(p));
-        },
-        bounce: function (p) {
-            return 1 - (function (p) {
-                    for (var a = 0, b = 1; 1; a += b, b /= 2) {
-                        if (p >= (7 - 4 * a) / 11) {
-                            return -Math.pow((11 - 6 * a - 11 * p) / 4, 2) +
-                                Math.pow(b, 2);
-                        }
-                    }
-                })(1 - p);
-        },
-        elastic: function (p) {
-            return 1 - (function (p) {
-                    var x = 1.5;
-                    return Math.pow(2, 10 * (p - 1)) *
-                        Math.cos(20 * Math.PI * x / 3 * p);
-                })(1 - p);
-        }
-    };
-
-    var animateInterval = null;
-
-    function _animate(opts) {
-        var start = new Date;
-
-        animateInterval = setInterval(function () {
-            var
-                timePassed = new Date - start,
-                progress = timePassed / opts.duration;
-
-            if (progress > 1) {
-                progress = 1;
-            }
-
-            var animateFn = typeof opts.delta == "function" ?
-                opts.delta :
-                animateFx[opts.delta];
-
-            var delta = animateFn(progress);
-            opts.step(delta);
-
-            if (progress == 1) {
-                clearInterval(animateInterval);
-            }
-        }, opts.delay || 10);
-    }
+    var animation = new window.Animation(
+        config.animation.fn,
+        config.animation.duration);
 
     function animate() {
-        animateInterval && clearInterval(animateInterval); // stop previous animation
         var
             path = (toValue - fromValue),
-            from = fromValue,
-            cfg = config.animation;
+            from = fromValue;
 
-        _animate({
-            delay: cfg.delay,
-            duration: cfg.duration,
-            delta: cfg.fn,
-            step: function (delta) {
-                fromValue = parseFloat(from) + path * delta;
-                config.updateValueOnAnimation ?
-                    self.setRawValue(fromValue) :
-                    self.draw();
-            }
+        animation.animate(function (delta) {
+            fromValue = parseFloat(from) + path * delta;
+            config.updateValueOnAnimation ?
+                self.setRawValue(fromValue) :
+                self.draw();
         });
     }
 
