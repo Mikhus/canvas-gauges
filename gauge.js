@@ -269,11 +269,18 @@ var Gauge = function (config) {
         canvas = config.renderTo.tagName ?
             config.renderTo : document.getElementById(config.renderTo),
         ctx = canvas.getContext('2d'),
+        pxRatio = window.devicePixelRatio || 1,
         cache, CW, CH, CX, CY, max, cctx;
 
     function baseInit() {
-        canvas.width = config.width;
-        canvas.height = config.height;
+        canvas.width = config.width * pxRatio;
+        canvas.height = config.height * pxRatio;
+
+        canvas.style.width = config.width + 'px';
+        canvas.style.height = config.height + 'px';
+
+        ctx.scale(pxRatio, pxRatio);
+        ctx.save();
 
         cache = canvas.cloneNode(true);
         cctx = cache.getContext('2d');
@@ -568,23 +575,26 @@ var Gauge = function (config) {
     // major ticks draw
     function drawMajorTicks() {
         var r = max / 100 * 81;
+        var i = 0;
+        var tlen = config.majorTicks.length;
 
         ctx.lineWidth = 2;
         ctx.strokeStyle = config.colors.majorTicks;
         ctx.save();
 
-        if (config.majorTicks.length === 0) {
+        if (tlen === 0) {
             var numberOfDefaultTicks = 5;
             var tickSize = (config.maxValue - config.minValue) / numberOfDefaultTicks;
 
-            for (var i = 0; i < numberOfDefaultTicks; i++) {
+            for (; i < numberOfDefaultTicks; i++) {
                 config.majorTicks.push(formatMajorTickNumber(config.minValue + (tickSize * i)));
             }
             config.majorTicks.push(formatMajorTickNumber(config.maxValue));
         }
 
-        for (var i = 0; i < config.majorTicks.length; ++i) {
-            var a = config.startAngle + i * (config.ticksAngle / (config.majorTicks.length - 1));
+        i = 0;
+        for (; i < tlen; ++i) {
+            var a = config.startAngle + i * (config.ticksAngle / (tlen - 1));
             ctx.rotate(radians(a));
 
             ctx.beginPath();
@@ -622,8 +632,9 @@ var Gauge = function (config) {
         ctx.save();
 
         var len = config.minorTicks * (config.majorTicks.length - 1);
+        var i = 0;
 
-        for (var i = 0; i < len; ++i) {
+        for (; i < len; ++i) {
             var a = config.startAngle + i * (config.ticksAngle / len);
             ctx.rotate(radians(a));
 
@@ -641,11 +652,13 @@ var Gauge = function (config) {
     function drawNumbers() {
         var r = max / 100 * 55;
         var points = {};
+        var i = 0;
+        var tlen = config.majorTicks.length;
 
-        for (var i = 0; i < config.majorTicks.length; ++i) {
+        for (; i < tlen; ++i) {
             var
                 a = config.startAngle + i *
-                    (config.ticksAngle / (config.majorTicks.length - 1)),
+                    (config.ticksAngle / (tlen - 1)),
                 p = rpoint(r, radians(a));
 
             if (a === 360) a = 0;
@@ -696,6 +709,7 @@ var Gauge = function (config) {
         var
             cdec = config.valueFormat['dec'],
             cint = config.valueFormat['int'];
+        var i = 0, s;
         val = parseFloat(val);
 
         var n = (val < 0);
@@ -705,15 +719,21 @@ var Gauge = function (config) {
         if (cdec > 0) {
             val = val.toFixed(cdec).toString().split('.');
 
-            for (var i = 0, s = cint - val[0].length; i < s; ++i) {
+            s = cint - val[0].length;
+
+            for (; i < s; ++i) {
                 val[0] = '0' + val[0];
             }
 
             val = (n ? '-' : '') + val[0] + '.' + val[1];
-        } else {
+        }
+
+        else {
             val = Math.round(val).toString();
 
-            for (var i = 0, s = cint - val.length; i < s; ++i) {
+            s = cint - val.length;
+
+            for (; i < s; ++i) {
                 val = '0' + val;
             }
 
@@ -746,8 +766,9 @@ var Gauge = function (config) {
 
         var r1 = max / 100 * 81;
         var r2 = r1 - max / 100 * 15;
+        var i = 0, s = config.highlights.length
 
-        for (var i = 0, s = config.highlights.length; i < s; i++) {
+        for (; i < s; i++) {
             var
                 hlt = config.highlights[i],
                 vd = (config.maxValue - config.minValue) / config.ticksAngle,
