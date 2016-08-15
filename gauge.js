@@ -279,11 +279,9 @@ var Gauge = function (config) {
         canvas.style.width = config.width + 'px';
         canvas.style.height = config.height + 'px';
 
-        ctx.scale(pxRatio, pxRatio);
-        ctx.save();
-
         cache = canvas.cloneNode(true);
         cctx = cache.getContext('2d');
+
         CW = canvas.width;
         CH = canvas.height;
         CX = CW / 2;
@@ -415,6 +413,8 @@ var Gauge = function (config) {
 
         if (!imready) {
             self.onready && self.onready();
+            cctx.scale(pxRatio, pxRatio);
+            cctx.save();
             imready = true;
         }
 
@@ -431,9 +431,7 @@ var Gauge = function (config) {
             cctx.clearRect(-CX, -CY, CW, CH);
             cctx.save();
 
-            var tmp = {
-                ctx: ctx
-            };
+            var tmp = { ctx: ctx };
             ctx = cctx;
 
             drawPlate();
