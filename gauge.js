@@ -219,12 +219,17 @@ var Gauge = function (config) {
      * initialize the gauge to be assured it was fully drawn
      * before you start the update on it
      *
-     * @event {Function} onready
+     * @event onready
      */
     this.onready = function () {};
 
     function applyRecursive(dst, src) {
-        for (var i in src) {
+        var i;
+        for (i in src) {
+            if (!src.hasOwnProperty(i)) {
+                continue;
+            }
+
             // modification by Chris Poile, Oct 08, 2012. More correct check of an Array instance
             if (typeof src[i] == "object" &&
                 !(Object.prototype.toString.call(src[i]) === '[object Array]')
@@ -235,7 +240,9 @@ var Gauge = function (config) {
                 }
 
                 applyRecursive(dst[i], src[i]);
-            } else {
+            }
+
+            else {
                 dst[i] = src[i];
             }
         }
@@ -265,6 +272,7 @@ var Gauge = function (config) {
         throw Error("Canvas element was not specified when creating the Gauge object!");
     }
 
+    //noinspection JSUnresolvedVariable
     var
         canvas = config.renderTo.tagName ?
             config.renderTo : document.getElementById(config.renderTo),
@@ -297,7 +305,7 @@ var Gauge = function (config) {
         // translate canvas to have 0,0 in center
         ctx.translate(CX, CY);
         ctx.save();
-    };
+    }
 
     // do basic initialization
     baseInit();
@@ -432,6 +440,7 @@ var Gauge = function (config) {
             cctx.save();
 
             var tmp = { ctx: ctx };
+            //noinspection JSUnusedAssignment
             ctx = cctx;
 
             drawPlate();
@@ -479,9 +488,7 @@ var Gauge = function (config) {
             r0 = max / 100 * 93,
             d0 = max - r0,
             r1 = max / 100 * 91,
-            d1 = max - r1,
             r2 = max / 100 * 88,
-            d2 = max - r2,
             r3 = max / 100 * 85;
 
         ctx.save();
@@ -764,7 +771,7 @@ var Gauge = function (config) {
 
         var r1 = max / 100 * 81;
         var r2 = r1 - max / 100 * 15;
-        var i = 0, s = config.highlights.length
+        var i = 0, s = config.highlights.length;
 
         for (; i < s; i++) {
             var
@@ -1037,7 +1044,9 @@ Gauge.initialized = false;
             h.appendChild(r);
             ss = r.styleSheet;
             ss.cssText = text;
-        } else {
+        }
+
+        else {
             try {
                 r.appendChild(d.createTextNode(text));
             } catch (e) {
@@ -1046,8 +1055,8 @@ Gauge.initialized = false;
 
             h.appendChild(r);
 
-            ss = r.styleSheet ? r.styleSheet :
-                (r.sheet || d.styleSheets[d.styleSheets.length - 1]);
+            // ss = r.styleSheet ? r.styleSheet :
+            //     (r.sheet || d.styleSheets[d.styleSheets.length - 1]);
         }
 
         var iv = setInterval(function () {
@@ -1077,14 +1086,16 @@ Gauge.initialized = false;
         }, 1);
     }
 
+    //noinspection JSUnresolvedVariable
     if (document.fonts === undefined)
         oldLoadFontFamily();
 
     else {
+        //noinspection JSUnresolvedFunction
         var ledFontFace = new window.FontFace(fontFamily, fontSrc);
         document.fonts.add(ledFontFace);
 
-        ledFontFace.load().then(function (fontFace) {
+        ledFontFace.load().then(function () {
             onFontLoadSuccess();
 
         }, function (reason) {
@@ -1103,14 +1114,18 @@ Gauge.Collection.get = function (id) {
         for (var i = 0, s = self.length; i < s; i++) {
             var canvas = self[i].config.renderTo.tagName ?
                 self[i].config.renderTo :
-                document.getElementById(self[i].config.renderTo);
+                document.getElementById(self[i].config.renderTo || '');
             if (canvas.getAttribute('id') == id) {
                 return self[i];
             }
         }
-    } else if (typeof(id) == 'number') {
+    }
+
+    else if (typeof(id) == 'number') {
         return self[id];
-    } else {
+    }
+
+    else {
         return null;
     }
 };
@@ -1255,41 +1270,40 @@ domReady(function () {
                                         if (!config.colors.needle.circle) {
                                             config.colors.needle.circle = {};
                                         }
-                                        switch (cfgProp[2]) {
-                                            case 'circle':
+                                        if (cfgProp[2] === 'circle') {
                                             {
                                                 switch (cfgProp[3]) {
-                                                    case 'outerstart':
-                                                    {
+                                                    case 'outerstart': {
                                                         config.colors.needle.circle.outerStart = attrValue;
                                                         break;
                                                     }
-                                                    case 'outerend':
-                                                    {
+                                                    case 'outerend': {
                                                         config.colors.needle.circle.outerEnd = attrValue;
                                                         break;
                                                     }
-                                                    case 'innerstart':
-                                                    {
+                                                    case 'innerstart': {
                                                         config.colors.needle.circle.innerStart = attrValue;
                                                         break;
                                                     }
-                                                    case 'innerend':
-                                                    {
+                                                    case 'innerend': {
                                                         config.colors.needle.circle.innerEnd = attrValue;
                                                         break;
                                                     }
                                                 }
                                             }
-                                            case 'shadowup':
                                             {
                                                 config.colors.needle.shadowUp = attrValue;
-                                                break;
+
                                             }
-                                            case 'shadowdown':
+                                        } else if (cfgProp[2] === 'shadowup') {
+                                            {
+                                                config.colors.needle.shadowUp = attrValue;
+
+                                            }
+                                        } else if (cfgProp[2] === 'shadowdown') {
                                             {
                                                 config.colors.needle.shadowDown = attrValue;
-                                                break;
+
                                             }
                                         }
                                     }
@@ -1507,8 +1521,8 @@ domReady(function () {
 
                             if (cfgName == 'majorTicks') {
                                 attrValue = attrValue.split(/\s+/);
-                            } else if (cfgName == 'strokeTicks' || cfgName == 'glow') {
-                                attrValue = attrValue == 'true' ? true : false;
+                            } else if (cfgName == 'strokeTicks' || cfgName === 'glow') {
+                                attrValue = attrValue === 'true';
                             } else if (cfgName == 'valueFormat') {
                                 var val = attrValue.split('.');
 
@@ -1521,7 +1535,7 @@ domReady(function () {
                                     continue;
                                 }
                             } else if (cfgName === 'updateValueOnAnimation') {
-                                attrValue = attrValue === 'true' ? true : false;
+                                attrValue = attrValue === 'true';
                             }
 
                             config[cfgName] = attrValue;
