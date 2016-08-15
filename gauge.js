@@ -576,7 +576,7 @@ var Gauge = function (config) {
         var i = 0;
         var tlen = config.majorTicks.length;
 
-        ctx.lineWidth = 2;
+        ctx.lineWidth = 2 * pxRatio;
         ctx.strokeStyle = config.colors.majorTicks;
         ctx.save();
 
@@ -624,7 +624,7 @@ var Gauge = function (config) {
     function drawMinorTicks() {
         var r = max / 100 * 81;
 
-        ctx.lineWidth = 1;
+        ctx.lineWidth = 1 * pxRatio;
         ctx.strokeStyle = config.colors.minorTicks;
 
         ctx.save();
@@ -849,8 +849,8 @@ var Gauge = function (config) {
             ctx.beginPath();
             ctx.moveTo(-pad2, -rOut);
             ctx.lineTo(-pad1, 0);
-            ctx.lineTo(-1, rIn);
-            ctx.lineTo(1, rIn);
+            ctx.lineTo(-1 * pxRatio, rIn);
+            ctx.lineTo(1 * pxRatio, rIn);
             ctx.lineTo(pad1, 0);
             ctx.lineTo(pad2, -rOut);
             ctx.closePath();
@@ -863,11 +863,11 @@ var Gauge = function (config) {
             ctx.fill();
 
             ctx.beginPath();
-            ctx.lineTo(-0.5, rIn);
-            ctx.lineTo(-1, rIn);
+            ctx.lineTo(-0.5 * pxRatio, rIn);
+            ctx.lineTo(-1 * pxRatio, rIn);
             ctx.lineTo(-pad1, 0);
             ctx.lineTo(-pad2, -rOut);
-            ctx.lineTo(pad2 / 2 - 2, -rOut);
+            ctx.lineTo(pad2 / 2 * pxRatio - 2 * pxRatio, -rOut);
             ctx.closePath();
             ctx.fillStyle = config.colors.needle.shadowUp;
             ctx.fill();
