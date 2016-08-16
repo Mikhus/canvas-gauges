@@ -1,0 +1,6 @@
+.idea/
+*.log
+coverage/
+.eslintrc
+.babelrc
+.travis.yml
