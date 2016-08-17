@@ -21,7 +21,7 @@ const gzip = require('gulp-gzip');
 gulp.task('help', () => usage(gulp));
 
 /**
- * Clean-ups files from previous build
+ * Clean-ups files from previous build.
  *
  * @task {clean}
  */
@@ -34,7 +34,7 @@ gulp.task('clean', (done) => {
 
 /**
  * Automatically generates API documentation for this project
- * from a source code
+ * from a source code.
  *
  * @task {doc}
  */
@@ -44,7 +44,7 @@ gulp.task('doc', () => {
 });
 
 /**
- * Transpiles, combines and minifies gauge code
+ * Transpiles, combines and minifies JavaScript code.
  *
  * @task {build}
  */
@@ -65,7 +65,7 @@ gulp.task('build', ['clean'], () => {
 });
 
 /**
- * Runs gzipping for minified file
+ * Runs gzipping for minified file.
  *
  * @task {gzip}
  */
@@ -76,7 +76,7 @@ gulp.task('gzip', ['build'], () => {
 });
 
 /**
- * Performs JavaScript syntax linting checks
+ * Performs JavaScript syntax linting checks.
  *
  * @task {lint}
  */
@@ -88,7 +88,7 @@ gulp.task('lint', () => {
 });
 
 /**
- * Runs tests
+ * Runs tests.
  *
  * @task {test}
  *
