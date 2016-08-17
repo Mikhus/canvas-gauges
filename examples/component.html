@@ -38,11 +38,16 @@
         data-animation-rule="bounce"
         data-animation-duration="500"
 ></canvas>
+<canvas data-type="gauge"></canvas>
 <script>
+// animage all gauges on a page
 window.addEventListener('load', () => {
-    setInterval(() => {
-        Gauge.Collection[0].value = Math.random() * -220 + 220;
-    }, 1000);
+    Gauge.Collection.forEach(gauge => {
+       setInterval(() => {
+           gauge.value = Math.random() * -gauge.options.maxValue +
+               gauge.options.maxValue;
+       }, gauge.animation.duration + 500);
+    });
 });
 </script>
 </html>
