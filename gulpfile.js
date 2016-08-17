@@ -11,6 +11,7 @@ const uglify = require('gulp-uglify');
 const rimraf = require('rimraf');
 const esdoc = require('gulp-esdoc');
 const eslint = require('gulp-eslint');
+const gzip = require('gulp-gzip');
 
 /**
  * Displays this usage information.
@@ -27,7 +28,8 @@ gulp.task('help', () => usage(gulp));
 gulp.task('clean', (done) => {
     rimraf('gauge.js', () =>
     rimraf('gauge.min.js', () =>
-    rimraf('gauge.min.js.map', done)));
+    rimraf('gauge.min.js.map', () =>
+    rimraf('gauge.min.js.gz', done))));
 });
 
 /**
@@ -48,7 +50,7 @@ gulp.task('doc', () => {
  */
 gulp.task('build', ['clean'], () => {
     //noinspection JSCheckFunctionSignatures
-    browserify('lib/Gauge.js')
+    return browserify('lib/Gauge.js')
         .transform(babelify, { presets: ['es2015'] })
         .bundle()
         //.on('error', e => gutil.log(e))
@@ -59,6 +61,17 @@ gulp.task('build', ['clean'], () => {
         // capture sourcemaps from transforms
         .pipe(uglify())
         .pipe(sourcemaps.write('.'))
+        .pipe(gulp.dest('.'));
+});
+
+/**
+ * Runs gzipping for minified file
+ *
+ * @task {gzip}
+ */
+gulp.task('gzip', ['build'], () => {
+    return gulp.src('gauge.min.js')
+        .pipe(gzip({ gzipOptions: { level: 9 } }))
         .pipe(gulp.dest('.'));
 });
 
