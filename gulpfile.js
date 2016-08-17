@@ -74,4 +74,24 @@ gulp.task('lint', () => {
         .pipe(eslint.failAfterError());
 });
 
+/**
+ * Runs tests
+ *
+ * @task {test}
+ *
+ * Testing concept could be following:
+ *  1. Create various gauge configuration HTML pages
+ *  2. Use protractor to navigate this pages
+ *  3. On each page, depending on the gauge config and screen res/dpi
+ *     checking the proper pixels on canvas if them matching expected color
+ *     This could be checks, for example if highlight area in this pixel is
+ *     present or not, if arrow starts/ends at this point, etc.
+ *     This would be valuable checks, because if something wrong happen with
+ *     drawing, most probably expected pixels won't match the expected specs,
+ *     so we can automatically figure something is broken.
+ */
+gulp.task('test', ['lint'], () => {
+
+});
+
 gulp.task('default', ['help']);
