@@ -10,6 +10,7 @@ const sourcemaps = require('gulp-sourcemaps');
 const uglify = require('gulp-uglify');
 const rimraf = require('rimraf');
 const esdoc = require('gulp-esdoc');
+const eslint = require('gulp-eslint');
 
 /**
  * Displays this usage information.
@@ -46,6 +47,7 @@ gulp.task('doc', () => {
  * @task {build}
  */
 gulp.task('build', ['clean'], () => {
+    //noinspection JSCheckFunctionSignatures
     browserify('lib/Gauge.js')
         .transform(babelify, { presets: ['es2015'] })
         .bundle()
@@ -57,7 +59,19 @@ gulp.task('build', ['clean'], () => {
         // capture sourcemaps from transforms
         .pipe(uglify())
         .pipe(sourcemaps.write('.'))
-        .pipe(gulp.dest('.'))
+        .pipe(gulp.dest('.'));
+});
+
+/**
+ * Performs JavaScript syntax linting checks
+ *
+ * @task {lint}
+ */
+gulp.task('lint', () => {
+    return gulp.src(['**/*.js', '!node_modules/**', '!docs/**', '!**.min.js'])
+        .pipe(eslint())
+        .pipe(eslint.format())
+        .pipe(eslint.failAfterError());
 });
 
 gulp.task('default', ['help']);
