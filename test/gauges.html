@@ -8,12 +8,14 @@
     <style>body{padding:0;margin:0;background:#222}</style>
 </head>
 <body style="width:100%;height:100%">
+
+<!-- customized gauge -->
 <canvas data-type="gauge"
         data-width="400"
         data-height="400"
         data-units="Km/h",
         data-title="false"
-        data-value="0"
+        data-value="22"
         data-min-value="0"
         data-max-value="220"
         data-major-ticks="0,20,40,60,80,100,120,140,160,180,200,220"
@@ -38,17 +40,9 @@
         data-animation-rule="bounce"
         data-animation-duration="500"
 ></canvas>
+
+<!-- default gauge -->
 <canvas data-type="gauge"></canvas>
-<script>
-// animage all gauges on a page
-window.addEventListener('load', () => {
-    Gauge.Collection.forEach(gauge => {
-       setInterval(() => {
-           gauge.value = Math.random() * -gauge.options.maxValue +
-               gauge.options.maxValue;
-       }, gauge.animation.duration + 500);
-    });
-});
-</script>
+
 </body>
 </html>
