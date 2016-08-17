@@ -3,3 +3,4 @@ docs/
 coverage/
 node_modules/
 *.gz
+errorShots/

@@ -18,6 +18,7 @@ const esdoc = require('gulp-esdoc');
 const eslint = require('gulp-eslint');
 const gzip = require('gulp-gzip');
 const KarmaServer = require('karma').Server;
+const wdio = require('gulp-wdio');
 
 /**
  * Displays this usage information.
@@ -109,15 +110,15 @@ gulp.task('test:spec', ['lint'], done => {
         configFile: __dirname + '/karma.conf.js',
         singleRun: true
     }, () => {
-        server.stop();
+        server && server.stop();
         done();
     }).start();
 });
 
 /**
- * Runs all tests including end-to-end tests.
+ * Runs end-to-end tests.
  *
- * @task {test}
+ * @task {test:e2e}
  *
  * Testing concept could be following:
  *  1. Create various gauge configuration HTML pages
@@ -130,8 +131,18 @@ gulp.task('test:spec', ['lint'], done => {
  *     drawing, most probably expected pixels won't match the expected specs,
  *     so we can automatically figure something is broken.
  */
-gulp.task('test', ['test:spec'], () => {
-
+gulp.task('test:e2e', () => {
+    return gulp.src('wdio.conf.js')
+        .pipe(wdio({ type: 'selenium' }))
+        .once('error', () => process.exit(1))
+        .once('end', () => setTimeout(() => process.exit(0), 500));
 });
+
+/**
+ * Runs all tests.
+ *
+ * @task {test}
+ */
+gulp.task('test', ['test:spec'], () => gulp.start('test:e2e'));
 
 gulp.task('default', ['help']);

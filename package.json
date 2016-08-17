@@ -86,6 +86,7 @@
     "gulp-sourcemaps": "^1.6.0",
     "gulp-uglify": "^2.0.0",
     "gulp-util": "^3.0.7",
+    "gulp-wdio": "^1.0.4",
     "karma": "^1.2.0",
     "karma-babel-preprocessor": "^6.0.1",
     "karma-browserify": "^5.1.0",
@@ -104,6 +105,7 @@
     "utils-merge": "^1.0.0",
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.1.0",
-    "watchify": "^3.7.0"
+    "watchify": "^3.7.0",
+    "wdio-mocha-framework": "^0.4.0"
   }
 }
