@@ -1,3 +1,5 @@
+const istanbul = require('browserify-istanbul');
+
 // Karma configuration
 // Generated on Wed Aug 17 2016 15:31:14 GMT+0300 (EEST)
 module.exports = config => {
@@ -8,7 +10,7 @@ module.exports = config => {
 
         // frameworks to use
         // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
-        frameworks: ['browserify', 'mocha', 'chai', 'sinon'],
+        frameworks: ['browserify', 'mocha'],
 
         // list of files / patterns to load in the browser
         files: [
@@ -29,15 +31,47 @@ module.exports = config => {
         browserify: {
             debug: true,
             transform: [
-                ['babelify', { presets: ['es2015'] }],
-                'brfs'
-            ]
+                ['babelify', {
+                    presets: ['es2015'],
+                    plugins: ['transform-object-assign']
+                }],
+                istanbul({
+                    ignore: ['**/node_modules/**', '**/test/**'],
+                    instrumenterConfig: {
+                        embedSource: true
+                    }
+                })
+            ],
+            extensions: ['js']
         },
 
         // test results reporter to use
         // possible values: 'dots', 'progress'
         // available reporters: https://npmjs.org/browse/keyword/karma-reporter
-        reporters: ['progress'],
+        reporters: ['mocha', 'coverage', 'threshold'],
+
+        coverageReporter: {
+            reporters: [
+                { type: 'html' },
+                { type: 'text' }
+            ],
+            instrumenterOptions: {
+                istanbul: {
+                    noCompact: true
+                }
+            },
+            instrumenter: {
+                'test/**/*.spec.js': 'istanbul'
+            },
+            includeAllSources: true
+        },
+
+        thresholdReporter: {
+            statements: 90,
+            branches: 90,
+            functions: 90,
+            lines: 90
+        },
 
         // web server port
         port: 9876,
@@ -52,18 +86,17 @@ module.exports = config => {
         // enable / disable watching file and executing tests whenever any file changes
         autoWatch: false,
 
-
         // start these browsers
         // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
         browsers: [
             'Chrome',
-            'Firefox',
-            'PhantomJS'
+            'Firefox'/*,
+            'PhantomJS'*/
         ],
 
         // Continuous Integration mode
         // if true, Karma captures browsers, runs the tests and exits
-        singleRun: false,
+        singleRun: true,
 
         // Concurrency level
         // how many browser should be started simultaneous

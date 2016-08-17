@@ -1,3 +1,8 @@
+/**
+ * Canv-Gauge Dev Tasks Runner
+ *
+ * @author Mykhailo Stadnyk <mikhus@gmail.com>
+ */
 const gulp = require('gulp');
 const usage = require('gulp-help-doc');
 const browserify = require('browserify');
@@ -12,6 +17,7 @@ const rimraf = require('rimraf');
 const esdoc = require('gulp-esdoc');
 const eslint = require('gulp-eslint');
 const gzip = require('gulp-gzip');
+const KarmaServer = require('karma').Server;
 
 /**
  * Displays this usage information.
@@ -81,14 +87,35 @@ gulp.task('gzip', ['build'], () => {
  * @task {lint}
  */
 gulp.task('lint', () => {
-    return gulp.src(['**/*.js', '!node_modules/**', '!docs/**', '!**.min.js'])
+    return gulp.src([
+            '**/*.js',
+            '!node_modules/**',
+            '!docs/**',
+            '!**.min.js',
+            '!coverage/**'
+        ])
         .pipe(eslint())
         .pipe(eslint.format())
         .pipe(eslint.failAfterError());
 });
 
 /**
- * Runs tests.
+ * Runs unit tests.
+ *
+ * @task {test:spec}
+ */
+gulp.task('test:spec', ['lint'], done => {
+    let server = new KarmaServer({
+        configFile: __dirname + '/karma.conf.js',
+        singleRun: true
+    }, () => {
+        server.stop();
+        done();
+    }).start();
+});
+
+/**
+ * Runs all tests including end-to-end tests.
  *
  * @task {test}
  *
@@ -103,7 +130,7 @@ gulp.task('lint', () => {
  *     drawing, most probably expected pixels won't match the expected specs,
  *     so we can automatically figure something is broken.
  */
-gulp.task('test', ['lint'], () => {
+gulp.task('test', ['test:spec'], () => {
 
 });
 
