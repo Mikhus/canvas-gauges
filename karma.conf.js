@@ -3,7 +3,7 @@ const istanbul = require('browserify-istanbul');
 // Karma configuration
 // Generated on Wed Aug 17 2016 15:31:14 GMT+0300 (EEST)
 module.exports = config => {
-    config.set({
+    let options = {
 
         // base path that will be used to resolve all patterns (eg. files, exclude)
         basePath: '',
@@ -91,8 +91,17 @@ module.exports = config => {
         browsers: [
             'Chrome',
             'Firefox'/*,
-            'PhantomJS'*/
+             'PhantomJS'*/
         ],
+
+        customLaunchers: {
+            ChromeTravis: {
+                base: 'Chrome',
+                flags: ['--no-sandbox']
+            }
+        },
+
+
 
         // Continuous Integration mode
         // if true, Karma captures browsers, runs the tests and exits
@@ -101,5 +110,11 @@ module.exports = config => {
         // Concurrency level
         // how many browser should be started simultaneous
         concurrency: Infinity
-    });
+    };
+
+    if (process.env.TRAVIS) {
+        options.browsers = ['ChromeTravis', 'Firefox'];
+    }
+
+    config.set(options);
 };
