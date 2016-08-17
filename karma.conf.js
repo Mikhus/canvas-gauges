@@ -15,7 +15,7 @@ module.exports = config => {
         // list of files / patterns to load in the browser
         files: [
             'lib/**/*.js',
-            'test/**/*.spec.js'
+            'test/spec/**/*.js'
         ],
 
         // list of files to exclude
@@ -25,7 +25,7 @@ module.exports = config => {
         // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
         preprocessors: {
             'lib/**/*.js': ['browserify'],
-            'test/**/*.spec.js': ['browserify']
+            'test/spec/**/*.js': ['browserify']
         },
 
         browserify: {
@@ -90,8 +90,7 @@ module.exports = config => {
         // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
         browsers: [
             'Chrome',
-            'Firefox'/*,
-             'PhantomJS'*/
+            'Firefox'
         ],
 
         customLaunchers: {

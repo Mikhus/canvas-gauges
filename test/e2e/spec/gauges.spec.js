@@ -1,5 +1,5 @@
 const expect = require('chai').expect;
-const GaugesPage = require('../pageobjects/gauges.page');
+const GaugesPage = require('../pageobject/gauges.page');
 
 describe('gauges', () => {
     it('gauge canvases should be present on a page', () => {
