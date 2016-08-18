@@ -19,6 +19,8 @@ const eslint = require('gulp-eslint');
 const gzip = require('gulp-gzip');
 const KarmaServer = require('karma').Server;
 const wdio = require('gulp-wdio');
+const gutil = require('gulp-util');
+const chalk = require('chalk');
 
 /**
  * Displays this usage information.
@@ -60,7 +62,10 @@ gulp.task('build', ['clean'], () => {
     return browserify('lib/Gauge.js')
         .transform(babelify, { presets: ['es2015'] })
         .bundle()
-        //.on('error', e => gutil.log(e))
+        .on('error', function(err) {
+            gutil.log(err);
+            this.emit('end');
+        })
         .pipe(source('gauge.js'))
         .pipe(buffer())
         .pipe(rename('gauge.min.js'))
@@ -69,6 +74,10 @@ gulp.task('build', ['clean'], () => {
         .pipe(uglify())
         .pipe(sourcemaps.write('.'))
         .pipe(gulp.dest('.'));
+});
+
+gulp.task('watch', ['build'], () => {
+    gulp.watch('lib/**/*.js', () => gulp.start('build'));
 });
 
 /**
@@ -88,6 +97,8 @@ gulp.task('gzip', ['build'], () => {
  * @task {lint}
  */
 gulp.task('lint', () => {
+    console.log(chalk.bold.green('\nStarting linting checks...\n'));
+
     return gulp.src([
             '**/*.js',
             '!node_modules/**',
@@ -106,6 +117,8 @@ gulp.task('lint', () => {
  * @task {test:spec}
  */
 gulp.task('test:spec', ['lint'], done => {
+    console.log(chalk.bold.green('Starting unit tests...'));
+
     let server = new KarmaServer({
         configFile: __dirname + '/karma.conf.js',
         singleRun: true
@@ -132,6 +145,8 @@ gulp.task('test:spec', ['lint'], done => {
  *     so we can automatically figure something is broken.
  */
 gulp.task('test:e2e', () => {
+    console.log(chalk.bold.green('\nStarting end-to-end tests...\n'));
+
     return gulp.src('wdio.conf.js')
         .pipe(wdio({ type: 'selenium' }))
         .once('error', () => process.exit(1))
@@ -139,7 +154,7 @@ gulp.task('test:e2e', () => {
 });
 
 /**
- * Runs all tests.
+ * Runs all tests including end-ro-end tests as well.
  *
  * @task {test}
  */
