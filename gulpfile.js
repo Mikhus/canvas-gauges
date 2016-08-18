@@ -59,18 +59,21 @@ gulp.task('doc', () => {
  */
 gulp.task('build', ['clean'], () => {
     //noinspection JSCheckFunctionSignatures
-    return browserify('lib/Gauge.js')
-        .transform(babelify, { presets: ['es2015'] })
+    return browserify(['lib/babelHelpers.js', 'lib/Gauge.js'])
+        .transform(babelify, {
+            presets: ['es2015'],
+            plugins: ['external-helpers-2']
+        })
         .bundle()
         .on('error', function(err) {
             gutil.log(err);
             this.emit('end');
         })
         .pipe(source('gauge.js'))
+        //.pipe(gulp.dest('.'))
         .pipe(buffer())
         .pipe(rename('gauge.min.js'))
         .pipe(sourcemaps.init({ loadMaps: true }))
-        // capture sourcemaps from transforms
         .pipe(uglify())
         .pipe(sourcemaps.write('.'))
         .pipe(gulp.dest('.'));
