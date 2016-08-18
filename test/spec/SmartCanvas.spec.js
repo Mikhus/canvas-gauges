@@ -58,6 +58,7 @@ describe('SmartCanvas', () => {
 
             canv.commit();
 
+            //noinspection BadExpressionStatementJS
             expect(canv.contextClone.scale.calledWith(pxr, pxr)).to.be.ok;
         });
         it('should return this object', () => {
@@ -85,8 +86,11 @@ describe('SmartCanvas', () => {
 
             SmartCanvas.redraw();
 
+            //noinspection BadExpressionStatementJS
             expect(c1.redraw.called).to.be.ok;
+            //noinspection BadExpressionStatementJS
             expect(c2.redraw.called).to.be.ok;
+            //noinspection BadExpressionStatementJS
             expect(c3.redraw.called).to.be.ok;
         });
     });
