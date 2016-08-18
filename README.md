@@ -1,6 +1,6 @@
 # HTML Canvas Gauges v2.0
 
-[![Build Status](https://travis-ci.org/Mikhus/canv-gauge.svg?branch=v2.0.0)](https://travis-ci.org/Mikhus/canv-gauge) ![Test Coverage](https://rawgit.com/Mikhus/canv-gauge/v2.0.0/test-coverage.svg)
+[![Build Status](https://travis-ci.org/Mikhus/canv-gauge.svg?branch=v2.0.0)](https://travis-ci.org/Mikhus/canv-gauge) ![Test Coverage](https://rawgit.com/Mikhus/canv-gauge/v2.0.0/test-coverage.svg) ![Documentation Coverage](https://rawgit.com/Mikhus/canv-gauge/v2.0.0/docs-coverage.svg)
 
 [![Canvas Gauges](https://raw.githubusercontent.com/Mikhus/blob/master/gauges.png)](https://rawgit.com/Mikhus/canv-gauge/v2.0.0/examples/component.html)
 

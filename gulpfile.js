@@ -51,7 +51,33 @@ gulp.task('clean', (done) => {
  */
 gulp.task('doc', () => {
     gulp.src('./lib')
-        .pipe(esdoc({ destination: './docs' }));
+        .pipe(esdoc({ destination: './docs' }))
+        .on('finish', () => {
+            if (process.env.TRAVIS) {
+                return ;
+            }
+
+            console.log(chalk.bold.green('Generating badge...'));
+
+            let coverage = require('./docs/coverage.json').coverage;
+            let color = 'green';
+
+            if (parseFloat(coverage) < 90) {
+                color = 'red';
+            }
+
+            let url = 'https://img.shields.io/badge/docs-' +
+                coverage.replace(/%/g, '%25') +
+                '-' + color + '.svg';
+
+            http.get(url, response => {
+                if ((response instanceof Error)) {
+                    return console.error(response);
+                }
+
+                response.pipe(fs.createWriteStream('docs-coverage.svg'));
+            });
+        });
 });
 
 /**
