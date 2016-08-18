@@ -21,6 +21,8 @@ const KarmaServer = require('karma').Server;
 const wdio = require('gulp-wdio');
 const gutil = require('gulp-util');
 const chalk = require('chalk');
+const http = require('https');
+const fs = require('fs');
 
 /**
  * Displays this usage information.
@@ -153,7 +155,48 @@ gulp.task('test:e2e', () => {
     return gulp.src('wdio.conf.js')
         .pipe(wdio({ type: 'selenium' }))
         .once('error', () => process.exit(1))
-        .once('end', () => setTimeout(() => process.exit(0), 500));
+        .once('end', () => {
+            if (process.env.TRAVIS) {
+                setTimeout(() => process.exit(0), 500);
+            }
+
+            console.log(chalk.bold.green('Generating badge...'));
+
+            // create badges
+            let rx = new RegExp(
+                '[\u001b\u009b][[()#;?]*' +
+                '(?:[0-9]{1,4}(?:;[0-9]{0,4})*)?' +
+                '[0-9A-ORZcf-nqry=><]', 'g');
+            let coverage = fs.readFileSync(
+                    './coverage/report/coverage.txt',
+                    { encoding: 'utf8' }
+                )
+                .replace(rx, '')
+                .split(/\r?\n/)[2]
+                .split(':')[1]
+                .split('(')[0]
+                .trim();
+            let color = 'green';
+
+            if (parseFloat(coverage) < 90) {
+                color = 'red';
+            }
+
+            let url = 'https://img.shields.io/badge/coverage-' +
+                coverage.replace(/%/g, '%25') +
+                '-' + color + '.svg';
+
+            http.get(url, response => {
+                if ((response instanceof Error)) {
+                    console.error(response);
+                    process.exit(0);
+                }
+
+                response
+                    .pipe(fs.createWriteStream('test-coverage.svg'))
+                    .on('finish', () => process.exit(0));
+            });
+        });
 });
 
 /**

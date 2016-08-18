@@ -53,6 +53,12 @@ module.exports = config => {
         coverageReporter: {
             reporters: [
                 { type: 'html' },
+                {
+                    type: 'text-summary',
+                    dir: 'coverage/',
+                    subdir: 'report/',
+                    file: 'coverage.txt'
+                },
                 { type: 'text' }
             ],
             instrumenterOptions: {

@@ -1,6 +1,8 @@
 # HTML Canvas Gauges v2.0
 
-[![Canvas Gauges](https://raw.githubusercontent.com/Mikhus/blob/master/gauges.png)](https://rawgit.com/Mikhus/canv-gauge/master/examples/all-in-one.html)
+[![Build Status](https://travis-ci.org/Mikhus/canv-gauge.svg?branch=v2.0.0)](https://travis-ci.org/Mikhus/canv-gauge) ![Test Coverage](https://raw.githubusercontent.com/Mikhus/canv-gauge/v2.0.0/test-coverage.svg)
+
+[![Canvas Gauges](https://raw.githubusercontent.com/Mikhus/blob/master/gauges.png)](https://rawgit.com/Mikhus/canv-gauge/v2.0.0/examples/component.html)
 
 This is tiny implementation of highly configurable gauge using pure JavaScript and HTML5 canvas.
 No dependencies. Suitable for IoT devices because of minimum code base.
