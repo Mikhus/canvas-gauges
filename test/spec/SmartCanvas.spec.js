@@ -62,7 +62,7 @@ describe('SmartCanvas', () => {
         });
         it('should return this object', () => {
             let canv = new SmartCanvas(document.createElement('canvas'));
-            expect(canv.commit()).to.be.a(canv);
+            expect(canv.commit()).equals(canv);
         });
     });
 
