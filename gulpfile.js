@@ -153,37 +153,10 @@ gulp.task('test:spec', ['lint'], done => {
     let server = new KarmaServer({
         configFile: __dirname + '/karma.conf.js',
         singleRun: true
-    }, () => {
-        server && server.stop();
-        done();
-    }).start();
-});
-
-/**
- * Runs end-to-end tests.
- *
- * @task {test:e2e}
- *
- * Testing concept could be following:
- *  1. Create various gauge configuration HTML pages
- *  2. Use protractor to navigate this pages
- *  3. On each page, depending on the gauge config and screen res/dpi
- *     checking the proper pixels on canvas if them matching expected color
- *     This could be checks, for example if highlight area in this pixel is
- *     present or not, if arrow starts/ends at this point, etc.
- *     This would be valuable checks, because if something wrong happen with
- *     drawing, most probably expected pixels won't match the expected specs,
- *     so we can automatically figure something is broken.
- */
-gulp.task('test:e2e', () => {
-    console.log(chalk.bold.green('\nStarting end-to-end tests...\n'));
-
-    return gulp.src('wdio.conf.js')
-        .pipe(wdio({ type: 'selenium' }))
-        .once('error', () => process.exit(1))
-        .once('end', () => {
+    }, exitCode => {
+        if (!exitCode) {
             if (process.env.TRAVIS) {
-                setTimeout(() => process.exit(0), 500);
+                return done();
             }
 
             console.log(chalk.bold.green('Generating badge...'));
@@ -194,9 +167,9 @@ gulp.task('test:e2e', () => {
                 '(?:[0-9]{1,4}(?:;[0-9]{0,4})*)?' +
                 '[0-9A-ORZcf-nqry=><]', 'g');
             let coverage = fs.readFileSync(
-                    './coverage/report/coverage.txt',
-                    { encoding: 'utf8' }
-                )
+                './coverage/report/coverage.txt',
+                { encoding: 'utf8' }
+            )
                 .replace(rx, '')
                 .split(/\r?\n/)[2]
                 .split(':')[1]
@@ -222,14 +195,45 @@ gulp.task('test:e2e', () => {
                     .pipe(fs.createWriteStream('test-coverage.svg'))
                     .on('finish', () => process.exit(0));
             });
-        });
+
+            done();
+        }
+
+        else {
+            process.exit(exitCode);
+        }
+    }).start();
 });
 
 /**
- * Runs all tests including end-ro-end tests as well.
+ * Runs end-to-end tests.
+ *
+ * @task {test:e2e}
+ *
+ * Testing concept could be following:
+ *  1. Create various gauge configuration HTML pages
+ *  2. Use protractor to navigate this pages
+ *  3. On each page, depending on the gauge config and screen res/dpi
+ *     checking the proper pixels on canvas if them matching expected color
+ *     This could be checks, for example if highlight area in this pixel is
+ *     present or not, if arrow starts/ends at this point, etc.
+ *     This would be valuable checks, because if something wrong happen with
+ *     drawing, most probably expected pixels won't match the expected specs,
+ *     so we can automatically figure something is broken.
+ */
+gulp.task('test:e2e', () => {
+    console.log(chalk.bold.green('\nStarting end-to-end tests...\n'));
+
+    return gulp.src('wdio.conf.js')
+        .pipe(wdio({ type: 'selenium' }))
+        .once('error', () => process.exit(1));
+});
+
+/**
+ * Runs all tests including end-to-end tests as well.
  *
  * @task {test}
  */
-gulp.task('test', ['test:spec'], () => gulp.start('test:e2e'));
+gulp.task('test', ['lint', 'test:spec', 'test:e2e']);
 
 gulp.task('default', ['help']);
