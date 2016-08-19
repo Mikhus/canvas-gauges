@@ -11,7 +11,7 @@
     "test:headless": "xvfb-run npm test --silent",
     "start": "./node_modules/.bin/gulp watch",
     "doc": "./node_modules/.bin/gulp doc --silent",
-    "commit": "npm run doc && npm run test && git add --all . && git commit"
+    "commit": "npm run doc && npm test && git add --all . && git commit"
   },
   "repository": {
     "type": "git",

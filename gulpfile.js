@@ -196,12 +196,10 @@ gulp.task('test:spec', ['lint'], done => {
                     .on('finish', () => process.exit(0));
             });
 
-            done();
+            return done();
         }
 
-        else {
-            process.exit(exitCode);
-        }
+        process.exit(exitCode);
     }).start();
 });
 
