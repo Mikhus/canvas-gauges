@@ -9,10 +9,9 @@ No dependencies. Suitable for IoT devices because of minimum code base.
 
 ## Install
 
-Make it simple using npm or bower:
+Make it simple using npm:
 
     $ npm install canv-gauge
-    $ bower install canv-gauge
 
 ## Documentation
 

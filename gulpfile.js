@@ -23,6 +23,9 @@ const gutil = require('gulp-util');
 const chalk = require('chalk');
 const http = require('https');
 const fs = require('fs');
+const selenium = require('selenium-standalone');
+const mocha = require('gulp-mocha');
+const cp = require('child_process');
 
 /**
  * Displays this usage information.
@@ -123,7 +126,7 @@ gulp.task('gzip', ['build'], () => {
 });
 
 /**
- * Performs JavaScript syntax linting checks.
+ * Performs JavaScript syntax check.
  *
  * @task {lint}
  */
@@ -147,7 +150,7 @@ gulp.task('lint', () => {
  *
  * @task {test:spec}
  */
-gulp.task('test:spec', ['lint'], done => {
+gulp.task('test:spec', done => {
     console.log(chalk.bold.green('Starting unit tests...'));
 
     let server = new KarmaServer({
@@ -167,9 +170,9 @@ gulp.task('test:spec', ['lint'], done => {
                 '(?:[0-9]{1,4}(?:;[0-9]{0,4})*)?' +
                 '[0-9A-ORZcf-nqry=><]', 'g');
             let coverage = fs.readFileSync(
-                './coverage/report/coverage.txt',
-                { encoding: 'utf8' }
-            )
+                    './coverage/report/coverage.txt',
+                    { encoding: 'utf8' }
+                )
                 .replace(rx, '')
                 .split(/\r?\n/)[2]
                 .split(':')[1]
@@ -204,6 +207,27 @@ gulp.task('test:spec', ['lint'], done => {
 });
 
 /**
+ * Installs and starts selenium server
+ *
+ * @task {selenium}
+ */
+gulp.task('selenium', done => {
+    cp.execSync('pkill -f selenium-standalone');
+
+    selenium.install({ logger: gutil.log }, err => {
+        if (err) return done(err);
+
+        selenium.start((err, child) => {
+            if (err) return done(err);
+
+            selenium.child = child;
+
+            done();
+        });
+    });
+});
+
+/**
  * Runs end-to-end tests.
  *
  * @task {test:e2e}
@@ -219,16 +243,24 @@ gulp.task('test:spec', ['lint'], done => {
  *     drawing, most probably expected pixels won't match the expected specs,
  *     so we can automatically figure something is broken.
  */
-gulp.task('test:e2e', () => {
+gulp.task('test:e2e', ['selenium'], done => {
     console.log(chalk.bold.green('\nStarting end-to-end tests...\n'));
 
-    return gulp.src('wdio.conf.js')
-        .pipe(wdio({ type: 'selenium' }))
-        .once('error', () => process.exit(1));
+    gulp.src(['test/e2e/**/*.e2e.js'])
+        .pipe(mocha({ reporter: 'spec' }))
+        .once('error', err => {
+            console.error(err);
+            cp.execSync('pkill -f selenium-standalone');
+            process.exit(1);
+        })
+        .once('end', () => {
+            cp.execSync('pkill -f selenium-standalone');
+            done();
+        });
 });
 
 /**
- * Runs all tests including end-to-end tests as well.
+ * Runs all tests and checks.
  *
  * @task {test}
  */
