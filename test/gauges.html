@@ -48,5 +48,28 @@
 <!-- default gauge -->
 <canvas data-type="gauge"></canvas>
 
+<script>
+function domReady(handler) {
+    if (window.addEventListener) {
+        window.addEventListener('DOMContentLoaded', handler, false);
+    }
+
+    else {
+        window.attachEvent('onload', handler);
+    }
+}
+
+domReady(function () {
+    var customGauge = Gauge.Collection[0];
+    var imageData = customGauge.canvas.context.getImageData(
+        0, 0,
+        customGauge.canvas.width,
+        customGauge.canvas.height
+    );
+
+    console.log();
+});
+</script>
+
 </body>
 </html>

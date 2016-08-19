@@ -15,7 +15,10 @@ describe('Gauges UI', function() {
     before(() => {
         client = webdriver.remote({
             desiredCapabilities: {
-                browserName: process.env.TRAVIS ? 'firefox' : 'chrome'
+                browserName: 'chrome',
+                chromeOptions: {
+                    args: ['no-sandbox']
+                }
             }
         });
 
