@@ -14,7 +14,10 @@ describe('Gauges UI', function() {
 
     before(() => {
         client = webdriver.remote({
-            desiredCapabilities: { browserName: 'chrome' }});
+            desiredCapabilities: {
+                browserName: process.env.TRAVIS ? 'firefox' : 'chrome'
+            }
+        });
 
         return client.init();
     });
@@ -23,11 +26,15 @@ describe('Gauges UI', function() {
         client
             .url(url)
             .execute(function () {
-                return document.title;
+                let result = true;
+                let customGauge = Gauge.Collection[0];
+                let defaultGauge = Gauge.Collection[1];
+
+                return result;
             })
             .then(result => {
-                // console.log(result.value);
-                expect(result.value).to.be.a('string');
+                //noinspection BadExpressionStatementJS
+                expect(result.value).to.be.ok;
                 done();
             });
     });
