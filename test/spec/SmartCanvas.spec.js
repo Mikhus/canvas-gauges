@@ -51,8 +51,9 @@ describe('SmartCanvas', () => {
 
     describe('commit()', () => {
         it('should properly scale cached view on commit', () => {
+            let initialPxr = window.devicePixelRatio;
+            let pxr = window.devicePixelRatio = 2;
             let canv = new SmartCanvas(document.createElement('canvas'));
-            let pxr = window.devicePixelRatio || 1;
 
             sinon.spy(canv.contextClone, 'scale');
 
@@ -60,6 +61,8 @@ describe('SmartCanvas', () => {
 
             //noinspection BadExpressionStatementJS
             expect(canv.contextClone.scale.calledWith(pxr, pxr)).to.be.ok;
+
+            window.devicePixelRatio = initialPxr;
         });
         it('should return this object', () => {
             let canv = new SmartCanvas(document.createElement('canvas'));
