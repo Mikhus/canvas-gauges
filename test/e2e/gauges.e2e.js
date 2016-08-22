@@ -60,8 +60,6 @@ describe('Gauges UI', function() {
 
                 let canvas = document.createElement('canvas');
                 let ctx = canvas.getContext('2d');
-                canvas.style.border = '2px solid white';
-                document.body.appendChild(canvas);
 
                 canvas.width  = textWidth;
                 canvas.height = textHeight;
