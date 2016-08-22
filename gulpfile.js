@@ -110,6 +110,12 @@ gulp.task('build', ['clean'], () => {
         .pipe(gulp.dest('.'));
 });
 
+/**
+ * Watch for source code changes and automatically re-build
+ * when wny of them detected.
+ * 
+ * @task {watch}
+ */
 gulp.task('watch', ['build'], () => {
     gulp.watch('lib/**/*.js', () => gulp.start('build'));
 });
