@@ -49,22 +49,21 @@ describe('DomObserver', () => {
 
     describe('isValidNode()', () => {
         it('should return true if node is valid, false otherwise', () => {
-            class Test {
+            class TestGauge {
                 constructor(options) {}
                 draw() {}
             }
 
+            window['TestGauge'] = TestGauge;
+
             let typeOptions = {};
-            let observer = new DomObserver(typeOptions, 'div', 'test', Test);
+            let observer = new DomObserver(typeOptions, 'div', 'TestGauge');
             let validElement = document.createElement('div');
             let invalidElement = document.createElement('div');
             let anotherInvalidElement = document.createElement('span');
 
-            observer.observe([]); // fake call to improve coverage on untestable
-                                  // code
-
-            validElement.setAttribute('data-type', 'test');
-            invalidElement.setAttribute('data-type', 'not-test');
+            validElement.setAttribute('data-type', 'test-gauge');
+            invalidElement.setAttribute('data-type', 'not-test-gauge');
 
             //noinspection BadExpressionStatementJS
             expect(observer.isValidNode(validElement)).to.be.ok;
@@ -81,26 +80,27 @@ describe('DomObserver', () => {
         {
             let created = false;
 
-            class Test {
-                constructor(options) { created= true; }
+            class TestGauge {
+                constructor(options) { created = true; }
                 draw() {}
             }
 
-            sinon.spy(Test.prototype, 'draw');
+            window['TestGauge'] = TestGauge;
+
+            sinon.spy(TestGauge.prototype, 'draw');
 
             let typeOptions = { bg: '', color: '' };
-            let observer = new DomObserver(typeOptions, 'div', 'test', Test);
+            let observer = new DomObserver(typeOptions, 'div', 'TestGauge');
             let element = document.createElement('div');
 
-            element.setAttribute('data-type', 'test');
+            element.setAttribute('data-type', 'test-gauge');
             element.setAttribute('data-bg', '#fff');
 
             observer.process(element);
 
+            expect(created).equals(true);
             //noinspection BadExpressionStatementJS
-            expect(created).to.be.ok;
-            //noinspection BadExpressionStatementJS
-            expect(Test.prototype.draw.called).to.be.ok;
+            expect(TestGauge.prototype.draw.called).to.be.ok;
         });
     });
 });

@@ -36,7 +36,8 @@ function es6concat(type = 'all') {
         'lib/DomObserver.js',
         'lib/SmartCanvas.js',
         'lib/SharedOptions.js',
-        'lib/Collection.js'
+        'lib/Collection.js',
+        'lib/BaseGauge.js'
     ];
 
     switch (type.toLowerCase()) {
@@ -94,6 +95,10 @@ gulp.task('build:es5', ['clean'], () => {
         .pipe(babel({
             presets: ['es2015']
         }))
+        .on('error', function(err) {
+            gutil.log(err);
+            this.emit('end');
+        })
         //.pipe(gulp.dest('.'))
         .pipe(rename('gauge.min.js'))
         .pipe(replace(/^/, '(function() {'))
