@@ -1,0 +1,82 @@
+{
+  "private": true,
+  "name": "canv-gauge",
+  "version": "0.1.0",
+  "description": "Minimalistic HTML5 Canvas Gauges",
+  "author": "Mykhailo Stadnyk <mikhus@gmail.com>",
+  "generator": "slush-gh-pages v1.4.2",
+  "license": "UNLICENSED",
+  "homepage": "https://github.com/Mikhus/canv-gauge",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/Mikhus/canv-gauge.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Mikhus/canv-gauge/issues"
+  },
+  "engines": {
+    "node": ">= 4.0.0"
+  },
+  "scripts": {
+    "clean": "rm -f {assets/stylesheets/*,assets/javascripts/*,assets/images/*}",
+    "postcss": "postcss --config postcss.config.js --replace assets/stylesheets/styles.css",
+    "scss": "node-sass --importer node_modules/node-sass-import --output-style compressed _assets/stylesheets/main.scss assets/stylesheets/styles.css",
+    "scss:dev": "node-sass --importer node_modules/node-sass-import --source-map true _assets/stylesheets/main.scss assets/stylesheets/styles.css",
+    "lint:js": "eslint _assets/javascripts",
+    "lint:css": "stylelint _assets/stylesheets/**/*.scss --syntax scss",
+    "imagemin": "imagemin _assets/images/* -o assets/images",
+    "icons": "svgo -f _assets/images/icons && mkdir -p assets/images && svg-sprite-generate -d _assets/images/icons -o assets/images/icons.svg",
+    "serve": "browser-sync start --server _site --reload-delay 1000 --port 8888 --files _site --reload-debounce",
+    "build:jekyll": "JEKYLL_GITHUB_TOKEN=$([ -f .githubtoken ] && cat .githubtoken) JEKYLL_ENV=production bundle exec jekyll build --config _config.yml",
+    "build:css": "npm run scss && npm run postcss",
+    "build:css:dev": "npm run scss:dev && npm run postcss",
+    "build:js": "NODE_ENV=production rollup --config --input _assets/javascripts/main.js --output assets/javascripts/scripts.js",
+    "build:js:dev": "NODE_ENV=development rollup --config --sourcemap --input _assets/javascripts/main.js --output assets/javascripts/scripts.js",
+    "build:images": "npm run imagemin && npm run icons",
+    "build": "npm run clean &&  npm-run-all -p build:*",
+    "watch:jekyll": "JEKYLL_GITHUB_TOKEN=$([ -f .githubtoken ] && cat .githubtoken) JEKYLL_ENV=development bundle exec jekyll build --watch --incremental --config _config.yml,_config-development.yml || true",
+    "watch:css": "chokidar '_assets/stylesheets/**/*' --silent -d -c 'npm run build:css:dev'",
+    "watch:js": "chokidar '_assets/javascripts/**/*' --silent -d -c 'npm run build:js:dev'",
+    "watch:images": "chokidar '_assets/images/**/*' --silent -d -c 'npm run build:images'",
+    "watch": "npm run clean && npm-run-all -p --continue-on-error watch:* serve",
+    "postinstall": "bundle install && npm run build",
+    "preversion": "npm test",
+    "version": "NODE_ENV=production npm run build && git add -A assets",
+    "postversion": "git push && git push --tags",
+    "test": "npm run lint:js && npm run lint:css && npm run build:jekyll",
+    "start": "npm run watch"
+  },
+  "devDependencies": {
+    "autoprefixer": "^6.3.6",
+    "babel-cli": "^6.11.4",
+    "babel-plugin-transform-runtime": "^6.12.0",
+    "babel-preset-es2015-rollup": "github:rollup/babel-preset-es2015-rollup",
+    "babel-preset-stage-0": "^6.5.0",
+    "browser-sync": "^2.14.0",
+    "chokidar-cli": "^1.2.0",
+    "eslint": "^3.2.2",
+    "eslint-config-standard": "^5.3.1",
+    "eslint-plugin-promise": "^2.0.1",
+    "eslint-plugin-standard": "^2.0.0",
+    "imagemin-cli": "^3.0.0",
+    "node-sass": "^3.7.0",
+    "node-sass-import": "^1.0.2",
+    "npm-run-all": "^2.1.1",
+    "postcss-cli": "^2.5.2",
+    "rollup": "^0.34.3",
+    "rollup-plugin-babel": "^2.6.1",
+    "rollup-plugin-commonjs": "^3.3.1",
+    "rollup-plugin-node-resolve": "^2.0.0",
+    "rollup-plugin-uglify": "^1.0.1",
+    "stylelint": "^7.1.0",
+    "stylelint-config-standard": "^12.0.0",
+    "svg-sprite-generator": "0.0.7",
+    "svgo": "^0.6.6"
+  },
+  "dependencies": {
+    "jquery": "^2.2.4",
+    "bootstrap": "^4.0.0-alpha.3",
+    "tether": "^1.3.4",
+    "svg4everybody": "^2.1.0"
+  }
+}

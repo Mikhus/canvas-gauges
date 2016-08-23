@@ -1,0 +1,13 @@
+/*
+ * Custom Variables
+ *
+ * In here you can override Bootstrap default variables
+ */
+
+$enable-flex: true;
+
+// Custom fonts
+$font-family-sans-serif: "Source Sans Pro", sans-serif;
+$font-family-serif:      "Source Code Pro", serif;
+$font-family-monospace:  "Source Code Pro", monospace;
+$font-family-base:       $font-family-sans-serif;

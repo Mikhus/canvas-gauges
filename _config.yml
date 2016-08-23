@@ -1,0 +1,89 @@
+# Basics
+title: HTML5 Canvas Gauges
+description: Minimalistic HTML5 Canvas Gauges
+url: http://mikhus.github.io/canv-gauge/
+author: Mykhailo Stadnyk
+
+# Where things are
+destination:  ./_site
+layouts_dir:  _layouts
+data_dir:     _data
+includes_dir: _includes
+collections:
+  posts:
+    output:   true
+
+# Handling Reading
+encoding:     "utf-8"
+markdown_ext: "markdown,mkdown,mkdn,mkd,md"
+keep_files:   []
+include:      []
+exclude:
+  - node_modules
+  - package.json
+  - rollup.config.js
+  - postcss.config.js
+  - Gemfile
+  - Gemfile.lock
+  - README.md
+
+# Filtering Content
+show_drafts: null
+limit_posts: 0
+future:      false
+unpublished: false
+
+# Serving
+baseurl: "" # does not include hostname
+show_dir_listing: false
+
+# Outputting
+permalink:     pretty
+paginate_path: /page:num
+timezone:      Europe/Kiev
+
+quiet:    false
+verbose:  false
+defaults: []
+
+liquid:
+  error_mode: lax
+
+# Required for github-metadata
+repository: Mikhus/canv-gauge
+
+# Plugins
+gems:
+  - jekyll-mentions
+  - jemoji
+  - jekyll-redirect-from
+  - jekyll-sitemap
+  - jekyll-feed
+  - jekyll-seo-tag
+  - jekyll-paginate
+  - jekyll-gist
+  
+  - jekyll-github-metadata
+  
+
+# Markdown Processors
+kramdown:
+  auto_ids:       true
+  footnote_nr:    1
+  entity_output:  as_char
+  toc_levels:     1..6
+  smart_quotes:   lsquo,rsquo,ldquo,rdquo
+  input:          GFM
+  hard_wrap:      false
+  footnote_nr:    1
+
+# Html Compressor
+compress_html:
+  clippings: []
+  comments: []
+  endings: []
+  ignore:
+    envs: ['development']
+  blanklines: false
+  profile: false
+  startings: []

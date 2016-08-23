@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <base data-ice="baseUrl" href="../../">
+  <title data-ice="title">lib/Animation.js | API Document</title>
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
+  <script src="script/prettify/prettify.js"></script>
+  
+  
+  <script src="script/manual.js"></script>
+</head>
+<body class="layout-container" data-ice="rootContainer">
+
+<header>
+  <a href="./">Home</a>
+  
+  <a href="identifiers.html">Reference</a>
+  <a href="source.html">Source</a>
+  
+  
+  <div class="search-box">
+  <span>
+    <img src="./image/search.png">
+    <span class="search-input-edge"></span><input class="search-input"><span class="search-input-edge"></span>
+  </span>
+    <ul class="search-result"></ul>
+  </div>
+</header>
+
+<nav class="navigation" data-ice="nav"><div>
+  <ul>
+    
+  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/Animation.js~Animation.html">Animation</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/BaseGauge.js~BaseGauge.html">BaseGauge</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/DomObserver.js~DomObserver.html">DomObserver</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/Gauge.js~Gauge.html">Gauge</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/LinearGauge.js~LinearGauge.html">LinearGauge</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/SmartCanvas.js~SmartCanvas.html">SmartCanvas</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-Collection">Collection</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-vendorize">vendorize</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-GenericOptions">GenericOptions</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-AnimationRule">AnimationRule</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-AnimationRules">AnimationRules</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-DrawEventCallback">DrawEventCallback</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-EndEventCallback">EndEventCallback</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-GaugeInterface">GaugeInterface</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-GaugeOptions">GaugeOptions</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-Highlight">Highlight</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-RenderTarget">RenderTarget</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-LinearGaugeOptions">LinearGaugeOptions</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array/indexOf">Array.indexOf</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object/assign">Object.assign</a></span></span></li>
+</ul>
+</div>
+</nav>
+
+<div class="content" data-ice="content"><h1 data-ice="title">lib/Animation.js</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">/*!
+ * @license
+ * Minimalistic HTML5 Canvas Gauge implementation
+ *
+ * This code is subject to MIT license.
+ *
+ * Copyright (c) 2012 Mykhailo Stadnyk &lt;mikhus@gmail.com&gt;
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the &quot;Software&quot;), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
+const vendorize = require(&apos;./vendorize&apos;);
+
+/* istanbul ignore next */
+/**
+ * @type {function(callback: function(time: number): number, element?: HTMLElement)}
+ * @access private
+ */
+const requestAnimationFrame = vendorize(&apos;requestAnimationFrame&apos;) ||
+    (callback =&gt; setTimeout(() =&gt; callback(new Date().getTime()), 1000 / 60));
+
+/**
+ * Generic AnimationRule function interface
+ *
+ * @typedef {function(percent: number): number} AnimationRule
+ */
+
+/**
+ * Callback for animation step draw event.
+ * It will be called each time animation step is executed, bypassing
+ * as first argument a percent of animation completeness. It is expected
+ * that this callback will do an actual work of animating an elements or
+ * whatever, as far as animation engine is just calculating and executing
+ * animation steps without any knowledge about things under animation.
+ *
+ * @typedef {function(percent: number): *} DrawEventCallback
+ */
+
+/**
+ * Callback for animation complete event.
+ * It is called once each animation is complete.
+ *
+ * @typedef {function(): *} EndEventCallback
+ */
+
+/**
+ * Predefined known animation rules.
+ * It&apos;s a simple collection of math for some most used animations.
+ *
+ * @typedef {{linear: AnimationRule, quad: AnimationRule, dequad: AnimationRule, quint: AnimationRule, dequint: AnimationRule, cycle: AnimationRule, decycle: AnimationRule, bounce: AnimationRule, debounce: AnimationRule, elastic: AnimationRule, delastic: AnimationRule}} AnimationRules
+ */
+
+/* istanbul ignore next: no reason covering this */
+let rules = {
+    linear: p =&gt; p,
+    quad: p =&gt; Math.pow(p, 2),
+    dequad: p =&gt; 1 - rules.quad(1 - p),
+    quint: p =&gt; Math.pow(p, 5),
+    dequint: p =&gt; 1 - Math.pow(1 - p, 5),
+    cycle: p =&gt; 1 - Math.sin(Math.acos(p)),
+    decycle: p =&gt; Math.sin(Math.acos(1 - p)),
+    bounce: p =&gt; 1 - rules.debounce(1 - p),
+    debounce: p =&gt; {
+        let a = 0, b = 1;
+        for (; 1; a += b, b /= 2) {
+            if (p &gt;= (7 - 4 * a) / 11) {
+                return -Math.pow((11 - 6 * a - 11 * p) / 4, 2) +
+                    Math.pow(b, 2);
+            }
+        }
+    },
+    elastic: p =&gt; 1 - rules.delastic(1 - p),
+    delastic: p =&gt; {
+        let x = 1.5;
+        return Math.pow(2, 10 * (p - 1)) *
+            Math.cos(20 * Math.PI * x / 3 * p);
+    }
+};
+
+/* istanbul ignore next: private, not testable */
+/**
+ * Evaluates animation step and decides if the next step required or
+ * stops animation calling a proper events.
+ *
+ * @access private
+ * @param {number} time
+ * @param {DrawEventCallback} draw
+ * @param {number} start
+ * @param {AnimationRule} rule
+ * @param {number} duration
+ * @param {EndEventCallback} end
+ * @param {Animation} anim
+ */
+function step(time, draw, start, rule, duration, end, anim) {
+    if (typeof rule !== &apos;function&apos;) {
+        throw new TypeError(&apos;Invalid animation rule:&apos;, rule);
+    }
+
+    let progress = time - start;
+    let percent = progress / duration;
+
+    if (percent &gt; 1) {
+        percent = 1;
+    }
+
+    draw &amp;&amp; draw(percent === 1 ? percent : rule(percent));
+
+    if (progress &lt; duration) {
+        anim.frame = requestAnimationFrame(time =&gt;
+            step(time, draw, start, rule, duration, end, anim)
+        );
+    }
+
+    else {
+        end &amp;&amp; end();
+    }
+}
+
+/**
+ * Animation engine API for JavaScript-based animations.
+ * This is simply an animation core framework which simplifies creation
+ * of various animations for generic purposes.
+ *
+ * @example
+ * // create &apos;linear&apos; animation engine, 500ms duration
+ * let linear = new Animation(&apos;linear&apos;, 500);
+ *
+ * // create &apos;elastic&apos; animation engine
+ * let elastic = new Animation(&apos;elastic&apos;);
+ *
+ * // define animation behavior
+ * let bounced = new Animation(&apos;bounce&apos;, 500, percent =&gt; {
+ *     let value = parseInt(percent * 100, 10);
+ *
+ *     $(&apos;div.bounced&apos;).css({
+ *         width: value + &apos;%&apos;,
+ *         height: value + &apos;%&apos;
+ *     });
+ * });
+ *
+ * // execute animation
+ * bounced.animate();
+ *
+ * // execute animation and handle when its finished
+ * bounced.animate(null, () =&gt; {
+ *    console.log(&apos;Animation finished!&apos;);
+ * });
+ */
+export default class Animation {
+
+    /**
+     * @constructor
+     * @param {string|AnimationRule} rule
+     * @param {number} duration
+     * @param {DrawEventCallback} [draw]
+     * @param {EndEventCallback} [end]
+     */
+    constructor(rule = &apos;linear&apos;, duration = 250, draw = (()=&gt;{}),
+                end = (()=&gt;{}))
+    {
+        /**
+         * Overall animation duration in milliseconds.
+         * By default is equal to 250 ms.
+         *
+         * @type {number}
+         */
+        this.duration = duration;
+
+        /**
+         * Animation rule. By default is linear animation.
+         * Animation rule is a subject to animation rules, which are
+         * a simple object containing math-based methods for calculating
+         * animation steps.
+         *
+         * @type {string|AnimationRule}
+         */
+        this.rule = rule;
+
+        /**
+         * Callback function for the animation step draw event.
+         *
+         * @type {DrawEventCallback}
+         */
+        this.draw = draw;
+
+        /**
+         * Callback for the animation complete event.
+         *
+         * @type {EndEventCallback}
+         */
+        this.end = end;
+
+        if (typeof this.draw !== &apos;function&apos;) {
+            throw new TypeError(&apos;Invalid animation draw callback:&apos;, draw);
+        }
+
+        if (typeof this.end !== &apos;function&apos;) {
+            throw new TypeError(&apos;Invalid animation end callback:&apos;, end);
+        }
+    }
+
+    /* istanbul ignore next: non-testable */
+    /**
+     * Performs animation calling each animation step draw callback and
+     * end callback at the end of animation. Callbacks are optional to this
+     * method call. If them are not bypassed will be used that ones which
+     * was pre-set on constructing an Animation object or pre-set after
+     * construction.
+     *
+     * @example
+     * function draw(percent) {
+     *     $(&apos;.my-animated-divs&apos;).css({
+     *         width: parseInt(percent * 100, 10) + &apos;%&apos;
+     *     });
+     * }
+     * function done() {
+     *     console.log(&apos;Animation complete!&apos;);
+     * }
+     *
+     * // Define &apos;draw&apos; and &apos;end&apos; callbacks on construction
+     * var animation = new Animation(&apos;cycle&apos;, 500, draw, done);
+     * animation.animate();
+     *
+     * // Define &apos;draw&apos; and &apos;end&apos; callbacks after construction
+     * var animation = new Animation(&apos;cycle&apos;, 500);
+     * animation.draw = draw;
+     * animation.end = done;
+     * animation.animate();
+     *
+     * // Define &apos;draw&apos; and &apos;end&apos; callbacks at animation
+     * var animation = new Animation(&apos;cycle&apos;, 500);
+     * animation.animate(draw, done);
+     *
+     * @param {DrawEventCallback} [draw]
+     * @param {EndEventCallback} [end]
+     */
+    animate(draw, end) {
+        //noinspection JSUnresolvedVariable
+        const start = vendorize(&apos;animationStartTime&apos;) ||
+            window.performance &amp;&amp; window.performance.now ?
+                window.performance.now() :
+                Date.now();
+
+        draw = draw || this.draw;
+        end = end || this.end;
+
+        /**
+         * Current requested animation frame identifier
+         *
+         * @type {number}
+         */
+        this.frame = requestAnimationFrame(time =&gt;
+            step(time, draw, start, rules[this.rule] || this.rule,
+                this.duration, end, this));
+    }
+
+    /**
+     * Destroys this object properly
+     */
+    destroy() {
+        if (this.frame) {
+            const cancelAnimationFrame = vendorize(&apos;cancelAnimationFrame&apos;) ||
+                /* istanbul ignore next */
+                ((id) =&gt; {});
+
+            cancelAnimationFrame(this.frame);
+            this.frame = null;
+        }
+
+        this.draw = null;
+        this.end = null;
+    }
+}
+
+/**
+ * Animation rules bound statically to Animation constructor.
+ *
+ * @type {AnimationRules}
+ * @static
+ */
+Animation.rules = rules;
+
+module.exports = Animation;
+</code></pre>
+
+</div>
+
+<footer class="footer">
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(0.4.8)</span></a>
+</footer>
+
+<script src="script/search_index.js"></script>
+<script src="script/search.js"></script>
+<script src="script/pretty-print.js"></script>
+<script src="script/inherited-summary.js"></script>
+<script src="script/test-summary.js"></script>
+<script src="script/inner-link.js"></script>
+<script src="script/patch-for-local.js"></script>
+</body>
+</html>

@@ -1,0 +1,1848 @@
+{
+  "type": "Program",
+  "body": [
+    {
+      "type": "ExpressionStatement",
+      "expression": {
+        "type": "CallExpression",
+        "callee": {
+          "type": "Identifier",
+          "name": "require",
+          "range": [
+            1249,
+            1256
+          ],
+          "loc": {
+            "start": {
+              "line": 27,
+              "column": 0
+            },
+            "end": {
+              "line": 27,
+              "column": 7
+            }
+          }
+        },
+        "arguments": [
+          {
+            "type": "Literal",
+            "value": "./polyfill",
+            "raw": "'./polyfill'",
+            "range": [
+              1257,
+              1269
+            ],
+            "loc": {
+              "start": {
+                "line": 27,
+                "column": 8
+              },
+              "end": {
+                "line": 27,
+                "column": 20
+              }
+            }
+          }
+        ],
+        "range": [
+          1249,
+          1270
+        ],
+        "loc": {
+          "start": {
+            "line": 27,
+            "column": 0
+          },
+          "end": {
+            "line": 27,
+            "column": 21
+          }
+        }
+      },
+      "range": [
+        1249,
+        1271
+      ],
+      "loc": {
+        "start": {
+          "line": 27,
+          "column": 0
+        },
+        "end": {
+          "line": 27,
+          "column": 22
+        }
+      },
+      "leadingComments": [
+        {
+          "type": "Block",
+          "value": "!\n * @license\n * Minimalistic HTML5 Canvas Gauge implementation\n *\n * This code is subject to MIT license.\n *\n * Copyright (c) 2012 Mykhailo Stadnyk <mikhus@gmail.com>\n *\n * Permission is hereby granted, free of charge, to any person obtaining a copy\n * of this software and associated documentation files (the \"Software\"), to deal\n * in the Software without restriction, including without limitation the rights\n * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell\n * copies of the Software, and to permit persons to whom the Software is\n * furnished to do so, subject to the following conditions:\n *\n * The above copyright notice and this permission notice shall be included in\n * all copies or substantial portions of the Software.\n *\n * THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\n * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\n * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\n * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\n * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\n * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\n * SOFTWARE.\n ",
+          "range": [
+            0,
+            1248
+          ],
+          "loc": {
+            "start": {
+              "line": 1,
+              "column": 0
+            },
+            "end": {
+              "line": 26,
+              "column": 3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "type": "VariableDeclaration",
+      "declarations": [
+        {
+          "type": "VariableDeclarator",
+          "id": {
+            "type": "Identifier",
+            "name": "BaseGauge",
+            "range": [
+              1279,
+              1288
+            ],
+            "loc": {
+              "start": {
+                "line": 29,
+                "column": 6
+              },
+              "end": {
+                "line": 29,
+                "column": 15
+              }
+            }
+          },
+          "init": {
+            "type": "CallExpression",
+            "callee": {
+              "type": "Identifier",
+              "name": "require",
+              "range": [
+                1291,
+                1298
+              ],
+              "loc": {
+                "start": {
+                  "line": 29,
+                  "column": 18
+                },
+                "end": {
+                  "line": 29,
+                  "column": 25
+                }
+              }
+            },
+            "arguments": [
+              {
+                "type": "Literal",
+                "value": "./BaseGauge",
+                "raw": "'./BaseGauge'",
+                "range": [
+                  1299,
+                  1312
+                ],
+                "loc": {
+                  "start": {
+                    "line": 29,
+                    "column": 26
+                  },
+                  "end": {
+                    "line": 29,
+                    "column": 39
+                  }
+                }
+              }
+            ],
+            "range": [
+              1291,
+              1313
+            ],
+            "loc": {
+              "start": {
+                "line": 29,
+                "column": 18
+              },
+              "end": {
+                "line": 29,
+                "column": 40
+              }
+            }
+          },
+          "range": [
+            1279,
+            1313
+          ],
+          "loc": {
+            "start": {
+              "line": 29,
+              "column": 6
+            },
+            "end": {
+              "line": 29,
+              "column": 40
+            }
+          }
+        }
+      ],
+      "kind": "const",
+      "range": [
+        1273,
+        1314
+      ],
+      "loc": {
+        "start": {
+          "line": 29,
+          "column": 0
+        },
+        "end": {
+          "line": 29,
+          "column": 41
+        }
+      }
+    },
+    {
+      "type": "VariableDeclaration",
+      "declarations": [
+        {
+          "type": "VariableDeclarator",
+          "id": {
+            "type": "Identifier",
+            "name": "GenericOptions",
+            "range": [
+              1321,
+              1335
+            ],
+            "loc": {
+              "start": {
+                "line": 30,
+                "column": 6
+              },
+              "end": {
+                "line": 30,
+                "column": 20
+              }
+            }
+          },
+          "init": {
+            "type": "CallExpression",
+            "callee": {
+              "type": "Identifier",
+              "name": "require",
+              "range": [
+                1338,
+                1345
+              ],
+              "loc": {
+                "start": {
+                  "line": 30,
+                  "column": 23
+                },
+                "end": {
+                  "line": 30,
+                  "column": 30
+                }
+              }
+            },
+            "arguments": [
+              {
+                "type": "Literal",
+                "value": "./GenericOptions",
+                "raw": "'./GenericOptions'",
+                "range": [
+                  1346,
+                  1364
+                ],
+                "loc": {
+                  "start": {
+                    "line": 30,
+                    "column": 31
+                  },
+                  "end": {
+                    "line": 30,
+                    "column": 49
+                  }
+                }
+              }
+            ],
+            "range": [
+              1338,
+              1365
+            ],
+            "loc": {
+              "start": {
+                "line": 30,
+                "column": 23
+              },
+              "end": {
+                "line": 30,
+                "column": 50
+              }
+            }
+          },
+          "range": [
+            1321,
+            1365
+          ],
+          "loc": {
+            "start": {
+              "line": 30,
+              "column": 6
+            },
+            "end": {
+              "line": 30,
+              "column": 50
+            }
+          }
+        }
+      ],
+      "kind": "const",
+      "range": [
+        1315,
+        1366
+      ],
+      "loc": {
+        "start": {
+          "line": 30,
+          "column": 0
+        },
+        "end": {
+          "line": 30,
+          "column": 51
+        }
+      },
+      "trailingComments": [
+        {
+          "type": "Block",
+          "value": "*\n * Linear gauge configuration options\n *\n * @typedef {GenericOptions|{orientation: string}} LinearGaugeOptions\n ",
+          "range": [
+            1368,
+            1486
+          ],
+          "loc": {
+            "start": {
+              "line": 32,
+              "column": 0
+            },
+            "end": {
+              "line": 36,
+              "column": 3
+            }
+          }
+        },
+        {
+          "type": "Block",
+          "value": "*\n * Default linear gauge configuration options\n *\n * @type {LinearGaugeOptions}\n ",
+          "range": [
+            1488,
+            1574
+          ],
+          "loc": {
+            "start": {
+              "line": 38,
+              "column": 0
+            },
+            "end": {
+              "line": 42,
+              "column": 3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "type": "VariableDeclaration",
+      "declarations": [
+        {
+          "type": "VariableDeclarator",
+          "id": {
+            "type": "Identifier",
+            "name": "defaultLinearGaugeOptions",
+            "range": [
+              1579,
+              1604
+            ],
+            "loc": {
+              "start": {
+                "line": 43,
+                "column": 4
+              },
+              "end": {
+                "line": 43,
+                "column": 29
+              }
+            }
+          },
+          "init": {
+            "type": "CallExpression",
+            "callee": {
+              "type": "MemberExpression",
+              "computed": false,
+              "object": {
+                "type": "Identifier",
+                "name": "Object",
+                "range": [
+                  1607,
+                  1613
+                ],
+                "loc": {
+                  "start": {
+                    "line": 43,
+                    "column": 32
+                  },
+                  "end": {
+                    "line": 43,
+                    "column": 38
+                  }
+                }
+              },
+              "property": {
+                "type": "Identifier",
+                "name": "assign",
+                "range": [
+                  1614,
+                  1620
+                ],
+                "loc": {
+                  "start": {
+                    "line": 43,
+                    "column": 39
+                  },
+                  "end": {
+                    "line": 43,
+                    "column": 45
+                  }
+                }
+              },
+              "range": [
+                1607,
+                1620
+              ],
+              "loc": {
+                "start": {
+                  "line": 43,
+                  "column": 32
+                },
+                "end": {
+                  "line": 43,
+                  "column": 45
+                }
+              }
+            },
+            "arguments": [
+              {
+                "type": "ObjectExpression",
+                "properties": [],
+                "range": [
+                  1621,
+                  1623
+                ],
+                "loc": {
+                  "start": {
+                    "line": 43,
+                    "column": 46
+                  },
+                  "end": {
+                    "line": 43,
+                    "column": 48
+                  }
+                }
+              },
+              {
+                "type": "Identifier",
+                "name": "GenericOptions",
+                "range": [
+                  1625,
+                  1639
+                ],
+                "loc": {
+                  "start": {
+                    "line": 43,
+                    "column": 50
+                  },
+                  "end": {
+                    "line": 43,
+                    "column": 64
+                  }
+                }
+              },
+              {
+                "type": "ObjectExpression",
+                "properties": [
+                  {
+                    "type": "Property",
+                    "key": {
+                      "type": "Identifier",
+                      "name": "orientation",
+                      "range": [
+                        1668,
+                        1679
+                      ],
+                      "loc": {
+                        "start": {
+                          "line": 45,
+                          "column": 4
+                        },
+                        "end": {
+                          "line": 45,
+                          "column": 15
+                        }
+                      }
+                    },
+                    "value": {
+                      "type": "Literal",
+                      "value": "vertical",
+                      "raw": "'vertical'",
+                      "range": [
+                        1681,
+                        1691
+                      ],
+                      "loc": {
+                        "start": {
+                          "line": 45,
+                          "column": 17
+                        },
+                        "end": {
+                          "line": 45,
+                          "column": 27
+                        }
+                      }
+                    },
+                    "kind": "init",
+                    "method": false,
+                    "shorthand": false,
+                    "computed": false,
+                    "range": [
+                      1668,
+                      1691
+                    ],
+                    "loc": {
+                      "start": {
+                        "line": 45,
+                        "column": 4
+                      },
+                      "end": {
+                        "line": 45,
+                        "column": 27
+                      }
+                    },
+                    "leadingComments": [
+                      {
+                        "type": "Line",
+                        "value": " basic options",
+                        "range": [
+                          1647,
+                          1663
+                        ],
+                        "loc": {
+                          "start": {
+                            "line": 44,
+                            "column": 4
+                          },
+                          "end": {
+                            "line": 44,
+                            "column": 20
+                          }
+                        }
+                      }
+                    ]
+                  }
+                ],
+                "range": [
+                  1641,
+                  1693
+                ],
+                "loc": {
+                  "start": {
+                    "line": 43,
+                    "column": 66
+                  },
+                  "end": {
+                    "line": 46,
+                    "column": 1
+                  }
+                }
+              }
+            ],
+            "range": [
+              1607,
+              1694
+            ],
+            "loc": {
+              "start": {
+                "line": 43,
+                "column": 32
+              },
+              "end": {
+                "line": 46,
+                "column": 2
+              }
+            }
+          },
+          "range": [
+            1579,
+            1694
+          ],
+          "loc": {
+            "start": {
+              "line": 43,
+              "column": 4
+            },
+            "end": {
+              "line": 46,
+              "column": 2
+            }
+          }
+        }
+      ],
+      "kind": "let",
+      "range": [
+        1575,
+        1695
+      ],
+      "loc": {
+        "start": {
+          "line": 43,
+          "column": 0
+        },
+        "end": {
+          "line": 46,
+          "column": 3
+        }
+      },
+      "leadingComments": [
+        {
+          "type": "Block",
+          "value": "*\n * Linear gauge configuration options\n *\n * @typedef {GenericOptions|{orientation: string}} LinearGaugeOptions\n ",
+          "range": [
+            1368,
+            1486
+          ],
+          "loc": {
+            "start": {
+              "line": 32,
+              "column": 0
+            },
+            "end": {
+              "line": 36,
+              "column": 3
+            }
+          }
+        },
+        {
+          "type": "Block",
+          "value": "*\n * Default linear gauge configuration options\n *\n * @type {LinearGaugeOptions}\n ",
+          "range": [
+            1488,
+            1574
+          ],
+          "loc": {
+            "start": {
+              "line": 38,
+              "column": 0
+            },
+            "end": {
+              "line": 42,
+              "column": 3
+            }
+          }
+        }
+      ],
+      "trailingComments": [
+        {
+          "type": "Block",
+          "value": "*\n * Minimalistic HTML5 Canvas Linear Gauge\n ",
+          "range": [
+            1697,
+            1746
+          ],
+          "loc": {
+            "start": {
+              "line": 48,
+              "column": 0
+            },
+            "end": {
+              "line": 50,
+              "column": 3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "type": "ExportDefaultDeclaration",
+      "declaration": {
+        "type": "ClassDeclaration",
+        "id": {
+          "type": "Identifier",
+          "name": "LinearGauge",
+          "range": [
+            1768,
+            1779
+          ],
+          "loc": {
+            "start": {
+              "line": 51,
+              "column": 21
+            },
+            "end": {
+              "line": 51,
+              "column": 32
+            }
+          }
+        },
+        "superClass": {
+          "type": "Identifier",
+          "name": "BaseGauge",
+          "range": [
+            1788,
+            1797
+          ],
+          "loc": {
+            "start": {
+              "line": 51,
+              "column": 41
+            },
+            "end": {
+              "line": 51,
+              "column": 50
+            }
+          }
+        },
+        "body": {
+          "type": "ClassBody",
+          "body": [
+            {
+              "type": "MethodDefinition",
+              "key": {
+                "type": "Identifier",
+                "name": "constructor",
+                "range": [
+                  1884,
+                  1895
+                ],
+                "loc": {
+                  "start": {
+                    "line": 57,
+                    "column": 4
+                  },
+                  "end": {
+                    "line": 57,
+                    "column": 15
+                  }
+                }
+              },
+              "value": {
+                "type": "FunctionExpression",
+                "id": null,
+                "params": [
+                  {
+                    "type": "Identifier",
+                    "name": "options",
+                    "range": [
+                      1896,
+                      1903
+                    ],
+                    "loc": {
+                      "start": {
+                        "line": 57,
+                        "column": 16
+                      },
+                      "end": {
+                        "line": 57,
+                        "column": 23
+                      }
+                    }
+                  }
+                ],
+                "body": {
+                  "type": "BlockStatement",
+                  "body": [
+                    {
+                      "type": "ExpressionStatement",
+                      "expression": {
+                        "type": "AssignmentExpression",
+                        "operator": "=",
+                        "left": {
+                          "type": "Identifier",
+                          "name": "options",
+                          "range": [
+                            1915,
+                            1922
+                          ],
+                          "loc": {
+                            "start": {
+                              "line": 58,
+                              "column": 8
+                            },
+                            "end": {
+                              "line": 58,
+                              "column": 15
+                            }
+                          }
+                        },
+                        "right": {
+                          "type": "CallExpression",
+                          "callee": {
+                            "type": "MemberExpression",
+                            "computed": false,
+                            "object": {
+                              "type": "Identifier",
+                              "name": "Object",
+                              "range": [
+                                1925,
+                                1931
+                              ],
+                              "loc": {
+                                "start": {
+                                  "line": 58,
+                                  "column": 18
+                                },
+                                "end": {
+                                  "line": 58,
+                                  "column": 24
+                                }
+                              }
+                            },
+                            "property": {
+                              "type": "Identifier",
+                              "name": "assign",
+                              "range": [
+                                1932,
+                                1938
+                              ],
+                              "loc": {
+                                "start": {
+                                  "line": 58,
+                                  "column": 25
+                                },
+                                "end": {
+                                  "line": 58,
+                                  "column": 31
+                                }
+                              }
+                            },
+                            "range": [
+                              1925,
+                              1938
+                            ],
+                            "loc": {
+                              "start": {
+                                "line": 58,
+                                "column": 18
+                              },
+                              "end": {
+                                "line": 58,
+                                "column": 31
+                              }
+                            }
+                          },
+                          "arguments": [
+                            {
+                              "type": "ObjectExpression",
+                              "properties": [],
+                              "range": [
+                                1939,
+                                1941
+                              ],
+                              "loc": {
+                                "start": {
+                                  "line": 58,
+                                  "column": 32
+                                },
+                                "end": {
+                                  "line": 58,
+                                  "column": 34
+                                }
+                              }
+                            },
+                            {
+                              "type": "Identifier",
+                              "name": "defaultLinearGaugeOptions",
+                              "range": [
+                                1943,
+                                1968
+                              ],
+                              "loc": {
+                                "start": {
+                                  "line": 58,
+                                  "column": 36
+                                },
+                                "end": {
+                                  "line": 58,
+                                  "column": 61
+                                }
+                              }
+                            },
+                            {
+                              "type": "LogicalExpression",
+                              "operator": "||",
+                              "left": {
+                                "type": "Identifier",
+                                "name": "options",
+                                "range": [
+                                  1970,
+                                  1977
+                                ],
+                                "loc": {
+                                  "start": {
+                                    "line": 58,
+                                    "column": 63
+                                  },
+                                  "end": {
+                                    "line": 58,
+                                    "column": 70
+                                  }
+                                }
+                              },
+                              "right": {
+                                "type": "ObjectExpression",
+                                "properties": [],
+                                "range": [
+                                  1981,
+                                  1983
+                                ],
+                                "loc": {
+                                  "start": {
+                                    "line": 58,
+                                    "column": 74
+                                  },
+                                  "end": {
+                                    "line": 58,
+                                    "column": 76
+                                  }
+                                }
+                              },
+                              "range": [
+                                1970,
+                                1983
+                              ],
+                              "loc": {
+                                "start": {
+                                  "line": 58,
+                                  "column": 63
+                                },
+                                "end": {
+                                  "line": 58,
+                                  "column": 76
+                                }
+                              }
+                            }
+                          ],
+                          "range": [
+                            1925,
+                            1984
+                          ],
+                          "loc": {
+                            "start": {
+                              "line": 58,
+                              "column": 18
+                            },
+                            "end": {
+                              "line": 58,
+                              "column": 77
+                            }
+                          }
+                        },
+                        "range": [
+                          1915,
+                          1984
+                        ],
+                        "loc": {
+                          "start": {
+                            "line": 58,
+                            "column": 8
+                          },
+                          "end": {
+                            "line": 58,
+                            "column": 77
+                          }
+                        }
+                      },
+                      "range": [
+                        1915,
+                        1985
+                      ],
+                      "loc": {
+                        "start": {
+                          "line": 58,
+                          "column": 8
+                        },
+                        "end": {
+                          "line": 58,
+                          "column": 78
+                        }
+                      }
+                    },
+                    {
+                      "type": "ExpressionStatement",
+                      "expression": {
+                        "type": "CallExpression",
+                        "callee": {
+                          "type": "Super",
+                          "range": [
+                            1995,
+                            2000
+                          ],
+                          "loc": {
+                            "start": {
+                              "line": 60,
+                              "column": 8
+                            },
+                            "end": {
+                              "line": 60,
+                              "column": 13
+                            }
+                          }
+                        },
+                        "arguments": [
+                          {
+                            "type": "Identifier",
+                            "name": "options",
+                            "range": [
+                              2001,
+                              2008
+                            ],
+                            "loc": {
+                              "start": {
+                                "line": 60,
+                                "column": 14
+                              },
+                              "end": {
+                                "line": 60,
+                                "column": 21
+                              }
+                            }
+                          }
+                        ],
+                        "range": [
+                          1995,
+                          2009
+                        ],
+                        "loc": {
+                          "start": {
+                            "line": 60,
+                            "column": 8
+                          },
+                          "end": {
+                            "line": 60,
+                            "column": 22
+                          }
+                        }
+                      },
+                      "range": [
+                        1995,
+                        2010
+                      ],
+                      "loc": {
+                        "start": {
+                          "line": 60,
+                          "column": 8
+                        },
+                        "end": {
+                          "line": 60,
+                          "column": 23
+                        }
+                      }
+                    }
+                  ],
+                  "range": [
+                    1905,
+                    2016
+                  ],
+                  "loc": {
+                    "start": {
+                      "line": 57,
+                      "column": 25
+                    },
+                    "end": {
+                      "line": 61,
+                      "column": 5
+                    }
+                  }
+                },
+                "generator": false,
+                "expression": false,
+                "range": [
+                  1895,
+                  2016
+                ],
+                "loc": {
+                  "start": {
+                    "line": 57,
+                    "column": 15
+                  },
+                  "end": {
+                    "line": 61,
+                    "column": 5
+                  }
+                }
+              },
+              "kind": "constructor",
+              "computed": false,
+              "range": [
+                1884,
+                2016
+              ],
+              "loc": {
+                "start": {
+                  "line": 57,
+                  "column": 4
+                },
+                "end": {
+                  "line": 61,
+                  "column": 5
+                }
+              },
+              "leadingComments": [
+                {
+                  "type": "Block",
+                  "value": "*\n     * @constructor\n     * @param {LinearGaugeOptions} options\n     ",
+                  "range": [
+                    1805,
+                    1879
+                  ],
+                  "loc": {
+                    "start": {
+                      "line": 53,
+                      "column": 4
+                    },
+                    "end": {
+                      "line": 56,
+                      "column": 7
+                    }
+                  }
+                }
+              ],
+              "trailingComments": [
+                {
+                  "type": "Block",
+                  "value": "*\n     * Triggering linear gauge render on a canvas.\n     *\n     * @returns {LinearGauge}\n     ",
+                  "range": [
+                    2022,
+                    2121
+                  ],
+                  "loc": {
+                    "start": {
+                      "line": 63,
+                      "column": 4
+                    },
+                    "end": {
+                      "line": 67,
+                      "column": 7
+                    }
+                  }
+                }
+              ],
+              "static": false
+            },
+            {
+              "type": "MethodDefinition",
+              "key": {
+                "type": "Identifier",
+                "name": "draw",
+                "range": [
+                  2126,
+                  2130
+                ],
+                "loc": {
+                  "start": {
+                    "line": 68,
+                    "column": 4
+                  },
+                  "end": {
+                    "line": 68,
+                    "column": 8
+                  }
+                }
+              },
+              "value": {
+                "type": "FunctionExpression",
+                "id": null,
+                "params": [],
+                "body": {
+                  "type": "BlockStatement",
+                  "body": [
+                    {
+                      "type": "ReturnStatement",
+                      "argument": {
+                        "type": "ThisExpression",
+                        "range": [
+                          2150,
+                          2154
+                        ],
+                        "loc": {
+                          "start": {
+                            "line": 69,
+                            "column": 15
+                          },
+                          "end": {
+                            "line": 69,
+                            "column": 19
+                          }
+                        }
+                      },
+                      "range": [
+                        2143,
+                        2155
+                      ],
+                      "loc": {
+                        "start": {
+                          "line": 69,
+                          "column": 8
+                        },
+                        "end": {
+                          "line": 69,
+                          "column": 20
+                        }
+                      }
+                    }
+                  ],
+                  "range": [
+                    2133,
+                    2161
+                  ],
+                  "loc": {
+                    "start": {
+                      "line": 68,
+                      "column": 11
+                    },
+                    "end": {
+                      "line": 70,
+                      "column": 5
+                    }
+                  }
+                },
+                "generator": false,
+                "expression": false,
+                "range": [
+                  2130,
+                  2161
+                ],
+                "loc": {
+                  "start": {
+                    "line": 68,
+                    "column": 8
+                  },
+                  "end": {
+                    "line": 70,
+                    "column": 5
+                  }
+                }
+              },
+              "kind": "method",
+              "computed": false,
+              "range": [
+                2126,
+                2161
+              ],
+              "loc": {
+                "start": {
+                  "line": 68,
+                  "column": 4
+                },
+                "end": {
+                  "line": 70,
+                  "column": 5
+                }
+              },
+              "leadingComments": [
+                {
+                  "type": "Block",
+                  "value": "*\n     * Triggering linear gauge render on a canvas.\n     *\n     * @returns {LinearGauge}\n     ",
+                  "range": [
+                    2022,
+                    2121
+                  ],
+                  "loc": {
+                    "start": {
+                      "line": 63,
+                      "column": 4
+                    },
+                    "end": {
+                      "line": 67,
+                      "column": 7
+                    }
+                  }
+                }
+              ],
+              "static": false
+            }
+          ],
+          "range": [
+            1798,
+            2164
+          ],
+          "loc": {
+            "start": {
+              "line": 51,
+              "column": 51
+            },
+            "end": {
+              "line": 72,
+              "column": 1
+            }
+          }
+        },
+        "range": [
+          1762,
+          2164
+        ],
+        "loc": {
+          "start": {
+            "line": 51,
+            "column": 15
+          },
+          "end": {
+            "line": 72,
+            "column": 1
+          }
+        },
+        "leadingComments": [
+          {
+            "type": "Block",
+            "value": "*\n * Minimalistic HTML5 Canvas Linear Gauge\n ",
+            "range": [
+              1697,
+              1746
+            ],
+            "loc": {
+              "start": {
+                "line": 48,
+                "column": 0
+              },
+              "end": {
+                "line": 50,
+                "column": 3
+              }
+            }
+          }
+        ],
+        "trailingComments": []
+      },
+      "range": [
+        1747,
+        2164
+      ],
+      "loc": {
+        "start": {
+          "line": 51,
+          "column": 0
+        },
+        "end": {
+          "line": 72,
+          "column": 1
+        }
+      },
+      "leadingComments": [
+        {
+          "type": "Block",
+          "value": "*\n * Minimalistic HTML5 Canvas Linear Gauge\n ",
+          "range": [
+            1697,
+            1746
+          ],
+          "loc": {
+            "start": {
+              "line": 48,
+              "column": 0
+            },
+            "end": {
+              "line": 50,
+              "column": 3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "type": "ExpressionStatement",
+      "expression": {
+        "type": "AssignmentExpression",
+        "operator": "=",
+        "left": {
+          "type": "MemberExpression",
+          "computed": true,
+          "object": {
+            "type": "Identifier",
+            "name": "window",
+            "range": [
+              2166,
+              2172
+            ],
+            "loc": {
+              "start": {
+                "line": 74,
+                "column": 0
+              },
+              "end": {
+                "line": 74,
+                "column": 6
+              }
+            }
+          },
+          "property": {
+            "type": "Literal",
+            "value": "LinearGauge",
+            "raw": "'LinearGauge'",
+            "range": [
+              2173,
+              2186
+            ],
+            "loc": {
+              "start": {
+                "line": 74,
+                "column": 7
+              },
+              "end": {
+                "line": 74,
+                "column": 20
+              }
+            }
+          },
+          "range": [
+            2166,
+            2187
+          ],
+          "loc": {
+            "start": {
+              "line": 74,
+              "column": 0
+            },
+            "end": {
+              "line": 74,
+              "column": 21
+            }
+          }
+        },
+        "right": {
+          "type": "Identifier",
+          "name": "LinearGauge",
+          "range": [
+            2190,
+            2201
+          ],
+          "loc": {
+            "start": {
+              "line": 74,
+              "column": 24
+            },
+            "end": {
+              "line": 74,
+              "column": 35
+            }
+          }
+        },
+        "range": [
+          2166,
+          2201
+        ],
+        "loc": {
+          "start": {
+            "line": 74,
+            "column": 0
+          },
+          "end": {
+            "line": 74,
+            "column": 35
+          }
+        }
+      },
+      "range": [
+        2166,
+        2202
+      ],
+      "loc": {
+        "start": {
+          "line": 74,
+          "column": 0
+        },
+        "end": {
+          "line": 74,
+          "column": 36
+        }
+      }
+    },
+    {
+      "type": "ExpressionStatement",
+      "expression": {
+        "type": "CallExpression",
+        "callee": {
+          "type": "MemberExpression",
+          "computed": false,
+          "object": {
+            "type": "Identifier",
+            "name": "BaseGauge",
+            "range": [
+              2204,
+              2213
+            ],
+            "loc": {
+              "start": {
+                "line": 76,
+                "column": 0
+              },
+              "end": {
+                "line": 76,
+                "column": 9
+              }
+            }
+          },
+          "property": {
+            "type": "Identifier",
+            "name": "initialize",
+            "range": [
+              2214,
+              2224
+            ],
+            "loc": {
+              "start": {
+                "line": 76,
+                "column": 10
+              },
+              "end": {
+                "line": 76,
+                "column": 20
+              }
+            }
+          },
+          "range": [
+            2204,
+            2224
+          ],
+          "loc": {
+            "start": {
+              "line": 76,
+              "column": 0
+            },
+            "end": {
+              "line": 76,
+              "column": 20
+            }
+          }
+        },
+        "arguments": [
+          {
+            "type": "Literal",
+            "value": "LinearGauge",
+            "raw": "'LinearGauge'",
+            "range": [
+              2225,
+              2238
+            ],
+            "loc": {
+              "start": {
+                "line": 76,
+                "column": 21
+              },
+              "end": {
+                "line": 76,
+                "column": 34
+              }
+            }
+          },
+          {
+            "type": "Identifier",
+            "name": "defaultLinearGaugeOptions",
+            "range": [
+              2240,
+              2265
+            ],
+            "loc": {
+              "start": {
+                "line": 76,
+                "column": 36
+              },
+              "end": {
+                "line": 76,
+                "column": 61
+              }
+            }
+          }
+        ],
+        "range": [
+          2204,
+          2266
+        ],
+        "loc": {
+          "start": {
+            "line": 76,
+            "column": 0
+          },
+          "end": {
+            "line": 76,
+            "column": 62
+          }
+        }
+      },
+      "range": [
+        2204,
+        2267
+      ],
+      "loc": {
+        "start": {
+          "line": 76,
+          "column": 0
+        },
+        "end": {
+          "line": 76,
+          "column": 63
+        }
+      }
+    },
+    {
+      "type": "ExpressionStatement",
+      "expression": {
+        "type": "AssignmentExpression",
+        "operator": "=",
+        "left": {
+          "type": "MemberExpression",
+          "computed": false,
+          "object": {
+            "type": "Identifier",
+            "name": "module",
+            "range": [
+              2269,
+              2275
+            ],
+            "loc": {
+              "start": {
+                "line": 78,
+                "column": 0
+              },
+              "end": {
+                "line": 78,
+                "column": 6
+              }
+            }
+          },
+          "property": {
+            "type": "Identifier",
+            "name": "exports",
+            "range": [
+              2276,
+              2283
+            ],
+            "loc": {
+              "start": {
+                "line": 78,
+                "column": 7
+              },
+              "end": {
+                "line": 78,
+                "column": 14
+              }
+            }
+          },
+          "range": [
+            2269,
+            2283
+          ],
+          "loc": {
+            "start": {
+              "line": 78,
+              "column": 0
+            },
+            "end": {
+              "line": 78,
+              "column": 14
+            }
+          }
+        },
+        "right": {
+          "type": "Identifier",
+          "name": "LinearGauge",
+          "range": [
+            2286,
+            2297
+          ],
+          "loc": {
+            "start": {
+              "line": 78,
+              "column": 17
+            },
+            "end": {
+              "line": 78,
+              "column": 28
+            }
+          }
+        },
+        "range": [
+          2269,
+          2297
+        ],
+        "loc": {
+          "start": {
+            "line": 78,
+            "column": 0
+          },
+          "end": {
+            "line": 78,
+            "column": 28
+          }
+        }
+      },
+      "range": [
+        2269,
+        2298
+      ],
+      "loc": {
+        "start": {
+          "line": 78,
+          "column": 0
+        },
+        "end": {
+          "line": 78,
+          "column": 29
+        }
+      }
+    }
+  ],
+  "sourceType": "module",
+  "range": [
+    1249,
+    2298
+  ],
+  "loc": {
+    "start": {
+      "line": 27,
+      "column": 0
+    },
+    "end": {
+      "line": 78,
+      "column": 29
+    }
+  },
+  "comments": [
+    {
+      "type": "Block",
+      "value": "!\n * @license\n * Minimalistic HTML5 Canvas Gauge implementation\n *\n * This code is subject to MIT license.\n *\n * Copyright (c) 2012 Mykhailo Stadnyk <mikhus@gmail.com>\n *\n * Permission is hereby granted, free of charge, to any person obtaining a copy\n * of this software and associated documentation files (the \"Software\"), to deal\n * in the Software without restriction, including without limitation the rights\n * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell\n * copies of the Software, and to permit persons to whom the Software is\n * furnished to do so, subject to the following conditions:\n *\n * The above copyright notice and this permission notice shall be included in\n * all copies or substantial portions of the Software.\n *\n * THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\n * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\n * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\n * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\n * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\n * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\n * SOFTWARE.\n ",
+      "range": [
+        0,
+        1248
+      ],
+      "loc": {
+        "start": {
+          "line": 1,
+          "column": 0
+        },
+        "end": {
+          "line": 26,
+          "column": 3
+        }
+      }
+    },
+    {
+      "type": "Block",
+      "value": "*\n * Linear gauge configuration options\n *\n * @typedef {GenericOptions|{orientation: string}} LinearGaugeOptions\n ",
+      "range": [
+        1368,
+        1486
+      ],
+      "loc": {
+        "start": {
+          "line": 32,
+          "column": 0
+        },
+        "end": {
+          "line": 36,
+          "column": 3
+        }
+      }
+    },
+    {
+      "type": "Block",
+      "value": "*\n * Default linear gauge configuration options\n *\n * @type {LinearGaugeOptions}\n ",
+      "range": [
+        1488,
+        1574
+      ],
+      "loc": {
+        "start": {
+          "line": 38,
+          "column": 0
+        },
+        "end": {
+          "line": 42,
+          "column": 3
+        }
+      }
+    },
+    {
+      "type": "Line",
+      "value": " basic options",
+      "range": [
+        1647,
+        1663
+      ],
+      "loc": {
+        "start": {
+          "line": 44,
+          "column": 4
+        },
+        "end": {
+          "line": 44,
+          "column": 20
+        }
+      }
+    },
+    {
+      "type": "Block",
+      "value": "*\n * Minimalistic HTML5 Canvas Linear Gauge\n ",
+      "range": [
+        1697,
+        1746
+      ],
+      "loc": {
+        "start": {
+          "line": 48,
+          "column": 0
+        },
+        "end": {
+          "line": 50,
+          "column": 3
+        }
+      }
+    },
+    {
+      "type": "Block",
+      "value": "*\n     * @constructor\n     * @param {LinearGaugeOptions} options\n     ",
+      "range": [
+        1805,
+        1879
+      ],
+      "loc": {
+        "start": {
+          "line": 53,
+          "column": 4
+        },
+        "end": {
+          "line": 56,
+          "column": 7
+        }
+      }
+    },
+    {
+      "type": "Block",
+      "value": "*\n     * Triggering linear gauge render on a canvas.\n     *\n     * @returns {LinearGauge}\n     ",
+      "range": [
+        2022,
+        2121
+      ],
+      "loc": {
+        "start": {
+          "line": 63,
+          "column": 4
+        },
+        "end": {
+          "line": 67,
+          "column": 7
+        }
+      }
+    }
+  ]
+}
