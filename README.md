@@ -17,6 +17,10 @@ Make it simple using npm:
 
 coming soon...
 
+## Sponsored By
+
+[![Lohika](http://www.lohika.com/wp-content/themes/gridalicious/images/lohika_full.svg)](http://www.lohika.com/)
+
 ## License
 
 This code is subject to [MIT](https://raw.githubusercontent.com/Mikhus/canv-gauge/v2.0.0/LICENSE) license.

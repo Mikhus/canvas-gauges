@@ -6,10 +6,8 @@
 const gulp = require('gulp');
 const usage = require('gulp-help-doc');
 const browserify = require('browserify');
-const babelify = require('babelify');
 const source = require('vinyl-source-stream');
 const buffer = require('vinyl-buffer');
-const merge = require('utils-merge');
 const rename = require('gulp-rename');
 const sourcemaps = require('gulp-sourcemaps');
 const uglify = require('gulp-uglify');
@@ -18,7 +16,6 @@ const esdoc = require('gulp-esdoc');
 const eslint = require('gulp-eslint');
 const gzip = require('gulp-gzip');
 const KarmaServer = require('karma').Server;
-const wdio = require('gulp-wdio');
 const gutil = require('gulp-util');
 const chalk = require('chalk');
 const http = require('https');
@@ -26,6 +23,26 @@ const fs = require('fs');
 const selenium = require('selenium-standalone');
 const mocha = require('gulp-mocha');
 const cp = require('child_process');
+const concat = require('gulp-concat');
+const yargs = require('yargs');
+const replace = require('gulp-replace');
+const babel = require('gulp-babel');
+
+function es6concat() {
+    return gulp.src([
+            'lib/polyfill.js',
+            'lib/vendorize.js',
+            'lib/Animation.js',
+            'lib/DomObserver.js',
+            'lib/SmartCanvas.js',
+            'lib/SharedOptions.js',
+            'lib/Gauge.js'
+        ])
+        .pipe(concat('gauge.es6.js'))
+        .pipe(replace(/((var|const|let)\s+.*?=\s*)?require\(.*?\);?/g, ''))
+        .pipe(replace(/(module\.)?exports(.default)?\s+=\s*.*?\r?\n/g, ''))
+        .pipe(replace(/export\s+(default\s+)?(SharedOptions;)?/g, ''));
+}
 
 /**
  * Displays this usage information.
@@ -33,6 +50,41 @@ const cp = require('child_process');
  * @task {help}
  */
 gulp.task('help', () => usage(gulp));
+
+/**
+ * Currently there is no way to minify es6 code, so this task is
+ * temporally useless. Awaiting for support of es6 in minifiers.
+ *
+ * @task {build:es6}
+ */
+gulp.task('build:es6', ['clean'], () => {
+    return gutil.log(chalk.red(
+        'Sorry, this feature is currently not supported.'));
+    // es6concat()
+    //     .pipe(rename('gauge.es6.min.js'))
+    //     .pipe(uglify())
+    //     .pipe(gulp.dest('.'));
+});
+
+/**
+ * Builds and minifies es5 code
+ *
+ * @task {build:es5}
+ */
+gulp.task('build:es5', ['clean'], () => {
+    es6concat()
+        .pipe(rename('gauge.es5.js'))
+        .pipe(babel({
+            presets: ['es2015']
+        }))
+        .pipe(rename('gauge.min.js'))
+        .pipe(replace(/^/, '(function() {'))
+        .pipe(replace(/$/, '}());'))
+        .pipe(sourcemaps.init({ loadMaps: true }))
+        .pipe(uglify())
+        .pipe(sourcemaps.write('.'))
+        .pipe(gulp.dest('.'));
+});
 
 /**
  * Clean-ups files from previous build.
@@ -87,33 +139,17 @@ gulp.task('doc', () => {
  * Transpiles, combines and minifies JavaScript code.
  *
  * @task {build}
+ * @arg {target} compile target, could be 'es5' (default) or 'es6'
  */
-gulp.task('build', ['clean'], () => {
-    //noinspection JSCheckFunctionSignatures
-    return browserify(['lib/babelHelpers.js', 'lib/Gauge.js'])
-        .transform(babelify, {
-            presets: ['es2015'],
-            plugins: ['external-helpers-2']
-        })
-        .bundle()
-        .on('error', function(err) {
-            gutil.log(err);
-            this.emit('end');
-        })
-        .pipe(source('gauge.js'))
-        //.pipe(gulp.dest('.'))
-        .pipe(buffer())
-        .pipe(rename('gauge.min.js'))
-        .pipe(sourcemaps.init({ loadMaps: true }))
-        .pipe(uglify())
-        .pipe(sourcemaps.write('.'))
-        .pipe(gulp.dest('.'));
+gulp.task('build', () => {
+    //noinspection JSUnresolvedVariable
+    gulp.start('build:' + (yargs.argv.target || 'es5'));
 });
 
 /**
  * Watch for source code changes and automatically re-build
  * when wny of them detected.
- * 
+ *
  * @task {watch}
  */
 gulp.task('watch', ['build'], () => {
@@ -159,7 +195,7 @@ gulp.task('lint', () => {
 gulp.task('test:spec', done => {
     console.log(chalk.bold.green('Starting unit tests...'));
 
-    let server = new KarmaServer({
+    new KarmaServer({
         configFile: __dirname + '/karma.conf.js',
         singleRun: true
     }, exitCode => {
