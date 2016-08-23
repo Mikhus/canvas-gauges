@@ -5,4 +5,6 @@ layout: page
 body_class: body--homepage
 ---
 
+## Documentation
 
+[API Docs](docs/2.0.0/)
