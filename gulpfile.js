@@ -94,7 +94,7 @@ gulp.task('build:es5', ['clean'], () => {
         .pipe(babel({
             presets: ['es2015']
         }))
-        .pipe(gulp.dest('.'))
+        //.pipe(gulp.dest('.'))
         .pipe(rename('gauge.min.js'))
         .pipe(replace(/^/, '(function() {'))
         .pipe(replace(/$/, '}());'))

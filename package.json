@@ -10,8 +10,9 @@
     "test": "./node_modules/.bin/gulp test --silent",
     "test:headless": "xvfb-run npm test --silent",
     "start": "./node_modules/.bin/gulp watch",
+    "build": "./node_modules/.bin/gulp build --silent",
     "doc": "./node_modules/.bin/gulp doc --silent",
-    "commit": "npm run doc && npm test && git add --all . && git commit"
+    "commit": "npm run build && npm run doc && npm test && git add --all . && git commit"
   },
   "repository": {
     "type": "git",
