@@ -2,8 +2,6 @@
 
 Minimalistic HTML5 Canvas Gauges
 
-> This boilerplate was generated with [slush-gh-pages](https://github.com/ronik-design/slush-gh-pages).
-
 ### To develop
 
 ```
