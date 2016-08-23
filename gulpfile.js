@@ -35,7 +35,7 @@ function es6concat(type = 'all') {
         'lib/Animation.js',
         'lib/DomObserver.js',
         'lib/SmartCanvas.js',
-        'lib/SharedOptions.js',
+        'lib/GenericOptions.js',
         'lib/Collection.js',
         'lib/BaseGauge.js'
     ];
@@ -114,11 +114,15 @@ gulp.task('build:es5', ['clean'], () => {
  *
  * @task {clean}
  */
-gulp.task('clean', (done) => {
+gulp.task('clean', done => {
     rimraf('gauge.js', () =>
     rimraf('gauge.min.js', () =>
     rimraf('gauge.min.js.map', () =>
     rimraf('gauge.min.js.gz', done))));
+});
+
+gulp.task('clean:docs', done => {
+    rimraf('docs', done);
 });
 
 /**
@@ -127,7 +131,7 @@ gulp.task('clean', (done) => {
  *
  * @task {doc}
  */
-gulp.task('doc', () => {
+gulp.task('doc', ['clean:docs'], () => {
     gulp.src('./lib')
         .pipe(esdoc({ destination: './docs' }))
         .on('finish', () => {
