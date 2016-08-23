@@ -24,7 +24,7 @@ describe('SmartCanvas', () => {
         it('should add instance to SmartCanvas.Collection', () => {
             let canv = new SmartCanvas(document.createElement('canvas'));
 
-            expect(SmartCanvas.Collection).includes(canv);
+            expect(SmartCanvas.collection).includes(canv);
         });
     });
 
@@ -34,7 +34,7 @@ describe('SmartCanvas', () => {
 
             canv.destroy();
 
-            expect(SmartCanvas.Collection).not.includes(canv);
+            expect(SmartCanvas.collection).not.includes(canv);
         });
         it('should properly dereference all bound items', () => {
             let canv = new SmartCanvas(document.createElement('canvas'));
@@ -72,7 +72,7 @@ describe('SmartCanvas', () => {
 
     describe('SmartCanvas.redraw()', () => {
         it('should redraw all canvases in collection', () => {
-            SmartCanvas.Collection.splice(0, SmartCanvas.Collection.length);
+            SmartCanvas.collection.splice(0, SmartCanvas.collection.length);
 
             let c = document.createElement('canvas');
             let c1 = new SmartCanvas(c);
@@ -81,7 +81,7 @@ describe('SmartCanvas', () => {
 
             c3.onRedraw = () => {};
 
-            expect(SmartCanvas.Collection.length).equals(3);
+            expect(SmartCanvas.collection.length).equals(3);
 
             sinon.spy(c1, 'redraw');
             sinon.spy(c2, 'redraw');

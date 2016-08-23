@@ -129,7 +129,7 @@ describe('Gauge', () => {
 
             gauge.destroy();
 
-            expect(Gauge.Collection).not.includes(gauge);
+            expect(Gauge.collection).not.includes(gauge);
         });
         it('should properly dereference all bound items', () => {
             let gauge = new Gauge({
@@ -182,16 +182,16 @@ describe('Gauge', () => {
     });
 });
 
-describe('Gauge.Collection', () => {
+describe('Gauge.collection', () => {
     it('should be an array', () => {
-        expect(Gauge.Collection).to.be.an('array');
+        expect(Gauge.collection).instanceOf(Array);
     });
 
     describe('get()', () => {
         let g1, g2, g3;
 
         beforeEach(() => {
-            Gauge.Collection.splice(0, Gauge.Collection.length);
+            Gauge.collection.splice(0, Gauge.collection.length);
 
             let c1 = document.createElement('canvas');
             let c2 = document.createElement('canvas');
@@ -207,16 +207,16 @@ describe('Gauge.Collection', () => {
         });
 
         it('should find gauge by a given id', () => {
-            expect(Gauge.Collection.get('gauge-1')).equals(g1);
+            expect(Gauge.collection.get('gauge-1')).equals(g1);
         });
         it('should find gauge by index', () => {
-            expect(Gauge.Collection.get(1)).equals(g2);
+            expect(Gauge.collection.get(1)).equals(g2);
         });
         it('should return null if nothing found', () => {
-            expect(Gauge.Collection.get('gauge-4')).equals(null);
+            expect(Gauge.collection.get('gauge-4')).equals(null);
         });
         it('should return null if invalod locator given', () => {
-            expect(Gauge.Collection.get({})).equals(null);
+            expect(Gauge.collection.get({})).equals(null);
         });
     });
 });

@@ -28,16 +28,31 @@ const yargs = require('yargs');
 const replace = require('gulp-replace');
 const babel = require('gulp-babel');
 
-function es6concat() {
-    return gulp.src([
-            'lib/polyfill.js',
-            'lib/vendorize.js',
-            'lib/Animation.js',
-            'lib/DomObserver.js',
-            'lib/SmartCanvas.js',
-            'lib/SharedOptions.js',
-            'lib/Gauge.js'
-        ])
+function es6concat(type = 'all') {
+    let bundle = [
+        'lib/polyfill.js',
+        'lib/vendorize.js',
+        'lib/Animation.js',
+        'lib/DomObserver.js',
+        'lib/SmartCanvas.js',
+        'lib/SharedOptions.js',
+        'lib/Collection.js'
+    ];
+
+    switch (type.toLowerCase()) {
+        case 'gauge':
+            bundle.push('lib/Gauge.js');
+            break;
+        case 'linear':
+        case 'linear-gauge':
+        case 'lineargauge':
+            bundle.push('lib/LinearGauge.js');
+            break;
+        default:
+            bundle.push('lib/Gauge.js', 'lib/LinearGauge.js');
+    }
+
+    return gulp.src(bundle)
         .pipe(concat('gauge.es6.js'))
         .pipe(replace(/((var|const|let)\s+.*?=\s*)?require\(.*?\);?/g, ''))
         .pipe(replace(/(module\.)?exports(.default)?\s+=\s*.*?\r?\n/g, ''))
@@ -56,11 +71,12 @@ gulp.task('help', () => usage(gulp));
  * temporally useless. Awaiting for support of es6 in minifiers.
  *
  * @task {build:es6}
+ * @arg {type} build type: 'gauge' - Gauge object only, 'linear-gauge' - LinearGauge object only, 'all' - everything (default)
  */
 gulp.task('build:es6', ['clean'], () => {
     return gutil.log(chalk.red(
         'Sorry, this feature is currently not supported.'));
-    // es6concat()
+    // es6concat(yargs.argv.type || 'all')
     //     .pipe(rename('gauge.es6.min.js'))
     //     .pipe(uglify())
     //     .pipe(gulp.dest('.'));
@@ -70,13 +86,15 @@ gulp.task('build:es6', ['clean'], () => {
  * Builds and minifies es5 code
  *
  * @task {build:es5}
+ * @arg {type} build type: 'gauge' - Gauge object only, 'linear-gauge' - LinearGauge object only, 'all' - everything (default)
  */
 gulp.task('build:es5', ['clean'], () => {
-    es6concat()
+    es6concat(yargs.argv.type || 'all')
         .pipe(rename('gauge.es5.js'))
         .pipe(babel({
             presets: ['es2015']
         }))
+        .pipe(gulp.dest('.'))
         .pipe(rename('gauge.min.js'))
         .pipe(replace(/^/, '(function() {'))
         .pipe(replace(/$/, '}());'))
@@ -140,6 +158,7 @@ gulp.task('doc', () => {
  *
  * @task {build}
  * @arg {target} compile target, could be 'es5' (default) or 'es6'
+ * @arg {type} build type: 'gauge' - Gauge object only, 'linear-gauge' - LinearGauge object only, 'all' - everything (default)
  */
 gulp.task('build', () => {
     //noinspection JSUnresolvedVariable

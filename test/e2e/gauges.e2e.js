@@ -29,8 +29,8 @@ describe('Gauges UI', function() {
         client
             .url(url)
             .execute(() => {
-                let customGauge = Gauge.Collection[0];
-                let defaultGauge = Gauge.Collection[1];
+                let customGauge = Gauge.collection[0];
+                let defaultGauge = Gauge.collection[1];
 
                 return customGauge instanceof Gauge &&
                         defaultGauge instanceof Gauge;
@@ -44,7 +44,7 @@ describe('Gauges UI', function() {
     it('should have title properly drawn', done => {
         client
             .execute(() => {
-                let gauge = Gauge.Collection[0];
+                let gauge = Gauge.collection[0];
                 let w = gauge.canvas.element.width;
                 let h = gauge.canvas.element.height;
                 let max = w > h ? h / 2 : w / 2;

@@ -63,7 +63,7 @@ if (!Array.prototype.forEach) {
 }
 // animage all gauges on a page
 window.addEventListener('load', function() {
-    Gauge.Collection.forEach(function(gauge) {
+    Gauge.collection.forEach(function(gauge) {
        setInterval(function() {
            gauge.value = Math.random() * -gauge.options.maxValue +
                gauge.options.maxValue;
