@@ -2,103 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="dc71fa66-51b1-4581-a402-35515442b227" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.babelrc" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.editorconfig" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.eslintrc" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.jekyll-metadata" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.stylelintrc" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/404.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/_assets/images/.gitkeep" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/_assets/images/icons/.gitkeep" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/_assets/javascripts/globals/jquery.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/_assets/javascripts/globals/tether.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/_assets/javascripts/main.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/_assets/javascripts/ready.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/_assets/stylesheets/README.md" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/_assets/stylesheets/_components.scss" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/_assets/stylesheets/_mixins.scss" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/_assets/stylesheets/_pages.scss" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/_assets/stylesheets/_variables.scss" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/_assets/stylesheets/components/_body.scss" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/_assets/stylesheets/components/_footer.scss" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/_assets/stylesheets/components/_header.scss" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/_assets/stylesheets/components/_page.scss" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/_assets/stylesheets/components/_post.scss" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/_assets/stylesheets/main.scss" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/_assets/stylesheets/mixins/_markdown.scss" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/_assets/stylesheets/pages/_example.scss" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/_config-development.yml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/_data/settings.yml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/_includes/footer.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/_includes/header.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/_layouts/post.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/_posts/.gitkeep" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/assets/javascripts/scripts.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/assets/stylesheets/styles.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/2.0.0/ast/source/Animation.js.json" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/2.0.0/ast/source/BaseGauge.js.json" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/2.0.0/ast/source/Collection.js.json" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/2.0.0/ast/source/DomObserver.js.json" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/2.0.0/ast/source/Gauge.js.json" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/2.0.0/ast/source/GenericOptions.js.json" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/2.0.0/ast/source/LinearGauge.js.json" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/2.0.0/ast/source/SmartCanvas.js.json" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/2.0.0/ast/source/polyfill.js.json" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/2.0.0/ast/source/vendorize.js.json" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/2.0.0/badge.svg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/2.0.0/class/lib/Animation.js~Animation.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/2.0.0/class/lib/BaseGauge.js~BaseGauge.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/2.0.0/class/lib/DomObserver.js~DomObserver.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/2.0.0/class/lib/Gauge.js~Gauge.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/2.0.0/class/lib/LinearGauge.js~LinearGauge.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/2.0.0/class/lib/SmartCanvas.js~SmartCanvas.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/2.0.0/coverage.json" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/2.0.0/css/prettify-tomorrow.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/2.0.0/css/style.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/2.0.0/dump.json" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/2.0.0/file/lib/Animation.js.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/2.0.0/file/lib/BaseGauge.js.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/2.0.0/file/lib/Collection.js.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/2.0.0/file/lib/DomObserver.js.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/2.0.0/file/lib/Gauge.js.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/2.0.0/file/lib/GenericOptions.js.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/2.0.0/file/lib/LinearGauge.js.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/2.0.0/file/lib/SmartCanvas.js.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/2.0.0/file/lib/polyfill.js.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/2.0.0/file/lib/vendorize.js.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/2.0.0/function/index.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/2.0.0/identifiers.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/2.0.0/image/badge.svg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/2.0.0/image/github.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/2.0.0/image/search.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/2.0.0/index.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/2.0.0/package.json" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/2.0.0/script/inherited-summary.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/2.0.0/script/inner-link.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/2.0.0/script/manual.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/2.0.0/script/patch-for-local.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/2.0.0/script/prettify/Apache-License-2.0.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/2.0.0/script/prettify/prettify.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/2.0.0/script/pretty-print.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/2.0.0/script/search.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/2.0.0/script/search_index.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/2.0.0/script/test-summary.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/2.0.0/source.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/2.0.0/typedef/index.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/2.0.0/variable/index.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/index.md" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/package.json" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/params.json" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/postcss.config.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/rollup.config.js" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Gemfile" afterPath="$PROJECT_DIR$/Gemfile" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Gemfile.lock" afterPath="$PROJECT_DIR$/Gemfile.lock" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/README.md" afterPath="$PROJECT_DIR$/README.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/_config.yml" afterPath="$PROJECT_DIR$/_config.yml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/_data/authors.yml" afterPath="$PROJECT_DIR$/_data/authors.yml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/_layouts/default.html" afterPath="$PROJECT_DIR$/_layouts/default.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/_layouts/page.html" afterPath="$PROJECT_DIR$/_layouts/page.html" />
     </list>
     <ignored path="canv-gauge-site.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -131,13 +35,29 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="_config_dev.yml" pinned="false" current-in-tab="true">
+      <file leaf-file-name="_config_dev.yml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/_config_dev.yml">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="90">
               <caret line="5" column="39" selection-start-line="5" selection-start-column="29" selection-end-line="5" selection-end-column="78" />
               <folding />
             </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="README.md" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/README.md">
+          <provider selected="true" editor-type-id="split-provider[text-editor;MarkdownPreviewEditor]">
+            <state split_layout="FIRST">
+              <first_editor relative-caret-position="30">
+                <caret line="2" column="42" selection-start-line="2" selection-start-column="42" selection-end-line="2" selection-end-column="42" />
+                <folding />
+              </first_editor>
+              <second_editor />
+            </state>
+          </provider>
+          <provider editor-type-id="MarkdownFxPreviewEditor">
+            <state />
           </provider>
         </entry>
       </file>
@@ -163,9 +83,9 @@
         <option value="$PROJECT_DIR$/_includes/footer.html" />
         <option value="$PROJECT_DIR$/_includes/header.html" />
         <option value="$PROJECT_DIR$/index.md" />
-        <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/_config.yml" />
         <option value="$PROJECT_DIR$/_layouts/default.html" />
+        <option value="$PROJECT_DIR$/README.md" />
       </list>
     </option>
   </component>
@@ -315,18 +235,18 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1471982278417</updated>
-      <workItem from="1471982279667" duration="6874000" />
+      <workItem from="1471982279667" duration="7091000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="6874000" />
+    <option name="totallyTimeSpent" value="7091000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1920" height="1040" extended-state="0" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.16452992" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.16452992" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -431,20 +351,6 @@
           <caret line="1" column="24" selection-start-line="1" selection-start-column="24" selection-end-line="1" selection-end-column="24" />
           <folding />
         </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/README.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;MarkdownPreviewEditor]">
-        <state split_layout="FIRST">
-          <first_editor relative-caret-position="300">
-            <caret line="20" column="0" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
-            <folding />
-          </first_editor>
-          <second_editor />
-        </state>
-      </provider>
-      <provider editor-type-id="MarkdownFxPreviewEditor">
-        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/index.md">
@@ -579,6 +485,20 @@
           <caret line="5" column="39" selection-start-line="5" selection-start-column="29" selection-end-line="5" selection-end-column="78" />
           <folding />
         </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/README.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;MarkdownPreviewEditor]">
+        <state split_layout="FIRST">
+          <first_editor relative-caret-position="30">
+            <caret line="2" column="42" selection-start-line="2" selection-start-column="42" selection-end-line="2" selection-end-column="42" />
+            <folding />
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+      <provider editor-type-id="MarkdownFxPreviewEditor">
+        <state />
       </provider>
     </entry>
   </component>
