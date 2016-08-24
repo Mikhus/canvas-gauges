@@ -1,0 +1,1189 @@
+
+$experimental: true;
+
+$pre-bg: $code-background-color;
+$pre-border-size: $panel-border-size;
+$pre-border-style: $panel-border-style;
+$pre-border-color: $panel-border-color;
+$pre-font-color: $body-font-color;
+$pre-padding: 0.5em;
+$pre-line-height: 1.5;
+
+$code-font-size: 1rem;
+$code-word-spacing: 0;
+$code-line-height: 1rem;
+$code-text-rendering: optimal;
+
+$definition-list-content-margin-left: 0px;
+
+$subheader-font-family: $body-font-family;
+$subheader-font-size: 1rem;
+$subheader-font-color: darken($header-font-color, 15%); // resolves to #7a2518
+$subheader-text-rendering: $header-text-rendering !default;
+
+$subheader-font-family: $body-font-family;
+$subheader-font-size: 1rem;
+$subheader-font-color: darken($header-font-color, 15%); // resolves to #7a2518
+$subheader-font-weight: normal;
+$subheader-font-style: italic;
+$subheader-line-height: 1.45;
+$subheader-top-margin: 0px;
+$subheader-bottom-margin: 0.25em;
+
+$sidebar-header-align: left;
+$sidebar-header-border-size: 0px;
+$sidebar-header-border-style: none;
+$sidebar-header-border-color: $body-bg;
+
+$icon-text-shadow: $body-font-color;
+$lightless: 20%;
+$rainbow-lightness: 20%;
+
+
+*:not(pre) > code {
+  font-size: $code-font-size;
+  font-style: normal !important;
+  letter-spacing: 0px;
+  padding: $code-padding;
+  @if $code-word-spacing != 0 {
+    word-spacing: $code-word-spacing;
+  }
+  //white-space: nowrap;
+  @if $code-background-color != inherit {
+    background-color: $code-background-color;
+  }
+  @if $code-border-size != 0 {
+    border: $code-border-size $code-border-style $code-border-color;
+  }
+  @if $code-background-color != inherit or $code-border-size != 0 {
+    @include radius;
+  }
+  //text-shadow: none;
+  line-height: $code-line-height;
+  @if $code-text-rendering != inherit {
+    text-rendering: $code-text-rendering;
+  }
+}
+
+pre, pre > code {
+  line-height: $pre-line-height;
+  // this overrides what was set on code
+  color: $code-color;
+  font-family: $code-font-family;
+  font-weight: normal;
+  @if $code-text-rendering != inherit {
+    text-rendering: $code-text-rendering;
+  }
+}
+/*
+code {
+      font-family: $code-font-family;
+      font-weight: $code-font-weight;
+      color: $code-color;
+      background-color: $code-background-color;
+      border-width: $code-border-size;
+      border-style: $code-border-style;
+      border-color: $code-border-color;
+      padding: $code-padding;
+    }
+*/
+
+#toc {
+	ul.sectlevel1, ul.sectlevel2, ul.sectlevel3, ul.sectlevel4, ul.sectlevel5 {
+	  margin-top: 0px;
+  }
+}
+
+#toctitle {
+  font-size: 1.563em;
+  margin: 1.152em 0 0 0;
+}
+
+
+
+.keyseq {
+  color: lighten($body-font-color, 20%);
+}
+
+kbd {
+  font-family: $code-font-family;
+  display: inline-block;
+  color: $body-font-color;
+  font-size: 0.65em;
+  line-height: 1.45;
+  background-color: #f7f7f7;
+  border: 1px solid #ccc;
+  @include radius(3px);
+  //@include box-shadow(0 1px 0 rgba(0, 0, 0, .2), 0 0 0 0.1em white inset);
+  margin: 0 0.15em;
+  padding: 0.2em 0.5em;
+  vertical-align: middle;
+  position: relative;
+  top: -0.1em;
+  white-space: nowrap;
+}
+
+.keyseq kbd:first-child {
+  margin-left: 0px;
+}
+
+.keyseq kbd:last-child {
+  margin-right: 0px;
+}
+
+.menuseq, .menu {
+  color: darken($body-font-color, 10%);
+}
+
+b.button:before, b.button:after {
+  position: relative;
+  top: -1px;
+  font-weight: normal;
+}
+
+b.button:before {
+  content: "[";
+  padding: 0 3px 0 2px;
+}
+
+b.button:after {
+  content: "]";
+  padding: 0 2px 0 3px;
+}
+
+
+// AsciiDoc block styles
+
+// these blocks that don't inherit panel styles
+.audioblock,
+.imageblock,
+.literalblock,
+.listingblock,
+.stemblock,
+.videoblock {
+  margin-bottom: $panel-margin-bottom;
+}
+
+.admonitionblock td.content,
+.audioblock,
+.exampleblock,
+.imageblock,
+.listingblock,
+.literalblock,
+.stemblock,
+.openblock,
+.paragraph,
+.quoteblock,
+table.tableblock,
+.verseblock,
+.videoblock,
+.dlist,
+.olist,
+.ulist,
+.qlist,
+.hdlist {
+  & > .title {
+    //FIXME @extend %subheader;
+    text-rendering: $subheader-text-rendering;
+    font-size: $subheader-font-size;
+    font-weight: bold; 
+    color: $subheader-font-color;
+    text-align: left;
+  }
+}
+
+
+.admonitionblock > table {
+  border-collapse: separate;
+  border: 0;
+  background: none;
+  width: 100%;
+	
+	tr, td {
+		line-height: 1.6;
+		font-size: 1rem;
+		color: $text-color;
+	}
+	
+  td.icon {
+    text-align: center;
+    vertical-align: middle;
+    // FIXME use ems!
+    width: 80px;
+    img {
+      max-width: none;
+    }
+    .title {
+      //font-weight: $header-font-weight;
+      font-weight: bold;
+      font-family: $header-font-family;
+      text-transform: uppercase;
+    }
+  }
+
+  td.content {
+    padding-left: emCalc(18px);
+    padding-right: emCalc(20px);
+    border-left: $hr-border-width $hr-border-style $hr-border-color; 
+    // FIXME use $aside-font-color
+    color: $panel-font-color;
+    // QUESTION use opacity instead of blockquote-cite-font-color?
+    //opacity: 0.75;
+
+    //& > .paragraph:last-child > p {
+    & > :last-child > :last-child {
+      margin-bottom: 0px;
+    }
+  }
+}
+
+.exampleblock > .content {
+  // FIXME add variable for $example-bg
+  @include panel($body-bg, $panel-padding, false);
+  @include radius;
+  //& > :last-child > :last-child,
+  //// argh, review!
+  //.olist > ol > li:last-child > :last-child,
+  //.ulist > ul > li:last-child > :last-child,
+  //.qlist > ol > li:last-child > :last-child {
+  //  margin-bottom: 0;
+  //}
+}
+
+
+.sidebarblock {
+  @include panel($panel-bg, $panel-padding, false);
+  @include radius;
+
+  & > .content {
+    & > .title {
+      @extend h3;
+      color: $subheader-font-color;
+      //color: darken($header-font-color, 15%); // name this panel-header-color?
+      //line-height: 1.45; // a touch up from the header line height
+      margin-top: 0px;
+			margin-bottom: 0.625rem;
+      @if $sidebar-header-align {
+        text-align: $sidebar-header-align;
+      }
+      @if $sidebar-header-border-size != 0px {
+        border-width: $sidebar-header-border-size;
+        border-style: $sidebar-header-border-style;
+        border-color: $sidebar-header-border-color;
+      }
+    }
+  }
+}
+ 
+
+.exampleblock > .content,
+.sidebarblock > .content {
+  // FIXME argh, review!
+  & > :last-child > :last-child,
+  .olist > ol > li:last-child > :last-child,
+  .ulist > ul > li:last-child > :last-child,
+  .qlist > ol > li:last-child > :last-child {
+    margin-bottom: 0;
+  }
+}
+
+
+
+// FIXME make this situation simpler
+// we're trying to accomodate highlight themes that have background colors
+// if "highlight" is in first position, then a source highlighter is not in use
+.literalblock pre,
+.listingblock pre:not(.highlight),
+.listingblock pre[class="highlight"],
+.listingblock pre[class^="highlight "],
+.listingblock pre.CodeRay,
+.listingblock pre.prettyprint {
+  background: $pre-bg;
+
+  .sidebarblock & {
+    // FIXME make me a variable
+    // FIXME what about inline code?
+    //background: #ededef;
+    background: #f2f1f1;
+  }
+	
+
+  // override default setting for 'code'
+  & > code {
+    background: $pre-bg;
+  }
+}
+
+.listingblock {
+  // use pre[class] so we win over pre.<name> styles
+  pre, pre[class] {
+    @if $pre-border-size {
+      border: $pre-border-size $pre-border-style $pre-border-color;
+    }
+    // FIXME make border radius on listing blocks configurable!
+    @include radius;
+    word-wrap: break-word;
+
+		background-color: $pre-bg;
+		
+    &.nowrap {
+      overflow-x: auto;
+      white-space: pre;
+      word-wrap: normal;
+    }
+    
+    // screens below breakpoint
+    padding: $pre-padding;
+
+    font-size: emCalc(13px);
+
+    @media #{$small} {
+      font-size: emCalc(14.5px);
+    }
+
+    @media #{$medium} {
+      font-size: emCalc(16px);
+    }
+  }
+}
+
+.literalblock {
+	pre, pre[class] {
+		background-color: inherit;
+		border: none;
+		padding: 0px;
+		
+		font-size: 1em;
+		word-wrap: break-word;
+		
+    &.nowrap {
+      overflow-x: auto;
+      white-space: pre;
+      word-wrap: normal;
+    }
+	}
+}
+
+.literalblock.output pre {
+  // FIXME this doesn't work if pre-bg is an image!
+  color: $pre-bg;
+  background-color: $pre-font-color;
+}
+
+// highlight.js themes put bg on <code>, so shift padding
+.listingblock pre.highlightjs {
+  padding: 0px;
+  & > code {
+    padding: $pre-padding;
+    // FIXME make border radius on listing blocks configurable!
+    @include radius;
+  }
+}
+
+@if not $pre-border-size {
+  .listingblock pre.prettyprint {
+    border-width: 0;
+  }
+}
+
+.listingblock > .content {
+  // give floating language text a place to drop anchor
+  position: relative;
+}
+
+.listingblock code[data-lang]:before {
+  display: none;
+  content: attr(data-lang);
+  position: absolute;
+  font-size: emCalc(12px);
+  //top: 0.5rem; // 0.67em
+  top: 0.425rem;
+  right: 0.5rem; // 0.67em
+  line-height: 1;
+  text-transform: uppercase;
+  color: $text-color;
+}
+
+.listingblock:hover code[data-lang]:before {
+  display: block;
+}
+
+.listingblock.terminal pre .command:before {
+  content: attr(data-prompt); 
+  padding-right: 0.5em;
+  color: #999;
+}
+
+.listingblock.terminal pre .command:not([data-prompt]):before {
+  content: "$"; 
+}
+
+// overrides for Pygments default styles
+table.pyhltable {
+  border-collapse: separate;
+  border: 0;
+  margin-bottom: 0;
+  background: none;
+}
+
+table.pyhltable td {
+  vertical-align: top;
+  padding-top: 0;
+  padding-bottom: 0;
+  line-height: $pre-line-height;
+}
+
+table.pyhltable td.code {
+  padding-left: .75em;
+  padding-right: 0;
+}
+
+// QUESTION can't td:not(.code) be written as td.linenos?
+pre.pygments .lineno,
+table.pyhltable td:not(.code) {
+  color: #999;
+  padding-left: 0;
+  padding-right: .5em;
+  border-right: 1px solid $hr-border-color;
+}
+
+pre.pygments .lineno {
+  display: inline-block;
+  margin-right: .25em;
+}
+
+table.pyhltable .linenodiv {
+  background: none !important;
+  padding-right: 0 !important;
+}
+
+// TODO
+// - add centered option using margin-left: auto; margin-right: auto; padding-left: 1.5em;
+.quoteblock {
+  margin: 0 1em $paragraph-margin-bottom 1.5em;
+  display: table; // enables auto width
+  & > .title {
+    margin-left: -1.5em;
+    margin-bottom: 0.75em;
+  }
+
+  blockquote, blockquote p {
+    color: $blockquote-font-color;
+    font-size: 1.15rem;
+    line-height: 1.75;
+    word-spacing: 0.1em;
+    //letter-spacing: 0;
+    font-style: italic;
+    text-align: justify;
+  }
+
+  blockquote {
+    padding: 0;
+    border: 0;
+		font-style: italic;
+		
+		&:before {
+		  content:"\00BB";
+      font-size:80px;
+      line-height: 0;
+      position:absolute;
+      left: -50px;
+      top: auto;
+      color: $grey-11;
+		}
+		
+		&:after {
+			content: "\00AB";
+			font-size:80px;
+      line-height: 0;
+      position:absolute;
+      right: -50px;
+		}
+
+    & > .paragraph:last-child p {
+      margin-bottom: 0;
+    }
+  }
+
+  .attribution {
+    //margin-top: 0.5rem;
+    margin-top: 0.5em;
+    margin-right: 0.5ex;
+    text-align: left;
+  }
+
+  .quoteblock {
+    margin-left: 0;
+    margin-right: 0;
+    padding: 0.5em 0;
+    border-left: 3px solid $blockquote-cite-font-color;
+
+    blockquote {
+      padding: 0 0 0 0.75em;
+      &:before {
+        display: none;
+      }
+    }
+  }
+}
+
+.verseblock {
+  //margin: 0 0.5em $paragraph-margin-bottom 0.5em;
+  margin: 0 1em $paragraph-margin-bottom 1em;
+  pre {
+    // FIXME make me a variable
+    font-family: "Open Sans", "DejaVu Sans", sans;
+    font-size: 1.15rem;
+    color: $blockquote-font-color;
+		background-color: transparent;
+		padding: 0px;
+		border: none;
+		overflow: initial;
+    font-weight: 300;
+    text-rendering: optimizeLegibility;
+    strong {
+      font-weight: 400;
+    }
+  }
+
+  .attribution {
+    margin-top: 1.25rem;
+    margin-left: 0.5ex;
+  }
+}
+
+.quoteblock,
+.verseblock {
+  .attribution {
+    font-size: $blockquote-cite-font-size;
+    line-height: 1.45;
+    font-style: italic;
+    br {
+      display: none;
+    }
+    cite {
+      display: block;
+      //letter-spacing: -0.05em;
+      //letter-spacing: -0.025em;
+      color: $blockquote-cite-font-color;
+    }
+  }
+}
+
+.quoteblock.abstract {
+  margin: 0 0 $paragraph-margin-bottom 0;
+  display: block;
+  blockquote, blockquote p {
+    text-align: left;
+    word-spacing: 0;
+    //letter-spacing: -0.001em;
+  }
+
+  blockquote, blockquote p:first-of-type {
+    //&:first-line {
+    //  font-weight: bold;
+    //  letter-spacing: 0;
+    //}
+
+    &:before {
+      display: none;
+    }
+  }
+}
+
+table.tableblock {
+  max-width: 100%;
+  border-collapse: separate;
+  // QUESTION should this be any last-child?
+  td > .paragraph:last-child p,
+  th, td {
+    & > p:last-child {
+      margin-bottom: 0;
+    }
+  }
+}
+
+// NOTE .grid-* selectors must be defined before .frame-* selectors in order for styles to cascade properly
+table.tableblock,
+th.tableblock,
+td.tableblock {
+  border: 0 solid $table-border-color;
+}
+
+table.grid-all th.tableblock,
+table.grid-all td.tableblock {
+  border-width: 0 $table-border-size $table-border-size 0;
+}
+
+table.grid-all tfoot > tr > th.tableblock,
+table.grid-all tfoot > tr > td.tableblock {
+  border-width: $table-border-size $table-border-size 0 0;
+}
+
+table.grid-cols th.tableblock,
+table.grid-cols td.tableblock {
+  border-width: 0 $table-border-size 0 0;
+}
+
+table.grid-all * > tr > .tableblock:last-child,
+table.grid-cols * > tr > .tableblock:last-child {
+  border-right-width: 0;
+}
+
+table.grid-rows th.tableblock,
+table.grid-rows td.tableblock {
+  border-width: 0 0 $table-border-size 0;
+}
+
+table.grid-all tbody > tr:last-child > th.tableblock,
+table.grid-all tbody > tr:last-child > td.tableblock,
+table.grid-all thead:last-child > tr > th.tableblock,
+table.grid-rows tbody > tr:last-child > th.tableblock,
+table.grid-rows tbody > tr:last-child > td.tableblock,
+table.grid-rows thead:last-child > tr > th.tableblock {
+  border-bottom-width: 0;
+}
+
+table.grid-rows tfoot > tr > th.tableblock,
+table.grid-rows tfoot > tr > td.tableblock {
+  border-width: $table-border-size 0 0 0;
+}
+
+table.frame-all {
+  border-width: $table-border-size;
+}
+
+table.frame-sides {
+  border-width: 0 $table-border-size;
+}
+
+table.frame-topbot {
+  border-width: $table-border-size 0;
+}
+
+@each $halign in (left, right, center) {
+  th.halign-#{$halign},
+  td.halign-#{$halign} {
+    text-align: $halign;
+  }
+}
+
+@each $valign in (top, bottom, middle) {
+  th.valign-#{$valign},
+  td.valign-#{$valign} {
+    vertical-align: $valign;
+  }
+}
+
+// NOTE Fix required in Foundation, user-agent stylesheet is overriding
+table thead th,
+table tfoot th {
+  font-weight: $table-head-font-weight;
+}
+
+// vertical table header (block)
+tbody tr th {
+  display: $table-display;
+  //line-height: $table-line-height;
+  background: $table-head-bg;
+}
+
+// vertical table header (content)
+tbody tr th,
+tfoot tr th {
+  &, p {
+    color: $table-head-font-color;
+    font-weight: $table-head-font-weight;
+  }
+}
+
+p.tableblock > code:only-child {
+  background: none;
+  padding: 0;
+}
+
+/*
+p.tableblock {
+  font-size: 1em;
+}
+*/
+
+td > div.verse {
+  white-space: pre;
+}
+
+// AsciiDoc list styles
+
+ol {
+  margin-left: $list-side-margin + emCalc(4px);
+}
+
+ul li ol {
+  margin-left: $list-side-margin;
+}
+
+dl dd {
+  margin-left: $definition-list-content-margin-left;
+}
+
+// argh
+dl dd:last-child,
+dl dd:last-child > :last-child {
+  margin-bottom: 0;
+}
+
+ol > li p,
+ul > li p,
+ul dd,
+ol dd,
+.olist .olist,
+.ulist .ulist,
+.ulist .olist,
+.olist .ulist {
+  margin-bottom: $paragraph-margin-bottom / 2;
+}
+
+ul.unstyled,
+ol.unnumbered,
+ul.checklist,
+ul.none {
+  list-style-type: none;
+}
+
+ul.unstyled,
+ol.unnumbered,
+ul.checklist {
+  margin-left: emCalc(10px);
+}
+
+// use consistent size for checkbox
+ul.checklist li > p:first-child > .fa-square-o:first-child,
+ul.checklist li > p:first-child > .fa-check-square-o:first-child {
+  width: 1em;
+  font-size: 0.85em;
+}
+
+ul.checklist li > p:first-child > input[type="checkbox"]:first-child {
+  width: 1em;
+  position: relative;
+  top: 1px;
+}
+
+ul.inline {
+  @include inline-list;
+}
+
+// used when you need to style the term inline
+// or should we name it "natural"?
+.unstyled dl dt {
+  font-weight: normal;
+  font-style: normal;
+}
+
+@mixin ordered-list-type($class, $type) {
+  ol.#{$class} {
+    list-style-type: #{$type};
+  }
+}
+
+@include ordered-list-type(arabic, decimal);
+@include ordered-list-type(decimal, decimal-leading-zero);
+@include ordered-list-type(loweralpha, lower-alpha);
+@include ordered-list-type(upperalpha, upper-alpha);
+@include ordered-list-type(lowerroman, lower-roman);
+@include ordered-list-type(upperroman, upper-roman);
+@include ordered-list-type(lowergreek, lower-greek);
+//@include ordered-list-type(armenian, armenian);
+//@include ordered-list-type(georgian, georgian);
+
+.hdlist > table,
+.colist > table {
+  border: 0;
+  background: none;
+  & > tbody > tr {
+    background: none;
+  }
+}
+
+td.hdlist1,
+td.hdlist2 {
+  vertical-align: top;
+  padding: 0 emCalc(10px);
+}
+
+td.hdlist1 {
+  font-weight: bold;
+  padding-bottom: $paragraph-margin-bottom;
+}
+
+.literalblock + .colist,
+.listingblock + .colist {
+  margin-top: -0.5em;
+}
+
+.colist > table {
+  tr > td:first-of-type {
+    padding: 0 0.75em;
+    line-height: 1;
+  }
+
+  tr > td:last-of-type {
+    padding: emCalc(4px) 0;
+  }
+}
+
+// reenable once we can style the number too
+//.qanda > ol > li > p > em:only-child {
+//  color: darken($primary-color, 5%);
+//}
+
+// picked from foundation/components/_thumbs.css
+.thumb,
+.th {
+  line-height: 0;
+  display: inline-block;
+  border: $thumb-border-style $thumb-border-width $thumb-border-color;
+  @if $experimental {
+    -webkit-box-shadow: $thumb-box-shadow;
+  }
+  box-shadow: $thumb-box-shadow;
+}
+
+// for now just allow title to be aligned for imageblock, might add others later
+// TODO might want to support auto-sizing content so title aligns to edge of content
+//.imageblock {
+//  &.text-center > .title {
+//    text-align: center !important;
+//  }
+//
+//  &.text-right > .title {
+//    text-align: right !important;
+//  }
+//}
+
+.imageblock {
+  &.left,
+  &[style*="float: left"] {
+    margin: emCalc(4px) emCalc(10px) $panel-margin-bottom 0;
+  }
+  &.right,
+  &[style*="float: right"] {
+    margin: emCalc(4px) 0 $panel-margin-bottom emCalc(10px);
+  }
+  //&.center {
+  //  display: table;
+  //}
+
+  & > .title {
+    margin-bottom: 0;
+  }
+
+  &.thumb,
+  &.th {
+    border-width: $thumb-border-width + ($thumb-border-width * .5);
+    & > .title {
+      padding: 0 emCalc(2px);
+    }
+  }
+}
+
+//span.image {
+.image {
+  // QUESTION should we require the related role?
+  // "related" mean "illustrative" or "supporting" of the text
+  //&.related,
+  //&.rel {
+  //}
+
+  &.left,
+  &.right {
+    margin-top: emCalc(4px);
+    margin-bottom: emCalc(4px);
+    display: inline-block;
+    line-height: 0;
+  }
+
+  &.left {
+    margin-right: emCalc(10px);
+  }
+
+  &.right {
+    margin-left: emCalc(10px);
+  }
+}
+
+// NOTE defined directly on object & svg (above) to align with settings for img
+//.imageblock,
+//span.image {
+//  object[type="image/svg+xml"], svg {
+//    display: inline-block;
+//    vertical-align: middle;
+//  }
+//}
+
+a.image {
+  text-decoration: none;
+  // allow SVG to be a link
+  display: inline-block;
+  //object[type="image/svg+xml"] {
+  object {
+    pointer-events: none;
+  }
+}
+
+// AsciiDoc footnote styles
+sup.footnote,
+sup.footnoteref {
+  font-size: emCalc(14px); // 80% instead?
+  position: static;
+  vertical-align: super;
+  a {
+    text-decoration: none;
+    &:active {
+      text-decoration: underline;
+    }
+  }
+}
+
+#footnotes {
+  padding-top: emCalc(12px);
+  padding-bottom: emCalc(12px);
+  margin-bottom: $panel-margin-bottom / 2;
+  hr {
+    width: 20%;
+    min-width: emCalc(100px);
+    margin: -0.25em 0 0.75em 0;
+    border-width: 1px 0 0 0;
+  }
+  .footnote {
+    padding: 0 0.375em 0 0.225em; // .15em difference is due to text-indent
+    line-height: 1.3334;
+    font-size: emCalc(14px);
+    margin-left: 1.2em;
+    text-indent: -1.05em;
+    margin-bottom: 0.2em;
+    a:first-of-type {
+      font-weight: bold;
+      text-decoration: none;
+    }
+  }
+
+  .footnote:last-of-type {
+    margin-bottom: 0;
+  }
+
+  // footnotes in embedded documents
+  #content & {
+    margin-top: -$panel-margin-bottom / 2;
+    margin-bottom: 0;
+    padding: emCalc(12px) 0;
+  }
+}
+
+// for embedded gists
+.gist .file-data > table {
+  border: 0;
+  background: #fff;
+  width: 100%;
+  margin-bottom: 0;
+  td.line-data {
+    width: 99%;
+  }
+}
+
+
+.exampleblock > .content {
+  // white
+  //background-color: #fff;
+  //border-color: $panel-border-color;
+  //FIXME @include single-box-shadow($panel-border-color, 0, 1px, 2px);
+
+  // light yellow
+  background-color: #fffef7; // from rgb(252,247,227), analogous to #f8f8f7
+  border-color: $panel-border-color;
+  //FIXME @include single-box-shadow($panel-border-color, 0, 1px, 4px);
+}
+
+div.unbreakable { page-break-inside: avoid; }
+
+.big { font-size: larger; }
+
+.small { font-size: smaller; }
+
+.underline { text-decoration: underline; }
+
+.overline { text-decoration: overline; }
+
+.line-through { text-decoration: line-through; }
+
+.aqua { color: #00bfbf; }
+
+.aqua-background { background-color: #00fafa; }
+
+.black { color: black; }
+
+.black-background { background-color: black; }
+
+.blue { color: #0000bf; }
+
+.blue-background { background-color: #0000fa; }
+
+.fuchsia { color: #bf00bf; }
+
+.fuchsia-background { background-color: #fa00fa; }
+
+.gray { color: #606060; }
+
+.gray-background { background-color: #7d7d7d; }
+
+.green { color: #006000; }
+
+.green-background { background-color: #007d00; }
+
+.lime { color: #00bf00; }
+
+.lime-background { background-color: #00fa00; }
+
+.maroon { color: #600000; }
+
+.maroon-background { background-color: #7d0000; }
+
+.navy { color: #000060; }
+
+.navy-background { background-color: #00007d; }
+
+.olive { color: #606000; }
+
+.olive-background { background-color: #7d7d00; }
+
+.purple { color: #600060; }
+
+.purple-background { background-color: #7d007d; }
+
+.red { color: #bf0000; }
+
+.red-background { background-color: #fa0000; }
+
+.silver { color: #909090; }
+
+.silver-background { background-color: #bcbcbc; }
+
+.teal { color: #006060; }
+
+.teal-background { background-color: #007d7d; }
+
+.white { color: #bfbfbf; }
+
+.white-background { background-color: #fafafa; }
+
+.yellow { color: #bfbf00; }
+
+.yellow-background { background-color: #fafa00; }
+
+//
+// _awesome-icons.sccs
+//
+
+span.icon>.fa {
+  cursor: default;
+}
+
+.admonitionblock td.icon {
+  [class^="fa icon-"] {
+    font-size: 2.5em;
+    text-shadow: $icon-text-shadow;
+    cursor: default;
+  }
+  
+  .icon-note:before {
+    //@extend .fa-info-circle;
+    content: "\f05a";
+    color: scale-color($success-color, $lightness: $rainbow-lightness);
+    //color: $success-color;
+    font-family: FontAwesome;
+  }
+  
+  .icon-tip:before {
+    // @extend .fa-lightbulb-o;
+    content: "\f0eb";
+    color: scale-color($info-color, $lightness: $rainbow-lightness);
+    //color: $info-color;
+    font-family: FontAwesome;
+  }
+  
+  .icon-warning:before {
+    // @extend .fa-exclamation-triangle;
+    content: "\f071";
+    color: scale-color($warning-color, $lightness: $rainbow-lightness);
+    //color: $warning-color;
+    font-family: FontAwesome;
+  }
+
+  .icon-caution:before {
+    // @extend .fa-fire;
+    content: "\f06d";
+    color: scale-color($alert-color, $lightness: $rainbow-lightness);
+    //color: $alert-color;
+    font-family: FontAwesome;
+  }
+  
+  .icon-important:before {
+    // @extend .icon-exclamation-circle;
+    content: "\f06a";
+    color: scale-color($ci-2, $lightness: $rainbow-lightness);
+    //color: $ci-2;
+    font-family: FontAwesome;
+  }
+}
+
+// alternatively could use &#10122; through &#10131 to get the numbered circles,
+// then style them as appropriate; would need to output them in the text, though
+.conum[data-value] {
+  display: inline-block;
+  color: #fff !important;
+  background-color: $body-font-color;
+  @include radius(100px);
+  text-align: center;
+  font-size: 0.75em;
+  //width: 1.5em;
+  //height: 1.5em;
+  //line-height: 1.5em;
+  width: 1.67em;
+  height: 1.67em;
+  line-height: 1.67em;
+  // FIXME make this font a variable
+  font-family: "Open Sans", "DejaVu Sans", sans-serif;
+  font-style: normal;
+  // QUESTION should the callout numbers be regular weight?
+  font-weight: bold;
+  // text-indent only seems to be required for webkit
+  //text-indent: -1px;
+
+  & * {
+    color: #fff !important;
+  }
+
+  & + b {
+    display: none;
+  }
+
+  &:after {
+    content: attr(data-value);
+  }
+
+  pre & {
+    position: relative;
+    top: -0.125em;
+  }
+}
+
+// hack to disallow syntax highlighting from changing the color
+b.conum * {
+  color: inherit !important;
+}
+
+// hack for when highlight.js adds a bogus element into DOM
+// QUESTION should we solve this w/ javascript instead?
+.conum:not([data-value]):empty {
+  display: none;
+}

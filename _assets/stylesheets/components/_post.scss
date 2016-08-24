@@ -1,5 +1,0 @@
-.post {
-  @include markdown-paragraph();
-  @include markdown-blockquote();
-  @include markdown-list();
-}
