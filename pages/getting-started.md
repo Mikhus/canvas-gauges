@@ -1,5 +1,5 @@
 ---
-layout: page
+layout: page-fullwidth
 show_meta: false
 title: "Getting Started"
 subheadline: "A Step-by-Step Guide"
