@@ -1,7 +1,7 @@
 ---
 layout: page-fullwidth
 show_meta: false
-title: "Getting Started"
+title: "<span class='icon-startup'></span> Getting Started"
 subheadline: "A Step-by-Step Guide"
 teaser: "This step-by-step guide helps you to start use Canvas Gauges."
 #header:

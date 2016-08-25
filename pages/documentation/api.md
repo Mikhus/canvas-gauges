@@ -1,7 +1,7 @@
 ---
 layout: page-fullwidth
 show_meta: false
-title: "Canvas Gauge API"
+title: "<span class='icon-api-docs'></span> Canvas Gauge API"
 subheadline: "Developer's Guide Documentation"
 permalink: "/documentation/api/"
 ---

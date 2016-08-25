@@ -1,7 +1,7 @@
 ---
 permalink: /search/
 layout: page
-title: "Search"
+title: "<span class='icon-search'></span> Search"
 sitemap: false
 ---
 

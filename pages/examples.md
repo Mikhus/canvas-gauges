@@ -1,7 +1,7 @@
 ---
 layout: page-fullwidth
 show_meta: false
-title: "Examples"
+title: "<span class='icon-examples'></span> Examples"
 subheadline: "Gauges Use Examples"
 permalink: "/examples/"
 ---
