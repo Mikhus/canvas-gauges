@@ -370,7 +370,6 @@ mark {
 .iconfont       { font-family: iconfont; }
 .iconfont-48    { font-size: 48px; }
 
-
 [data-icon]:before { content: attr(data-icon); }
 
 [data-icon]:before,
@@ -390,15 +389,16 @@ mark {
 .icon-cloud:before,
 .icon-code:before,
 .icon-cog:before,
+.icon-docs:before,
 .icon-dropbox:before,
 .icon-edit:before,
 .icon-export:before,
 .icon-eye:before,
 .icon-facebook:before,
 .icon-feather:before,
+.icon-finder:before,
 .icon-github:before,
 .icon-globe:before,
-.icon-googleplus:before,
 .icon-heart:before,
 .icon-heart-outlined:before,
 .icon-home:before,
@@ -415,9 +415,11 @@ mark {
 .icon-price-tag:before,
 .icon-rocket:before,
 .icon-rss:before,
+.icon-search:before,
 .icon-soundcloud:before,
 .icon-star:before,
 .icon-star-outlined:before,
+.icon-startup:before,
 .icon-thumbs-down:before,
 .icon-thumbs-up:before,
 .icon-tree:before,
@@ -429,18 +431,18 @@ mark {
 .icon-warning:before,
 .icon-xing:before,
 .icon-youtube:before {
-  display: inline-block;
-font-family: "iconfont";
-font-style: normal;
-font-weight: normal;
-font-variant: normal;
-line-height: 1;
-text-decoration: inherit;
-text-rendering: optimizeLegibility;
-text-transform: none;
--moz-osx-font-smoothing: grayscale;
--webkit-font-smoothing: antialiased;
-font-smoothing: antialiased;
+    display: inline-block;
+    font-family: "iconfont";
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    line-height: 1;
+    text-decoration: inherit;
+    text-rendering: optimizeLegibility;
+    text-transform: none;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    font-smoothing: antialiased;
 }
 
 .icon-archive:before { content: "\f100"; }
@@ -459,15 +461,16 @@ font-smoothing: antialiased;
 .icon-cloud:before { content: "\f10c"; }
 .icon-code:before { content: "\f10d"; }
 .icon-cog:before { content: "\f10e"; }
+.icon-docs:before { content: "\f16a"; }
 .icon-dropbox:before { content: "\f10f"; }
 .icon-edit:before { content: "\f110"; }
 .icon-export:before { content: "\f111"; }
 .icon-eye:before { content: "\f112"; }
 .icon-facebook:before { content: "\f113"; }
 .icon-feather:before { content: "\f114"; }
+.icon-finder:before { content: "\f168"; }
 .icon-github:before { content: "\f115"; }
 .icon-globe:before { content: "\f116"; }
-.icon-googleplus:before { content: "\f136"; }
 .icon-heart:before { content: "\f117"; }
 .icon-heart-outlined:before { content: "\f118"; }
 .icon-home:before { content: "\f119"; }
@@ -484,9 +487,11 @@ font-smoothing: antialiased;
 .icon-price-tag:before { content: "\f124"; }
 .icon-rocket:before { content: "\f125"; }
 .icon-rss:before { content: "\f126"; }
+.icon-search:before { content: "\f169"; }
 .icon-soundcloud:before { content: "\f127"; }
 .icon-star:before { content: "\f128"; }
 .icon-star-outlined:before { content: "\f129"; }
+.icon-startup:before { content: "\f16b"; }
 .icon-thumbs-down:before { content: "\f12a"; }
 .icon-thumbs-up:before { content: "\f12b"; }
 .icon-tree:before { content: "\f134"; }
@@ -498,3 +503,6 @@ font-smoothing: antialiased;
 .icon-warning:before { content: "\f131"; }
 .icon-xing:before { content: "\f135"; }
 .icon-youtube:before { content: "\f132"; }
+
+
+

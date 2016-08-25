@@ -46,7 +46,7 @@ no_hash: true
 # -----------------------------------------------------------------------------
 
 input:
- vectors: svg-files-for-custom-font
+ vectors: svg
 #  templates: my/templates
 
 output:

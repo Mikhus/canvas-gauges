@@ -2,7 +2,170 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="dc71fa66-51b1-4581-a402-35515442b227" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/README.md" afterPath="$PROJECT_DIR$/README.md" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/_posts/design/2014-07-09-post-left-sidebar.md" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/_posts/design/2014-07-10-breadcrumb.md" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/_posts/design/2014-07-10-page.md" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/_posts/design/2014-07-10-post-right-sidebar.md" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/_posts/design/2014-08-19-page-fullwidth.md" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/_posts/design/2014-09-10-portfolio.md" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/_posts/design/2014-09-13-grid.md" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/_posts/design/2014-09-14-video.md" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/_posts/design/2014-09-15-gallery.md" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/_posts/design/2014-10-08-header-image-pattern.md" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/_posts/design/2014-10-09-header-full-width-image.md" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/_posts/design/2014-10-09-header-image-color.md" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/_posts/design/2014-10-09-header-logo-only.md" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/_posts/design/2015-02-10-header-with-text.md" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/_posts/design/2015-03-12-no-header-but-image.md" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/_posts/design/2015-08-11-no-header.md" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/_posts/design/2015-08-15-comments.md" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/_posts/design/2015-08-16-typography.md" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/_posts/design/2015-10-15-mediaelement_js.md" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/assets/fonts/svg-files-for-custom-font/.fontcustom-manifest.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/gallery-example-1-thumb.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/gallery-example-1.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/gallery-example-2-thumb.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/gallery-example-2.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/gallery-example-3-thumb.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/gallery-example-3.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/gallery-example-4-thumb.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/gallery-example-4.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/gallery-example-5-thumb.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/gallery-example-5.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/gallery-example-6-thumb.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/gallery-example-6.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/gallery-example-7-thumb.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/gallery-example-7.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/gallery-example-8-thumb.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/gallery-example-8.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/header-bus-thumb.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/header-bus.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/header_drop.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/header_homepage_13.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/header_roadmap_2.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/header_roadmap_3.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/header_typewriter.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/header_unsplash_1.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/header_unsplash_12.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/header_unsplash_2-970x.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/header_unsplash_2.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/header_unsplash_4.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/header_unsplash_5.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/header_unsplash_6.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/header_unsplash_7.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/header_unsplash_8.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/header_unsplash_9.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/header_unsplash_leaf.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/homepage_typography-thumb.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/homepage_typography.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/mediaplayer_js-home.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/mediaplayer_js-thumb.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/mediaplayer_js-title.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/pattern_concrete.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/presentation-feeling-responsive.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/promo-video-start.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/start-video-feeling-responsive-302x182.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/typewriter-thumb.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/unsplash_9.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/unsplash_brooklyn-bridge-thumb.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/unsplash_brooklyn-bridge_header.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/unsplash_eagle.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/video-feeling-responsive-1280x720.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/video-feeling-responsive-tutorial-frontpage.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/webdesign_screenshot_jcorneille.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/webdesign_screenshot_nixdorf.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/webdesign_screenshot_phlow.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/webdesign_screenshot_schriefer.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/webdesign_screenshot_stilwandel.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/webdesign_screenshot_tarnkappe.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/widget-1-302x182.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/widget-github-303x182.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/pages/changelog.md" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/pages/contact.md" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/pages/design.md" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/pages/documentation.md" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/pages/headers.md" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/pages/info.md" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/pages/redirected_page.md" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/pages/roadmap.md" afterPath="" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/assets/css/styles_feeling_responsive.scss" afterPath="$PROJECT_DIR$/assets/css/styles.scss" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/assets/fonts/svg-files-for-custom-font/archive.svg" afterPath="$PROJECT_DIR$/assets/fonts/svg/archive.svg" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/assets/fonts/svg-files-for-custom-font/browser.svg" afterPath="$PROJECT_DIR$/assets/fonts/svg/browser.svg" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/assets/fonts/svg-files-for-custom-font/calendar.svg" afterPath="$PROJECT_DIR$/assets/fonts/svg/calendar.svg" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/assets/fonts/svg-files-for-custom-font/camera.svg" afterPath="$PROJECT_DIR$/assets/fonts/svg/camera.svg" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/assets/fonts/svg-files-for-custom-font/chat.svg" afterPath="$PROJECT_DIR$/assets/fonts/svg/chat.svg" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/assets/fonts/svg-files-for-custom-font/check.svg" afterPath="$PROJECT_DIR$/assets/fonts/svg/check.svg" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/assets/fonts/svg-files-for-custom-font/chevron-down.svg" afterPath="$PROJECT_DIR$/assets/fonts/svg/chevron-down.svg" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/assets/fonts/svg-files-for-custom-font/chevron-left.svg" afterPath="$PROJECT_DIR$/assets/fonts/svg/chevron-left.svg" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/assets/fonts/svg-files-for-custom-font/chevron-right.svg" afterPath="$PROJECT_DIR$/assets/fonts/svg/chevron-right.svg" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/assets/fonts/svg-files-for-custom-font/chevron-up.svg" afterPath="$PROJECT_DIR$/assets/fonts/svg/chevron-up.svg" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/assets/fonts/svg-files-for-custom-font/circle-with-cross.svg" afterPath="$PROJECT_DIR$/assets/fonts/svg/circle-with-cross.svg" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/assets/fonts/svg-files-for-custom-font/circle-with-minus.svg" afterPath="$PROJECT_DIR$/assets/fonts/svg/circle-with-minus.svg" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/assets/fonts/svg-files-for-custom-font/circle-with-plus.svg" afterPath="$PROJECT_DIR$/assets/fonts/svg/circle-with-plus.svg" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/assets/fonts/svg-files-for-custom-font/cloud.svg" afterPath="$PROJECT_DIR$/assets/fonts/svg/cloud.svg" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/assets/fonts/svg-files-for-custom-font/code.svg" afterPath="$PROJECT_DIR$/assets/fonts/svg/code.svg" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/assets/fonts/svg-files-for-custom-font/cog.svg" afterPath="$PROJECT_DIR$/assets/fonts/svg/cog.svg" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/assets/fonts/svg-files-for-custom-font/dropbox.svg" afterPath="$PROJECT_DIR$/assets/fonts/svg/dropbox.svg" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/assets/fonts/svg-files-for-custom-font/edit.svg" afterPath="$PROJECT_DIR$/assets/fonts/svg/edit.svg" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/assets/fonts/svg-files-for-custom-font/export.svg" afterPath="$PROJECT_DIR$/assets/fonts/svg/export.svg" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/assets/fonts/svg-files-for-custom-font/eye.svg" afterPath="$PROJECT_DIR$/assets/fonts/svg/eye.svg" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/assets/fonts/svg-files-for-custom-font/facebook.svg" afterPath="$PROJECT_DIR$/assets/fonts/svg/facebook.svg" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/assets/fonts/svg-files-for-custom-font/feather.svg" afterPath="$PROJECT_DIR$/assets/fonts/svg/feather.svg" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/assets/fonts/svg-files-for-custom-font/github.svg" afterPath="$PROJECT_DIR$/assets/fonts/svg/github.svg" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/assets/fonts/svg-files-for-custom-font/globe.svg" afterPath="$PROJECT_DIR$/assets/fonts/svg/globe.svg" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/assets/fonts/svg-files-for-custom-font/heart-outlined.svg" afterPath="$PROJECT_DIR$/assets/fonts/svg/heart-outlined.svg" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/assets/fonts/svg-files-for-custom-font/heart.svg" afterPath="$PROJECT_DIR$/assets/fonts/svg/heart.svg" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/assets/fonts/svg-files-for-custom-font/home.svg" afterPath="$PROJECT_DIR$/assets/fonts/svg/home.svg" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/assets/fonts/svg-files-for-custom-font/instagram.svg" afterPath="$PROJECT_DIR$/assets/fonts/svg/instagram.svg" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/assets/fonts/svg-files-for-custom-font/lab-flask.svg" afterPath="$PROJECT_DIR$/assets/fonts/svg/lab-flask.svg" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/assets/fonts/svg-files-for-custom-font/leaf.svg" afterPath="$PROJECT_DIR$/assets/fonts/svg/leaf.svg" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/assets/fonts/svg-files-for-custom-font/linkedin.svg" afterPath="$PROJECT_DIR$/assets/fonts/svg/linkedin.svg" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/assets/fonts/svg-files-for-custom-font/mail.svg" afterPath="$PROJECT_DIR$/assets/fonts/svg/mail.svg" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/assets/fonts/svg-files-for-custom-font/message.svg" afterPath="$PROJECT_DIR$/assets/fonts/svg/message.svg" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/assets/fonts/svg-files-for-custom-font/mic.svg" afterPath="$PROJECT_DIR$/assets/fonts/svg/mic.svg" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/assets/fonts/svg-files-for-custom-font/network.svg" afterPath="$PROJECT_DIR$/assets/fonts/svg/network.svg" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/assets/fonts/svg-files-for-custom-font/paper-plane.svg" afterPath="$PROJECT_DIR$/assets/fonts/svg/paper-plane.svg" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/assets/fonts/svg-files-for-custom-font/pinterest.svg" afterPath="$PROJECT_DIR$/assets/fonts/svg/pinterest.svg" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/assets/fonts/svg-files-for-custom-font/price-tag.svg" afterPath="$PROJECT_DIR$/assets/fonts/svg/price-tag.svg" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/assets/fonts/svg-files-for-custom-font/rocket.svg" afterPath="$PROJECT_DIR$/assets/fonts/svg/rocket.svg" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/assets/fonts/svg-files-for-custom-font/rss.svg" afterPath="$PROJECT_DIR$/assets/fonts/svg/rss.svg" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/assets/fonts/svg-files-for-custom-font/soundcloud.svg" afterPath="$PROJECT_DIR$/assets/fonts/svg/soundcloud.svg" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/assets/fonts/svg-files-for-custom-font/star-outlined.svg" afterPath="$PROJECT_DIR$/assets/fonts/svg/star-outlined.svg" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/assets/fonts/svg-files-for-custom-font/star.svg" afterPath="$PROJECT_DIR$/assets/fonts/svg/star.svg" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/assets/fonts/svg-files-for-custom-font/thumbs-down.svg" afterPath="$PROJECT_DIR$/assets/fonts/svg/thumbs-down.svg" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/assets/fonts/svg-files-for-custom-font/thumbs-up.svg" afterPath="$PROJECT_DIR$/assets/fonts/svg/thumbs-up.svg" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/assets/fonts/svg-files-for-custom-font/tree.svg" afterPath="$PROJECT_DIR$/assets/fonts/svg/tree.svg" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/assets/fonts/svg-files-for-custom-font/tumblr.svg" afterPath="$PROJECT_DIR$/assets/fonts/svg/tumblr.svg" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/assets/fonts/svg-files-for-custom-font/twitter.svg" afterPath="$PROJECT_DIR$/assets/fonts/svg/twitter.svg" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/assets/fonts/svg-files-for-custom-font/upload-to-cloud.svg" afterPath="$PROJECT_DIR$/assets/fonts/svg/upload-to-cloud.svg" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/assets/fonts/svg-files-for-custom-font/video.svg" afterPath="$PROJECT_DIR$/assets/fonts/svg/video.svg" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/assets/fonts/svg-files-for-custom-font/vimeo.svg" afterPath="$PROJECT_DIR$/assets/fonts/svg/vimeo.svg" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/assets/fonts/svg-files-for-custom-font/warning.svg" afterPath="$PROJECT_DIR$/assets/fonts/svg/warning.svg" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/assets/fonts/svg-files-for-custom-font/xing.svg" afterPath="$PROJECT_DIR$/assets/fonts/svg/xing.svg" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/assets/fonts/svg-files-for-custom-font/youtube.svg" afterPath="$PROJECT_DIR$/assets/fonts/svg/youtube.svg" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/assets/fonts/iconfont.eot" afterPath="$PROJECT_DIR$/assets/fonts/iconfont.eot" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/assets/fonts/iconfont.ttf" afterPath="$PROJECT_DIR$/assets/fonts/iconfont.ttf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/assets/fonts/iconfont.woff" afterPath="$PROJECT_DIR$/assets/fonts/iconfont.woff" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/watcherTasks.xml" afterPath="$PROJECT_DIR$/.idea/watcherTasks.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/_config.yml" afterPath="$PROJECT_DIR$/_config.yml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/_data/navigation.yml" afterPath="$PROJECT_DIR$/_data/navigation.yml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/_data/network.yml" afterPath="$PROJECT_DIR$/_data/network.yml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/_data/services.yml" afterPath="$PROJECT_DIR$/_data/services.yml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/_data/socialmedia.yml" afterPath="$PROJECT_DIR$/_data/socialmedia.yml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/_includes/_footer.html" afterPath="$PROJECT_DIR$/_includes/_footer.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/_includes/_head.html" afterPath="$PROJECT_DIR$/_includes/_head.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/_includes/_masthead.html" afterPath="$PROJECT_DIR$/_includes/_masthead.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/_includes/_navigation.html" afterPath="$PROJECT_DIR$/_includes/_navigation.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/_sass/_06_typography.scss" afterPath="$PROJECT_DIR$/_sass/_06_typography.scss" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/assets/fonts/.fontcustom-manifest.json" afterPath="$PROJECT_DIR$/assets/fonts/.fontcustom-manifest.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/assets/fonts/fontcustom.yml" afterPath="$PROJECT_DIR$/assets/fonts/fontcustom.yml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/assets/fonts/iconfont-preview.html" afterPath="$PROJECT_DIR$/assets/fonts/iconfont-preview.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/assets/fonts/iconfont.css" afterPath="$PROJECT_DIR$/assets/fonts/iconfont.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/assets/fonts/iconfont.svg" afterPath="$PROJECT_DIR$/assets/fonts/iconfont.svg" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pages/getting-started.md" afterPath="$PROJECT_DIR$/pages/getting-started.md" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pages/pages-root-folder/index.md" afterPath="$PROJECT_DIR$/pages/pages-root-folder/index.md" />
     </list>
     <ignored path="canv-gauge-site.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -24,48 +187,12 @@
     <favorites_list name="canv-gauge-site" />
   </component>
   <component name="FileEditorManager">
-    <leaf>
-      <file leaf-file-name="default.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/_layouts/default.html">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file leaf-file-name="_footer.html" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/_includes/_footer.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-23">
-              <caret line="23" column="0" selection-start-line="23" selection-start-column="0" selection-end-line="23" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="_config_dev.yml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/_config_dev.yml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="90">
-              <caret line="5" column="39" selection-start-line="5" selection-start-column="29" selection-end-line="5" selection-end-column="78" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="README.md" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/README.md">
-          <provider selected="true" editor-type-id="split-provider[text-editor;MarkdownPreviewEditor]">
-            <state split_layout="FIRST">
-              <first_editor relative-caret-position="30">
-                <caret line="2" column="42" selection-start-line="2" selection-start-column="42" selection-end-line="2" selection-end-column="42" />
-                <folding />
-              </first_editor>
-              <second_editor />
-            </state>
-          </provider>
-          <provider editor-type-id="MarkdownFxPreviewEditor">
-            <state />
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="_config.yml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/_config.yml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-8">
-              <caret line="11" column="0" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
+            <state relative-caret-position="210">
+              <caret line="14" column="36" selection-start-line="14" selection-start-column="36" selection-end-line="14" selection-end-column="36" />
               <folding />
             </state>
           </provider>
@@ -79,13 +206,31 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/_includes/footer.html" />
         <option value="$PROJECT_DIR$/_includes/header.html" />
         <option value="$PROJECT_DIR$/index.md" />
-        <option value="$PROJECT_DIR$/_config.yml" />
         <option value="$PROJECT_DIR$/_layouts/default.html" />
         <option value="$PROJECT_DIR$/README.md" />
+        <option value="$PROJECT_DIR$/assets/fonts/iconfont.css" />
+        <option value="$PROJECT_DIR$/assets/css/styles_feeling_responsive.scss" />
+        <option value="$PROJECT_DIR$/assets/css/styles.scss" />
+        <option value="$PROJECT_DIR$/_includes/_head.html" />
+        <option value="$PROJECT_DIR$/assets/fonts/svg-files-for-custom-font/.fontcustom-manifest.json" />
+        <option value="$PROJECT_DIR$/gulpfile.js" />
+        <option value="$PROJECT_DIR$/.gitignore" />
+        <option value="$PROJECT_DIR$/assets/fonts/fontcustom.yml" />
+        <option value="$PROJECT_DIR$/_includes/_navigation.html" />
+        <option value="$PROJECT_DIR$/assets/fonts/.fontcustom-manifest.json" />
+        <option value="$PROJECT_DIR$/_sass/_06_typography.scss" />
+        <option value="$PROJECT_DIR$/_data/navigation.yml" />
+        <option value="$PROJECT_DIR$/_data/socialmedia.yml" />
+        <option value="$PROJECT_DIR$/pages/pages-root-folder/index.md" />
+        <option value="$PROJECT_DIR$/_config.yml" />
+        <option value="$PROJECT_DIR$/_includes/_masthead.html" />
+        <option value="$PROJECT_DIR$/_data/network.yml" />
+        <option value="$PROJECT_DIR$/pages/getting-started.md" />
+        <option value="$PROJECT_DIR$/_data/services.yml" />
+        <option value="$PROJECT_DIR$/_includes/_footer.html" />
       </list>
     </option>
   </component>
@@ -124,8 +269,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
-      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -144,8 +287,80 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="canv-gauge-site" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="canv-gauge-site" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="_sass" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="canv-gauge-site" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="canv-gauge-site" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="_layouts" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="canv-gauge-site" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="canv-gauge-site" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="_includes" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="canv-gauge-site" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="canv-gauge-site" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="_drafts" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="canv-gauge-site" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="canv-gauge-site" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="_data" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
         </subPane>
       </pane>
+      <pane id="Scope" />
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -199,6 +414,12 @@
       <method />
     </configuration>
     <configuration default="true" type="js.build_tools.gulp" factoryName="Gulp.js">
+      <node-interpreter>project</node-interpreter>
+      <node-options />
+      <gulpfile />
+      <tasks />
+      <arguments />
+      <envs />
       <method />
     </configuration>
     <configuration default="true" type="js.build_tools.npm" factoryName="npm">
@@ -235,33 +456,34 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1471982278417</updated>
-      <workItem from="1471982279667" duration="7091000" />
+      <workItem from="1471982279667" duration="11107000" />
+      <workItem from="1472116606395" duration="9367000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="7091000" />
+    <option name="totallyTimeSpent" value="20474000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1920" height="1040" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.16452992" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.16613248" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="npm" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.47916666" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="npm" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
@@ -281,224 +503,427 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/.gitignore">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="12" column="4" selection-start-line="12" selection-start-column="4" selection-end-line="12" selection-end-column="4" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/_layouts/compress.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="45">
-          <caret line="3" column="16" selection-start-line="3" selection-start-column="16" selection-end-line="3" selection-end-column="16" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/_includes/footer.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="1" column="8" selection-start-line="1" selection-start-column="8" selection-end-line="1" selection-end-column="8" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/_includes/header.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="30">
-          <caret line="2" column="6" selection-start-line="2" selection-start-column="6" selection-end-line="2" selection-end-column="6" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/_layouts/page.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="7" column="8" selection-start-line="7" selection-start-column="8" selection-end-line="7" selection-end-column="8" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/404.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="7" column="0" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/_layouts/post.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/package.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="600">
-          <caret line="33" column="19" selection-start-line="33" selection-start-column="19" selection-end-line="33" selection-end-column="19" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/.stylelintrc">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="1" column="24" selection-start-line="1" selection-start-column="24" selection-end-line="1" selection-end-column="24" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/index.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;MarkdownPreviewEditor]">
-        <state split_layout="FIRST">
-          <first_editor relative-caret-position="150">
-            <caret line="10" column="0" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
-            <folding />
-          </first_editor>
-          <second_editor />
-        </state>
-      </provider>
-      <provider editor-type-id="MarkdownFxPreviewEditor">
+    <entry file="file://$PROJECT_DIR$/.jekyll-metadata" />
+    <entry file="file://$PROJECT_DIR$/_config-development.yml" />
+    <entry file="file://$PROJECT_DIR$/rollup.config.js" />
+    <entry file="file://$PROJECT_DIR$/_data/settings.yml" />
+    <entry file="file://$PROJECT_DIR$/images/gallery-example-1.jpg">
+      <provider selected="true" editor-type-id="images">
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/params.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
+    <entry file="file://$PROJECT_DIR$/images/gallery-example-1-thumb.jpg">
+      <provider selected="true" editor-type-id="images">
+        <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/postcss.config.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
+    <entry file="file://$PROJECT_DIR$/images/gallery-example-2.jpg">
+      <provider selected="true" editor-type-id="images">
+        <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/_data/authors.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
+    <entry file="file://$PROJECT_DIR$/images/header-bus.jpg">
+      <provider selected="true" editor-type-id="images">
+        <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/assets/javascripts/scripts.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-28920">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
+    <entry file="file://$PROJECT_DIR$/images/webdesign_screenshot_tarnkappe.jpg">
+      <provider selected="true" editor-type-id="images">
+        <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/assets/stylesheets/styles.css">
+    <entry file="file://$PROJECT_DIR$/blog/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-21684">
-          <caret line="0" column="1766" selection-start-line="0" selection-start-column="1766" selection-end-line="0" selection-end-column="1766" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Gemfile.lock">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Gemfile">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/.jekyll-metadata">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-4603">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/_config-development.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="7" column="17" selection-start-line="7" selection-start-column="17" selection-end-line="7" selection-end-column="17" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/rollup.config.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="420">
-          <caret line="28" column="0" selection-start-line="28" selection-start-column="0" selection-end-line="28" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/_data/settings.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/_data/navigation.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/_layouts/default.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-23">
-          <caret line="23" column="0" selection-start-line="23" selection-start-column="0" selection-end-line="23" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/_config.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-8">
-          <caret line="11" column="0" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
-          <folding />
+        <state relative-caret-position="120">
+          <caret line="8" column="0" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/_config_dev.yml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
+        <state relative-caret-position="75">
           <caret line="5" column="39" selection-start-line="5" selection-start-column="29" selection-end-line="5" selection-end-column="78" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/README.md">
+      <provider editor-type-id="MarkdownFxPreviewEditor">
+        <state />
+      </provider>
       <provider selected="true" editor-type-id="split-provider[text-editor;MarkdownPreviewEditor]">
         <state split_layout="FIRST">
-          <first_editor relative-caret-position="30">
-            <caret line="2" column="42" selection-start-line="2" selection-start-column="42" selection-end-line="2" selection-end-column="42" />
+          <first_editor relative-caret-position="45">
+            <caret line="3" column="0" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/assets/css/atom.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-180">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/_layouts/page.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="7" column="8" selection-start-line="7" selection-start-column="8" selection-end-line="7" selection-end-column="8" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/_includes/__INSTRUCTIONS.md">
+      <provider editor-type-id="MarkdownFxPreviewEditor">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="split-provider[text-editor;MarkdownPreviewEditor]">
+        <state split_layout="FIRST">
+          <first_editor relative-caret-position="0">
+            <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
             <folding />
           </first_editor>
           <second_editor />
         </state>
       </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/assets/fonts/svg/.fontcustom-manifest.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="800">
+          <caret line="169" column="15" selection-start-line="168" selection-start-column="4" selection-end-line="171" selection-end-column="6" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/gulpfile.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="4" column="31" selection-start-line="4" selection-start-column="31" selection-end-line="4" selection-end-column="31" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="4" column="0" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/assets/fonts/iconfont-preview.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="405">
+          <caret line="282" column="40" selection-start-line="282" selection-start-column="40" selection-end-line="282" selection-end-column="40" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/assets/css/styles.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="644">
+          <caret line="46" column="11" selection-start-line="46" selection-start-column="11" selection-end-line="46" selection-end-column="11" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/assets/fonts/iconfont.svg">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/assets/fonts/fontcustom.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="300">
+          <caret line="20" column="35" selection-start-line="20" selection-start-column="35" selection-end-line="20" selection-end-column="35" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/assets/fonts/.fontcustom-manifest.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="365">
+          <caret line="200" column="20" selection-start-line="200" selection-start-column="20" selection-end-line="200" selection-end-column="20" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/assets/fonts/iconfont.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="320">
+          <caret line="52" column="22" selection-start-line="22" selection-start-column="0" selection-end-line="155" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pages/search.md">
       <provider editor-type-id="MarkdownFxPreviewEditor">
         <state />
+      </provider>
+      <provider selected="true" editor-type-id="split-provider[text-editor;MarkdownPreviewEditor]">
+        <state split_layout="FIRST">
+          <first_editor relative-caret-position="0">
+            <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+            <folding />
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/_includes/_google_search.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/_sass/_06_typography.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2375">
+          <caret line="505" column="0" selection-start-line="505" selection-start-column="0" selection-end-line="505" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pages/headers.md">
+      <provider editor-type-id="MarkdownFxPreviewEditor">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="split-provider[text-editor;MarkdownPreviewEditor]">
+        <state split_layout="FIRST">
+          <first_editor relative-caret-position="255">
+            <caret line="13" column="5" selection-start-line="13" selection-start-column="5" selection-end-line="13" selection-end-column="5" />
+            <folding />
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pages/pages-root-folder/index.md">
+      <provider editor-type-id="MarkdownFxPreviewEditor">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="split-provider[text-editor;MarkdownPreviewEditor]">
+        <state split_layout="FIRST">
+          <first_editor relative-caret-position="885">
+            <caret line="45" column="0" selection-start-line="45" selection-start-column="0" selection-end-line="45" selection-end-column="0" />
+            <folding />
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/_data/navigation.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="335">
+          <caret line="50" column="29" selection-start-line="50" selection-start-column="29" selection-end-line="50" selection-end-column="29" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/_config.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="300">
+          <caret line="29" column="0" selection-start-line="29" selection-start-column="0" selection-end-line="29" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/_includes/_head.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-90">
+          <caret line="35" column="21" selection-start-line="35" selection-start-column="21" selection-end-line="35" selection-end-column="21" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/_data/socialmedia.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="10" column="16" selection-start-line="10" selection-start-column="16" selection-end-line="10" selection-end-column="16" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pages/pages-root-folder/sitemap.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pages/getting-started.md">
+      <provider editor-type-id="MarkdownFxPreviewEditor">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="split-provider[text-editor;MarkdownPreviewEditor]">
+        <state split_layout="FIRST">
+          <first_editor relative-caret-position="165">
+            <caret line="11" column="62" selection-start-line="11" selection-start-column="62" selection-end-line="11" selection-end-column="62" />
+            <folding />
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/_data/language_de.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/_data/language.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="12" column="25" selection-start-line="12" selection-start-column="25" selection-end-line="12" selection-end-column="25" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/_data/authors.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="9" column="42" selection-start-line="9" selection-start-column="42" selection-end-line="9" selection-end-column="42" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/_data/services.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="2" column="0" selection-start-line="2" selection-start-column="1" selection-end-line="4" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/_data/network.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="1" selection-end-line="20" selection-end-column="45" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/_includes/_masthead.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-105">
+          <caret line="21" column="0" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/_drafts/gallery.md">
+      <provider editor-type-id="MarkdownFxPreviewEditor">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="split-provider[text-editor;MarkdownPreviewEditor]">
+        <state split_layout="FIRST">
+          <first_editor relative-caret-position="0">
+            <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+            <folding />
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/_drafts/page_all_frontmatter.md">
+      <provider editor-type-id="MarkdownFxPreviewEditor">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="split-provider[text-editor;MarkdownPreviewEditor]">
+        <state split_layout="FIRST">
+          <first_editor relative-caret-position="-147">
+            <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+            <folding />
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/_drafts/post_without_image.md">
+      <provider editor-type-id="MarkdownFxPreviewEditor">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="split-provider[text-editor;MarkdownPreviewEditor]">
+        <state split_layout="FIRST">
+          <first_editor relative-caret-position="0">
+            <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+            <folding />
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/_drafts/post_with_image.md">
+      <provider editor-type-id="MarkdownFxPreviewEditor">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="split-provider[text-editor;MarkdownPreviewEditor]">
+        <state split_layout="FIRST">
+          <first_editor relative-caret-position="0">
+            <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+            <folding />
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/_includes/_footer_scripts.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/_layouts/frontpage.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1725">
+          <caret line="106" column="29" selection-start-line="106" selection-start-column="29" selection-end-line="106" selection-end-column="29" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/_layouts/default.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="210">
+          <caret line="13" column="20" selection-start-line="13" selection-start-column="20" selection-end-line="13" selection-end-column="20" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/_includes/_frontpage-widget.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/_includes/_navigation.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1620">
+          <caret line="91" column="17" selection-start-line="91" selection-start-column="17" selection-end-line="91" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/_includes/_footer.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="210">
+          <caret line="14" column="36" selection-start-line="14" selection-start-column="36" selection-end-line="14" selection-end-column="36" />
+          <folding />
+        </state>
       </provider>
     </entry>
   </component>

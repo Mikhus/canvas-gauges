@@ -47,3 +47,10 @@ sitemap:
 {% endif %}
 
 @import "11_syntax-highlighting.scss";
+
+.top-bar-section {
+  a[class^="icon-"]:before,
+  a[class*=" icon-"]:before {
+    margin-right: .6rem;
+  }
+}
