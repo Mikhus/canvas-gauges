@@ -19,19 +19,12 @@
     url: "/documentation/examples/"
     icon: examples
 
-#- title: Blog
-#  url: "/blog/"
-#  side: left
-#  dropdown:
-#  - title: "Blog Archive"
-#    url: "/blog/archive/"
-
 - title: "Search"
   url: "/search/"
   side: right
   icon: search
 
-- title: "Fork"
+- title: "Fork Me"
   url: "http://github.com/Mikhus/canv-gauge"
-  side: right
+  side: left
   icon: github
