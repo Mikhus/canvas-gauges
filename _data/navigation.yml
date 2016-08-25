@@ -3,15 +3,21 @@
   side: left
   icon: home
 
-- title: Getting Started
-  url: "/getting-started/"
-  side: left
-  icon: startup
-
 - title: Documentation
   url: "/documentation/"
   side: left
   icon: docs
+  dropdown:
+  - title: Getting Started
+    url: "/getting-started/"
+    side: left
+    icon: startup
+  - title: "Developer's API Docs"
+    url: "/documentation/api/"
+    icon: api-docs
+  - title: "Examples"
+    url: "/examples/"
+    icon: examples
 
 #- title: Blog
 #  url: "/blog/"

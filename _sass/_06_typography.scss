@@ -373,6 +373,7 @@ mark {
 [data-icon]:before { content: attr(data-icon); }
 
 [data-icon]:before,
+.icon-api-docs:before,
 .icon-archive:before,
 .icon-browser:before,
 .icon-calendar:before,
@@ -392,6 +393,7 @@ mark {
 .icon-docs:before,
 .icon-dropbox:before,
 .icon-edit:before,
+.icon-examples:before,
 .icon-export:before,
 .icon-eye:before,
 .icon-facebook:before,
@@ -445,6 +447,7 @@ mark {
     font-smoothing: antialiased;
 }
 
+.icon-api-docs:before { content: "\f16c"; }
 .icon-archive:before { content: "\f100"; }
 .icon-browser:before { content: "\f101"; }
 .icon-calendar:before { content: "\f133"; }
@@ -464,6 +467,7 @@ mark {
 .icon-docs:before { content: "\f16a"; }
 .icon-dropbox:before { content: "\f10f"; }
 .icon-edit:before { content: "\f110"; }
+.icon-examples:before { content: "\f16d"; }
 .icon-export:before { content: "\f111"; }
 .icon-eye:before { content: "\f112"; }
 .icon-facebook:before { content: "\f113"; }
@@ -503,6 +507,3 @@ mark {
 .icon-warning:before { content: "\f131"; }
 .icon-xing:before { content: "\f135"; }
 .icon-youtube:before { content: "\f132"; }
-
-
-

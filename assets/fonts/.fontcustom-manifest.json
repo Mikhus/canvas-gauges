@@ -1,7 +1,7 @@
 {
   "checksum": {
-    "previous": "e414e5b6f5c81e8c5a3a144945b16f3ad9af3c9c4a0a7afefc74c9628d3fb70b",
-    "current": "e414e5b6f5c81e8c5a3a144945b16f3ad9af3c9c4a0a7afefc74c9628d3fb70b"
+    "previous": "02c43b72a9808b122c3870d68cf95a891d1b36424fc2c5dc2b16d973492518c6",
+    "current": "02c43b72a9808b122c3870d68cf95a891d1b36424fc2c5dc2b16d973492518c6"
   },
   "fonts": [
     "./iconfont.ttf",
@@ -10,6 +10,10 @@
     "./iconfont.eot"
   ],
   "glyphs": {
+    "api-docs": {
+      "codepoint": 61804,
+      "source": "svg/api-docs.svg"
+    },
     "archive": {
       "codepoint": 61696,
       "source": "svg/archive.svg"
@@ -85,6 +89,10 @@
     "edit": {
       "codepoint": 61712,
       "source": "svg/edit.svg"
+    },
+    "examples": {
+      "codepoint": 61805,
+      "source": "svg/examples.svg"
     },
     "export": {
       "codepoint": 61713,
