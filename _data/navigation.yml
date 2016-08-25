@@ -53,7 +53,7 @@
 #    url: "/design/no-header-but-image/"
 
 - title: Documentation
-  url: "/docs/2.0.0/"
+  url: "/documentation/"
   side: left
   icon: docs
 
