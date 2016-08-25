@@ -4,6 +4,9 @@ show_meta: false
 title: "<span class='icon-api-docs'></span> Canvas Gauge API"
 subheadline: "Developer's Guide Documentation"
 permalink: "/documentation/api/"
+breadcrumb: true
+header:
+  image_fullwidth: "architect.jpg"
 ---
 
 <script>

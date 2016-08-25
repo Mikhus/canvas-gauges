@@ -9,14 +9,14 @@
   icon: docs
   dropdown:
   - title: Getting Started
-    url: "/getting-started/"
+    url: "/documentation//getting-started/"
     side: left
     icon: startup
   - title: "Developer's API Docs"
     url: "/documentation/api/"
     icon: api-docs
   - title: "Examples"
-    url: "/examples/"
+    url: "/documentation/examples/"
     icon: examples
 
 #- title: Blog
