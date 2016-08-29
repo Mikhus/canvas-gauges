@@ -131,9 +131,17 @@ gulp.task('clean:docs', done => {
  *
  * @task {doc}
  */
-gulp.task('doc', ['clean:docs'], () => {
+gulp.task('doc', ['clean:docs'], done => {
     gulp.src('./lib')
-        .pipe(esdoc({ destination: './docs' }))
+        .pipe(esdoc({
+            destination: './docs',
+            package: './package.json',
+            title: 'HTML5 Canvas Gauges API Documentation',
+            styles: [
+                './assets/styles/docs.css',
+                //'../canv-gauge-site/_site/assets/css/styles.css'
+            ]
+        }))
         .on('finish', () => {
             if (process.env.TRAVIS) {
                 return ;
@@ -159,6 +167,13 @@ gulp.task('doc', ['clean:docs'], () => {
 
                 response.pipe(fs.createWriteStream('docs-coverage.svg'));
             });
+
+            //move to pages
+
+            let version = require('./package.json').version;
+            let target = '../canv-gauge-site/docs/' + version;
+
+            rimraf(target, () => fs.rename('docs', target, done));
         });
 });
 
