@@ -684,8 +684,8 @@
                     },
                     "value": {
                       "type": "Literal",
-                      "value": 5,
-                      "raw": "5",
+                      "value": 0,
+                      "raw": "0",
                       "range": [
                         1751,
                         1752
