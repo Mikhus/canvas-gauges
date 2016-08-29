@@ -48,6 +48,12 @@ window.esdocSearchIndex = [
     "class"
   ],
   [
+    "canv-gauge/lib/drawings.js~drawings",
+    "variable/index.html#static-variable-drawings",
+    "<span>drawings</span> <span class=\"search-result-import-path\">canv-gauge/lib/drawings.js</span>",
+    "variable"
+  ],
+  [
     "canv-gauge/lib/vendorize.js~vendorize",
     "function/index.html#static-function-vendorize",
     "<span>vendorize</span> <span class=\"search-result-import-path\">canv-gauge/lib/vendorize.js</span>",
@@ -826,6 +832,12 @@ window.esdocSearchIndex = [
     "class/lib/SmartCanvas.js~SmartCanvas.html#static-method-redraw",
     "lib/SmartCanvas.js~SmartCanvas.redraw",
     "method"
+  ],
+  [
+    "lib/drawings.js",
+    "file/lib/drawings.js.html",
+    "lib/drawings.js",
+    "file"
   ],
   [
     "lib/polyfill.js",

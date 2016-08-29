@@ -42,6 +42,7 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-Collection">Collection</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-vendorize">vendorize</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-GenericOptions">GenericOptions</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-drawings">drawings</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-AnimationRule">AnimationRule</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-AnimationRules">AnimationRules</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-DrawEventCallback">DrawEventCallback</a></span></span></li>
@@ -89,6 +90,7 @@ require(&apos;./polyfill&apos;);
 const GenericOptions = require(&apos;./GenericOptions&apos;);
 const BaseGauge = require(&apos;./BaseGauge&apos;);
 const SmartCanvas = require(&apos;./SmartCanvas&apos;);
+const drawings = require(&apos;./drawings&apos;);
 
 // todo: customizable fonts
 // todo: readme and documentation update
@@ -106,11 +108,6 @@ const SmartCanvas = require(&apos;./SmartCanvas&apos;);
  * Gauge configuration options
  *
  * @typedef {GenericOptions|{ticksAngle: number, startAngle: number, colorNeedleCircleOuterStart: string, colorNeedleCircleOuterEnd: string, colorNeedleCircleInnerStart: string, colorNeedleCircleInnerEnd: string, colorNeedleShadowUp: string, colorNeedleShadowDown: string, colorValueBoxRectStart: string, colorValueBoxRectEnd: string, colorValueBoxBackground: string, colorValueBoxShadow: string, needleStart: number, needleEnd: number, needleWidth: number, needleCircleSize: number, needleCircleInner: boolean, needleCircleOuter: boolean}} GaugeOptions
- */
-
-/**
- * @access private
- * @typedef {CanvasRenderingContext2D|{max: number, maxRadius: number}} Canvas2DContext
  */
 
 /**
@@ -147,142 +144,6 @@ const defaultGaugeOptions = Object.assign({}, GenericOptions, {
 
 /* istanbul ignore next: private, not testable */
 /**
- * Formats a number for display on the dial&apos;s plate using the majorTicksFormat
- * config option.
- *
- * @access private
- * @param {number} num number to format
- * @param {object} options
- * @returns {string} formatted number
- */
-function formatMajorTickNumber(num, options) {
-    let right, hasDec = false;
-
-    // First, force the correct number of digits right of the decimal.
-    if (options.majorTicksDec === 0) {
-        right = Math.round(num).toString();
-    }
-
-    else {
-        right = num.toFixed(options.majorTicksDec);
-    }
-
-    // Second, force the correct number of digits left of the decimal.
-    if (options.majorTicksInt &gt; 1) {
-        // Does this number have a decimal?
-        hasDec = ~right.indexOf(&apos;.&apos;);
-
-        // Is this number a negative number?
-        if (~right.indexOf(&apos;-&apos;)) {
-            return &apos;-&apos; + [
-                options.majorTicksInt +
-                options.majorTicksDec +
-                2 + (hasDec ? 1 : 0) - right.length
-            ].join(&apos;0&apos;) + right.replace(&apos;-&apos;, &apos;&apos;);
-        }
-
-        else {
-            return [
-                options.majorTicksInt +
-                options.majorTicksDec +
-                1 + (hasDec ? 1 : 0) - right.length
-            ].join(&apos;0&apos;) + right;
-        }
-    }
-
-    return right;
-}
-
-/* istanbul ignore next: private, not testable */
-/**
- * Transforms degrees to radians
- *
- * @param {number} degrees
- * @returns {number}
- */
-function radians(degrees) {
-    return degrees * Math.PI / 180;
-}
-
-/* istanbul ignore next: private, not testable */
-/**
- * Calculates and returns radial point coordinates
- *
- * @access private
- * @param {number} radius
- * @param {number} angle
- * @returns {{x: number, y: number}}
- */
-function radialPoint(radius, angle) {
-    return { x: -radius * Math.sin(angle), y: radius * Math.cos(angle) };
-}
-
-/* istanbul ignore next: private, not testable */
-/**
- * Creates and returns linear gradient canvas object
- *
- * @access private
- * @param {Canvas2DContext} context
- * @param {string} colorFrom
- * @param {string} colorTo
- * @param {number} length
- * @returns {CanvasGradient}
- */
-function linearGradient(context, colorFrom, colorTo, length) {
-    let grad = context.createLinearGradient(0, 0, 0, length);
-
-    grad.addColorStop(0, colorFrom);
-    grad.addColorStop(1, colorTo);
-
-    return grad;
-}
-
-/* istanbul ignore next: private, not testable */
-/**
- * Pads a given value with leading zeros using the given options
- *
- * @access private
- * @param {number} val
- * @param {GaugeOptions|{valueInt: number, valueDec: number}} options
- * @returns {string}
- */
-function padValue(val, options) {
-    let dec = options.valueDec;
-    let int = options.valueInt;
-    let i = 0;
-    let s, strVal, n;
-
-    val = parseFloat(val);
-    n = (val &lt; 0);
-    val = Math.abs(val);
-
-    if (dec &gt; 0) {
-        strVal = val.toFixed(dec).toString().split(&apos;.&apos;);
-        s = int - strVal[0].length;
-
-        for (; i &lt; s; ++i) {
-            strVal[0] = &apos;0&apos; + strVal[0];
-        }
-
-        strVal = (n ? &apos;-&apos; : &apos;&apos;) + strVal[0] + &apos;.&apos; + strVal[1];
-    }
-
-    else {
-        strVal = Math.round(val).toString();
-        s = int - strVal.length;
-
-        for (; i &lt; s; ++i) {
-            strVal = &apos;0&apos; + strVal;
-        }
-
-        strVal = (n ? &apos;-&apos; : &apos;&apos;) + strVal;
-    }
-
-    return strVal;
-}
-
-/* istanbul ignore next: private, not testable */
-/**
  * Draws gradient-filled circle on a canvas
  *
  * @access private
@@ -294,7 +155,7 @@ function padValue(val, options) {
 function drawCircle(radius, context, start, end) {
     context.beginPath();
     context.arc(0, 0, radius, 0, Math.PI * 2, true);
-    context.fillStyle = linearGradient(context, start, end, radius);
+    context.fillStyle = drawings.linearGradient(context, start, end, radius);
     context.fill();
     context.closePath();
 }
@@ -388,16 +249,16 @@ function drawHighlights(context, options) {
     for (; i &lt; s; i++) {
         let hlt = options.highlights[i];
         let vd = (options.maxValue - options.minValue) / options.ticksAngle;
-        let sa = radians(options.startAngle +
+        let sa = drawings.radians(options.startAngle +
                 (hlt.from - options.minValue) / vd);
-        let ea = radians(options.startAngle + (hlt.to - options.minValue) / vd);
-        let ps = radialPoint(r2, sa);
-        let pe = radialPoint(r1, sa);
-        let ps1 = radialPoint(r1, ea);
-        let pe1 = radialPoint(r2, ea);
+        let ea = drawings.radians(options.startAngle + (hlt.to - options.minValue) / vd);
+        let ps = drawings.radialPoint(r2, sa);
+        let pe = drawings.radialPoint(r1, sa);
+        let ps1 = drawings.radialPoint(r1, ea);
+        let pe1 = drawings.radialPoint(r2, ea);
 
         context.beginPath();
-        context.rotate(radians(90));
+        context.rotate(drawings.radians(90));
         context.arc(0, 0, r1, sa, ea, false);
         context.restore();
         context.save();
@@ -412,7 +273,7 @@ function drawHighlights(context, options) {
         context.fill();
 
         context.beginPath();
-        context.rotate(radians(90));
+        context.rotate(drawings.radians(90));
         context.arc(0, 0, r2, sa - 0.2, ea + 0.2, false);
         context.restore();
         context.closePath();
@@ -445,7 +306,7 @@ function drawMinorTicks(context, options) {
     for (; i &lt; s; ++i) {
         let angle = options.startAngle + i * (options.ticksAngle / s);
 
-        context.rotate(radians(angle));
+        context.rotate(drawings.radians(angle));
 
         context.beginPath();
         context.moveTo(0, radius);
@@ -481,11 +342,11 @@ function drawMajorTicks(context, options) {
             numberOfDefaultTicks;
 
         for (; i &lt; numberOfDefaultTicks; i++) {
-            options.majorTicks.push(formatMajorTickNumber(
+            options.majorTicks.push(drawings.formatMajorTickNumber(
                 options.minValue + (tickSize * i),
                 options));
         }
-        options.majorTicks.push(formatMajorTickNumber(
+        options.majorTicks.push(drawings.formatMajorTickNumber(
             options.maxValue,
             options));
     }
@@ -493,7 +354,7 @@ function drawMajorTicks(context, options) {
     i = 0;
     for (; i &lt; s; ++i) {
         let a = options.startAngle + i * (options.ticksAngle / (s - 1));
-        context.rotate(radians(a));
+        context.rotate(drawings.radians(a));
 
         context.beginPath();
         context.moveTo(0, r);
@@ -506,12 +367,12 @@ function drawMajorTicks(context, options) {
     }
 
     if (options.strokeTicks) {
-        context.rotate(radians(90));
+        context.rotate(drawings.radians(90));
 
         context.beginPath();
         context.arc(0, 0, r,
-            radians(options.startAngle),
-            radians(options.startAngle + options.ticksAngle),
+            drawings.radians(options.startAngle),
+            drawings.radians(options.startAngle + options.ticksAngle),
             false
         );
         context.stroke();
@@ -538,7 +399,7 @@ function drawNumbers(context, options) {
 
     for (; i &lt; s; ++i) {
         let angle = options.startAngle + i * (options.ticksAngle / (s - 1));
-        let point = radialPoint(radius, radians(angle));
+        let point = drawings.radialPoint(radius, drawings.radians(angle));
 
         if (angle === 360) angle = 0;
 
@@ -638,7 +499,7 @@ function drawNeedle(context, options) {
 
     context.save();
 
-    context.rotate(radians(
+    context.rotate(drawings.radians(
         options.startAngle + (value - options.minValue) /
         (options.maxValue - options.minValue) * options.ticksAngle));
 
@@ -652,7 +513,7 @@ function drawNeedle(context, options) {
         context.lineTo(pad2, -rOut);
         context.closePath();
 
-        context.fillStyle = linearGradient(
+        context.fillStyle = drawings.linearGradient(
             context,
             options.colorNeedleStart,
             options.colorNeedleEnd,
@@ -678,7 +539,7 @@ function drawNeedle(context, options) {
         context.lineTo(pad2, rIn);
         context.closePath();
 
-        context.fillStyle = linearGradient(
+        context.fillStyle = drawings.linearGradient(
             context,
             options.colorNeedleStart,
             options.colorNeedleEnd,
@@ -695,7 +556,7 @@ function drawNeedle(context, options) {
         if (options.needleCircleOuter) {
             context.beginPath();
             context.arc(0, 0, r1, 0, Math.PI * 2, true);
-            context.fillStyle = linearGradient(
+            context.fillStyle = drawings.linearGradient(
                 context,
                 options.colorNeedleCircleOuterStart,
                 options.colorNeedleCircleOuterEnd,
@@ -709,7 +570,7 @@ function drawNeedle(context, options) {
         if (options.needleCircleInner) {
             context.beginPath();
             context.arc(0, 0, r2, 0, Math.PI * 2, true);
-            context.fillStyle = linearGradient(
+            context.fillStyle = drawings.linearGradient(
                 context,
                 options.colorNeedleCircleInnerStart,
                 options.colorNeedleCircleInnerEnd,
@@ -719,38 +580,6 @@ function drawNeedle(context, options) {
             context.closePath();
         }
     }
-}
-
-/* istanbul ignore next: private, not testable */
-/**
- * Draws rounded corners rectangle
- *
- * @access private
- * @param {Canvas2DContext} context
- * @param {number} x
- * @param {number} y
- * @param {number} w
- * @param {number} h
- * @param {number} r
- */
-function roundRect(context, x, y, w, h, r) {
-    context.beginPath();
-
-    context.moveTo(x + r, y);
-    context.lineTo(x + w - r, y);
-
-    context.quadraticCurveTo(x + w, y, x + w, y + r);
-    context.lineTo(x + w, y + h - r);
-
-    context.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
-    context.lineTo(x + r, y + h);
-
-    context.quadraticCurveTo(x, y + h, x, y + h - r);
-    context.lineTo(x, y + r);
-
-    context.quadraticCurveTo(x, y, x + r, y);
-
-    context.closePath();
 }
 
 /* istanbul ignore next: private, not testable */
@@ -765,7 +594,7 @@ function drawValueBox(context, options, value) {
     if (!options.valueText) return;
 
     let max = context.max;
-    let text = padValue(value, options);
+    let text = drawings.padValue(value, options);
     let y = max - max * .33;
     let x = 0;
 
@@ -775,9 +604,9 @@ function drawValueBox(context, options, value) {
 
     if (options.valueBox) {
         let th = 0.12 * max;
-        let tw = context.measureText(&apos;-&apos; + padValue(0, options)).width;
+        let tw = context.measureText(&apos;-&apos; + drawings.padValue(0, options)).width;
 
-        roundRect(context,
+        drawings.roundRect(context,
             -tw / 2 - 0.025 * max,
             y - th - 0.04 * max,
             tw + 0.05 * max,

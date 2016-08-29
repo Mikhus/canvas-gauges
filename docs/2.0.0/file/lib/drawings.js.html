@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <base data-ice="baseUrl" href="../../">
-  <title data-ice="title">lib/SmartCanvas.js | HTML5 Canvas Gauges API Documentation API Document</title>
+  <title data-ice="title">lib/drawings.js | HTML5 Canvas Gauges API Documentation API Document</title>
   <link type="text/css" rel="stylesheet" href="css/style.css">
   <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
   <script src="script/prettify/prettify.js"></script>
@@ -58,7 +58,7 @@
 </div>
 </nav>
 
-<div class="content" data-ice="content"><h1 data-ice="title">lib/SmartCanvas.js</h1>
+<div class="content" data-ice="content"><h1 data-ice="title">lib/drawings.js</h1>
 <pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">/*!
  * @license
  * Minimalistic HTML5 Canvas Gauge implementation
@@ -85,223 +85,185 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+
 /**
- * Drawings on canvas using hidden canvas as a cache for better
- * performance drawings during canvas animations. SmartCanvas also
- * adopts a canvas to
+ * @access private
+ * @typedef {CanvasRenderingContext2D|{max: number, maxRadius: number}} Canvas2DContext
  */
-export default class SmartCanvas {
+
+/* istanbul ignore next: private, not testable */
+/**
+ * Common canvas drawings functions
+ */
+let drawings = {
 
     /**
-     * @constructor
-     * @param {HTMLCanvasElement} canvas
-     * @param {number} width
-     * @param {number} height
-     */
-    constructor(canvas, width, height) {
-        SmartCanvas.collection.push(this);
-
-        /**
-         * Canvas base width
-         *
-         * @type {number}
-         */
-        this.width = width || 0;
-
-        /**
-         * Canvas base height
-         *
-         * @type {number}
-         */
-        this.height = height || 0;
-
-        /**
-         * Target drawings canvas element
-         *
-         * @type {HTMLCanvasElement}
-         */
-        this.element = canvas;
-
-        this.init();
-    }
-
-    /**
-     * Initializes canvases and contexts
-     */
-    init() {
-        let pixelRatio = SmartCanvas.pixelRatio;
-
-        this.element.width = this.width * pixelRatio;
-        this.element.height = this.height * pixelRatio;
-
-        this.element.style.width = this.width + &apos;px&apos;;
-        this.element.style.height = this.height + &apos;px&apos;;
-
-        /**
-         * Canvas caching element
-         *
-         * @type {HTMLCanvasElement|Node}
-         */
-        this.elementClone = this.element.cloneNode(true);
-
-        //noinspection JSUnresolvedVariable
-        /**
-         * Target drawings canvas element 2D context
-         *
-         * @type {CanvasRenderingContext2D}
-         */
-        this.context = this.element.getContext(&apos;2d&apos;);
-
-        /**
-         * Canvas caching element 2D context
-         *
-         * @type {CanvasRenderingContext2D}
-         */
-        this.contextClone = this.elementClone.getContext(&apos;2d&apos;);
-
-        /**
-         * Actual drawings width
-         *
-         * @type {number}
-         */
-        this.drawWidth = this.element.width;
-
-        /**
-         * Actual drawings height
-         *
-         * @type {number}
-         */
-        this.drawHeight = this.element.height;
-
-        /**
-         * X-coordinate of drawings zero point
-         *
-         * @type {number}
-         */
-        this.drawX = this.drawWidth / 2;
-
-        /**
-         * Y-coordinate of drawings zero point
-         *
-         * @type {number}
-         */
-        this.drawY = this.drawHeight / 2;
-
-        /**
-         * Minimal side length in pixels of the drawing
-         *
-         * @type {number}
-         */
-        this.minSide = this.drawX &lt; this.drawY ? this.drawX : this.drawY;
-
-        this.elementClone.initialized = false;
-
-        this.contextClone.translate(this.drawX, this.drawY);
-        this.contextClone.save();
-
-        this.context.translate(this.drawX, this.drawY);
-        this.context.save();
-
-        this.context.max = this.contextClone.max = this.minSide;
-        this.context.maxRadius = this.contextClone.maxRadius = null;
-    }
-
-    /**
-     * Destroys this object, removing the references from memory
-     */
-    destroy() {
-        let index = SmartCanvas.collection.indexOf(this);
-
-        /* istanbul ignore else */
-        if (~index) {
-            SmartCanvas.collection.splice(index, 1);
-        }
-
-        // derefecence all created elements
-        this.context.max = null;
-        delete this.context.max;
-
-        this.context.maxRadius = null;
-        delete this.context.maxRadius;
-
-        this.context = null;
-        this.contextClone = null;
-        this.elementClone = null;
-        this.element = null;
-
-        /**
-         * On canvas redraw event callback
-         *
-         * @type {function|null|undefined}
-         */
-        this.onRedraw = null;
-    }
-
-    /**
-     * Commits the drawings
-     */
-    commit() {
-        let scale = SmartCanvas.pixelRatio;
-
-        if (scale !== 1) {
-            this.contextClone.scale(scale, scale);
-            this.contextClone.save();
-        }
-
-        return this;
-    }
-
-    /**
-     * Redraw this object
-     */
-    redraw() {
-        this.init();
-
-        /**
-         * On canvas redraw event callback
-         *
-         * @type {function(): *}
-         */
-        this.onRedraw &amp;&amp; this.onRedraw();
-
-        return this;
-    }
-
-    /**
-     * Returns current device pixel ratio
+     * Draws rounded corners rectangle
      *
+     * @access private
+     * @param {Canvas2DContext} context
+     * @param {number} x
+     * @param {number} y
+     * @param {number} w
+     * @param {number} h
+     * @param {number} r
+     */
+    roundRect(context, x, y, w, h, r) {
+        context.beginPath();
+
+        context.moveTo(x + r, y);
+        context.lineTo(x + w - r, y);
+
+        context.quadraticCurveTo(x + w, y, x + w, y + r);
+        context.lineTo(x + w, y + h - r);
+
+        context.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+        context.lineTo(x + r, y + h);
+
+        context.quadraticCurveTo(x, y + h, x, y + h - r);
+        context.lineTo(x, y + r);
+
+        context.quadraticCurveTo(x, y, x + r, y);
+
+        context.closePath();
+    },
+
+    /* istanbul ignore next: private, not testable */
+    /**
+     * Pads a given value with leading zeros using the given options
+     *
+     * @access private
+     * @param {number} val
+     * @param {GaugeOptions|{valueInt: number, valueDec: number}} options
+     * @returns {string}
+     */
+    padValue(val, options) {
+        let dec = options.valueDec;
+        let int = options.valueInt;
+        let i = 0;
+        let s, strVal, n;
+
+        val = parseFloat(val);
+        n = (val &lt; 0);
+        val = Math.abs(val);
+
+        if (dec &gt; 0) {
+            strVal = val.toFixed(dec).toString().split(&apos;.&apos;);
+            s = int - strVal[0].length;
+
+            for (; i &lt; s; ++i) {
+                strVal[0] = &apos;0&apos; + strVal[0];
+            }
+
+            strVal = (n ? &apos;-&apos; : &apos;&apos;) + strVal[0] + &apos;.&apos; + strVal[1];
+        }
+
+        else {
+            strVal = Math.round(val).toString();
+            s = int - strVal.length;
+
+            for (; i &lt; s; ++i) {
+                strVal = &apos;0&apos; + strVal;
+            }
+
+            strVal = (n ? &apos;-&apos; : &apos;&apos;) + strVal;
+        }
+
+        return strVal;
+    },
+
+    /**
+     * Formats a number for display on the dial&apos;s plate using the majorTicksFormat
+     * config option.
+     *
+     * @access private
+     * @param {number} num number to format
+     * @param {object} options
+     * @returns {string} formatted number
+     */
+    formatMajorTickNumber(num, options) {
+        let right, hasDec = false;
+
+        // First, force the correct number of digits right of the decimal.
+        if (options.majorTicksDec === 0) {
+            right = Math.round(num).toString();
+        }
+
+        else {
+            right = num.toFixed(options.majorTicksDec);
+        }
+
+        // Second, force the correct number of digits left of the decimal.
+        if (options.majorTicksInt &gt; 1) {
+            // Does this number have a decimal?
+            hasDec = ~right.indexOf(&apos;.&apos;);
+
+            // Is this number a negative number?
+            if (~right.indexOf(&apos;-&apos;)) {
+                return &apos;-&apos; + [
+                        options.majorTicksInt +
+                        options.majorTicksDec +
+                        2 + (hasDec ? 1 : 0) - right.length
+                    ].join(&apos;0&apos;) + right.replace(&apos;-&apos;, &apos;&apos;);
+            }
+
+            else {
+                return [
+                        options.majorTicksInt +
+                        options.majorTicksDec +
+                        1 + (hasDec ? 1 : 0) - right.length
+                    ].join(&apos;0&apos;) + right;
+            }
+        }
+
+        return right;
+    },
+
+    /**
+     * Transforms degrees to radians
+     *
+     * @param {number} degrees
      * @returns {number}
      */
-    static get pixelRatio() {
-        /* istanbul ignore next */
-        //noinspection JSUnresolvedVariable
-        return window.devicePixelRatio || 1;
-    }
+    radians(degrees) {
+        return degrees * Math.PI / 180;
+    },
 
     /**
-     * Forces redraw all canvas in the current collection
+     * Calculates and returns radial point coordinates
+     *
+     * @access private
+     * @param {number} radius
+     * @param {number} angle
+     * @returns {{x: number, y: number}}
      */
-    static redraw() {
-        let i = 0;
-        let s = SmartCanvas.collection.length;
+    radialPoint(radius, angle) {
+        return { x: -radius * Math.sin(angle), y: radius * Math.cos(angle) };
+    },
 
-        for (; i &lt; s; i++) {
-            SmartCanvas.collection[i].redraw();
-        }
+    /**
+     * Creates and returns linear gradient canvas object
+     *
+     * @access private
+     * @param {Canvas2DContext} context
+     * @param {string} colorFrom
+     * @param {string} colorTo
+     * @param {number} length
+     * @returns {CanvasGradient}
+     */
+    linearGradient(context, colorFrom, colorTo, length) {
+        let grad = context.createLinearGradient(0, 0, 0, length);
+
+        grad.addColorStop(0, colorFrom);
+        grad.addColorStop(1, colorTo);
+
+        return grad;
     }
-}
+};
 
-SmartCanvas.collection = [];
+export default  drawings;
 
-/* istanbul ignore next: very browser-specific testing required to cover */
-//noinspection JSUnresolvedVariable
-if (window.matchMedia) {
-    //noinspection JSUnresolvedFunction
-    window.matchMedia(&apos;screen and (min-resolution: 2dppx)&apos;)
-        .addListener(SmartCanvas.redraw);
-}
-
-module.exports = SmartCanvas;
+module.exports = drawings;
 </code></pre>
 
 </div>

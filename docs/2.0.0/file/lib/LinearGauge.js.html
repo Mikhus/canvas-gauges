@@ -42,6 +42,7 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-Collection">Collection</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-vendorize">vendorize</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-GenericOptions">GenericOptions</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-drawings">drawings</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-AnimationRule">AnimationRule</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-AnimationRules">AnimationRules</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-DrawEventCallback">DrawEventCallback</a></span></span></li>
@@ -88,6 +89,7 @@ require(&apos;./polyfill&apos;);
 
 const BaseGauge = require(&apos;./BaseGauge&apos;);
 const GenericOptions = require(&apos;./GenericOptions&apos;);
+const drawings = require(&apos;./drawings&apos;);
 
 /**
  * Linear gauge configuration options
@@ -102,8 +104,26 @@ const GenericOptions = require(&apos;./GenericOptions&apos;);
  */
 let defaultLinearGaugeOptions = Object.assign({}, GenericOptions, {
     // basic options
-    orientation: &apos;vertical&apos;
+    orientation: &apos;vertical&apos;,
+    borderRadius: 0,
+    width: 80,
+    height: 240
 });
+
+function drawRectangle(contaxt, options, x, y, w, h) {
+    if (options.borderRadius) {
+        // rounded corners rect
+    }
+
+    else {
+        // flat rect
+    }
+}
+
+function drawLinearPlate(context, options) {
+    context.save();
+    console.log(options);
+}
 
 /**
  * Minimalistic HTML5 Canvas Linear Gauge
@@ -115,6 +135,14 @@ export default class LinearGauge extends BaseGauge {
      * @param {LinearGaugeOptions} options
      */
     constructor(options) {
+        if (!options.width) options.width = defaultLinearGaugeOptions.width;
+        if (!options.height) options.height = defaultLinearGaugeOptions.height;
+
+        if (!options.orientation) {
+            options.orientation = options.width &gt; options.height ?
+                &apos;horizontal&apos; : &apos;vertical&apos;;
+        }
+
         options = Object.assign({}, defaultLinearGaugeOptions, options || {});
 
         super(options);
@@ -126,6 +154,36 @@ export default class LinearGauge extends BaseGauge {
      * @returns {LinearGauge}
      */
     draw() {
+        let canvas = this.canvas;
+        let [x, y, w, h] = [
+            -canvas.drawX,
+            -canvas.drawY,
+            canvas.drawWidth,
+            canvas.drawHeight
+        ];
+        let options = this.options;
+
+        if (!canvas.elementClone.initialized) {
+            let context = canvas.contextClone;
+
+            // clear the cache
+            context.clearRect(x, y, w, h);
+            context.save();
+
+            drawLinearPlate(context, options);
+
+            canvas.elementClone.initialized = true;
+        }
+
+        this.canvas.commit();
+
+        // clear the canvas
+        canvas.context.clearRect(x, y, w, h);
+        canvas.context.save();
+
+        canvas.context.drawImage(canvas.elementClone, x, y, w, h);
+        canvas.context.save();
+
         return this;
     }
 

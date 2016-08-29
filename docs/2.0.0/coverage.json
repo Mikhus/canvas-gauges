@@ -1,7 +1,7 @@
 {
   "coverage": "100%",
-  "expectCount": 66,
-  "actualCount": 66,
+  "expectCount": 67,
+  "actualCount": 67,
   "files": {
     "lib/Animation.js": {
       "expectCount": 9,
@@ -41,6 +41,11 @@
     "lib/SmartCanvas.js": {
       "expectCount": 20,
       "actualCount": 20,
+      "undocumentLines": []
+    },
+    "lib/drawings.js": {
+      "expectCount": 1,
+      "actualCount": 1,
       "undocumentLines": []
     },
     "lib/vendorize.js": {
