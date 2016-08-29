@@ -37,7 +37,8 @@ function es6concat(type = 'all') {
         'lib/SmartCanvas.js',
         'lib/GenericOptions.js',
         'lib/Collection.js',
-        'lib/BaseGauge.js'
+        'lib/BaseGauge.js',
+        'lib/drawings.js'
     ];
 
     switch (type.toLowerCase()) {
