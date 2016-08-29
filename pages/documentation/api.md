@@ -16,7 +16,7 @@ function fitme(frame) {
     frame.style.visibility = 'visible';
     var links = doc.getElementsByTagName('a');
     for (var i = 0, s = links.length; i < s; i++) {
-       if (links[i].href.match(/^https?:\/\//)) {
+       if (links[i].hostname !== document.location.hostname) {
            links[i].setAttribute('target', '_top');
        }
     }
