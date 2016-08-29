@@ -9,7 +9,7 @@
   icon: docs
   dropdown:
   - title: Getting Started
-    url: "/documentation//getting-started/"
+    url: "/documentation/getting-started/"
     side: left
     icon: startup
   - title: "Developer's API Docs"

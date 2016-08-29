@@ -31,4 +31,4 @@ homepage: true
 
 # Coming soon... 
 
-## Meanwhile, [API Docs](/documentation/api/) are available.
+## Meanwhile, [API Docs]({{ site.url }}/documentation/api/) are available.
