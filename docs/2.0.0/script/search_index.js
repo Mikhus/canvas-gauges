@@ -54,6 +54,42 @@ window.esdocSearchIndex = [
     "variable"
   ],
   [
+    "canv-gauge/lib/drawings.js~formatmajorticknumber",
+    "function/index.html#static-function-formatMajorTickNumber",
+    "<span>formatMajorTickNumber</span> <span class=\"search-result-import-path\">canv-gauge/lib/drawings.js</span>",
+    "function"
+  ],
+  [
+    "canv-gauge/lib/drawings.js~lineargradient",
+    "function/index.html#static-function-linearGradient",
+    "<span>linearGradient</span> <span class=\"search-result-import-path\">canv-gauge/lib/drawings.js</span>",
+    "function"
+  ],
+  [
+    "canv-gauge/lib/drawings.js~padvalue",
+    "function/index.html#static-function-padValue",
+    "<span>padValue</span> <span class=\"search-result-import-path\">canv-gauge/lib/drawings.js</span>",
+    "function"
+  ],
+  [
+    "canv-gauge/lib/drawings.js~radialpoint",
+    "function/index.html#static-function-radialPoint",
+    "<span>radialPoint</span> <span class=\"search-result-import-path\">canv-gauge/lib/drawings.js</span>",
+    "function"
+  ],
+  [
+    "canv-gauge/lib/drawings.js~radians",
+    "function/index.html#static-function-radians",
+    "<span>radians</span> <span class=\"search-result-import-path\">canv-gauge/lib/drawings.js</span>",
+    "function"
+  ],
+  [
+    "canv-gauge/lib/drawings.js~roundrect",
+    "function/index.html#static-function-roundRect",
+    "<span>roundRect</span> <span class=\"search-result-import-path\">canv-gauge/lib/drawings.js</span>",
+    "function"
+  ],
+  [
     "canv-gauge/lib/vendorize.js~vendorize",
     "function/index.html#static-function-vendorize",
     "<span>vendorize</span> <span class=\"search-result-import-path\">canv-gauge/lib/vendorize.js</span>",
@@ -529,13 +565,13 @@ window.esdocSearchIndex = [
   ],
   [
     "lib/basegauge.js~basegauge#value",
-    "class/lib/BaseGauge.js~BaseGauge.html#instance-get-value",
+    "class/lib/BaseGauge.js~BaseGauge.html#instance-set-value",
     "lib/BaseGauge.js~BaseGauge#value",
     "member"
   ],
   [
     "lib/basegauge.js~basegauge#value",
-    "class/lib/BaseGauge.js~BaseGauge.html#instance-set-value",
+    "class/lib/BaseGauge.js~BaseGauge.html#instance-get-value",
     "lib/BaseGauge.js~BaseGauge#value",
     "member"
   ],

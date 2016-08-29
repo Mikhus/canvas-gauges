@@ -516,7 +516,7 @@
     "access": null,
     "description": null,
     "lineNumber": 1,
-    "content": "const SmartCanvas = require('./SmartCanvas');\nconst Animation = require('./Animation');\nconst Collection = require('./Collection');\nconst DomObserver = require('./DomObserver');\n\nlet gaugesCollection = new Collection();\n\n/**\n * Basic abstract BaseGauge class implementing common functionality\n * for different type of gauges.\n *\n * It should not be instantiated directly but must be extended by a final\n * gauge implementation.\n *\n * @abstract\n * @example\n *\n * class MyCoolGauge extends BaseGauge {\n *\n *     // theses methods below MUST be implemented:\n *\n *     constructor(options) {\n *        // ... do something with options\n *        super(options);\n *        // ... implement anything else\n *     }\n *\n *     draw() {\n *         // ... some implementation here\n *         return this;\n *     }\n * }\n */\nexport default class BaseGauge {\n\n    /**\n     * @constructor\n     * @abstract\n     * @param {GenericOptions} options\n     */\n    constructor(options) {\n        let className = this.constructor.name;\n\n        if (className === 'BaseGauge') {\n            throw new TypeError('Attempt to instantiate abstract class!');\n        }\n\n        gaugesCollection.push(this);\n\n        /**\n         * Gauge type name\n         *\n         * @type {string} typeName\n         */\n        this.typeName = className;\n\n        /**\n         * Gauge type class\n         *\n         * @type {BaseGauge} type\n         */\n        this.type = window[className];\n\n        options.minValue = parseFloat(options.minValue);\n        options.maxValue = parseFloat(options.maxValue);\n\n        /**\n         * Gauge options\n         *\n         * @type {GenericOptions} options\n         */\n        this.options = options || {};\n\n        if (!options.renderTo) {\n            throw TypeError('Canvas element was not specified when creating ' +\n                'the Gauge object!');\n        }\n\n        let canvas = options.renderTo.tagName ?\n            options.renderTo :\n            /* istanbul ignore next: to be tested with e2e tests */\n            document.getElementById(options.renderTo);\n\n        /**\n         * @type {SmartCanvas} canvas\n         */\n        this.canvas = new SmartCanvas(canvas, options.width, options.height);\n        this.canvas.onRedraw = this.draw.bind(this);\n\n        /**\n         * @type {Animation} animation\n         */\n        this.animation = new Animation(\n            options.animationRule,\n            options.animationDuration);\n    }\n\n    /**\n     * Sets new value for this gauge.\n     * If gauge is animated by configuration it will trigger a proper animation.\n     * Upsetting a value triggers gauge redraw.\n     *\n     * @param {number} value\n     */\n    set value(value) {\n        if (value === this.options.value) return;\n\n        if (this.options.animation) {\n            let fromValue = this.options.value;\n\n            /**\n             * @type {number}\n             * @access private\n             */\n            this._value = value;\n\n            this.animation.animate(percent => {\n                this.options.value = fromValue + (value - fromValue) * percent;\n\n                this.draw();\n            }, () => {\n                this.options.value = value;\n                delete this._value;\n                this.draw();\n            });\n        }\n\n        else {\n            this.options.value = value;\n            this.draw();\n        }\n    }\n\n    /**\n     * Returns current value of the gauge\n     *\n     * @return {number}\n     */\n    get value() {\n        return typeof this._value === 'undefined' ?\n            this.options.value : this._value;\n    }\n\n    /**\n     * Updates gauge configuration options at runtime and redraws the gauge\n     *\n     * @param {GenericOptions} options\n     * @returns {BaseGauge}\n     */\n    update(options) {\n        Object.assign(this.options, options || {});\n\n        this.canvas.width = this.options.width;\n        this.canvas.height = this.options.height;\n\n        this.animation.rule = this.options.animationRule;\n        this.animation.duration = this.options.animationDuration;\n\n        this.canvas.redraw();\n\n        return this;\n    }\n\n    /**\n     * Performs destruction of this object properly\n     */\n    destroy() {\n        let index = gaugesCollection.indexOf(this);\n\n        /* istanbul ignore else */\n        if (~index) {\n            //noinspection JSUnresolvedFunction\n            gaugesCollection.splice(index, 1);\n        }\n\n        this.canvas.destroy();\n        this.canvas = null;\n\n        this.animation.destroy();\n        this.animation = null;\n    }\n\n    /**\n     * Triggering gauge render on a canvas.\n     *\n     * @abstract\n     * @returns {BaseGauge}\n     */\n    draw() {\n        throw new TypeError('draw() must be implemented by a child class!');\n    }\n\n    /**\n     * Collection of the gauges on a page.\n     * The collection is singleton collection of the gauges spread\n     * across all gauge types.\n     *\n     * @return {Collection}\n     */\n    static get collection() {\n        return gaugesCollection;\n    }\n\n    /**\n     * Inject given gauge object into DOM\n     *\n     * @param {string} Type\n     * @param {GenericOptions} options\n     */\n    static initialize(Type, options) {\n        new DomObserver(options, 'canvas', Type);\n    }\n}\n\nwindow['BaseGauge'] = BaseGauge;\n\nmodule.exports = BaseGauge;\n"
+    "content": "const SmartCanvas = require('./SmartCanvas');\nconst Animation = require('./Animation');\nconst Collection = require('./Collection');\nconst DomObserver = require('./DomObserver');\n\nlet gaugesCollection = new Collection();\n\n/**\n * Basic abstract BaseGauge class implementing common functionality\n * for different type of gauges.\n *\n * It should not be instantiated directly but must be extended by a final\n * gauge implementation.\n *\n * @abstract\n * @example\n *\n * class MyCoolGauge extends BaseGauge {\n *\n *     // theses methods below MUST be implemented:\n *\n *     constructor(options) {\n *        // ... do something with options\n *        super(options);\n *        // ... implement anything else\n *     }\n *\n *     draw() {\n *         // ... some implementation here\n *         return this;\n *     }\n * }\n */\nexport default class BaseGauge {\n\n    /**\n     * @constructor\n     * @abstract\n     * @param {GenericOptions} options\n     */\n    constructor(options) {\n        let className = this.constructor.name;\n\n        if (className === 'BaseGauge') {\n            throw new TypeError('Attempt to instantiate abstract class!');\n        }\n\n        gaugesCollection.push(this);\n\n        /**\n         * Gauge type name\n         *\n         * @type {string} typeName\n         */\n        this.typeName = className;\n\n        /**\n         * Gauge type class\n         *\n         * @type {BaseGauge} type\n         */\n        this.type = window[className];\n\n        options.minValue = parseFloat(options.minValue);\n        options.maxValue = parseFloat(options.maxValue);\n\n        /**\n         * Gauge options\n         *\n         * @type {GenericOptions} options\n         */\n        this.options = options || {};\n\n        if (!options.renderTo) {\n            throw TypeError('Canvas element was not specified when creating ' +\n                'the Gauge object!');\n        }\n\n        let canvas = options.renderTo.tagName ?\n            options.renderTo :\n            /* istanbul ignore next: to be tested with e2e tests */\n            document.getElementById(options.renderTo);\n\n        /**\n         * @type {SmartCanvas} canvas\n         */\n        this.canvas = new SmartCanvas(canvas, options.width, options.height);\n        this.canvas.onRedraw = this.draw.bind(this);\n\n        /**\n         * @type {Animation} animation\n         */\n        this.animation = new Animation(\n            options.animationRule,\n            options.animationDuration);\n    }\n\n    /**\n     * Sets new value for this gauge.\n     * If gauge is animated by configuration it will trigger a proper animation.\n     * Upsetting a value triggers gauge redraw.\n     *\n     * @param {number} value\n     */\n    set value(value) {\n        if (value === this.options.value) return;\n\n        if (this.options.animation) {\n            let fromValue = this.options.value;\n\n            /**\n             * @type {number}\n             * @access private\n             */\n            this._value = value;\n\n            this.animation.animate(percent => {\n                this.options.value = fromValue + (value - fromValue) * percent;\n\n                this.draw();\n            }, () => {\n                this.options.value = value;\n                delete this._value;\n                this.draw();\n            });\n        }\n\n        else {\n            this.options.value = value;\n            this.draw();\n        }\n    }\n\n    /**\n     * Returns current value of the gauge\n     *\n     * @return {number}\n     */\n    get value() {\n        return typeof this._value === 'undefined' ?\n            this.options.value : this._value;\n    }\n\n    /**\n     * Updates gauge configuration options at runtime and redraws the gauge\n     *\n     * @param {GaugeOptions} options\n     * @returns {BaseGauge}\n     */\n    update(options) {\n        Object.assign(this.options, options || {});\n\n        this.canvas.width = this.options.width;\n        this.canvas.height = this.options.height;\n\n        this.animation.rule = this.options.animationRule;\n        this.animation.duration = this.options.animationDuration;\n\n        this.canvas.redraw();\n\n        return this;\n    }\n\n    /**\n     * Performs destruction of this object properly\n     */\n    destroy() {\n        let index = gaugesCollection.indexOf(this);\n\n        /* istanbul ignore else */\n        if (~index) {\n            //noinspection JSUnresolvedFunction\n            gaugesCollection.splice(index, 1);\n        }\n\n        this.canvas.destroy();\n        this.canvas = null;\n\n        this.animation.destroy();\n        this.animation = null;\n    }\n\n    /**\n     * Triggering gauge render on a canvas.\n     *\n     * @abstract\n     * @returns {BaseGauge}\n     */\n    draw() {\n        throw new TypeError('draw() must be implemented by a child class!');\n    }\n\n    /**\n     * Collection of the gauges on a page.\n     * The collection is singleton collection of the gauges spread\n     * across all gauge types.\n     *\n     * @return {Collection}\n     */\n    static get collection() {\n        return gaugesCollection;\n    }\n\n    /**\n     * Inject given gauge object into DOM\n     *\n     * @param {string} Type\n     * @param {GenericOptions} options\n     */\n    static initialize(Type, options) {\n        new DomObserver(options, 'canvas', Type);\n    }\n}\n\nwindow['BaseGauge'] = BaseGauge;\n\nmodule.exports = BaseGauge;\n"
   },
   {
     "__docId__": 21,
@@ -872,7 +872,7 @@
       {
         "nullable": null,
         "types": [
-          "GenericOptions"
+          "GaugeOptions"
         ],
         "spread": false,
         "optional": false,
@@ -1564,7 +1564,7 @@
     "access": null,
     "description": null,
     "lineNumber": 27,
-    "content": "/*!\n * @license\n * Minimalistic HTML5 Canvas Gauge implementation\n *\n * This code is subject to MIT license.\n *\n * Copyright (c) 2012 Mykhailo Stadnyk <mikhus@gmail.com>\n *\n * Permission is hereby granted, free of charge, to any person obtaining a copy\n * of this software and associated documentation files (the \"Software\"), to deal\n * in the Software without restriction, including without limitation the rights\n * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell\n * copies of the Software, and to permit persons to whom the Software is\n * furnished to do so, subject to the following conditions:\n *\n * The above copyright notice and this permission notice shall be included in\n * all copies or substantial portions of the Software.\n *\n * THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\n * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\n * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\n * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\n * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\n * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\n * SOFTWARE.\n */\nrequire('./polyfill');\n\nconst GenericOptions = require('./GenericOptions');\nconst BaseGauge = require('./BaseGauge');\nconst SmartCanvas = require('./SmartCanvas');\nconst drawings = require('./drawings');\n\n// todo: customizable fonts\n// todo: readme and documentation update\n// todo: github pages\n// todo: wiki\n// todo: LinearGauge implementation\n// todo: online configurator\n// todo: online packager\n// todo: e2e tests\n// todo: angular 2 integration\n// todo: react integrations\n// todo: typescript definitions\n\n/**\n * Gauge configuration options\n *\n * @typedef {GenericOptions|{ticksAngle: number, startAngle: number, colorNeedleCircleOuterStart: string, colorNeedleCircleOuterEnd: string, colorNeedleCircleInnerStart: string, colorNeedleCircleInnerEnd: string, colorNeedleShadowUp: string, colorNeedleShadowDown: string, colorValueBoxRectStart: string, colorValueBoxRectEnd: string, colorValueBoxBackground: string, colorValueBoxShadow: string, needleStart: number, needleEnd: number, needleWidth: number, needleCircleSize: number, needleCircleInner: boolean, needleCircleOuter: boolean}} GaugeOptions\n */\n\n/**\n * Default gauge configuration options\n *\n * @access private\n * @type {GaugeOptions}\n */\nconst defaultGaugeOptions = Object.assign({}, GenericOptions, {\n    // basic options\n    ticksAngle: 270,\n    startAngle: 45,\n\n    // colors\n    colorNeedleCircleOuterStart: '#f0f0f0',\n    colorNeedleCircleOuterEnd: '#ccc',\n    colorNeedleCircleInnerStart: '#e8e8e8',\n    colorNeedleCircleInnerEnd: '#f5f5f5',\n    colorNeedleShadowUp: 'rgba(2,255,255,0.2)',\n    colorNeedleShadowDown: 'rgba(188,143,143,0.45)',\n    colorValueBoxRectStart: '#888',\n    colorValueBoxRectEnd: '#666',\n    colorValueBoxBackground: '#babab2',\n    colorValueBoxShadow: 'rgba(0,0,0,1)',\n\n    // needle\n    needleStart: 0,\n    needleEnd: 85,\n    needleWidth: 4,\n    needleCircleSize: 10,\n    needleCircleInner: true,\n    needleCircleOuter: true\n});\n\n/* istanbul ignore next: private, not testable */\n/**\n * Draws gradient-filled circle on a canvas\n *\n * @access private\n * @param {number} radius\n * @param {Canvas2DContext} context\n * @param {string} start gradient start color\n * @param {string} end gradient end color\n */\nfunction drawCircle(radius, context, start, end) {\n    context.beginPath();\n    context.arc(0, 0, radius, 0, Math.PI * 2, true);\n    context.fillStyle = drawings.linearGradient(context, start, end, radius);\n    context.fill();\n    context.closePath();\n}\n\n/* istanbul ignore next: private, not testable */\n/**\n * Returns max radius without borders for the gauge\n *\n * @param {Canvas2DContext} context\n * @param {GaugeOptions} options\n * @return {number}\n */\nfunction maxRadius(context, options) {\n    if (!context.maxRadius) {\n        context.maxRadius = context.max\n            - options.borderShadowWidth\n            - options.borderOuterWidth\n            - options.borderMiddleWidth\n            - options.borderInnerWidth;\n    }\n\n    return context.maxRadius;\n}\n\n/* istanbul ignore next: private, not testable */\n/**\n * Draws gauge plate on the canvas\n *\n * @access private\n * @param {Canvas2DContext} context\n * @param {GaugeOptions} options\n */\nfunction drawPlate(context, options) {\n    let d0 = options.borderShadowWidth;\n    let r0 = context.max -  options.borderShadowWidth;\n    let r1 = r0 - options.borderOuterWidth;\n    let r2 = r1 - options.borderMiddleWidth;\n    let r3 = maxRadius(context, options);\n\n    context.save();\n\n    if (options.glow) {\n        context.shadowBlur = d0;\n        context.shadowColor = options.colorBorderShadow;\n    }\n\n    if (options.borderOuterWidth) {\n        drawCircle(r0, context,\n            options.colorBorderOuterStart,\n            options.colorBorderOuterEnd);\n    }\n\n    if (options.borderMiddleWidth) {\n        drawCircle(r1, context,\n            options.colorBorderMiddleStart,\n            options.colorBorderMiddleEnd);\n    }\n\n    if (options.borderInnerWidth) {\n        drawCircle(r2, context,\n            options.colorBorderInnerStart,\n            options.colorBorderInnerEnd);\n    }\n\n    context.restore();\n\n    context.beginPath();\n    context.arc(0, 0, r3, 0, Math.PI * 2, true);\n    context.fillStyle = options.colorPlate;\n    context.fill();\n    context.closePath();\n\n    context.save();\n}\n\n/* istanbul ignore next: private, not testable */\n/**\n * Draws gauge highlight areas on a canvas\n *\n * @access private\n * @param {Canvas2DContext} context\n * @param {GaugeOptions} options\n */\nfunction drawHighlights(context, options) {\n    context.save();\n\n    let r1 = maxRadius(context, options) - context.max * .05;\n    let r2 = r1 - context.max * .15;\n    let i = 0, s = options.highlights.length;\n\n    for (; i < s; i++) {\n        let hlt = options.highlights[i];\n        let vd = (options.maxValue - options.minValue) / options.ticksAngle;\n        let sa = drawings.radians(options.startAngle +\n                (hlt.from - options.minValue) / vd);\n        let ea = drawings.radians(options.startAngle + (hlt.to - options.minValue) / vd);\n        let ps = drawings.radialPoint(r2, sa);\n        let pe = drawings.radialPoint(r1, sa);\n        let ps1 = drawings.radialPoint(r1, ea);\n        let pe1 = drawings.radialPoint(r2, ea);\n\n        context.beginPath();\n        context.rotate(drawings.radians(90));\n        context.arc(0, 0, r1, sa, ea, false);\n        context.restore();\n        context.save();\n        context.moveTo(ps.x, ps.y);\n        context.lineTo(pe.x, pe.y);\n        context.lineTo(ps1.x, ps1.y);\n        context.lineTo(pe1.x, pe1.y);\n        context.lineTo(ps.x, ps.y);\n        context.closePath();\n\n        context.fillStyle = hlt.color;\n        context.fill();\n\n        context.beginPath();\n        context.rotate(drawings.radians(90));\n        context.arc(0, 0, r2, sa - 0.2, ea + 0.2, false);\n        context.restore();\n        context.closePath();\n\n        context.fillStyle = options.colorPlate;\n        context.fill();\n        context.save();\n    }\n}\n\n/* istanbul ignore next: private, not testable */\n/**\n * Draws minor ticks bar on a canvas\n *\n * @access private\n * @param {Canvas2DContext} context\n * @param {GaugeOptions} options\n */\nfunction drawMinorTicks(context, options) {\n    let radius = maxRadius(context, options) - context.max * .05;\n\n    context.lineWidth = SmartCanvas.pixelRatio;\n    context.strokeStyle = options.colorMinorTicks;\n\n    context.save();\n\n    let s = options.minorTicks * (options.majorTicks.length - 1);\n    let i = 0;\n\n    for (; i < s; ++i) {\n        let angle = options.startAngle + i * (options.ticksAngle / s);\n\n        context.rotate(drawings.radians(angle));\n\n        context.beginPath();\n        context.moveTo(0, radius);\n        context.lineTo(0, radius - context.max * .075);\n        context.stroke();\n        context.restore();\n        context.closePath();\n\n        context.save();\n    }\n}\n\n/* istanbul ignore next: private, not testable */\n/**\n * Draws gauge major ticks bar on a canvas\n *\n * @param {Canvas2DContext} context\n * @param {GaugeOptions} options\n */\nfunction drawMajorTicks(context, options) {\n    let r = maxRadius(context, options) - context.max * .05;\n    let i = 0;\n    let s = options.majorTicks.length;\n    let pixelRatio = SmartCanvas.pixelRatio;\n\n    context.lineWidth = 2 * pixelRatio;\n    context.strokeStyle = options.colorMajorTicks;\n    context.save();\n\n    if (s === 0) {\n        let numberOfDefaultTicks = 5;\n        let tickSize = (options.maxValue - options.minValue) /\n            numberOfDefaultTicks;\n\n        for (; i < numberOfDefaultTicks; i++) {\n            options.majorTicks.push(drawings.formatMajorTickNumber(\n                options.minValue + (tickSize * i),\n                options));\n        }\n        options.majorTicks.push(drawings.formatMajorTickNumber(\n            options.maxValue,\n            options));\n    }\n\n    i = 0;\n    for (; i < s; ++i) {\n        let a = options.startAngle + i * (options.ticksAngle / (s - 1));\n        context.rotate(drawings.radians(a));\n\n        context.beginPath();\n        context.moveTo(0, r);\n        context.lineTo(0, r - context.max * .15);\n        context.stroke();\n\n        context.restore();\n        context.closePath();\n        context.save();\n    }\n\n    if (options.strokeTicks) {\n        context.rotate(drawings.radians(90));\n\n        context.beginPath();\n        context.arc(0, 0, r,\n            drawings.radians(options.startAngle),\n            drawings.radians(options.startAngle + options.ticksAngle),\n            false\n        );\n        context.stroke();\n        context.restore();\n        context.closePath();\n\n        context.save();\n    }\n}\n\n/* istanbul ignore next: private, not testable */\n/**\n * Draws gauge bar numbers\n *\n * @access private\n * @param {Canvas2DContext} context\n * @param {GaugeOptions} options\n */\nfunction drawNumbers(context, options) {\n    let radius = maxRadius(context, options) - context.max * .35;\n    let points = {};\n    let i = 0;\n    let s = options.majorTicks.length;\n\n    for (; i < s; ++i) {\n        let angle = options.startAngle + i * (options.ticksAngle / (s - 1));\n        let point = drawings.radialPoint(radius, drawings.radians(angle));\n\n        if (angle === 360) angle = 0;\n\n        if (points[angle]) {\n            continue; //already drawn at this place, skipping\n        }\n\n        points[angle] = true;\n\n        context.font = 20 * (context.max / 200) + 'px Arial';\n        context.fillStyle = options.colorNumbers;\n        context.lineWidth = 0;\n        context.textAlign = 'center';\n        context.fillText(options.majorTicks[i], point.x, point.y + 3);\n    }\n}\n\n/* istanbul ignore next: private, not testable */\n/**\n * Draws gauge title\n *\n * @access private\n * @param {Canvas2DContext} context\n * @param {GaugeOptions} options\n */\nfunction drawTitle(context, options) {\n    if (!options.title) return;\n\n    context.save();\n    context.font = 24 * (context.max / 200) + 'px Arial';\n    context.fillStyle = options.colorTitle;\n    context.textAlign = 'center';\n    context.fillText(options.title, 0, -context.max / 4.25, context.max * .8);\n    context.restore();\n}\n\n/* istanbul ignore next: private, not testable */\n/**\n * Draws units name on the gauge\n *\n * @access private\n * @param {Canvas2DContext} context\n * @param {GaugeOptions} options\n */\nfunction drawUnits(context, options) {\n    if (!options.units) return;\n\n    context.save();\n    context.font = 22 * (context.max / 200) + 'px Arial';\n    context.fillStyle = options.colorUnits;\n    context.textAlign = 'center';\n    context.fillText(options.units, 0, context.max / 3.25, context.max * .8);\n    context.restore();\n}\n\n/* istanbul ignore next: private, not testable */\n/**\n * Draws gauge needle shadow\n *\n * @access private\n * @param {Canvas2DContext} context\n * @param {GaugeOptions} options\n */\nfunction drawNeedleShadow(context, options) {\n    if (!options.needleShadow) return;\n\n    context.shadowOffsetX = 2;\n    context.shadowOffsetY = 2;\n    context.shadowBlur = 10;\n    context.shadowColor = options.colorNeedleShadowDown;\n}\n\n/* istanbul ignore next: private, not testable */\n/**\n * Draws gauge needle\n *\n * @access private\n * @param {Canvas2DContext} context\n * @param {GaugeOptions} options\n */\nfunction drawNeedle(context, options) {\n    if (!options.needle) return;\n\n    let value = options.value;\n    let max = maxRadius(context, options);\n    let r1 = max / 100 * options.needleCircleSize;\n    let r2 = max / 100 * options.needleCircleSize * 0.75;\n    let rIn = max / 100 * options.needleEnd;\n    let rStart = options.needleStart ?\n            max / 100 * options.needleStart : 0,\n            rOut = max * .2;\n    let pad1 = max / 100 * options.needleWidth;\n    let pad2 = max / 100 * options.needleWidth / 2;\n    let pixelRatio = SmartCanvas.pixelRatio;\n\n    drawNeedleShadow(context, options);\n\n    context.save();\n\n    context.rotate(drawings.radians(\n        options.startAngle + (value - options.minValue) /\n        (options.maxValue - options.minValue) * options.ticksAngle));\n\n    if (options.needleType === 'arrow') {\n        context.beginPath();\n        context.moveTo(-pad2, -rOut);\n        context.lineTo(-pad1, 0);\n        context.lineTo(-1 * pixelRatio, rIn);\n        context.lineTo(pixelRatio, rIn);\n        context.lineTo(pad1, 0);\n        context.lineTo(pad2, -rOut);\n        context.closePath();\n\n        context.fillStyle = drawings.linearGradient(\n            context,\n            options.colorNeedleStart,\n            options.colorNeedleEnd,\n            rIn - rOut);\n        context.fill();\n\n        context.beginPath();\n        context.lineTo(-0.5 * pixelRatio, rIn);\n        context.lineTo(-1 * pixelRatio, rIn);\n        context.lineTo(-pad1, 0);\n        context.lineTo(-pad2, -rOut);\n        context.lineTo(pad2 / 2 * pixelRatio - 2 * pixelRatio, -rOut);\n        context.closePath();\n        context.fillStyle = options.colorNeedleShadowUp;\n        context.fill();\n    }\n\n    else { // simple line needle\n        context.beginPath();\n        context.moveTo(-pad2, rIn);\n        context.lineTo(-pad2, rStart);\n        context.lineTo(pad2, rStart);\n        context.lineTo(pad2, rIn);\n        context.closePath();\n\n        context.fillStyle = drawings.linearGradient(\n            context,\n            options.colorNeedleStart,\n            options.colorNeedleEnd,\n            rIn - rOut\n        );\n        context.fill();\n    }\n\n    context.restore();\n\n    if (options.needleCircleSize) {\n        drawNeedleShadow(context, options);\n\n        if (options.needleCircleOuter) {\n            context.beginPath();\n            context.arc(0, 0, r1, 0, Math.PI * 2, true);\n            context.fillStyle = drawings.linearGradient(\n                context,\n                options.colorNeedleCircleOuterStart,\n                options.colorNeedleCircleOuterEnd,\n                r1\n            );\n            context.fill();\n            context.restore();\n            context.closePath();\n        }\n\n        if (options.needleCircleInner) {\n            context.beginPath();\n            context.arc(0, 0, r2, 0, Math.PI * 2, true);\n            context.fillStyle = drawings.linearGradient(\n                context,\n                options.colorNeedleCircleInnerStart,\n                options.colorNeedleCircleInnerEnd,\n                r2\n            );\n            context.fill();\n            context.closePath();\n        }\n    }\n}\n\n/* istanbul ignore next: private, not testable */\n/**\n * Draws gauge value box\n *\n * @param {Canvas2DContext} context\n * @param {GaugeOptions} options\n * @param {number} value\n */\nfunction drawValueBox(context, options, value) {\n    if (!options.valueText) return;\n\n    let max = context.max;\n    let text = drawings.padValue(value, options);\n    let y = max - max * .33;\n    let x = 0;\n\n    context.save();\n    context.font = 40 * (max / 200) + 'px Led';\n    context.save();\n\n    if (options.valueBox) {\n        let th = 0.12 * max;\n        let tw = context.measureText('-' + drawings.padValue(0, options)).width;\n\n        drawings.roundRect(context,\n            -tw / 2 - 0.025 * max,\n            y - th - 0.04 * max,\n            tw + 0.05 * max,\n            th + 0.07 * max,\n            0.025 * max);\n    }\n\n    let grd = context.createRadialGradient(\n        x,\n        y - 0.12 * max - 0.025 * max + (0.12 * max + 0.045 * max) / 2,\n        max / 10,\n        x,\n        y - 0.12 * max - 0.025 * max + (0.12 * max + 0.045 * max) / 2,\n        max / 5\n    );\n\n    grd.addColorStop(0, options.colorValueBoxRectStart);\n    grd.addColorStop(1, options.colorValueBoxRectEnd);\n\n    context.strokeStyle = grd;\n    context.lineWidth = 0.05 * max;\n    context.stroke();\n\n    context.shadowBlur = 0.012 * max;\n    context.shadowColor = options.colorValueBoxShadow;\n\n    context.fillStyle = options.colorValueBoxBackground;\n    context.fill();\n\n    context.restore();\n\n    context.shadowOffsetX = 0.004 * max;\n    context.shadowOffsetY = 0.004 * max;\n    context.shadowBlur = 0.012 * max;\n    context.shadowColor = options.colorValueTextShadow;\n\n    context.fillStyle = options.colorValueText;\n    context.textAlign = 'center';\n    context.fillText(text, -x, y);\n\n    context.restore();\n}\n\n/**\n * Minimalistic HTML5 Canvas Gauge\n * @example\n *  var gauge = new Gauge({\n *     renderTo: 'gauge-id', // identifier of HTML canvas element or element itself\n *     width: 400,\n *     height: 400,\n *     units: 'Km/h',\n *     title: false,\n *     value: 0,\n *     minValue: 0,\n *     maxValue: 220,\n *     majorTicks: [\n *         '0','20','40','60','80','100','120','140','160','180','200','220'\n *     ],\n *     minorTicks: 2,\n *     strokeTicks: false,\n *     highlights: [\n *         { from: 0, to: 50, color: 'rgba(0,255,0,.15)' },\n *         { from: 50, to: 100, color: 'rgba(255,255,0,.15)' },\n *         { from: 100, to: 150, color: 'rgba(255,30,0,.25)' },\n *         { from: 150, to: 200, color: 'rgba(255,0,225,.25)' },\n *         { from: 200, to: 220, color: 'rgba(0,0,255,.25)' }\n *     ],\n *     colorPlate: '#222',\n *     colorMajorTicks: '#f5f5f5',\n *     colorMinorTicks: '#ddd',\n *     colorTitle: '#fff',\n *     colorUnits: '#ccc',\n *     colorNumbers: '#eee',\n *     colorNeedleStart: 'rgba(240, 128, 128, 1)',\n *     colorNeedleEnd: 'rgba(255, 160, 122, .9)',\n *     valueBox: true,\n *     animationRule: 'bounce'\n * });\n * // draw initially\n * gauge.draw();\n * // animate\n * setInterval(() => {\n *    gauge.value = Math.random() * -220 + 220;\n * }, 1000);\n */\nexport default class Gauge extends BaseGauge {\n\n    /**\n     * @constructor\n     * @param {GaugeOptions} options\n     */\n    constructor(options) {\n        options = Object.assign({}, defaultGaugeOptions, options || {});\n\n        /* istanbul ignore if */\n        if (isNaN(options.startAngle)) options.startAngle = 45;\n        /* istanbul ignore if */\n        if (isNaN(options.ticksAngle)) options.ticksAngle = 270;\n\n        /* istanbul ignore if */\n        if (options.ticksAngle > 360) options.ticksAngle = 360;\n        /* istanbul ignore if */\n        if (options.ticksAngle < 0) options.ticksAngle = 0;\n\n        /* istanbul ignore if */\n        if (options.startAngle < 0) options.startAngle = 0;\n        /* istanbul ignore if */\n        if (options.startAngle > 360) options.startAngle = 360;\n\n        super(options);\n    }\n\n    /**\n     * Triggering gauge render on a canvas.\n     *\n     * @returns {Gauge}\n     */\n    draw() {\n        let canvas = this.canvas;\n        let [x, y, w, h] = [\n            -canvas.drawX,\n            -canvas.drawY,\n            canvas.drawWidth,\n            canvas.drawHeight\n        ];\n        let options = this.options;\n\n        if (!canvas.elementClone.initialized) {\n            let context = canvas.contextClone;\n\n            // clear the cache\n            context.clearRect(x, y, w, h);\n            context.save();\n\n            drawPlate(context, options);\n            drawHighlights(context, options);\n            drawMinorTicks(context, options);\n            drawMajorTicks(context, options);\n            drawNumbers(context, options);\n            drawTitle(context, options);\n            drawUnits(context, options);\n\n            canvas.elementClone.initialized = true;\n        }\n\n        this.canvas.commit();\n\n        // clear the canvas\n        canvas.context.clearRect(x, y, w, h);\n        canvas.context.save();\n\n        canvas.context.drawImage(canvas.elementClone, x, y, w, h);\n        canvas.context.save();\n\n        drawValueBox(canvas.context, options, this.value);\n        drawNeedle(canvas.context, options);\n\n        return this;\n    }\n}\n\nwindow['Gauge'] = Gauge;\n\nBaseGauge.initialize('Gauge', defaultGaugeOptions);\n\nmodule.exports = Gauge;\n"
+    "content": "/*!\n * @license\n * Minimalistic HTML5 Canvas Gauge implementation\n *\n * This code is subject to MIT license.\n *\n * Copyright (c) 2012 Mykhailo Stadnyk <mikhus@gmail.com>\n *\n * Permission is hereby granted, free of charge, to any person obtaining a copy\n * of this software and associated documentation files (the \"Software\"), to deal\n * in the Software without restriction, including without limitation the rights\n * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell\n * copies of the Software, and to permit persons to whom the Software is\n * furnished to do so, subject to the following conditions:\n *\n * The above copyright notice and this permission notice shall be included in\n * all copies or substantial portions of the Software.\n *\n * THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\n * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\n * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\n * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\n * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\n * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\n * SOFTWARE.\n */\nrequire('./polyfill');\n\nconst GenericOptions = require('./GenericOptions');\nconst BaseGauge = require('./BaseGauge');\nconst SmartCanvas = require('./SmartCanvas');\nconst drawings = require('./drawings');\n\n// todo: customizable fonts\n// todo: readme and documentation update\n// todo: github pages\n// todo: wiki\n// todo: LinearGauge implementation\n// todo: online configurator\n// todo: online packager\n// todo: e2e tests\n// todo: angular 2 integration\n// todo: react integrations\n// todo: typescript definitions\n\n/**\n * Gauge configuration options\n *\n * @typedef {GenericOptions|{ticksAngle: number, startAngle: number, colorNeedleCircleOuterStart: string, colorNeedleCircleOuterEnd: string, colorNeedleCircleInnerStart: string, colorNeedleCircleInnerEnd: string, colorNeedleShadowUp: string, colorNeedleShadowDown: string, colorValueBoxRectStart: string, colorValueBoxRectEnd: string, colorValueBoxBackground: string, colorValueBoxShadow: string, needleStart: number, needleEnd: number, needleWidth: number, needleCircleSize: number, needleCircleInner: boolean, needleCircleOuter: boolean}} GaugeOptions\n */\n\n/**\n * Default gauge configuration options\n *\n * @access private\n * @type {GaugeOptions}\n */\nconst defaultGaugeOptions = Object.assign({}, GenericOptions, {\n    // basic options\n    ticksAngle: 270,\n    startAngle: 45,\n\n    // colors\n    colorNeedleCircleOuterStart: '#f0f0f0',\n    colorNeedleCircleOuterEnd: '#ccc',\n    colorNeedleCircleInnerStart: '#e8e8e8',\n    colorNeedleCircleInnerEnd: '#f5f5f5',\n    colorNeedleShadowUp: 'rgba(2,255,255,0.2)',\n    colorNeedleShadowDown: 'rgba(188,143,143,0.45)',\n    colorValueBoxRectStart: '#888',\n    colorValueBoxRectEnd: '#666',\n    colorValueBoxBackground: '#babab2',\n    colorValueBoxShadow: 'rgba(0,0,0,1)',\n\n    // needle\n    needleStart: 0,\n    needleEnd: 85,\n    needleWidth: 4,\n    needleCircleSize: 10,\n    needleCircleInner: true,\n    needleCircleOuter: true\n});\n\n/* istanbul ignore next: private, not testable */\n/**\n * Draws gradient-filled circle on a canvas\n *\n * @access private\n * @param {number} radius\n * @param {Canvas2DContext} context\n * @param {string} start gradient start color\n * @param {string} end gradient end color\n */\nfunction drawCircle(radius, context, start, end) {\n    context.beginPath();\n    context.arc(0, 0, radius, 0, Math.PI * 2, true);\n    context.fillStyle = drawings.linearGradient(context, start, end, radius);\n    context.fill();\n    context.closePath();\n}\n\n/* istanbul ignore next: private, not testable */\n/**\n * Returns max radius without borders for the gauge\n *\n * @param {Canvas2DContext} context\n * @param {GaugeOptions} options\n * @return {number}\n */\nfunction maxRadius(context, options) {\n    if (!context.maxRadius) {\n        context.maxRadius = context.max\n            - options.borderShadowWidth\n            - options.borderOuterWidth\n            - options.borderMiddleWidth\n            - options.borderInnerWidth;\n    }\n\n    return context.maxRadius;\n}\n\n/* istanbul ignore next: private, not testable */\n/**\n * Draws gauge plate on the canvas\n *\n * @access private\n * @param {Canvas2DContext} context\n * @param {GaugeOptions} options\n */\nfunction drawPlate(context, options) {\n    let d0 = options.borderShadowWidth;\n    let r0 = context.max -  options.borderShadowWidth;\n    let r1 = r0 - options.borderOuterWidth;\n    let r2 = r1 - options.borderMiddleWidth;\n    let r3 = maxRadius(context, options);\n\n    context.save();\n\n    if (options.glow) {\n        context.shadowBlur = d0;\n        context.shadowColor = options.colorBorderShadow;\n    }\n\n    if (options.borderOuterWidth) {\n        drawCircle(r0, context,\n            options.colorBorderOuterStart,\n            options.colorBorderOuterEnd);\n    }\n\n    if (options.borderMiddleWidth) {\n        drawCircle(r1, context,\n            options.colorBorderMiddleStart,\n            options.colorBorderMiddleEnd);\n    }\n\n    if (options.borderInnerWidth) {\n        drawCircle(r2, context,\n            options.colorBorderInnerStart,\n            options.colorBorderInnerEnd);\n    }\n\n    context.restore();\n\n    context.beginPath();\n    context.arc(0, 0, r3, 0, Math.PI * 2, true);\n    context.fillStyle = options.colorPlate;\n    context.fill();\n    context.closePath();\n\n    context.save();\n}\n\n/* istanbul ignore next: private, not testable */\n/**\n * Draws gauge highlight areas on a canvas\n *\n * @access private\n * @param {Canvas2DContext} context\n * @param {GaugeOptions} options\n */\nfunction drawHighlights(context, options) {\n    context.save();\n\n    let r1 = maxRadius(context, options) - context.max * .05;\n    let r2 = r1 - context.max * .15;\n    let i = 0, s = options.highlights.length;\n\n    for (; i < s; i++) {\n        let hlt = options.highlights[i];\n        let vd = (options.maxValue - options.minValue) / options.ticksAngle;\n        let sa = drawings.radians(options.startAngle +\n                (hlt.from - options.minValue) / vd);\n        let ea = drawings.radians(options.startAngle + (hlt.to - options.minValue) / vd);\n        let ps = drawings.radialPoint(r2, sa);\n        let pe = drawings.radialPoint(r1, sa);\n        let ps1 = drawings.radialPoint(r1, ea);\n        let pe1 = drawings.radialPoint(r2, ea);\n\n        context.beginPath();\n        context.rotate(drawings.radians(90));\n        context.arc(0, 0, r1, sa, ea, false);\n        context.restore();\n        context.save();\n        context.moveTo(ps.x, ps.y);\n        context.lineTo(pe.x, pe.y);\n        context.lineTo(ps1.x, ps1.y);\n        context.lineTo(pe1.x, pe1.y);\n        context.lineTo(ps.x, ps.y);\n        context.closePath();\n\n        context.fillStyle = hlt.color;\n        context.fill();\n\n        context.beginPath();\n        context.rotate(drawings.radians(90));\n        context.arc(0, 0, r2, sa - 0.2, ea + 0.2, false);\n        context.restore();\n        context.closePath();\n\n        context.fillStyle = options.colorPlate;\n        context.fill();\n        context.save();\n    }\n}\n\n/* istanbul ignore next: private, not testable */\n/**\n * Draws minor ticks bar on a canvas\n *\n * @access private\n * @param {Canvas2DContext} context\n * @param {GaugeOptions} options\n */\nfunction drawMinorTicks(context, options) {\n    let radius = maxRadius(context, options) - context.max * .05;\n\n    context.lineWidth = SmartCanvas.pixelRatio;\n    context.strokeStyle = options.colorMinorTicks;\n\n    context.save();\n\n    let s = options.minorTicks * (options.majorTicks.length - 1);\n    let i = 0;\n\n    for (; i < s; ++i) {\n        let angle = options.startAngle + i * (options.ticksAngle / s);\n\n        context.rotate(drawings.radians(angle));\n\n        context.beginPath();\n        context.moveTo(0, radius);\n        context.lineTo(0, radius - context.max * .075);\n        context.stroke();\n        context.restore();\n        context.closePath();\n\n        context.save();\n    }\n}\n\n/* istanbul ignore next: private, not testable */\n/**\n * Draws gauge major ticks bar on a canvas\n *\n * @param {Canvas2DContext} context\n * @param {GaugeOptions} options\n */\nfunction drawMajorTicks(context, options) {\n    let r = maxRadius(context, options) - context.max * .05;\n    let i = 0;\n    let s = options.majorTicks.length;\n    let pixelRatio = SmartCanvas.pixelRatio;\n\n    context.lineWidth = 2 * pixelRatio;\n    context.strokeStyle = options.colorMajorTicks;\n    context.save();\n\n    if (s === 0) {\n        let numberOfDefaultTicks = 5;\n        let tickSize = (options.maxValue - options.minValue) /\n            numberOfDefaultTicks;\n\n        for (; i < numberOfDefaultTicks; i++) {\n            options.majorTicks.push(drawings.formatMajorTickNumber(\n                options.minValue + (tickSize * i),\n                options));\n        }\n        options.majorTicks.push(drawings.formatMajorTickNumber(\n            options.maxValue,\n            options));\n    }\n\n    i = 0;\n    for (; i < s; ++i) {\n        let a = options.startAngle + i * (options.ticksAngle / (s - 1));\n        context.rotate(drawings.radians(a));\n\n        context.beginPath();\n        context.moveTo(0, r);\n        context.lineTo(0, r - context.max * .15);\n        context.stroke();\n\n        context.restore();\n        context.closePath();\n        context.save();\n    }\n\n    if (options.strokeTicks) {\n        context.rotate(drawings.radians(90));\n\n        context.beginPath();\n        context.arc(0, 0, r,\n            drawings.radians(options.startAngle),\n            drawings.radians(options.startAngle + options.ticksAngle),\n            false\n        );\n        context.stroke();\n        context.restore();\n        context.closePath();\n\n        context.save();\n    }\n}\n\n/* istanbul ignore next: private, not testable */\n/**\n * Draws gauge bar numbers\n *\n * @access private\n * @param {Canvas2DContext} context\n * @param {GaugeOptions} options\n */\nfunction drawNumbers(context, options) {\n    let radius = maxRadius(context, options) - context.max * .35;\n    let points = {};\n    let i = 0;\n    let s = options.majorTicks.length;\n\n    for (; i < s; ++i) {\n        let angle = options.startAngle + i * (options.ticksAngle / (s - 1));\n        let point = drawings.radialPoint(radius, drawings.radians(angle));\n\n        if (angle === 360) angle = 0;\n\n        if (points[angle]) {\n            continue; //already drawn at this place, skipping\n        }\n\n        points[angle] = true;\n\n        context.font = 20 * (context.max / 200) + 'px Arial';\n        context.fillStyle = options.colorNumbers;\n        context.lineWidth = 0;\n        context.textAlign = 'center';\n        context.fillText(options.majorTicks[i], point.x, point.y + 3);\n    }\n}\n\n/* istanbul ignore next: private, not testable */\n/**\n * Draws gauge title\n *\n * @access private\n * @param {Canvas2DContext} context\n * @param {GaugeOptions} options\n */\nfunction drawTitle(context, options) {\n    if (!options.title) return;\n\n    context.save();\n    context.font = 24 * (context.max / 200) + 'px Arial';\n    context.fillStyle = options.colorTitle;\n    context.textAlign = 'center';\n    context.fillText(options.title, 0, -context.max / 4.25, context.max * .8);\n    context.restore();\n}\n\n/* istanbul ignore next: private, not testable */\n/**\n * Draws units name on the gauge\n *\n * @access private\n * @param {Canvas2DContext} context\n * @param {GaugeOptions} options\n */\nfunction drawUnits(context, options) {\n    if (!options.units) return;\n\n    context.save();\n    context.font = 22 * (context.max / 200) + 'px Arial';\n    context.fillStyle = options.colorUnits;\n    context.textAlign = 'center';\n    context.fillText(options.units, 0, context.max / 3.25, context.max * .8);\n    context.restore();\n}\n\n/* istanbul ignore next: private, not testable */\n/**\n * Draws gauge needle shadow\n *\n * @access private\n * @param {Canvas2DContext} context\n * @param {GaugeOptions} options\n */\nfunction drawNeedleShadow(context, options) {\n    if (!options.needleShadow) return;\n\n    context.shadowOffsetX = 2;\n    context.shadowOffsetY = 2;\n    context.shadowBlur = 10;\n    context.shadowColor = options.colorNeedleShadowDown;\n}\n\n/* istanbul ignore next: private, not testable */\n/**\n * Draws gauge needle\n *\n * @access private\n * @param {Canvas2DContext} context\n * @param {GaugeOptions} options\n */\nfunction drawNeedle(context, options) {\n    if (!options.needle) return;\n\n    let value = options.value;\n    let max = maxRadius(context, options);\n    let r1 = max / 100 * options.needleCircleSize;\n    let r2 = max / 100 * options.needleCircleSize * 0.75;\n    let rIn = max / 100 * options.needleEnd;\n    let rStart = options.needleStart ?\n            max / 100 * options.needleStart : 0,\n            rOut = max * .2;\n    let pad1 = max / 100 * options.needleWidth;\n    let pad2 = max / 100 * options.needleWidth / 2;\n    let pixelRatio = SmartCanvas.pixelRatio;\n\n    drawNeedleShadow(context, options);\n\n    context.save();\n\n    context.rotate(drawings.radians(\n        options.startAngle + (value - options.minValue) /\n        (options.maxValue - options.minValue) * options.ticksAngle));\n\n    if (options.needleType === 'arrow') {\n        context.beginPath();\n        context.moveTo(-pad2, -rOut);\n        context.lineTo(-pad1, 0);\n        context.lineTo(-1 * pixelRatio, rIn);\n        context.lineTo(pixelRatio, rIn);\n        context.lineTo(pad1, 0);\n        context.lineTo(pad2, -rOut);\n        context.closePath();\n\n        context.fillStyle = drawings.linearGradient(\n            context,\n            options.colorNeedleStart,\n            options.colorNeedleEnd,\n            rIn - rOut);\n        context.fill();\n\n        context.beginPath();\n        context.lineTo(-0.5 * pixelRatio, rIn);\n        context.lineTo(-1 * pixelRatio, rIn);\n        context.lineTo(-pad1, 0);\n        context.lineTo(-pad2, -rOut);\n        context.lineTo(pad2 / 2 * pixelRatio - 2 * pixelRatio, -rOut);\n        context.closePath();\n        context.fillStyle = options.colorNeedleShadowUp;\n        context.fill();\n    }\n\n    else { // simple line needle\n        context.beginPath();\n        context.moveTo(-pad2, rIn);\n        context.lineTo(-pad2, rStart);\n        context.lineTo(pad2, rStart);\n        context.lineTo(pad2, rIn);\n        context.closePath();\n\n        context.fillStyle = drawings.linearGradient(\n            context,\n            options.colorNeedleStart,\n            options.colorNeedleEnd,\n            rIn - rOut\n        );\n        context.fill();\n    }\n\n    context.restore();\n\n    if (options.needleCircleSize) {\n        drawNeedleShadow(context, options);\n\n        if (options.needleCircleOuter) {\n            context.beginPath();\n            context.arc(0, 0, r1, 0, Math.PI * 2, true);\n            context.fillStyle = drawings.linearGradient(\n                context,\n                options.colorNeedleCircleOuterStart,\n                options.colorNeedleCircleOuterEnd,\n                r1\n            );\n            context.fill();\n            context.restore();\n            context.closePath();\n        }\n\n        if (options.needleCircleInner) {\n            context.beginPath();\n            context.arc(0, 0, r2, 0, Math.PI * 2, true);\n            context.fillStyle = drawings.linearGradient(\n                context,\n                options.colorNeedleCircleInnerStart,\n                options.colorNeedleCircleInnerEnd,\n                r2\n            );\n            context.fill();\n            context.closePath();\n        }\n    }\n}\n\n/* istanbul ignore next: private, not testable */\n/**\n * Draws gauge value box\n *\n * @param {Canvas2DContext} context\n * @param {GaugeOptions} options\n * @param {number} value\n */\nfunction drawValueBox(context, options, value) {\n    if (!options.valueText) return;\n\n    let max = context.max;\n    let text = drawings.padValue(value, options);\n    let y = max - max * .33;\n    let x = 0;\n\n    context.save();\n    context.font = 40 * (max / 200) + 'px Led';\n    context.save();\n\n    if (options.valueBox) {\n        let th = 0.12 * max;\n        let tw = context.measureText('-' + drawings.padValue(0, options)).width;\n\n        drawings.roundRect(context,\n            -tw / 2 - 0.025 * max,\n            y - th - 0.04 * max,\n            tw + 0.05 * max,\n            th + 0.07 * max,\n            0.025 * max);\n    }\n\n    let grd = context.createRadialGradient(\n        x,\n        y - 0.12 * max - 0.025 * max + (0.12 * max + 0.045 * max) / 2,\n        max / 10,\n        x,\n        y - 0.12 * max - 0.025 * max + (0.12 * max + 0.045 * max) / 2,\n        max / 5\n    );\n\n    grd.addColorStop(0, options.colorValueBoxRectStart);\n    grd.addColorStop(1, options.colorValueBoxRectEnd);\n\n    context.strokeStyle = grd;\n    context.lineWidth = 0.05 * max;\n    context.stroke();\n\n    context.shadowBlur = 0.012 * max;\n    context.shadowColor = options.colorValueBoxShadow;\n\n    context.fillStyle = options.colorValueBoxBackground;\n    context.fill();\n\n    context.restore();\n\n    context.shadowOffsetX = 0.004 * max;\n    context.shadowOffsetY = 0.004 * max;\n    context.shadowBlur = 0.012 * max;\n    context.shadowColor = options.colorValueTextShadow;\n\n    context.fillStyle = options.colorValueText;\n    context.textAlign = 'center';\n    context.fillText(text, -x, y);\n\n    context.restore();\n}\n\n/**\n * Minimalistic HTML5 Canvas Gauge\n * @example\n *  var gauge = new Gauge({\n *     renderTo: 'gauge-id', // identifier of HTML canvas element or element itself\n *     width: 400,\n *     height: 400,\n *     units: 'Km/h',\n *     title: false,\n *     value: 0,\n *     minValue: 0,\n *     maxValue: 220,\n *     majorTicks: [\n *         '0','20','40','60','80','100','120','140','160','180','200','220'\n *     ],\n *     minorTicks: 2,\n *     strokeTicks: false,\n *     highlights: [\n *         { from: 0, to: 50, color: 'rgba(0,255,0,.15)' },\n *         { from: 50, to: 100, color: 'rgba(255,255,0,.15)' },\n *         { from: 100, to: 150, color: 'rgba(255,30,0,.25)' },\n *         { from: 150, to: 200, color: 'rgba(255,0,225,.25)' },\n *         { from: 200, to: 220, color: 'rgba(0,0,255,.25)' }\n *     ],\n *     colorPlate: '#222',\n *     colorMajorTicks: '#f5f5f5',\n *     colorMinorTicks: '#ddd',\n *     colorTitle: '#fff',\n *     colorUnits: '#ccc',\n *     colorNumbers: '#eee',\n *     colorNeedleStart: 'rgba(240, 128, 128, 1)',\n *     colorNeedleEnd: 'rgba(255, 160, 122, .9)',\n *     valueBox: true,\n *     animationRule: 'bounce'\n * });\n * // draw initially\n * gauge.draw();\n * // animate\n * setInterval(() => {\n *    gauge.value = Math.random() * -220 + 220;\n * }, 1000);\n */\nexport default class Gauge extends BaseGauge {\n\n    /**\n     * @constructor\n     * @param {GaugeOptions} options\n     */\n    constructor(options) {\n        options = Object.assign({}, defaultGaugeOptions, options || {});\n\n        /* istanbul ignore if */\n        if (isNaN(options.startAngle)) options.startAngle = 45;\n        /* istanbul ignore if */\n        if (isNaN(options.ticksAngle)) options.ticksAngle = 270;\n\n        /* istanbul ignore if */\n        if (options.ticksAngle > 360) options.ticksAngle = 360;\n        /* istanbul ignore if */\n        if (options.ticksAngle < 0) options.ticksAngle = 0;\n\n        /* istanbul ignore if */\n        if (options.startAngle < 0) options.startAngle = 0;\n        /* istanbul ignore if */\n        if (options.startAngle > 360) options.startAngle = 360;\n\n        super(options);\n    }\n\n    /* istanbul ignore next */\n    /**\n     * Triggering gauge render on a canvas.\n     *\n     * @returns {Gauge}\n     */\n    draw() {\n        let canvas = this.canvas;\n        let [x, y, w, h] = [\n            -canvas.drawX,\n            -canvas.drawY,\n            canvas.drawWidth,\n            canvas.drawHeight\n        ];\n        let options = this.options;\n\n        if (!canvas.elementClone.initialized) {\n            let context = canvas.contextClone;\n\n            // clear the cache\n            context.clearRect(x, y, w, h);\n            context.save();\n\n            drawPlate(context, options);\n            drawHighlights(context, options);\n            drawMinorTicks(context, options);\n            drawMajorTicks(context, options);\n            drawNumbers(context, options);\n            drawTitle(context, options);\n            drawUnits(context, options);\n\n            canvas.elementClone.initialized = true;\n        }\n\n        this.canvas.commit();\n\n        // clear the canvas\n        canvas.context.clearRect(x, y, w, h);\n        canvas.context.save();\n\n        canvas.context.drawImage(canvas.elementClone, x, y, w, h);\n        canvas.context.save();\n\n        drawValueBox(canvas.context, options, this.value);\n        drawNeedle(canvas.context, options);\n\n        return this;\n    }\n}\n\nwindow['Gauge'] = Gauge;\n\nBaseGauge.initialize('Gauge', defaultGaugeOptions);\n\nmodule.exports = Gauge;\n"
   },
   {
     "__docId__": 63,
@@ -2249,7 +2249,7 @@
     "longname": "lib/Gauge.js~Gauge#draw",
     "access": null,
     "description": "Triggering gauge render on a canvas.",
-    "lineNumber": 666,
+    "lineNumber": 667,
     "unknown": [
       {
         "tagName": "@returns",
@@ -2351,7 +2351,7 @@
     "access": null,
     "description": null,
     "lineNumber": 27,
-    "content": "/*!\n * @license\n * Minimalistic HTML5 Canvas Gauge implementation\n *\n * This code is subject to MIT license.\n *\n * Copyright (c) 2012 Mykhailo Stadnyk <mikhus@gmail.com>\n *\n * Permission is hereby granted, free of charge, to any person obtaining a copy\n * of this software and associated documentation files (the \"Software\"), to deal\n * in the Software without restriction, including without limitation the rights\n * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell\n * copies of the Software, and to permit persons to whom the Software is\n * furnished to do so, subject to the following conditions:\n *\n * The above copyright notice and this permission notice shall be included in\n * all copies or substantial portions of the Software.\n *\n * THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\n * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\n * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\n * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\n * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\n * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\n * SOFTWARE.\n */\nrequire('./polyfill');\n\nconst BaseGauge = require('./BaseGauge');\nconst GenericOptions = require('./GenericOptions');\nconst drawings = require('./drawings');\n\n/**\n * Linear gauge configuration options\n *\n * @typedef {GenericOptions|{orientation: string}} LinearGaugeOptions\n */\n\n/**\n * Default linear gauge configuration options\n *\n * @type {LinearGaugeOptions}\n */\nlet defaultLinearGaugeOptions = Object.assign({}, GenericOptions, {\n    // basic options\n    orientation: 'vertical',\n    borderRadius: 0,\n    width: 80,\n    height: 240\n});\n\nfunction drawRectangle(contaxt, options, x, y, w, h) {\n    if (options.borderRadius) {\n        // rounded corners rect\n    }\n\n    else {\n        // flat rect\n    }\n}\n\nfunction drawLinearPlate(context, options) {\n    context.save();\n    console.log(options);\n}\n\n/**\n * Minimalistic HTML5 Canvas Linear Gauge\n */\nexport default class LinearGauge extends BaseGauge {\n\n    /**\n     * @constructor\n     * @param {LinearGaugeOptions} options\n     */\n    constructor(options) {\n        if (!options.width) options.width = defaultLinearGaugeOptions.width;\n        if (!options.height) options.height = defaultLinearGaugeOptions.height;\n\n        if (!options.orientation) {\n            options.orientation = options.width > options.height ?\n                'horizontal' : 'vertical';\n        }\n\n        options = Object.assign({}, defaultLinearGaugeOptions, options || {});\n\n        super(options);\n    }\n\n    /**\n     * Triggering linear gauge render on a canvas.\n     *\n     * @returns {LinearGauge}\n     */\n    draw() {\n        let canvas = this.canvas;\n        let [x, y, w, h] = [\n            -canvas.drawX,\n            -canvas.drawY,\n            canvas.drawWidth,\n            canvas.drawHeight\n        ];\n        let options = this.options;\n\n        if (!canvas.elementClone.initialized) {\n            let context = canvas.contextClone;\n\n            // clear the cache\n            context.clearRect(x, y, w, h);\n            context.save();\n\n            drawLinearPlate(context, options);\n\n            canvas.elementClone.initialized = true;\n        }\n\n        this.canvas.commit();\n\n        // clear the canvas\n        canvas.context.clearRect(x, y, w, h);\n        canvas.context.save();\n\n        canvas.context.drawImage(canvas.elementClone, x, y, w, h);\n        canvas.context.save();\n\n        return this;\n    }\n\n}\n\nwindow['LinearGauge'] = LinearGauge;\n\nBaseGauge.initialize('LinearGauge', defaultLinearGaugeOptions);\n\nmodule.exports = LinearGauge;\n"
+    "content": "/*!\n * @license\n * Minimalistic HTML5 Canvas Gauge implementation\n *\n * This code is subject to MIT license.\n *\n * Copyright (c) 2012 Mykhailo Stadnyk <mikhus@gmail.com>\n *\n * Permission is hereby granted, free of charge, to any person obtaining a copy\n * of this software and associated documentation files (the \"Software\"), to deal\n * in the Software without restriction, including without limitation the rights\n * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell\n * copies of the Software, and to permit persons to whom the Software is\n * furnished to do so, subject to the following conditions:\n *\n * The above copyright notice and this permission notice shall be included in\n * all copies or substantial portions of the Software.\n *\n * THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\n * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\n * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\n * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\n * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\n * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\n * SOFTWARE.\n */\nrequire('./polyfill');\n\nconst BaseGauge = require('./BaseGauge');\nconst GenericOptions = require('./GenericOptions');\nconst drawings = require('./drawings');\n\n/**\n * Linear gauge configuration options\n *\n * @typedef {GenericOptions|{orientation: string}} LinearGaugeOptions\n */\n\n/**\n * Default linear gauge configuration options\n *\n * @type {LinearGaugeOptions}\n */\nlet defaultLinearGaugeOptions = Object.assign({}, GenericOptions, {\n    // basic options\n    orientation: 'vertical',\n    borderRadius: 5,\n    width: 100,\n    height: 300\n});\n\n/* istanbul ignore next: private, not testable */\n/**\n * Draws rectangle on a canvas\n *\n * @param {Canvas2DContext} context\n * @param {number} r radius for founded corner rectangle if 0 or less won't be drawn\n * @param {number} x x-ccorinate of the top-left corner\n * @param {number} y y-coordinate of the top-left corner\n * @param {number} w width of the rectangle\n * @param {number} h height of the rectangle\n * @param {string} colorStart base fill color of the rectangle\n * @param {string} [colorEnd] gradient color of the rectangle\n */\nfunction drawRectangle(context, r, x, y, w, h, colorStart, colorEnd) {\n    context.beginPath();\n    context.fillStyle = colorEnd ?\n        drawings.linearGradient(context, colorStart, colorEnd, w > h ? w: h)\n        : colorStart;\n\n    (r > 0)  ?\n        drawings.roundRect(context, x, y, w, h, r) :\n        context.rect(x, y, w, h);\n\n    context.fill();\n    context.closePath();\n    context.save();\n}\n\n/* istanbul ignore next: private, not testable */\n/**\n * Draws linear gauge plate\n *\n * @param {Canvas2DContext} context\n * @param {LinearGaugeOptions} options\n * @param {number} x\n * @param {number} y\n * @param {number} w\n * @param {number} h\n */\nfunction drawLinearPlate(context, options, x, y, w, h) {\n    context.save();\n\n    let r = options.borderRadius;\n\n    let w1 = w - options.borderShadowWidth;\n    let w2 = w1 - options.borderOuterWidth * 2;\n    let w3 = w2 - options.borderMiddleWidth * 2;\n    let w4 = w3 - options.borderInnerWidth * 2;\n\n    let h1 = h - options.borderShadowWidth * 2;\n    let h2 = h1 - options.borderOuterWidth * 2;\n    let h3 = h2 - options.borderMiddleWidth * 2;\n    let h4 = h3 - options.borderInnerWidth * 2;\n\n    let x2 = x - (w2 - w1) / 2;\n    let x3 = x2 - (w3 - w2) / 2;\n    let x4 = x3 - (w4 - w3) / 2;\n\n    let y2 = y - (h2 - h1) / 2;\n    let y3 = y2 - (h3 - h2) / 2;\n    let y4 = y3 - (h4 - h3) / 2;\n\n    if (options.glow) {\n        context.shadowBlur = options.borderShadowWidth;\n        context.shadowColor = options.colorBorderShadow;\n    }\n\n    if (options.borderOuterWidth) {\n        drawRectangle(context, r, x, y, w1, h1,\n            options.colorBorderOuterStart, options.colorBorderOuterEnd);\n    }\n\n    context.shadowBlur = null;\n    context.shadowColor = null;\n\n    if (options.borderMiddleWidth) {\n        drawRectangle(context, --r, x2, y2, w2, h2,\n            options.colorBorderMiddleStart, options.colorBorderMiddleEnd);\n    }\n\n    if (options.borderInnerWidth) {\n        drawRectangle(context, --r, x3, y3, w3, h3,\n            options.colorBorderInnerStart, options.colorBorderInnerEnd);\n    }\n\n    drawRectangle(context, r, x4, y4, w4, h4, options.colorPlate);\n}\n\n/**\n * Minimalistic HTML5 Canvas Linear Gauge\n */\nexport default class LinearGauge extends BaseGauge {\n\n    /**\n     * @constructor\n     * @param {LinearGaugeOptions} options\n     */\n    constructor(options) {\n        /* istanbul ignore else */\n        if (!options.width) options.width = defaultLinearGaugeOptions.width;\n        /* istanbul ignore else */\n        if (!options.height) options.height = defaultLinearGaugeOptions.height;\n\n        /* istanbul ignore else */\n        if (!options.orientation) {\n            options.orientation = options.width > options.height ?\n                'horizontal' : 'vertical';\n        }\n\n        options = Object.assign({}, defaultLinearGaugeOptions, options || {});\n\n        super(options);\n    }\n\n    /* istanbul ignore next */\n    /**\n     * Triggering linear gauge render on a canvas.\n     *\n     * @returns {LinearGauge}\n     */\n    draw() {\n        let canvas = this.canvas;\n        let [x, y, w, h] = [\n            -canvas.drawX,\n            -canvas.drawY,\n            canvas.drawWidth,\n            canvas.drawHeight\n        ];\n        let options = this.options;\n\n        if (!canvas.elementClone.initialized) {\n            let context = canvas.contextClone;\n\n            // clear the cache\n            context.clearRect(x, y, w, h);\n            context.save();\n\n            drawLinearPlate(context, options, x, y, w, h);\n\n            canvas.elementClone.initialized = true;\n        }\n\n        this.canvas.commit();\n\n        // clear the canvas\n        canvas.context.clearRect(x, y, w, h);\n        canvas.context.save();\n\n        canvas.context.drawImage(canvas.elementClone, x, y, w, h);\n        canvas.context.save();\n\n        return this;\n    }\n\n}\n\nwindow['LinearGauge'] = LinearGauge;\n\nBaseGauge.initialize('LinearGauge', defaultLinearGaugeOptions);\n\nmodule.exports = LinearGauge;\n"
   },
   {
     "__docId__": 89,
@@ -2470,45 +2470,88 @@
     "export": false,
     "importPath": "canv-gauge/lib/LinearGauge.js",
     "importStyle": null,
-    "description": null,
-    "lineNumber": 52,
-    "undocument": true,
+    "description": "Draws rectangle on a canvas",
+    "lineNumber": 65,
     "params": [
       {
-        "name": "contaxt",
+        "nullable": null,
         "types": [
-          "*"
-        ]
+          "Canvas2DContext"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "context",
+        "description": ""
       },
       {
-        "name": "options",
+        "nullable": null,
         "types": [
-          "*"
-        ]
+          "number"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "r",
+        "description": "radius for founded corner rectangle if 0 or less won't be drawn"
       },
       {
+        "nullable": null,
+        "types": [
+          "number"
+        ],
+        "spread": false,
+        "optional": false,
         "name": "x",
-        "types": [
-          "*"
-        ]
+        "description": "x-ccorinate of the top-left corner"
       },
       {
+        "nullable": null,
+        "types": [
+          "number"
+        ],
+        "spread": false,
+        "optional": false,
         "name": "y",
-        "types": [
-          "*"
-        ]
+        "description": "y-coordinate of the top-left corner"
       },
       {
+        "nullable": null,
+        "types": [
+          "number"
+        ],
+        "spread": false,
+        "optional": false,
         "name": "w",
-        "types": [
-          "*"
-        ]
+        "description": "width of the rectangle"
       },
       {
-        "name": "h",
+        "nullable": null,
         "types": [
-          "*"
-        ]
+          "number"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "h",
+        "description": "height of the rectangle"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "colorStart",
+        "description": "base fill color of the rectangle"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": true,
+        "name": "colorEnd",
+        "description": "gradient color of the rectangle"
       }
     ],
     "generator": false
@@ -2525,21 +2568,68 @@
     "export": false,
     "importPath": "canv-gauge/lib/LinearGauge.js",
     "importStyle": null,
-    "description": null,
-    "lineNumber": 62,
-    "undocument": true,
+    "description": "Draws linear gauge plate",
+    "lineNumber": 91,
     "params": [
       {
-        "name": "context",
+        "nullable": null,
         "types": [
-          "*"
-        ]
+          "Canvas2DContext"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "context",
+        "description": ""
       },
       {
-        "name": "options",
+        "nullable": null,
         "types": [
-          "*"
-        ]
+          "LinearGaugeOptions"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "options",
+        "description": ""
+      },
+      {
+        "nullable": null,
+        "types": [
+          "number"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "x",
+        "description": ""
+      },
+      {
+        "nullable": null,
+        "types": [
+          "number"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "y",
+        "description": ""
+      },
+      {
+        "nullable": null,
+        "types": [
+          "number"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "w",
+        "description": ""
+      },
+      {
+        "nullable": null,
+        "types": [
+          "number"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "h",
+        "description": ""
       }
     ],
     "generator": false
@@ -2557,7 +2647,7 @@
     "importPath": "canv-gauge/lib/LinearGauge.js",
     "importStyle": "LinearGauge",
     "description": "Minimalistic HTML5 Canvas Linear Gauge",
-    "lineNumber": 70,
+    "lineNumber": 143,
     "interface": false,
     "extends": [
       "BaseGauge"
@@ -2573,7 +2663,7 @@
     "longname": "lib/LinearGauge.js~LinearGauge#constructor",
     "access": null,
     "description": "",
-    "lineNumber": 76,
+    "lineNumber": 149,
     "unknown": [
       {
         "tagName": "@constructor",
@@ -2604,7 +2694,7 @@
     "longname": "lib/LinearGauge.js~LinearGauge#draw",
     "access": null,
     "description": "Triggering linear gauge render on a canvas.",
-    "lineNumber": 95,
+    "lineNumber": 172,
     "unknown": [
       {
         "tagName": "@returns",
@@ -3159,8 +3249,8 @@
     "longname": "lib/drawings.js",
     "access": null,
     "description": null,
-    "lineNumber": 37,
-    "content": "/*!\n * @license\n * Minimalistic HTML5 Canvas Gauge implementation\n *\n * This code is subject to MIT license.\n *\n * Copyright (c) 2012 Mykhailo Stadnyk <mikhus@gmail.com>\n *\n * Permission is hereby granted, free of charge, to any person obtaining a copy\n * of this software and associated documentation files (the \"Software\"), to deal\n * in the Software without restriction, including without limitation the rights\n * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell\n * copies of the Software, and to permit persons to whom the Software is\n * furnished to do so, subject to the following conditions:\n *\n * The above copyright notice and this permission notice shall be included in\n * all copies or substantial portions of the Software.\n *\n * THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\n * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\n * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\n * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\n * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\n * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\n * SOFTWARE.\n */\n\n/**\n * @access private\n * @typedef {CanvasRenderingContext2D|{max: number, maxRadius: number}} Canvas2DContext\n */\n\n/* istanbul ignore next: private, not testable */\n/**\n * Common canvas drawings functions\n */\nlet drawings = {\n\n    /**\n     * Draws rounded corners rectangle\n     *\n     * @param {Canvas2DContext} context\n     * @param {number} x\n     * @param {number} y\n     * @param {number} w\n     * @param {number} h\n     * @param {number} r\n     */\n    roundRect(context, x, y, w, h, r) {\n        context.beginPath();\n\n        context.moveTo(x + r, y);\n        context.lineTo(x + w - r, y);\n\n        context.quadraticCurveTo(x + w, y, x + w, y + r);\n        context.lineTo(x + w, y + h - r);\n\n        context.quadraticCurveTo(x + w, y + h, x + w - r, y + h);\n        context.lineTo(x + r, y + h);\n\n        context.quadraticCurveTo(x, y + h, x, y + h - r);\n        context.lineTo(x, y + r);\n\n        context.quadraticCurveTo(x, y, x + r, y);\n\n        context.closePath();\n    },\n\n    /* istanbul ignore next: private, not testable */\n    /**\n     * Pads a given value with leading zeros using the given options\n     *\n     * @param {number} val\n     * @param {GaugeOptions|{valueInt: number, valueDec: number}} options\n     * @returns {string}\n     */\n    padValue(val, options) {\n        let dec = options.valueDec;\n        let int = options.valueInt;\n        let i = 0;\n        let s, strVal, n;\n\n        val = parseFloat(val);\n        n = (val < 0);\n        val = Math.abs(val);\n\n        if (dec > 0) {\n            strVal = val.toFixed(dec).toString().split('.');\n            s = int - strVal[0].length;\n\n            for (; i < s; ++i) {\n                strVal[0] = '0' + strVal[0];\n            }\n\n            strVal = (n ? '-' : '') + strVal[0] + '.' + strVal[1];\n        }\n\n        else {\n            strVal = Math.round(val).toString();\n            s = int - strVal.length;\n\n            for (; i < s; ++i) {\n                strVal = '0' + strVal;\n            }\n\n            strVal = (n ? '-' : '') + strVal;\n        }\n\n        return strVal;\n    },\n\n    /**\n     * Formats a number for display on the dial's plate using the majorTicksFormat\n     * config option.\n     *\n     * @param {number} num number to format\n     * @param {object} options\n     * @returns {string} formatted number\n     */\n    formatMajorTickNumber(num, options) {\n        let right, hasDec = false;\n\n        // First, force the correct number of digits right of the decimal.\n        if (options.majorTicksDec === 0) {\n            right = Math.round(num).toString();\n        }\n\n        else {\n            right = num.toFixed(options.majorTicksDec);\n        }\n\n        // Second, force the correct number of digits left of the decimal.\n        if (options.majorTicksInt > 1) {\n            // Does this number have a decimal?\n            hasDec = ~right.indexOf('.');\n\n            // Is this number a negative number?\n            if (~right.indexOf('-')) {\n                return '-' + [\n                        options.majorTicksInt +\n                        options.majorTicksDec +\n                        2 + (hasDec ? 1 : 0) - right.length\n                    ].join('0') + right.replace('-', '');\n            }\n\n            else {\n                return [\n                        options.majorTicksInt +\n                        options.majorTicksDec +\n                        1 + (hasDec ? 1 : 0) - right.length\n                    ].join('0') + right;\n            }\n        }\n\n        return right;\n    },\n\n    /**\n     * Transforms degrees to radians\n     *\n     * @param {number} degrees\n     * @returns {number}\n     */\n    radians(degrees) {\n        return degrees * Math.PI / 180;\n    },\n\n    /**\n     * Calculates and returns radial point coordinates\n     *\n     * @access private\n     * @param {number} radius\n     * @param {number} angle\n     * @returns {{x: number, y: number}}\n     */\n    radialPoint(radius, angle) {\n        return { x: -radius * Math.sin(angle), y: radius * Math.cos(angle) };\n    },\n\n    /**\n     * Creates and returns linear gradient canvas object\n     *\n     * @param {Canvas2DContext} context\n     * @param {string} colorFrom\n     * @param {string} colorTo\n     * @param {number} length\n     * @returns {CanvasGradient}\n     */\n    linearGradient(context, colorFrom, colorTo, length) {\n        let grad = context.createLinearGradient(0, 0, 0, length);\n\n        grad.addColorStop(0, colorFrom);\n        grad.addColorStop(1, colorTo);\n\n        return grad;\n    }\n};\n\nexport default  drawings;\n\nmodule.exports = drawings;\n"
+    "lineNumber": 44,
+    "content": "/*!\n * @license\n * Minimalistic HTML5 Canvas Gauge implementation\n *\n * This code is subject to MIT license.\n *\n * Copyright (c) 2012 Mykhailo Stadnyk <mikhus@gmail.com>\n *\n * Permission is hereby granted, free of charge, to any person obtaining a copy\n * of this software and associated documentation files (the \"Software\"), to deal\n * in the Software without restriction, including without limitation the rights\n * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell\n * copies of the Software, and to permit persons to whom the Software is\n * furnished to do so, subject to the following conditions:\n *\n * The above copyright notice and this permission notice shall be included in\n * all copies or substantial portions of the Software.\n *\n * THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\n * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\n * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\n * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\n * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\n * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\n * SOFTWARE.\n */\n\n/**\n * @access private\n * @typedef {CanvasRenderingContext2D|{max: number, maxRadius: number}} Canvas2DContext\n */\n\n/* istanbul ignore next: private, not testable */\n/**\n * Draws rounded corners rectangle\n *\n * @param {Canvas2DContext} context\n * @param {number} x\n * @param {number} y\n * @param {number} w\n * @param {number} h\n * @param {number} r\n */\nexport function roundRect(context, x, y, w, h, r) {\n    context.beginPath();\n\n    context.moveTo(x + r, y);\n    context.lineTo(x + w - r, y);\n\n    context.quadraticCurveTo(x + w, y, x + w, y + r);\n    context.lineTo(x + w, y + h - r);\n\n    context.quadraticCurveTo(x + w, y + h, x + w - r, y + h);\n    context.lineTo(x + r, y + h);\n\n    context.quadraticCurveTo(x, y + h, x, y + h - r);\n    context.lineTo(x, y + r);\n\n    context.quadraticCurveTo(x, y, x + r, y);\n\n    context.closePath();\n}\n\n/* istanbul ignore next: private, not testable */\n/**\n * Pads a given value with leading zeros using the given options\n *\n * @param {number} val\n * @param {GaugeOptions|{valueInt: number, valueDec: number}} options\n * @returns {string}\n */\nexport function padValue(val, options) {\n    let dec = options.valueDec;\n    let int = options.valueInt;\n    let i = 0;\n    let s, strVal, n;\n\n    val = parseFloat(val);\n    n = (val < 0);\n    val = Math.abs(val);\n\n    if (dec > 0) {\n        strVal = val.toFixed(dec).toString().split('.');\n        s = int - strVal[0].length;\n\n        for (; i < s; ++i) {\n            strVal[0] = '0' + strVal[0];\n        }\n\n        strVal = (n ? '-' : '') + strVal[0] + '.' + strVal[1];\n    }\n\n    else {\n        strVal = Math.round(val).toString();\n        s = int - strVal.length;\n\n        for (; i < s; ++i) {\n            strVal = '0' + strVal;\n        }\n\n        strVal = (n ? '-' : '') + strVal;\n    }\n\n    return strVal;\n}\n\n/* istanbul ignore next: private, not testable */\n/**\n * Formats a number for display on the dial's plate using the majorTicksFormat\n * config option.\n *\n * @param {number} num number to format\n * @param {object} options\n * @returns {string} formatted number\n */\nexport function formatMajorTickNumber(num, options) {\n    let right, hasDec = false;\n\n    // First, force the correct number of digits right of the decimal.\n    if (options.majorTicksDec === 0) {\n        right = Math.round(num).toString();\n    }\n\n    else {\n        right = num.toFixed(options.majorTicksDec);\n    }\n\n    // Second, force the correct number of digits left of the decimal.\n    if (options.majorTicksInt > 1) {\n        // Does this number have a decimal?\n        hasDec = ~right.indexOf('.');\n\n        // Is this number a negative number?\n        if (~right.indexOf('-')) {\n            return '-' + [\n                    options.majorTicksInt +\n                    options.majorTicksDec +\n                    2 + (hasDec ? 1 : 0) - right.length\n                ].join('0') + right.replace('-', '');\n        }\n\n        else {\n            return [\n                    options.majorTicksInt +\n                    options.majorTicksDec +\n                    1 + (hasDec ? 1 : 0) - right.length\n                ].join('0') + right;\n        }\n    }\n\n    return right;\n}\n\n/* istanbul ignore next: private, not testable */\n/**\n * Transforms degrees to radians\n *\n * @param {number} degrees\n * @returns {number}\n */\nexport function radians(degrees) {\n    return degrees * Math.PI / 180;\n}\n\n/* istanbul ignore next: private, not testable */\n/**\n * Calculates and returns radial point coordinates\n *\n * @param {number} radius\n * @param {number} angle\n * @returns {{x: number, y: number}}\n */\nexport function radialPoint(radius, angle) {\n    return { x: -radius * Math.sin(angle), y: radius * Math.cos(angle) };\n}\n\n/* istanbul ignore next: private, not testable */\n/**\n * Creates and returns linear gradient canvas object\n *\n * @param {Canvas2DContext} context\n * @param {string} colorFrom\n * @param {string} colorTo\n * @param {number} length\n * @returns {CanvasGradient}\n */\nexport function linearGradient(context, colorFrom, colorTo, length) {\n    let grad = context.createLinearGradient(0, 0, 0, length);\n\n    grad.addColorStop(0, colorFrom);\n    grad.addColorStop(1, colorTo);\n\n    return grad;\n}\n\nconst drawings = {\n    roundRect: roundRect,\n    padValue: padValue,\n    formatMajorTickNumber: formatMajorTickNumber,\n    radians: radians,\n    radialPoint: radialPoint,\n    linearGradient: linearGradient\n};\n\nexport default drawings;\n\nmodule.exports = drawings;\n"
   },
   {
     "__docId__": 126,
@@ -3183,6 +3273,355 @@
   },
   {
     "__docId__": 127,
+    "kind": "function",
+    "static": true,
+    "variation": null,
+    "name": "roundRect",
+    "memberof": "lib/drawings.js",
+    "longname": "lib/drawings.js~roundRect",
+    "access": null,
+    "export": true,
+    "importPath": "canv-gauge/lib/drawings.js",
+    "importStyle": "{roundRect}",
+    "description": "Draws rounded corners rectangle",
+    "lineNumber": 44,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "Canvas2DContext"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "context",
+        "description": ""
+      },
+      {
+        "nullable": null,
+        "types": [
+          "number"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "x",
+        "description": ""
+      },
+      {
+        "nullable": null,
+        "types": [
+          "number"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "y",
+        "description": ""
+      },
+      {
+        "nullable": null,
+        "types": [
+          "number"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "w",
+        "description": ""
+      },
+      {
+        "nullable": null,
+        "types": [
+          "number"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "h",
+        "description": ""
+      },
+      {
+        "nullable": null,
+        "types": [
+          "number"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "r",
+        "description": ""
+      }
+    ],
+    "generator": false
+  },
+  {
+    "__docId__": 128,
+    "kind": "function",
+    "static": true,
+    "variation": null,
+    "name": "padValue",
+    "memberof": "lib/drawings.js",
+    "longname": "lib/drawings.js~padValue",
+    "access": null,
+    "export": true,
+    "importPath": "canv-gauge/lib/drawings.js",
+    "importStyle": "{padValue}",
+    "description": "Pads a given value with leading zeros using the given options",
+    "lineNumber": 72,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{string}"
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "number"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "val",
+        "description": ""
+      },
+      {
+        "nullable": null,
+        "types": [
+          "GaugeOptions",
+          "{valueInt: number, valueDec: number}"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "options",
+        "description": ""
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "string"
+      ],
+      "spread": false,
+      "description": ""
+    },
+    "generator": false
+  },
+  {
+    "__docId__": 129,
+    "kind": "function",
+    "static": true,
+    "variation": null,
+    "name": "formatMajorTickNumber",
+    "memberof": "lib/drawings.js",
+    "longname": "lib/drawings.js~formatMajorTickNumber",
+    "access": null,
+    "export": true,
+    "importPath": "canv-gauge/lib/drawings.js",
+    "importStyle": "{formatMajorTickNumber}",
+    "description": "Formats a number for display on the dial's plate using the majorTicksFormat\nconfig option.",
+    "lineNumber": 116,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{string} formatted number"
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "number"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "num",
+        "description": "number to format"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "object"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "options",
+        "description": ""
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "string"
+      ],
+      "spread": false,
+      "description": "formatted number"
+    },
+    "generator": false
+  },
+  {
+    "__docId__": 130,
+    "kind": "function",
+    "static": true,
+    "variation": null,
+    "name": "radians",
+    "memberof": "lib/drawings.js",
+    "longname": "lib/drawings.js~radians",
+    "access": null,
+    "export": true,
+    "importPath": "canv-gauge/lib/drawings.js",
+    "importStyle": "{radians}",
+    "description": "Transforms degrees to radians",
+    "lineNumber": 161,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{number}"
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "number"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "degrees",
+        "description": ""
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "number"
+      ],
+      "spread": false,
+      "description": ""
+    },
+    "generator": false
+  },
+  {
+    "__docId__": 131,
+    "kind": "function",
+    "static": true,
+    "variation": null,
+    "name": "radialPoint",
+    "memberof": "lib/drawings.js",
+    "longname": "lib/drawings.js~radialPoint",
+    "access": null,
+    "export": true,
+    "importPath": "canv-gauge/lib/drawings.js",
+    "importStyle": "{radialPoint}",
+    "description": "Calculates and returns radial point coordinates",
+    "lineNumber": 173,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{{x: number, y: number}}"
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "number"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "radius",
+        "description": ""
+      },
+      {
+        "nullable": null,
+        "types": [
+          "number"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "angle",
+        "description": ""
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "{x: number, y: number}"
+      ],
+      "spread": false,
+      "description": ""
+    },
+    "generator": false
+  },
+  {
+    "__docId__": 132,
+    "kind": "function",
+    "static": true,
+    "variation": null,
+    "name": "linearGradient",
+    "memberof": "lib/drawings.js",
+    "longname": "lib/drawings.js~linearGradient",
+    "access": null,
+    "export": true,
+    "importPath": "canv-gauge/lib/drawings.js",
+    "importStyle": "{linearGradient}",
+    "description": "Creates and returns linear gradient canvas object",
+    "lineNumber": 187,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{CanvasGradient}"
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "Canvas2DContext"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "context",
+        "description": ""
+      },
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "colorFrom",
+        "description": ""
+      },
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "colorTo",
+        "description": ""
+      },
+      {
+        "nullable": null,
+        "types": [
+          "number"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "length",
+        "description": ""
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "CanvasGradient"
+      ],
+      "spread": false,
+      "description": ""
+    },
+    "generator": false
+  },
+  {
+    "__docId__": 133,
     "kind": "variable",
     "static": true,
     "variation": null,
@@ -3193,8 +3632,9 @@
     "export": true,
     "importPath": "canv-gauge/lib/drawings.js",
     "importStyle": "drawings",
-    "description": "Common canvas drawings functions",
-    "lineNumber": 37,
+    "description": null,
+    "lineNumber": 196,
+    "undocument": true,
     "type": {
       "types": [
         "*"
@@ -3202,7 +3642,7 @@
     }
   },
   {
-    "__docId__": 128,
+    "__docId__": 134,
     "kind": "file",
     "static": true,
     "variation": null,
@@ -3215,7 +3655,7 @@
     "content": "/**\n * @external {Object.assign} https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object/assign\n */\n/* istanbul ignore next */\nif (!Object.assign) {\n    Object.defineProperty(Object, 'assign', {\n        enumerable: false,\n        configurable: true,\n        writable: true,\n        value: function(target, firstSource) {\n            'use strict';\n\n            if (target === undefined || target === null) {\n                throw new TypeError('Cannot convert first argument to object');\n            }\n\n            var to = Object(target);\n            var i = 1;\n\n            for (; i < arguments.length; i++) {\n                var nextSource = arguments[i];\n\n                if (nextSource === undefined || nextSource === null) {\n                    continue;\n                }\n\n                var keysArray = Object.keys(Object(nextSource));\n                var nextIndex = 0, len = keysArray.length;\n\n                for (; nextIndex < len; nextIndex++) {\n                    var nextKey = keysArray[nextIndex];\n                    var desc = Object.getOwnPropertyDescriptor(\n                        nextSource, nextKey);\n\n                    if (desc !== undefined && desc.enumerable) {\n                        to[nextKey] = nextSource[nextKey];\n                    }\n                }\n            }\n\n            return to;\n        }\n    });\n}\n\n/**\n * @external {Array.indexOf} https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array/indexOf\n */\n/* istanbul ignore next */\nif (!Array.prototype.indexOf) {\n    Array.prototype.indexOf = function(searchElement, fromIndex) {\n        var k;\n\n        if (this == null) {\n            throw new TypeError('\"this\" is null or not defined');\n        }\n\n        var O = Object(this);\n        var len = O.length >>> 0;\n\n        if (len === 0) {\n            return -1;\n        }\n\n        var n = +fromIndex || 0;\n\n        if (Math.abs(n) === Infinity) {\n            n = 0;\n        }\n\n        if (n >= len) {\n            return -1;\n        }\n\n        k = Math.max(n >= 0 ? n : len - Math.abs(n), 0);\n\n        while (k < len) {\n            if (k in O && O[k] === searchElement) {\n                return k;\n            }\n\n            k++;\n        }\n\n        return -1;\n    };\n}\n"
   },
   {
-    "__docId__": 129,
+    "__docId__": 135,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -3228,7 +3668,7 @@
     "lineNumber": 5
   },
   {
-    "__docId__": 130,
+    "__docId__": 136,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -3241,7 +3681,7 @@
     "lineNumber": 50
   },
   {
-    "__docId__": 131,
+    "__docId__": 137,
     "kind": "file",
     "static": true,
     "variation": null,
@@ -3254,7 +3694,7 @@
     "content": "/*!\n * @license\n * Minimalistic HTML5 Canvas Gauge implementation\n *\n * This code is subject to MIT license.\n *\n * Copyright (c) 2012 Mykhailo Stadnyk <mikhus@gmail.com>\n *\n * Permission is hereby granted, free of charge, to any person obtaining a copy\n * of this software and associated documentation files (the \"Software\"), to deal\n * in the Software without restriction, including without limitation the rights\n * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell\n * copies of the Software, and to permit persons to whom the Software is\n * furnished to do so, subject to the following conditions:\n *\n * The above copyright notice and this permission notice shall be included in\n * all copies or substantial portions of the Software.\n *\n * THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\n * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\n * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\n * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\n * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\n * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\n * SOFTWARE.\n */\n/**\n * Look-ups for a proper vendor-specific property and returns its value\n *\n * @example\n * var requestAnimationFrame = vendorize('requestAnimationFrame');\n * // it will refer properly to:\n * //  - window.requestAnimationFrame by default or to\n * //  - window.webkitRequestAnimationFrame or to\n * //  - window.mozRequestAnimationFrame or to\n * //  - window.msRequestAnimationFrame or to\n * //  - window.oRequestAnimationFrame\n * // depending on the current browser vendor\n *\n * @author Mykhailo Stadnyk <mikhus@gmail.com>\n * @param {string} prop\n * @param {HTMLElement|Window|object} [from] - default is window\n * @returns {*}\n */\nexport default function vendorize(prop, from) {\n    /* istanbul ignore else: no reason to cover */\n    if (!from) {\n        from = typeof window === 'undefined' ? global : window;\n    }\n\n    if (typeof from[prop] !== 'undefined') {\n        return from[prop];\n    }\n\n    let vendors = ['webkit', 'moz', 'ms', 'o'];\n    let i = 0;\n    let s = vendors.length;\n    let capitalized = prop.charAt(0).toUpperCase() + prop.substr(1);\n\n    for (; i < s; i++) {\n        let vendorProp = from[vendors[i] + capitalized];\n\n        /* istanbul ignore if: requires very complex environment to test (specific browser version) */\n        if (typeof vendorProp !== 'undefined') {\n            return vendorProp;\n        }\n    }\n\n    return null;\n}\n\nmodule.exports = vendorize;\n"
   },
   {
-    "__docId__": 132,
+    "__docId__": 138,
     "kind": "function",
     "static": true,
     "variation": null,
@@ -3315,7 +3755,7 @@
     "generator": false
   },
   {
-    "__docId__": 134,
+    "__docId__": 140,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -3328,7 +3768,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 135,
+    "__docId__": 141,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -3341,7 +3781,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 136,
+    "__docId__": 142,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -3354,7 +3794,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 137,
+    "__docId__": 143,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -3367,7 +3807,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 138,
+    "__docId__": 144,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -3380,7 +3820,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 139,
+    "__docId__": 145,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -3393,7 +3833,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 140,
+    "__docId__": 146,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -3406,7 +3846,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 141,
+    "__docId__": 147,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -3419,7 +3859,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 142,
+    "__docId__": 148,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -3432,7 +3872,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 143,
+    "__docId__": 149,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -3445,7 +3885,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 144,
+    "__docId__": 150,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -3458,7 +3898,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 145,
+    "__docId__": 151,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -3471,7 +3911,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 146,
+    "__docId__": 152,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -3484,7 +3924,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 147,
+    "__docId__": 153,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -3497,7 +3937,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 148,
+    "__docId__": 154,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -3510,7 +3950,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 149,
+    "__docId__": 155,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -3523,7 +3963,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 150,
+    "__docId__": 156,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -3536,7 +3976,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 151,
+    "__docId__": 157,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -3549,7 +3989,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 152,
+    "__docId__": 158,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -3562,7 +4002,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 153,
+    "__docId__": 159,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -3575,7 +4015,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 154,
+    "__docId__": 160,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -3588,7 +4028,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 155,
+    "__docId__": 161,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -3601,7 +4041,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 156,
+    "__docId__": 162,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -3614,7 +4054,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 157,
+    "__docId__": 163,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -3627,7 +4067,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 158,
+    "__docId__": 164,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -3640,7 +4080,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 159,
+    "__docId__": 165,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -3653,7 +4093,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 160,
+    "__docId__": 166,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -3666,7 +4106,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 161,
+    "__docId__": 167,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -3679,7 +4119,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 162,
+    "__docId__": 168,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -3692,7 +4132,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 163,
+    "__docId__": 169,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -3705,7 +4145,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 164,
+    "__docId__": 170,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -3718,7 +4158,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 165,
+    "__docId__": 171,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -3731,7 +4171,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 166,
+    "__docId__": 172,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -3744,7 +4184,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 167,
+    "__docId__": 173,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -3757,7 +4197,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 168,
+    "__docId__": 174,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -3770,7 +4210,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 169,
+    "__docId__": 175,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -3783,7 +4223,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 170,
+    "__docId__": 176,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -3796,7 +4236,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 171,
+    "__docId__": 177,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -3809,7 +4249,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 172,
+    "__docId__": 178,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -3822,7 +4262,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 173,
+    "__docId__": 179,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -3835,7 +4275,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 174,
+    "__docId__": 180,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -3848,7 +4288,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 175,
+    "__docId__": 181,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -3861,7 +4301,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 176,
+    "__docId__": 182,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -3874,7 +4314,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 177,
+    "__docId__": 183,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -3887,7 +4327,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 178,
+    "__docId__": 184,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -3900,7 +4340,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 179,
+    "__docId__": 185,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -3913,7 +4353,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 180,
+    "__docId__": 186,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -3926,7 +4366,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 182,
+    "__docId__": 188,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -3939,7 +4379,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 183,
+    "__docId__": 189,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -3952,7 +4392,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 184,
+    "__docId__": 190,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -3965,7 +4405,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 185,
+    "__docId__": 191,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -3978,7 +4418,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 186,
+    "__docId__": 192,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -3991,7 +4431,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 187,
+    "__docId__": 193,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -4004,7 +4444,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 188,
+    "__docId__": 194,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -4017,7 +4457,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 189,
+    "__docId__": 195,
     "kind": "external",
     "static": true,
     "variation": null,

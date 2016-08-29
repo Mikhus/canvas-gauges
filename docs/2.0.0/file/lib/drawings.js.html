@@ -40,6 +40,12 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/LinearGauge.js~LinearGauge.html">LinearGauge</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/SmartCanvas.js~SmartCanvas.html">SmartCanvas</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-Collection">Collection</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-formatMajorTickNumber">formatMajorTickNumber</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-linearGradient">linearGradient</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-padValue">padValue</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-radialPoint">radialPoint</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-radians">radians</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-roundRect">roundRect</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-vendorize">vendorize</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-GenericOptions">GenericOptions</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-drawings">drawings</a></span></span></li>
@@ -93,171 +99,177 @@
 
 /* istanbul ignore next: private, not testable */
 /**
- * Common canvas drawings functions
+ * Draws rounded corners rectangle
+ *
+ * @param {Canvas2DContext} context
+ * @param {number} x
+ * @param {number} y
+ * @param {number} w
+ * @param {number} h
+ * @param {number} r
  */
-let drawings = {
+export function roundRect(context, x, y, w, h, r) {
+    context.beginPath();
 
-    /**
-     * Draws rounded corners rectangle
-     *
-     * @param {Canvas2DContext} context
-     * @param {number} x
-     * @param {number} y
-     * @param {number} w
-     * @param {number} h
-     * @param {number} r
-     */
-    roundRect(context, x, y, w, h, r) {
-        context.beginPath();
+    context.moveTo(x + r, y);
+    context.lineTo(x + w - r, y);
 
-        context.moveTo(x + r, y);
-        context.lineTo(x + w - r, y);
+    context.quadraticCurveTo(x + w, y, x + w, y + r);
+    context.lineTo(x + w, y + h - r);
 
-        context.quadraticCurveTo(x + w, y, x + w, y + r);
-        context.lineTo(x + w, y + h - r);
+    context.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+    context.lineTo(x + r, y + h);
 
-        context.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
-        context.lineTo(x + r, y + h);
+    context.quadraticCurveTo(x, y + h, x, y + h - r);
+    context.lineTo(x, y + r);
 
-        context.quadraticCurveTo(x, y + h, x, y + h - r);
-        context.lineTo(x, y + r);
+    context.quadraticCurveTo(x, y, x + r, y);
 
-        context.quadraticCurveTo(x, y, x + r, y);
+    context.closePath();
+}
 
-        context.closePath();
-    },
+/* istanbul ignore next: private, not testable */
+/**
+ * Pads a given value with leading zeros using the given options
+ *
+ * @param {number} val
+ * @param {GaugeOptions|{valueInt: number, valueDec: number}} options
+ * @returns {string}
+ */
+export function padValue(val, options) {
+    let dec = options.valueDec;
+    let int = options.valueInt;
+    let i = 0;
+    let s, strVal, n;
 
-    /* istanbul ignore next: private, not testable */
-    /**
-     * Pads a given value with leading zeros using the given options
-     *
-     * @param {number} val
-     * @param {GaugeOptions|{valueInt: number, valueDec: number}} options
-     * @returns {string}
-     */
-    padValue(val, options) {
-        let dec = options.valueDec;
-        let int = options.valueInt;
-        let i = 0;
-        let s, strVal, n;
+    val = parseFloat(val);
+    n = (val &lt; 0);
+    val = Math.abs(val);
 
-        val = parseFloat(val);
-        n = (val &lt; 0);
-        val = Math.abs(val);
+    if (dec &gt; 0) {
+        strVal = val.toFixed(dec).toString().split(&apos;.&apos;);
+        s = int - strVal[0].length;
 
-        if (dec &gt; 0) {
-            strVal = val.toFixed(dec).toString().split(&apos;.&apos;);
-            s = int - strVal[0].length;
-
-            for (; i &lt; s; ++i) {
-                strVal[0] = &apos;0&apos; + strVal[0];
-            }
-
-            strVal = (n ? &apos;-&apos; : &apos;&apos;) + strVal[0] + &apos;.&apos; + strVal[1];
+        for (; i &lt; s; ++i) {
+            strVal[0] = &apos;0&apos; + strVal[0];
         }
 
-        else {
-            strVal = Math.round(val).toString();
-            s = int - strVal.length;
-
-            for (; i &lt; s; ++i) {
-                strVal = &apos;0&apos; + strVal;
-            }
-
-            strVal = (n ? &apos;-&apos; : &apos;&apos;) + strVal;
-        }
-
-        return strVal;
-    },
-
-    /**
-     * Formats a number for display on the dial&apos;s plate using the majorTicksFormat
-     * config option.
-     *
-     * @param {number} num number to format
-     * @param {object} options
-     * @returns {string} formatted number
-     */
-    formatMajorTickNumber(num, options) {
-        let right, hasDec = false;
-
-        // First, force the correct number of digits right of the decimal.
-        if (options.majorTicksDec === 0) {
-            right = Math.round(num).toString();
-        }
-
-        else {
-            right = num.toFixed(options.majorTicksDec);
-        }
-
-        // Second, force the correct number of digits left of the decimal.
-        if (options.majorTicksInt &gt; 1) {
-            // Does this number have a decimal?
-            hasDec = ~right.indexOf(&apos;.&apos;);
-
-            // Is this number a negative number?
-            if (~right.indexOf(&apos;-&apos;)) {
-                return &apos;-&apos; + [
-                        options.majorTicksInt +
-                        options.majorTicksDec +
-                        2 + (hasDec ? 1 : 0) - right.length
-                    ].join(&apos;0&apos;) + right.replace(&apos;-&apos;, &apos;&apos;);
-            }
-
-            else {
-                return [
-                        options.majorTicksInt +
-                        options.majorTicksDec +
-                        1 + (hasDec ? 1 : 0) - right.length
-                    ].join(&apos;0&apos;) + right;
-            }
-        }
-
-        return right;
-    },
-
-    /**
-     * Transforms degrees to radians
-     *
-     * @param {number} degrees
-     * @returns {number}
-     */
-    radians(degrees) {
-        return degrees * Math.PI / 180;
-    },
-
-    /**
-     * Calculates and returns radial point coordinates
-     *
-     * @access private
-     * @param {number} radius
-     * @param {number} angle
-     * @returns {{x: number, y: number}}
-     */
-    radialPoint(radius, angle) {
-        return { x: -radius * Math.sin(angle), y: radius * Math.cos(angle) };
-    },
-
-    /**
-     * Creates and returns linear gradient canvas object
-     *
-     * @param {Canvas2DContext} context
-     * @param {string} colorFrom
-     * @param {string} colorTo
-     * @param {number} length
-     * @returns {CanvasGradient}
-     */
-    linearGradient(context, colorFrom, colorTo, length) {
-        let grad = context.createLinearGradient(0, 0, 0, length);
-
-        grad.addColorStop(0, colorFrom);
-        grad.addColorStop(1, colorTo);
-
-        return grad;
+        strVal = (n ? &apos;-&apos; : &apos;&apos;) + strVal[0] + &apos;.&apos; + strVal[1];
     }
+
+    else {
+        strVal = Math.round(val).toString();
+        s = int - strVal.length;
+
+        for (; i &lt; s; ++i) {
+            strVal = &apos;0&apos; + strVal;
+        }
+
+        strVal = (n ? &apos;-&apos; : &apos;&apos;) + strVal;
+    }
+
+    return strVal;
+}
+
+/* istanbul ignore next: private, not testable */
+/**
+ * Formats a number for display on the dial&apos;s plate using the majorTicksFormat
+ * config option.
+ *
+ * @param {number} num number to format
+ * @param {object} options
+ * @returns {string} formatted number
+ */
+export function formatMajorTickNumber(num, options) {
+    let right, hasDec = false;
+
+    // First, force the correct number of digits right of the decimal.
+    if (options.majorTicksDec === 0) {
+        right = Math.round(num).toString();
+    }
+
+    else {
+        right = num.toFixed(options.majorTicksDec);
+    }
+
+    // Second, force the correct number of digits left of the decimal.
+    if (options.majorTicksInt &gt; 1) {
+        // Does this number have a decimal?
+        hasDec = ~right.indexOf(&apos;.&apos;);
+
+        // Is this number a negative number?
+        if (~right.indexOf(&apos;-&apos;)) {
+            return &apos;-&apos; + [
+                    options.majorTicksInt +
+                    options.majorTicksDec +
+                    2 + (hasDec ? 1 : 0) - right.length
+                ].join(&apos;0&apos;) + right.replace(&apos;-&apos;, &apos;&apos;);
+        }
+
+        else {
+            return [
+                    options.majorTicksInt +
+                    options.majorTicksDec +
+                    1 + (hasDec ? 1 : 0) - right.length
+                ].join(&apos;0&apos;) + right;
+        }
+    }
+
+    return right;
+}
+
+/* istanbul ignore next: private, not testable */
+/**
+ * Transforms degrees to radians
+ *
+ * @param {number} degrees
+ * @returns {number}
+ */
+export function radians(degrees) {
+    return degrees * Math.PI / 180;
+}
+
+/* istanbul ignore next: private, not testable */
+/**
+ * Calculates and returns radial point coordinates
+ *
+ * @param {number} radius
+ * @param {number} angle
+ * @returns {{x: number, y: number}}
+ */
+export function radialPoint(radius, angle) {
+    return { x: -radius * Math.sin(angle), y: radius * Math.cos(angle) };
+}
+
+/* istanbul ignore next: private, not testable */
+/**
+ * Creates and returns linear gradient canvas object
+ *
+ * @param {Canvas2DContext} context
+ * @param {string} colorFrom
+ * @param {string} colorTo
+ * @param {number} length
+ * @returns {CanvasGradient}
+ */
+export function linearGradient(context, colorFrom, colorTo, length) {
+    let grad = context.createLinearGradient(0, 0, 0, length);
+
+    grad.addColorStop(0, colorFrom);
+    grad.addColorStop(1, colorTo);
+
+    return grad;
+}
+
+const drawings = {
+    roundRect: roundRect,
+    padValue: padValue,
+    formatMajorTickNumber: formatMajorTickNumber,
+    radians: radians,
+    radialPoint: radialPoint,
+    linearGradient: linearGradient
 };
 
-export default  drawings;
+export default drawings;
 
 module.exports = drawings;
 </code></pre>

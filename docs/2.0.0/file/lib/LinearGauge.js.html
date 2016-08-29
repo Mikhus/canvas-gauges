@@ -40,6 +40,12 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/LinearGauge.js~LinearGauge.html">LinearGauge</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/SmartCanvas.js~SmartCanvas.html">SmartCanvas</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-Collection">Collection</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-formatMajorTickNumber">formatMajorTickNumber</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-linearGradient">linearGradient</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-padValue">padValue</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-radialPoint">radialPoint</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-radians">radians</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-roundRect">roundRect</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-vendorize">vendorize</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-GenericOptions">GenericOptions</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-drawings">drawings</a></span></span></li>
@@ -105,24 +111,97 @@ const drawings = require(&apos;./drawings&apos;);
 let defaultLinearGaugeOptions = Object.assign({}, GenericOptions, {
     // basic options
     orientation: &apos;vertical&apos;,
-    borderRadius: 0,
-    width: 80,
-    height: 240
+    borderRadius: 5,
+    width: 100,
+    height: 300
 });
 
-function drawRectangle(contaxt, options, x, y, w, h) {
-    if (options.borderRadius) {
-        // rounded corners rect
-    }
+/* istanbul ignore next: private, not testable */
+/**
+ * Draws rectangle on a canvas
+ *
+ * @param {Canvas2DContext} context
+ * @param {number} r radius for founded corner rectangle if 0 or less won&apos;t be drawn
+ * @param {number} x x-ccorinate of the top-left corner
+ * @param {number} y y-coordinate of the top-left corner
+ * @param {number} w width of the rectangle
+ * @param {number} h height of the rectangle
+ * @param {string} colorStart base fill color of the rectangle
+ * @param {string} [colorEnd] gradient color of the rectangle
+ */
+function drawRectangle(context, r, x, y, w, h, colorStart, colorEnd) {
+    context.beginPath();
+    context.fillStyle = colorEnd ?
+        drawings.linearGradient(context, colorStart, colorEnd, w &gt; h ? w: h)
+        : colorStart;
 
-    else {
-        // flat rect
-    }
+    (r &gt; 0)  ?
+        drawings.roundRect(context, x, y, w, h, r) :
+        context.rect(x, y, w, h);
+
+    context.fill();
+    context.closePath();
+    context.save();
 }
 
-function drawLinearPlate(context, options) {
+/* istanbul ignore next: private, not testable */
+/**
+ * Draws linear gauge plate
+ *
+ * @param {Canvas2DContext} context
+ * @param {LinearGaugeOptions} options
+ * @param {number} x
+ * @param {number} y
+ * @param {number} w
+ * @param {number} h
+ */
+function drawLinearPlate(context, options, x, y, w, h) {
     context.save();
-    console.log(options);
+
+    let r = options.borderRadius;
+
+    let w1 = w - options.borderShadowWidth;
+    let w2 = w1 - options.borderOuterWidth * 2;
+    let w3 = w2 - options.borderMiddleWidth * 2;
+    let w4 = w3 - options.borderInnerWidth * 2;
+
+    let h1 = h - options.borderShadowWidth * 2;
+    let h2 = h1 - options.borderOuterWidth * 2;
+    let h3 = h2 - options.borderMiddleWidth * 2;
+    let h4 = h3 - options.borderInnerWidth * 2;
+
+    let x2 = x - (w2 - w1) / 2;
+    let x3 = x2 - (w3 - w2) / 2;
+    let x4 = x3 - (w4 - w3) / 2;
+
+    let y2 = y - (h2 - h1) / 2;
+    let y3 = y2 - (h3 - h2) / 2;
+    let y4 = y3 - (h4 - h3) / 2;
+
+    if (options.glow) {
+        context.shadowBlur = options.borderShadowWidth;
+        context.shadowColor = options.colorBorderShadow;
+    }
+
+    if (options.borderOuterWidth) {
+        drawRectangle(context, r, x, y, w1, h1,
+            options.colorBorderOuterStart, options.colorBorderOuterEnd);
+    }
+
+    context.shadowBlur = null;
+    context.shadowColor = null;
+
+    if (options.borderMiddleWidth) {
+        drawRectangle(context, --r, x2, y2, w2, h2,
+            options.colorBorderMiddleStart, options.colorBorderMiddleEnd);
+    }
+
+    if (options.borderInnerWidth) {
+        drawRectangle(context, --r, x3, y3, w3, h3,
+            options.colorBorderInnerStart, options.colorBorderInnerEnd);
+    }
+
+    drawRectangle(context, r, x4, y4, w4, h4, options.colorPlate);
 }
 
 /**
@@ -135,9 +214,12 @@ export default class LinearGauge extends BaseGauge {
      * @param {LinearGaugeOptions} options
      */
     constructor(options) {
+        /* istanbul ignore else */
         if (!options.width) options.width = defaultLinearGaugeOptions.width;
+        /* istanbul ignore else */
         if (!options.height) options.height = defaultLinearGaugeOptions.height;
 
+        /* istanbul ignore else */
         if (!options.orientation) {
             options.orientation = options.width &gt; options.height ?
                 &apos;horizontal&apos; : &apos;vertical&apos;;
@@ -148,6 +230,7 @@ export default class LinearGauge extends BaseGauge {
         super(options);
     }
 
+    /* istanbul ignore next */
     /**
      * Triggering linear gauge render on a canvas.
      *
@@ -170,7 +253,7 @@ export default class LinearGauge extends BaseGauge {
             context.clearRect(x, y, w, h);
             context.save();
 
-            drawLinearPlate(context, options);
+            drawLinearPlate(context, options, x, y, w, h);
 
             canvas.elementClone.initialized = true;
         }

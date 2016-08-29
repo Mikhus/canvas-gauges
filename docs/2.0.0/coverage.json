@@ -1,7 +1,7 @@
 {
-  "coverage": "100%",
-  "expectCount": 67,
-  "actualCount": 67,
+  "coverage": "98.63%",
+  "expectCount": 73,
+  "actualCount": 72,
   "files": {
     "lib/Animation.js": {
       "expectCount": 9,
@@ -44,9 +44,11 @@
       "undocumentLines": []
     },
     "lib/drawings.js": {
-      "expectCount": 1,
-      "actualCount": 1,
-      "undocumentLines": []
+      "expectCount": 7,
+      "actualCount": 6,
+      "undocumentLines": [
+        196
+      ]
     },
     "lib/vendorize.js": {
       "expectCount": 1,
