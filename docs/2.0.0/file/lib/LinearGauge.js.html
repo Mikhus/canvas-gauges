@@ -101,7 +101,7 @@ const SmartCanvas = require(&apos;./SmartCanvas&apos;);
 /**
  * Linear gauge configuration options
  *
- * @typedef {GenericOptions|{orientation: string, borderRadius: number, barBeginCircle: number, barWidth: number, barStrokeWidth: number, colorBar: string, colorBarEnd: string, colorBarStroke: string, tickSide: string, needleSide: string}} LinearGaugeOptions
+ * @typedef {GenericOptions|{orientation: string, borderRadius: number, barBeginCircle: number, barWidth: number, barStrokeWidth: number, colorBar: string, colorBarEnd: string, colorBarStroke: string, tickSide: string, needleSide: string, numberSide: string}} LinearGaugeOptions
  */
 
 /**
@@ -116,9 +116,9 @@ let defaultLinearGaugeOptions = Object.assign({}, GenericOptions, {
     height: 400,
 
     // bar
-    barBeginCircle: 25, // percents
+    barBeginCircle: 20, // percents
     barWidth: 15, // percents
-    barStrokeWidth: 0, // pixels
+    barStrokeWidth: 5, // pixels
 
     colorBarStroke: &apos;#222222&apos;,
     colorBar: &apos;#cccccc&apos;,
@@ -128,6 +128,8 @@ let defaultLinearGaugeOptions = Object.assign({}, GenericOptions, {
 
     tickSide: &apos;both&apos;, // available: &apos;left&apos;, &apos;right&apos;, &apos;both&apos;
     needleSide: &apos;both&apos;, // available: &apos;left&apos;, &apos;right&apos;, &apos;both&apos;
+
+    numberSide: &apos;both&apos; // available: &apos;left&apos;, &apos;right&apos;, &apos;both&apos;
 });
 
 /* istanbul ignore next: private, not testable */
@@ -228,27 +230,40 @@ function drawLinearBar(context, options, x, y, w, h) {
         let sinba = Math.sin(baseAngle);
         let cosba = Math.cos(baseAngle);
         let arcX = isVertical ?
-            x + wid / 2 : x + (len - length) / 2 + r;
+            x + wid / 2 :
+            x + (len - length) / 2 + r;
         let arcY = isVertical ?
-            y + (len - length) / 2 + length - r : y + wid / 2;
-        let lx = isVertical ? (arcX - r * sinba) :
-            (arcX + r * cosba - ds);
+            y + (len - length) / 2 + length - r :
+            y + wid / 2;
+        let lx = isVertical ?
+            (arcX - r * sinba - ds / 2) :
+            (arcX + r * cosba - ds / 2);
         let ly = isVertical ?
-            (arcY - r * cosba + ds) :
-            (arcY - r * sinba);
+            (arcY - r * cosba + ds / 2) :
+            (arcY - r * sinba - ds / 2);
 
         context.arc(arcX, arcY, r, sAngle, eAngle);
-
         context.moveTo(lx, ly);
-        isVertical ? (ly = ly - length + r * 2) : (lx = lx + length - r * 2);
+
+        isVertical ?
+            (ly = ly - length + r * 2 - ds / 2) :
+            (lx = lx + length - r * 2 + ds / 2);
+
         context.lineTo(lx, ly);
-        isVertical ? (lx = lx + bw) : (ly = ly + bw + ds / 5);
+
+        isVertical ?
+            (lx = lx + bw - ds / 2) :
+            (ly = ly + bw - ds / 2);
+
         context.lineTo(lx, ly);
-        lx = isVertical ? (arcX + r * sinba) :
-            (arcX + r * cosba - ds);
+
+        lx = isVertical ?
+            (arcX + r * sinba + ds / 2) :
+            (arcX + r * cosba - ds / 2);
         ly = isVertical ?
-            (arcY - r * cosba + ds) :
-            (arcY + r * sinba + ds / 2);
+            (arcY - r * cosba + ds / 2) :
+            ly;
+
         context.lineTo(lx, ly);
     }
 
@@ -296,10 +311,10 @@ function drawLinearMajorTicks(context, options, x, y, w, h) {
 
     let s = options.majorTicks.length;
     let pixelRatio = SmartCanvas.pixelRatio;
-    let i = 0;
     let hasLeft = options.tickSide !== &apos;right&apos;;
     let hasRight = options.tickSide !== &apos;left&apos;;
     let lw = 2 * pixelRatio;
+    let tx, ty, i, dx, dy;
 
     context.lineWidth = lw;
     context.strokeStyle = options.colorMajorTicks;
@@ -318,17 +333,30 @@ function drawLinearMajorTicks(context, options, x, y, w, h) {
 
     length = length - lw * 2 - d;
 
-    let tx = x + w / 2 - bw / 2 - .05 * w - .1 * w;
-
     // left
     if (hasLeft) {
-        for (i = 0; i &lt;= s; ++i) {
+        if (isVertical) {
+            tx = x + w / 2 - bw / 2 - .05 * w;
+            dx = .1 * w;
+            dy = 0;
+        }
+
+        else {
+            dx = 0;
+            dy = .1 * h;
+            ty = y + h / 2 - bw / 2 - .05 * h;
+        }
+
+        for (i = 0; i &lt; s; ++i) {
+            if (isVertical)
+                ty = y + dlen + length - i * length / (s - 1) + lw * 2;
+            else
+                tx = x + dlen + d + i * length / (s - 1) - lw / 2;
+
             context.beginPath();
 
-            let ty = y + dlen + length - i * length / s + lw * 2;
-
             context.moveTo(tx, ty);
-            context.lineTo(tx + .1 * w, ty);
+            context.lineTo(tx - dx, ty - dy);
             context.stroke();
 
             context.closePath();
@@ -336,17 +364,30 @@ function drawLinearMajorTicks(context, options, x, y, w, h) {
         }
     }
 
-    tx = x + w / 2 + bw / 2 + .05 * w;
-
     // right
     if (hasRight) {
-        for (i = 0; i &lt;= s; ++i) {
+        if (isVertical) {
+            dx = .1 * w;
+            dy = 0;
+            tx = x + w / 2 + bw / 2 + .05 * w;
+        }
+
+        else {
+            dx = 0;
+            dy = .1 * h;
+            ty = y + h / 2 + bw / 2 + .05 * h;
+        }
+
+        for (i = 0; i &lt; s; ++i) {
+            if (isVertical)
+                ty = y + dlen + length - i * length / (s - 1) + lw * 2;
+            else
+                tx = x + dlen + d + i * length / (s - 1) - lw / 2;
+
             context.beginPath();
 
-            let ty = y + dlen + length - i * length / s + lw * 2;
-
             context.moveTo(tx, ty);
-            context.lineTo(tx + .1 * w, ty);
+            context.lineTo(tx + dx, ty + dy);
             context.stroke();
 
             context.closePath();
@@ -367,6 +408,77 @@ function drawLinearMajorTicks(context, options, x, y, w, h) {
  * @param {number} h height of the gauge
  */
 function drawLinearMajorTicksNumbers(context, options, x, y, w, h) {
+    let [wid, len, ang, length, isVertical, ds, bw, r] =
+        barDimensions(options, w, h);
+    let s = options.majorTicks.length;
+    let hasLeft = options.numberSide !== &apos;right&apos;;
+    let hasRight = options.numberSide !== &apos;left&apos;;
+    let pixelRatio = SmartCanvas.pixelRatio;
+    let lw = 2 * pixelRatio;
+    let dlen = (len - length) / 2;
+    let d = r * 2;
+    let th = 20 * ((isVertical ? w : h) / 200);
+    let tx, ty, i, dx, dy;
+
+    length = length - lw * 2 - d;
+
+    context.font = th + &apos;px Arial&apos;;
+    context.fillStyle = options.colorNumbers;
+    context.lineWidth = 0;
+    context.textAlign = &apos;center&apos;;
+
+    // left
+    if (hasLeft) {
+        if (isVertical) {
+            context.textAlign = &apos;left&apos;;
+            tx = x + w / 2 - bw / 2 - .15 * w;
+        }
+
+        else {
+            ty = y + h / 2 - bw / 2 - .12 * h - th / 2;
+        }
+
+        dx = 0;
+
+        for (i = 0; i &lt; s; ++i) {
+            if (isVertical) {
+                ty = y + dlen + length - i * length / (s - 1) + lw * 2 + th / 3;
+                dx = .05 * w + context.measureText(options.majorTicks[i]).width;
+            }
+
+            else {
+                tx = x + dlen + d + i * length / (s - 1) - lw / 2;
+            }
+
+
+            context.fillText(options.majorTicks[i], tx - dx, ty);
+        }
+    }
+
+    // right
+    if (hasRight) {
+        if (isVertical) {
+            context.textAlign = &apos;right&apos;;
+            tx = x + w / 2 + bw / 2 + .15 * w;
+        }
+
+        else {
+            ty = y + h / 2 + bw / 2 + .12 * h + 1.25 * th;
+        }
+
+        for (i = 0; i &lt; s; ++i) {
+            if (isVertical) {
+                ty = y + dlen + length - i * length / (s - 1) + lw * 2 + th / 3;
+                dx = .05 * w + context.measureText(options.majorTicks[i]).width;
+            }
+
+            else {
+                tx = x + dlen + d + i * length / (s - 1) - lw / 2;
+            }
+
+            context.fillText(options.majorTicks[i], tx + dx, ty);
+        }
+    }
 
 }
 
@@ -576,10 +688,10 @@ export default class LinearGauge extends BaseGauge {
 
             drawLinearMajorTicks(context, options, ...drawBox);
             drawLinearMinorTicks(context, options, ...drawBox);
+            drawLinearMajorTicksNumbers(context, options, ...drawBox);
             drawLinearTitle(context, options, ...drawBox);
             drawLinearUnits(context, options, ...drawBox);
             drawLinearBar(context, options, ...drawBox);
-            drawLinearMajorTicksNumbers(context, options, ...drawBox);
             drawLinearBarHighlights(context, options, ...drawBox);
 
             canvas.elementClone.initialized = true;
