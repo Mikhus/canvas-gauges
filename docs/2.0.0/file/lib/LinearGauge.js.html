@@ -118,7 +118,7 @@ let defaultLinearGaugeOptions = Object.assign({}, GenericOptions, {
     // bar
     barBeginCircle: 20, // percents
     barWidth: 15, // percents
-    barStrokeWidth: 5, // pixels
+    barStrokeWidth: 0, // pixels
 
     colorBarStroke: &apos;#222222&apos;,
     colorBar: &apos;#cccccc&apos;,
@@ -296,6 +296,27 @@ function drawLinearBar(context, options, x, y, w, h) {
 
 /* istanbul ignore next: private, not testable */
 /**
+ * Draws a tick line on a linear gauge
+ *
+ * @param {Canvas2DContext} context
+ * @param x1
+ * @param y1
+ * @param x2
+ * @param y2
+ */
+function drawLinearTick(context, x1, y1, x2, y2) {
+    context.beginPath();
+
+    context.moveTo(x1, y1);
+    context.lineTo(x2, y2);
+    context.stroke();
+
+    context.closePath();
+    context.save();
+}
+
+/* istanbul ignore next: private, not testable */
+/**
  * Draws linear gauge&apos;s bar major ticks
  *
  * @param {Canvas2DContext} context
@@ -353,14 +374,7 @@ function drawLinearMajorTicks(context, options, x, y, w, h) {
             else
                 tx = x + dlen + d + i * length / (s - 1) - lw / 2;
 
-            context.beginPath();
-
-            context.moveTo(tx, ty);
-            context.lineTo(tx - dx, ty - dy);
-            context.stroke();
-
-            context.closePath();
-            context.save();
+            drawLinearTick(context, tx, ty, tx - dx, ty - dy);
         }
     }
 
@@ -384,14 +398,7 @@ function drawLinearMajorTicks(context, options, x, y, w, h) {
             else
                 tx = x + dlen + d + i * length / (s - 1) - lw / 2;
 
-            context.beginPath();
-
-            context.moveTo(tx, ty);
-            context.lineTo(tx + dx, ty + dy);
-            context.stroke();
-
-            context.closePath();
-            context.save();
+            drawLinearTick(context, tx, ty, tx + dx, ty + dy);
         }
     }
 }
