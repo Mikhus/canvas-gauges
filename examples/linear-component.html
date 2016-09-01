@@ -7,16 +7,16 @@
 </head>
 <body style="background:#222">
 <canvas data-type="linear-gauge"
-        data-width="220"
+        data-width="160"
         data-height="600"
         data-border-radius="20"
         data-borders="0"
-        data-bar-stroke-width="10"
+        data-bar-stroke-width="5"
 ></canvas>
 
 <canvas data-type="linear-gauge"
-        data-width="600"
-        data-height="220"
+        data-width="160"
+        data-height="600"
         data-border-radius="0"
         data-borders="0"
         data-bar-begin-circle="false"
@@ -24,6 +24,25 @@
         data-units="°C"
 ></canvas>
 
+<br />
+
+<canvas data-type="linear-gauge"
+        data-width="600"
+        data-height="160"
+        data-border-radius="0"
+        data-borders="0"
+        data-bar-begin-circle="false"
+        data-title="Temperature"
+        data-units="°C"
+></canvas>
+
+<canvas data-type="linear-gauge"
+        data-width="600"
+        data-height="160"
+        data-border-radius="20"
+        data-borders="0"
+        data-bar-stroke-width="0"
+></canvas>
 <script>
     if (!window.addEventListener) {
         window.addEventListener = function(evt, listener) {
