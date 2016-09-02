@@ -644,7 +644,7 @@ function drawLinearMinorTicks(context, options) {
  */
 function drawLinearMajorTicksNumbers(context, options) {
     let {isVertical, length, width, barWidth, barLength,
-        barMargin, barOffset, X, Y} = context.barDimensions;
+        barMargin, barOffset, X, Y, ticksLength} = context.barDimensions;
     let ticks = options.majorTicks.length;
     let hasLeft = options.numberSide !== &apos;right&apos;;
     let hasRight = options.numberSide !== &apos;left&apos;;
@@ -659,7 +659,7 @@ function drawLinearMajorTicksNumbers(context, options) {
 
     for (; i &lt; ticks; i++) {
         tick = options.majorTicks[i];
-        numberOffset = i * (barLength - barOffset) / (ticks - 1);
+        numberOffset = i * ticksLength / (ticks - 1);
 
         if (isVertical) {
             textY = Y + length - barMargin - barOffset - numberOffset
