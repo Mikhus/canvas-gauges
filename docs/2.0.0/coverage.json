@@ -37,7 +37,7 @@
       "expectCount": 4,
       "actualCount": 3,
       "undocumentLines": [
-        803
+        857
       ]
     },
     "lib/SmartCanvas.js": {
@@ -49,7 +49,7 @@
       "expectCount": 7,
       "actualCount": 6,
       "undocumentLines": [
-        196
+        213
       ]
     },
     "lib/vendorize.js": {

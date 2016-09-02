@@ -140,9 +140,6 @@ const defaultGaugeOptions = Object.assign({}, GenericOptions, {
     colorValueBoxShadow: &apos;rgba(0,0,0,1)&apos;,
 
     // needle
-    needleStart: 0,
-    needleEnd: 85,
-    needleWidth: 4,
     needleCircleSize: 10,
     needleCircleInner: true,
     needleCircleOuter: true
@@ -334,7 +331,7 @@ function drawMinorTicks(context, options) {
  */
 function drawMajorTicks(context, options) {
     let r = maxRadius(context, options) - context.max * .05;
-    let i = 0;
+    let i;
     let s = options.majorTicks.length;
     let pixelRatio = SmartCanvas.pixelRatio;
 
@@ -456,23 +453,6 @@ function drawUnits(context, options) {
 
 /* istanbul ignore next: private, not testable */
 /**
- * Draws gauge needle shadow
- *
- * @access private
- * @param {Canvas2DContext} context
- * @param {GaugeOptions} options
- */
-function drawNeedleShadow(context, options) {
-    if (!options.needleShadow) return;
-
-    context.shadowOffsetX = 2;
-    context.shadowOffsetY = 2;
-    context.shadowBlur = 10;
-    context.shadowColor = options.colorNeedleShadowDown;
-}
-
-/* istanbul ignore next: private, not testable */
-/**
  * Draws gauge needle
  *
  * @access private
@@ -494,7 +474,7 @@ function drawNeedle(context, options) {
     let pad2 = max / 100 * options.needleWidth / 2;
     let pixelRatio = SmartCanvas.pixelRatio;
 
-    drawNeedleShadow(context, options);
+    drawings.drawNeedleShadow(context, options);
 
     context.save();
 
@@ -550,7 +530,7 @@ function drawNeedle(context, options) {
     context.restore();
 
     if (options.needleCircleSize) {
-        drawNeedleShadow(context, options);
+        drawings.drawNeedleShadow(context, options);
 
         if (options.needleCircleOuter) {
             context.beginPath();

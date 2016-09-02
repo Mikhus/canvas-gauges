@@ -260,13 +260,31 @@ export function linearGradient(context, colorFrom, colorTo, length) {
     return grad;
 }
 
+/* istanbul ignore next: private, not testable */
+/**
+ * Draws gauge needle shadow
+ *
+ * @access private
+ * @param {Canvas2DContext} context
+ * @param {GaugeOptions} options
+ */
+export function drawNeedleShadow(context, options) {
+    if (!options.needleShadow) return;
+
+    context.shadowOffsetX = 2;
+    context.shadowOffsetY = 2;
+    context.shadowBlur = 10;
+    context.shadowColor = options.colorNeedleShadowDown;
+}
+
 const drawings = {
     roundRect: roundRect,
     padValue: padValue,
     formatMajorTickNumber: formatMajorTickNumber,
     radians: radians,
     radialPoint: radialPoint,
-    linearGradient: linearGradient
+    linearGradient: linearGradient,
+    drawNeedleShadow: drawNeedleShadow
 };
 
 export default drawings;
