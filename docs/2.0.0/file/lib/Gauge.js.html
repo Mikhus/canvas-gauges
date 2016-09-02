@@ -613,14 +613,8 @@ function drawValueBox(context, options, value) {
             0.025 * max);
     }
 
-    let grd = context.createRadialGradient(
-        x,
-        y - 0.12 * max - 0.025 * max + (0.12 * max + 0.045 * max) / 2,
-        max / 10,
-        x,
-        y - 0.12 * max - 0.025 * max + (0.12 * max + 0.045 * max) / 2,
-        max / 5
-    );
+    let gy = y - 0.12 * max - 0.025 * max + (0.12 * max + 0.045 * max) / 2;
+    let grd = context.createRadialGradient(x, gy, max / 10, x, gy, max / 5);
 
     grd.addColorStop(0, options.colorValueBoxRectStart);
     grd.addColorStop(1, options.colorValueBoxRectEnd);
