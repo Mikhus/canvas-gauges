@@ -258,8 +258,7 @@ function barDimensions(context, options, x, y, w, h) {
 
 /* istanbul ignore next: private, not testable */
 /**
- * Draws linear gauge&apos;s bar shape from the given options on a given
- * canvas context
+ * Draws bar shape from the given options on a given canvas context
  *
  * @access private
  * @param {Canvas2DContext} context
@@ -397,7 +396,7 @@ function drawLinearBarShape(context, barOpWidth, barStrokeWidth, strokeColor,
 }
 
 /**
- * Draws linear gauge&apos;s bar
+ * Draws gauge bar
  *
  * @param {Canvas2DContext} context
  * @param {LinearGaugeOptions} options
@@ -424,7 +423,7 @@ function drawLinearBar(context, options, x, y, w, h) {
 
 /* istanbul ignore next: private, not testable */
 /**
- * Draws linear gauge&apos;s bar progress
+ * Draws gauge bar progress
  *
  * @param {Canvas2DContext} context
  * @param {LinearGaugeOptions} options
@@ -451,7 +450,7 @@ function drawLinearBarProgress(context, options, x, y, w, h) {
 
 /* istanbul ignore next: private, not testable */
 /**
- * Draws linear gauge&apos;s bar highlighted areas
+ * Draws gauge bar highlighted areas
  *
  * @param {Canvas2DContext} context
  * @param {LinearGaugeOptions} options
@@ -529,6 +528,7 @@ function drawLinearTick(context, x1, y1, x2, y2) {
 
 /* istanbul ignore next: private, not testable */
 /**
+ * Draws ticks
  *
  * @param {Canvas2DContext} context
  * @param {string} color
@@ -610,21 +610,80 @@ function prepareTicks(options) {
 
 /* istanbul ignore next: private, not testable */
 /**
- * Draws linear gauge&apos;s bar major ticks
+ * Draws major ticks
  *
  * @param {Canvas2DContext} context
  * @param {LinearGaugeOptions} options
  */
 function drawLinearMajorTicks(context, options) {
     let [hasLeft, hasRight] = prepareTicks(options);
+    let lineWidth = 2;
 
     drawLinearTicks(context, options.colorMajorTicks,
-        options.majorTicks.length, 1, hasLeft, hasRight, 2, .1);
+        options.majorTicks.length, 1, hasLeft, hasRight, lineWidth, .1);
+
+    if (options.strokeTicks) {
+        let {isVertical, length, width, barWidth, barMargin, barOffset, X, Y,
+            ticksLength, pixelRatio} = context.barDimensions;
+        let rightTicks = (width - barWidth) / 2 + barWidth + .05 * width;
+        let leftTicks = (width - barWidth) / 2 - .05 * width;
+        let sX, sY, eX, eY;
+
+        lineWidth *= pixelRatio;
+
+        if (isVertical) {
+            sY = Y + length - barMargin - barOffset + lineWidth / 2;
+            eY = sY - ticksLength - lineWidth;
+
+            if (hasLeft) {
+                eX = sX = Math.round(X + leftTicks);
+                drawLinearTickStroke(context, sX, sY, eX, eY);
+            }
+
+            if (hasRight) {
+                eX = sX = Math.round(X + rightTicks);
+                drawLinearTickStroke(context, sX, sY, eX, eY);
+            }
+        }
+
+        else {
+            sX = X + barMargin + barOffset - lineWidth / 2;
+            eX = sX + ticksLength + lineWidth;
+
+            if (hasLeft) {
+                eY = sY = Math.round(Y + leftTicks);
+                drawLinearTickStroke(context, sX, sY, eX, eY);
+            }
+
+            if (hasRight) {
+                eY = sY = Math.round(Y + rightTicks);
+                drawLinearTickStroke(context, sX, sY, eX, eY);
+            }
+        }
+    }
 }
 
 /* istanbul ignore next: private, not testable */
 /**
- * Draws linear gauge&apos;s bar minor ticks
+ * Draws ticks stroke
+ *
+ * @param {Canvas2DContext} context
+ * @param {number} sX
+ * @param {number} sY
+ * @param {number} eX
+ * @param {number} eY
+ */
+function drawLinearTickStroke(context, sX, sY, eX, eY) {
+    context.beginPath();
+    context.moveTo(sX, sY);
+    context.lineTo(eX, eY);
+    context.stroke();
+    context.closePath();
+}
+
+/* istanbul ignore next: private, not testable */
+/**
+ * Draws minor ticks
  *
  * @param {Canvas2DContext} context
  * @param {LinearGaugeOptions} options
@@ -639,7 +698,7 @@ function drawLinearMinorTicks(context, options) {
 
 /* istanbul ignore next: private, not testable */
 /**
- * Draws linear gauge&apos;ticks bar major tick numbers
+ * Draws major tick numbers
  *
  * @param {Canvas2DContext} context
  * @param {LinearGaugeOptions} options
@@ -699,7 +758,7 @@ function drawLinearMajorTicksNumbers(context, options) {
 
 /* istanbul ignore next: private, not testable */
 /**
- * Draws linear gauge&apos;s title
+ * Draws linear gauge title
  *
  * @param {Canvas2DContext} context
  * @param {LinearGaugeOptions} options
@@ -724,7 +783,7 @@ function drawLinearTitle(context, options) {
 
 /* istanbul ignore next: private, not testable */
 /**
- * Draws linear gauge&apos;s units
+ * Draws linear gauge units
  *
  * @param {Canvas2DContext} context
  * @param {LinearGaugeOptions} options
@@ -749,7 +808,7 @@ function drawLinearUnits(context, options) {
 
 /* istanbul ignore next: private, not testable */
 /**
- * Draws linear gauge&apos;s bar needle
+ * Draws linear gauge needles
  *
  * @param {Canvas2DContext} context
  * @param {LinearGaugeOptions} options
