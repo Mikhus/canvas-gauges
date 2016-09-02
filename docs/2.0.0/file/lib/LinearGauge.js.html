@@ -101,7 +101,7 @@ const SmartCanvas = require(&apos;./SmartCanvas&apos;);
 /**
  * Linear gauge configuration options
  *
- * @typedef {GenericOptions|{orientation: string, borderRadius: number, barBeginCircle: number, barWidth: number, barStrokeWidth: number, colorBar: string, colorBarEnd: string, colorBarStroke: string, tickSide: string, needleSide: string, numberSide: string}} LinearGaugeOptions
+ * @typedef {GenericOptions|{orientation: string, borderRadius: number, barBeginCircle: number, barWidth: number, barStrokeWidth: number, barProgress: boolean, colorBar: string, colorBarEnd: string, colorBarStroke: string, colorBarProgress: string, colorBarProgressEnd: string, tickSide: string, needleSide: string, numberSide: string}} LinearGaugeOptions
  */
 
 /**
@@ -119,11 +119,12 @@ let defaultLinearGaugeOptions = Object.assign({}, GenericOptions, {
     barBeginCircle: 30, // percents
     barWidth: 20, // percents
     barStrokeWidth: 0, // pixels
+    barProgress: true,
 
     colorBarStroke: &apos;#222222&apos;,
     colorBar: &apos;#cccccc&apos;,
     colorBarEnd: &apos;&apos;,
-    colorBarProgress: &apos;&apos;,
+    colorBarProgress: &apos;#c33&apos;,
     colorBarProgressEnd: &apos;&apos;,
 
     tickSide: &apos;both&apos;, // available: &apos;left&apos;, &apos;right&apos;, &apos;both&apos;
@@ -185,7 +186,7 @@ function barDimensions(options, x, y, w, h) {
         Math.round(width * options.barBeginCircle / 200 - strokeWidth / 2) :
         0;
     let barLength = Math.round(length * .85 - strokeWidth);
-    let barMargin = Math.round((length - barLength - strokeWidth) / 2);
+    let barMargin = Math.round((length - barLength) / 2);
 
     let x0 = Math.round(x + (isVertical ? w / 2 : barMargin + radius));
     let y0 = Math.round(y + (isVertical ? h - barMargin - radius : h / 2));
@@ -212,26 +213,44 @@ function barDimensions(options, x, y, w, h) {
     return barDims;
 }
 
+
 /* istanbul ignore next: private, not testable */
 /**
- * Draws linear gauge&apos;s bar
+ * Draws linear gauge&apos;s bar shape from the given options on a given
+ * canvas context
  *
+ * @access private
  * @param {Canvas2DContext} context
- * @param {LinearGaugeOptions} options
- * @param {number} x x-coordinate of the top-left corner of the gauge
- * @param {number} y y-coordinate of the top-left corner of the gauge
- * @param {number} w width of the gauge
- * @param {number} h height of the gauge
+ * @param {number} barOpWidth
+ * @param {number} barStrokeWidth
+ * @param {string} strokeColor
+ * @param {number} circleRadius
+ * @param {string} colorStart
+ * @param {string} colorEnd
+ * @param {number|boolean} toValue
+ * @param {number} minValue
+ * @param {number} maxValue
+ * @param {number} x
+ * @param {number} y
+ * @param {number} w
+ * @param {number} h
  */
-function drawLinearBar(context, options, x, y, w, h) {
+function drawLinearBarShape(context, barOpWidth, barStrokeWidth, strokeColor,
+                            circleRadius, colorStart, colorEnd, toValue,
+                            minValue, maxValue, x, y, w, h)
+{
     let {isVertical, width, length, barWidth, barLength, strokeWidth,
-        barMargin, radius, pixelRatio, x0, y0} =
-        barDimensions(options, x, y, w, h);
+        barMargin, radius, x0, y0} =
+        barDimensions({
+            barStrokeWidth: barStrokeWidth,
+            barBeginCircle: circleRadius,
+            barWidth: barOpWidth
+        }, x, y, w, h);
 
     context.save();
     context.beginPath();
 
-    if (options.barBeginCircle) {
+    if (circleRadius) {
         let direction = drawings.radians(isVertical ? 270 : 0);
         let alpha = Math.asin(barWidth / 2 / radius);
         let cosAlpha = Math.cos(alpha);
@@ -242,8 +261,8 @@ function drawLinearBar(context, options, x, y, w, h) {
             radius * sinAlpha :
             radius * cosAlpha - strokeWidth / 2));
         let y1 = Math.round(isVertical ?
-            y0 - radius * cosAlpha:
-            y0 + radius * sinAlpha);
+        y0 - radius * cosAlpha:
+        y0 + radius * sinAlpha);
 
         barDims.barOffset = Math.round(isVertical ?
             (Math.abs(y1 - y0) + radius) :
@@ -252,6 +271,11 @@ function drawLinearBar(context, options, x, y, w, h) {
         // bottom point
         let x2 = isVertical ? Math.round(x0 - radius * sinAlpha) : x1;
         let y2 = isVertical ? y1 : Math.round(y0 - radius * sinAlpha);
+
+        if (toValue !== false) {
+            barLength = barDims.barOffset + (barLength - barDims.barOffset) *
+                (toValue / (maxValue - minValue));
+        }
 
         // bar ends at
         let x3 = Math.round(x1 + barLength - barDims.barOffset +
@@ -281,23 +305,27 @@ function drawLinearBar(context, options, x, y, w, h) {
         let rx = Math.round(isVertical ?
             (x +  (width - barWidth) / 2) : (x + barMargin));
         let ry = Math.round(isVertical ?
-            (y + barMargin) : (y +  (width - barWidth) / 2));
+            (y + barLength + barMargin) : (y +  (width - barWidth) / 2));
 
-        if (isVertical) context.rect(rx, ry, barWidth, barLength);
+        if (toValue !== false) {
+            barLength *= toValue / (maxValue - minValue);
+        }
+
+        if (isVertical) context.rect(rx, ry, barWidth, -barLength);
         else context.rect(rx, ry, barLength, barWidth);
     }
 
-    if (strokeWidth) {
+    if (barStrokeWidth) {
         context.lineWidth = strokeWidth;
-        context.strokeStyle = options.colorBarStroke;
+        context.strokeStyle = strokeColor;
         //context.lineJoin = &apos;round&apos;;
         context.stroke();
     }
 
-    if (options.colorBar) {
-        context.fillStyle = options.colorBarEnd ?
-            drawings.linearGradient(context, options.colorBar,
-                options.colorBarEnd, length) : options.colorBar;
+    if (colorStart) {
+        context.fillStyle = colorEnd ?
+            drawings.linearGradient(context, colorStart, colorEnd, barLength):
+            colorStart;
         context.fill();
     }
 
@@ -307,6 +335,55 @@ function drawLinearBar(context, options, x, y, w, h) {
     barDims.radius += strokeWidth;
     barDims.barWidth += strokeWidth;
     barDims.barLength += strokeWidth / 2;
+}
+
+/**
+ * Draws linear gauge&apos;s bar
+ *
+ * @param {Canvas2DContext} context
+ * @param {LinearGaugeOptions} options
+ * @param {number} x x-coordinate of the top-left corner of the gauge
+ * @param {number} y y-coordinate of the top-left corner of the gauge
+ * @param {number} w width of the gauge
+ * @param {number} h height of the gauge
+ */
+function drawLinearBar(context, options, x, y, w, h) {
+    drawLinearBarShape(context,
+        options.barWidth,
+        options.barStrokeWidth,
+        options.colorBarStroke,
+        options.barBeginCircle,
+        options.colorBar,
+        options.colorBarEnd,
+        false,
+        options.minValue,
+        options.maxValue,
+        x, y, w, h);
+}
+
+/* istanbul ignore next: private, not testable */
+/**
+ * Draws linear gauge&apos;s bar progress
+ *
+ * @param {Canvas2DContext} context
+ * @param {LinearGaugeOptions} options
+ * @param {number} x x-coordinate of the top-left corner of the gauge
+ * @param {number} y y-coordinate of the top-left corner of the gauge
+ * @param {number} w width of the gauge
+ * @param {number} h height of the gauge
+ */
+function drawLinearBarProgress(context, options, x, y, w, h) {
+    options.barProgress &amp;&amp; drawLinearBarShape(context,
+        options.barWidth,
+        options.barStrokeWidth,
+        &apos;rgba(0,0,0,0)&apos;,
+        options.barBeginCircle,
+        options.colorBarProgress,
+        options.colorBarProgressEnd,
+        options.value,
+        options.minValue,
+        options.maxValue,
+        x, y, w, h);
 }
 
 /* istanbul ignore next: private, not testable */
@@ -322,8 +399,8 @@ function drawLinearBar(context, options, x, y, w, h) {
 function drawLinearTick(context, x1, y1, x2, y2) {
     context.beginPath();
 
-    context.moveTo(Math.round(x1), Math.round(y1));
-    context.lineTo(Math.round(x2), Math.round(y2));
+    context.moveTo(x1, y1);
+    context.lineTo(x2, y2);
     context.stroke();
 
     context.closePath();
@@ -576,22 +653,6 @@ function drawLinearBarHighlights(context, options, x, y, w, h) {
 
 }
 
-
-/* istanbul ignore next: private, not testable */
-/**
- * Draws linear gauge&apos;s bar progress
- *
- * @param {Canvas2DContext} context
- * @param {LinearGaugeOptions} options
- * @param {number} x x-coordinate of the top-left corner of the gauge
- * @param {number} y y-coordinate of the top-left corner of the gauge
- * @param {number} w width of the gauge
- * @param {number} h height of the gauge
- */
-function drawLinearBarProgress(context, options, x, y, w, h) {
-
-}
-
 /* istanbul ignore next: private, not testable */
 /**
  * Draws linear gauge&apos;s bar needle
@@ -748,15 +809,15 @@ export default class LinearGauge extends BaseGauge {
             context.clearRect(x, y, w, h);
             context.save();
 
-            let drawBox = drawLinearPlate(context, options, x, y, w, h);
+            this.drawBox = drawLinearPlate(context, options, x, y, w, h);
 
-            drawLinearBar(context, options, ...drawBox);
-            drawLinearMinorTicks(context, options, ...drawBox);
-            drawLinearMajorTicks(context, options, ...drawBox);
-            drawLinearMajorTicksNumbers(context, options, ...drawBox);
-            drawLinearTitle(context, options, ...drawBox);
-            drawLinearUnits(context, options, ...drawBox);
-            drawLinearBarHighlights(context, options, ...drawBox);
+            drawLinearBar(context, options, ...this.drawBox);
+            drawLinearMinorTicks(context, options, ...this.drawBox);
+            drawLinearMajorTicks(context, options, ...this.drawBox);
+            drawLinearMajorTicksNumbers(context, options, ...this.drawBox);
+            drawLinearTitle(context, options, ...this.drawBox);
+            drawLinearUnits(context, options, ...this.drawBox);
+            drawLinearBarHighlights(context, options, ...this.drawBox);
 
             canvas.elementClone.initialized = true;
         }
@@ -770,8 +831,8 @@ export default class LinearGauge extends BaseGauge {
         canvas.context.drawImage(canvas.elementClone, x, y, w, h);
         canvas.context.save();
 
-        drawLinearBarProgress(canvas.context, options, x, y, w, h);
-        drawLinearBarNeedle(canvas.context, options, x, y, w, h);
+        drawLinearBarProgress(canvas.context, options, ...this.drawBox);
+        drawLinearBarNeedle(canvas.context, options, ...this.drawBox);
 
         return this;
     }

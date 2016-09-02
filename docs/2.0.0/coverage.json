@@ -1,6 +1,6 @@
 {
-  "coverage": "98.63%",
-  "expectCount": 73,
+  "coverage": "97.29%",
+  "expectCount": 74,
   "actualCount": 72,
   "files": {
     "lib/Animation.js": {
@@ -34,9 +34,11 @@
       "undocumentLines": []
     },
     "lib/LinearGauge.js": {
-      "expectCount": 3,
+      "expectCount": 4,
       "actualCount": 3,
-      "undocumentLines": []
+      "undocumentLines": [
+        745
+      ]
     },
     "lib/SmartCanvas.js": {
       "expectCount": 20,

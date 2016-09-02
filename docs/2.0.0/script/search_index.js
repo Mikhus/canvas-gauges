@@ -744,6 +744,12 @@ window.esdocSearchIndex = [
     "method"
   ],
   [
+    "lib/lineargauge.js~lineargauge#drawbox",
+    "class/lib/LinearGauge.js~LinearGauge.html#instance-member-drawBox",
+    "lib/LinearGauge.js~LinearGauge#drawBox",
+    "member"
+  ],
+  [
     "lib/lineargauge.js~lineargaugeoptions",
     "typedef/index.html#static-typedef-LinearGaugeOptions",
     "lib/LinearGauge.js~LinearGaugeOptions",
