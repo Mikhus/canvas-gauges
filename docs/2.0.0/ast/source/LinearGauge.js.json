@@ -69563,46 +69563,86 @@
                           "line": 1034,
                           "column": 53
                         }
-                      }
+                      },
+                      "trailingComments": [
+                        {
+                          "type": "Line",
+                          "value": " todo: draw value box",
+                          "range": [
+                            31051,
+                            31074
+                          ],
+                          "loc": {
+                            "start": {
+                              "line": 1035,
+                              "column": 8
+                            },
+                            "end": {
+                              "line": 1035,
+                              "column": 31
+                            }
+                          }
+                        }
+                      ]
                     },
                     {
                       "type": "ReturnStatement",
                       "argument": {
                         "type": "ThisExpression",
                         "range": [
-                          31059,
-                          31063
+                          31091,
+                          31095
                         ],
                         "loc": {
                           "start": {
-                            "line": 1036,
+                            "line": 1037,
                             "column": 15
                           },
                           "end": {
-                            "line": 1036,
+                            "line": 1037,
                             "column": 19
                           }
                         }
                       },
                       "range": [
-                        31052,
-                        31064
+                        31084,
+                        31096
                       ],
                       "loc": {
                         "start": {
-                          "line": 1036,
+                          "line": 1037,
                           "column": 8
                         },
                         "end": {
-                          "line": 1036,
+                          "line": 1037,
                           "column": 20
                         }
-                      }
+                      },
+                      "leadingComments": [
+                        {
+                          "type": "Line",
+                          "value": " todo: draw value box",
+                          "range": [
+                            31051,
+                            31074
+                          ],
+                          "loc": {
+                            "start": {
+                              "line": 1035,
+                              "column": 8
+                            },
+                            "end": {
+                              "line": 1035,
+                              "column": 31
+                            }
+                          }
+                        }
+                      ]
                     }
                   ],
                   "range": [
                     29673,
-                    31070
+                    31102
                   ],
                   "loc": {
                     "start": {
@@ -69610,7 +69650,7 @@
                       "column": 11
                     },
                     "end": {
-                      "line": 1037,
+                      "line": 1038,
                       "column": 5
                     }
                   }
@@ -69619,7 +69659,7 @@
                 "expression": false,
                 "range": [
                   29670,
-                  31070
+                  31102
                 ],
                 "loc": {
                   "start": {
@@ -69627,7 +69667,7 @@
                     "column": 8
                   },
                   "end": {
-                    "line": 1037,
+                    "line": 1038,
                     "column": 5
                   }
                 }
@@ -69636,7 +69676,7 @@
               "computed": false,
               "range": [
                 29666,
-                31070
+                31102
               ],
               "loc": {
                 "start": {
@@ -69644,7 +69684,7 @@
                   "column": 4
                 },
                 "end": {
-                  "line": 1037,
+                  "line": 1038,
                   "column": 5
                 }
               },
@@ -69691,7 +69731,7 @@
           ],
           "range": [
             28717,
-            31073
+            31105
           ],
           "loc": {
             "start": {
@@ -69699,14 +69739,14 @@
               "column": 51
             },
             "end": {
-              "line": 1039,
+              "line": 1040,
               "column": 1
             }
           }
         },
         "range": [
           28681,
-          31073
+          31105
         ],
         "loc": {
           "start": {
@@ -69714,7 +69754,7 @@
             "column": 15
           },
           "end": {
-            "line": 1039,
+            "line": 1040,
             "column": 1
           }
         },
@@ -69742,7 +69782,7 @@
       },
       "range": [
         28666,
-        31073
+        31105
       ],
       "loc": {
         "start": {
@@ -69750,7 +69790,7 @@
           "column": 0
         },
         "end": {
-          "line": 1039,
+          "line": 1040,
           "column": 1
         }
       },
@@ -69787,16 +69827,16 @@
             "type": "Identifier",
             "name": "window",
             "range": [
-              31075,
-              31081
+              31107,
+              31113
             ],
             "loc": {
               "start": {
-                "line": 1041,
+                "line": 1042,
                 "column": 0
               },
               "end": {
-                "line": 1041,
+                "line": 1042,
                 "column": 6
               }
             }
@@ -69806,31 +69846,31 @@
             "value": "LinearGauge",
             "raw": "'LinearGauge'",
             "range": [
-              31082,
-              31095
+              31114,
+              31127
             ],
             "loc": {
               "start": {
-                "line": 1041,
+                "line": 1042,
                 "column": 7
               },
               "end": {
-                "line": 1041,
+                "line": 1042,
                 "column": 20
               }
             }
           },
           "range": [
-            31075,
-            31096
+            31107,
+            31128
           ],
           "loc": {
             "start": {
-              "line": 1041,
+              "line": 1042,
               "column": 0
             },
             "end": {
-              "line": 1041,
+              "line": 1042,
               "column": 21
             }
           }
@@ -69839,46 +69879,46 @@
           "type": "Identifier",
           "name": "LinearGauge",
           "range": [
-            31099,
-            31110
+            31131,
+            31142
           ],
           "loc": {
             "start": {
-              "line": 1041,
+              "line": 1042,
               "column": 24
             },
             "end": {
-              "line": 1041,
+              "line": 1042,
               "column": 35
             }
           }
         },
         "range": [
-          31075,
-          31110
+          31107,
+          31142
         ],
         "loc": {
           "start": {
-            "line": 1041,
+            "line": 1042,
             "column": 0
           },
           "end": {
-            "line": 1041,
+            "line": 1042,
             "column": 35
           }
         }
       },
       "range": [
-        31075,
-        31111
+        31107,
+        31143
       ],
       "loc": {
         "start": {
-          "line": 1041,
+          "line": 1042,
           "column": 0
         },
         "end": {
-          "line": 1041,
+          "line": 1042,
           "column": 36
         }
       }
@@ -69894,16 +69934,16 @@
             "type": "Identifier",
             "name": "BaseGauge",
             "range": [
-              31113,
-              31122
+              31145,
+              31154
             ],
             "loc": {
               "start": {
-                "line": 1043,
+                "line": 1044,
                 "column": 0
               },
               "end": {
-                "line": 1043,
+                "line": 1044,
                 "column": 9
               }
             }
@@ -69912,31 +69952,31 @@
             "type": "Identifier",
             "name": "initialize",
             "range": [
-              31123,
-              31133
+              31155,
+              31165
             ],
             "loc": {
               "start": {
-                "line": 1043,
+                "line": 1044,
                 "column": 10
               },
               "end": {
-                "line": 1043,
+                "line": 1044,
                 "column": 20
               }
             }
           },
           "range": [
-            31113,
-            31133
+            31145,
+            31165
           ],
           "loc": {
             "start": {
-              "line": 1043,
+              "line": 1044,
               "column": 0
             },
             "end": {
-              "line": 1043,
+              "line": 1044,
               "column": 20
             }
           }
@@ -69947,16 +69987,16 @@
             "value": "LinearGauge",
             "raw": "'LinearGauge'",
             "range": [
-              31134,
-              31147
+              31166,
+              31179
             ],
             "loc": {
               "start": {
-                "line": 1043,
+                "line": 1044,
                 "column": 21
               },
               "end": {
-                "line": 1043,
+                "line": 1044,
                 "column": 34
               }
             }
@@ -69965,47 +70005,47 @@
             "type": "Identifier",
             "name": "defaultLinearGaugeOptions",
             "range": [
-              31149,
-              31174
+              31181,
+              31206
             ],
             "loc": {
               "start": {
-                "line": 1043,
+                "line": 1044,
                 "column": 36
               },
               "end": {
-                "line": 1043,
+                "line": 1044,
                 "column": 61
               }
             }
           }
         ],
         "range": [
-          31113,
-          31175
+          31145,
+          31207
         ],
         "loc": {
           "start": {
-            "line": 1043,
+            "line": 1044,
             "column": 0
           },
           "end": {
-            "line": 1043,
+            "line": 1044,
             "column": 62
           }
         }
       },
       "range": [
-        31113,
-        31176
+        31145,
+        31208
       ],
       "loc": {
         "start": {
-          "line": 1043,
+          "line": 1044,
           "column": 0
         },
         "end": {
-          "line": 1043,
+          "line": 1044,
           "column": 63
         }
       }
@@ -70022,16 +70062,16 @@
             "type": "Identifier",
             "name": "module",
             "range": [
-              31178,
-              31184
+              31210,
+              31216
             ],
             "loc": {
               "start": {
-                "line": 1045,
+                "line": 1046,
                 "column": 0
               },
               "end": {
-                "line": 1045,
+                "line": 1046,
                 "column": 6
               }
             }
@@ -70040,31 +70080,31 @@
             "type": "Identifier",
             "name": "exports",
             "range": [
-              31185,
-              31192
+              31217,
+              31224
             ],
             "loc": {
               "start": {
-                "line": 1045,
+                "line": 1046,
                 "column": 7
               },
               "end": {
-                "line": 1045,
+                "line": 1046,
                 "column": 14
               }
             }
           },
           "range": [
-            31178,
-            31192
+            31210,
+            31224
           ],
           "loc": {
             "start": {
-              "line": 1045,
+              "line": 1046,
               "column": 0
             },
             "end": {
-              "line": 1045,
+              "line": 1046,
               "column": 14
             }
           }
@@ -70073,46 +70113,46 @@
           "type": "Identifier",
           "name": "LinearGauge",
           "range": [
-            31195,
-            31206
+            31227,
+            31238
           ],
           "loc": {
             "start": {
-              "line": 1045,
+              "line": 1046,
               "column": 17
             },
             "end": {
-              "line": 1045,
+              "line": 1046,
               "column": 28
             }
           }
         },
         "range": [
-          31178,
-          31206
+          31210,
+          31238
         ],
         "loc": {
           "start": {
-            "line": 1045,
+            "line": 1046,
             "column": 0
           },
           "end": {
-            "line": 1045,
+            "line": 1046,
             "column": 28
           }
         }
       },
       "range": [
-        31178,
-        31207
+        31210,
+        31239
       ],
       "loc": {
         "start": {
-          "line": 1045,
+          "line": 1046,
           "column": 0
         },
         "end": {
-          "line": 1045,
+          "line": 1046,
           "column": 29
         }
       }
@@ -70121,7 +70161,7 @@
   "sourceType": "module",
   "range": [
     1249,
-    31207
+    31239
   ],
   "loc": {
     "start": {
@@ -70129,7 +70169,7 @@
       "column": 0
     },
     "end": {
-      "line": 1045,
+      "line": 1046,
       "column": 29
     }
   },
@@ -71571,6 +71611,24 @@
         "end": {
           "line": 1026,
           "column": 27
+        }
+      }
+    },
+    {
+      "type": "Line",
+      "value": " todo: draw value box",
+      "range": [
+        31051,
+        31074
+      ],
+      "loc": {
+        "start": {
+          "line": 1035,
+          "column": 8
+        },
+        "end": {
+          "line": 1035,
+          "column": 31
         }
       }
     }

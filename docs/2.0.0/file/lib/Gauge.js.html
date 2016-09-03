@@ -98,11 +98,13 @@ const BaseGauge = require(&apos;./BaseGauge&apos;);
 const SmartCanvas = require(&apos;./SmartCanvas&apos;);
 const drawings = require(&apos;./drawings&apos;);
 
+const PI = Math.PI;
+const HPI = PI / 2;
+
 // todo: customizable fonts
 // todo: readme and documentation update
 // todo: github pages
 // todo: wiki
-// todo: LinearGauge implementation
 // todo: online configurator
 // todo: online packager
 // todo: e2e tests
@@ -157,7 +159,7 @@ const defaultGaugeOptions = Object.assign({}, GenericOptions, {
  */
 function drawCircle(radius, context, start, end) {
     context.beginPath();
-    context.arc(0, 0, radius, 0, Math.PI * 2, true);
+    context.arc(0, 0, radius, 0, PI * 2, true);
     context.fillStyle = drawings.linearGradient(context, start, end, radius);
     context.fill();
     context.closePath();
@@ -226,7 +228,7 @@ function drawPlate(context, options) {
     context.restore();
 
     context.beginPath();
-    context.arc(0, 0, r3, 0, Math.PI * 2, true);
+    context.arc(0, 0, r3, 0, PI * 2, true);
     context.fillStyle = options.colorPlate;
     context.fill();
     context.closePath();
@@ -261,7 +263,7 @@ function drawHighlights(context, options) {
         let pe1 = drawings.radialPoint(r2, ea);
 
         context.beginPath();
-        context.rotate(drawings.radians(90));
+        context.rotate(HPI);
         context.arc(0, 0, r1, sa, ea, false);
         context.restore();
         context.save();
@@ -276,7 +278,7 @@ function drawHighlights(context, options) {
         context.fill();
 
         context.beginPath();
-        context.rotate(drawings.radians(90));
+        context.rotate(HPI);
         context.arc(0, 0, r2, sa - 0.2, ea + 0.2, false);
         context.restore();
         context.closePath();
@@ -363,7 +365,7 @@ function drawMajorTicks(context, options) {
     }
 
     if (options.strokeTicks) {
-        context.rotate(drawings.radians(90));
+        context.rotate(HPI);
 
         context.beginPath();
         context.arc(0, 0, r,
@@ -534,7 +536,7 @@ function drawNeedle(context, options) {
 
         if (options.needleCircleOuter) {
             context.beginPath();
-            context.arc(0, 0, r1, 0, Math.PI * 2, true);
+            context.arc(0, 0, r1, 0, PI * 2, true);
             context.fillStyle = drawings.linearGradient(
                 context,
                 options.colorNeedleCircleOuterStart,
@@ -548,7 +550,7 @@ function drawNeedle(context, options) {
 
         if (options.needleCircleInner) {
             context.beginPath();
-            context.arc(0, 0, r2, 0, Math.PI * 2, true);
+            context.arc(0, 0, r2, 0, PI * 2, true);
             context.fillStyle = drawings.linearGradient(
                 context,
                 options.colorNeedleCircleInnerStart,
