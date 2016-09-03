@@ -102,7 +102,6 @@ const drawings = require(&apos;./drawings&apos;);
 const PI = Math.PI;
 const HPI = PI / 2;
 
-// todo: customizable fonts
 // todo: readme and documentation update
 // todo: github pages
 // todo: wiki
@@ -408,7 +407,7 @@ function drawNumbers(context, options) {
 
         points[angle] = true;
 
-        context.font = 20 * (context.max / 200) + &apos;px Arial&apos;;
+        context.font = 20 * (context.max / 200) + &apos;px &apos; + options.fontNumbers;
         context.fillStyle = options.colorNumbers;
         context.lineWidth = 0;
         context.textAlign = &apos;center&apos;;
@@ -428,7 +427,7 @@ function drawTitle(context, options) {
     if (!options.title) return;
 
     context.save();
-    context.font = 24 * (context.max / 200) + &apos;px Arial&apos;;
+    context.font = 24 * (context.max / 200) + &apos;px &apos; + options.fontTitle;
     context.fillStyle = options.colorTitle;
     context.textAlign = &apos;center&apos;;
     context.fillText(options.title, 0, -context.max / 4.25, context.max * .8);
@@ -447,7 +446,7 @@ function drawUnits(context, options) {
     if (!options.units) return;
 
     context.save();
-    context.font = 22 * (context.max / 200) + &apos;px Arial&apos;;
+    context.font = 22 * (context.max / 200) + &apos;px &apos; + options.fontUnits;
     context.fillStyle = options.colorUnits;
     context.textAlign = &apos;center&apos;;
     context.fillText(options.units, 0, context.max / 3.25, context.max * .8);
@@ -581,7 +580,7 @@ function drawValueBox(context, options, value) {
     let x = 0;
 
     context.save();
-    context.font = 40 * (max / 200) + &apos;px Led&apos;;
+    context.font = 40 * (max / 200) + &apos;px &apos; + options.fontValue;
     context.save();
 
     if (options.valueBox) {

@@ -171,22 +171,16 @@ export default class DomObserver {
                         this.traverse();
                         clearInterval(interval);
                     }
-                }, 10);
-            }
-
-            if (window.MutationObserver) {
-                //noinspection JSCheckFunctionSignatures
-                new MutationObserver(this.observe.bind(this))
-                    .observe(document.body, {
-                        childList: true,
-                        subtree: true,
-                        attributes: true,
-                        characterData: true,
-                        attributeOldValue: true,
-                        characterDataOldValue: true
-                    });
+                });
             }
         });
+
+        /**
+         * Signals if mutations observer for this type or not
+         *
+         * @type {boolean}
+         */
+        this.mutationsObserved = false;
     }
 
     /**
@@ -218,6 +212,21 @@ export default class DomObserver {
             if (this.isValidNode(node)) {
                 this.process(node);
             }
+        }
+
+        if (window.MutationObserver &amp;&amp; !this.mutationsObserved) {
+            //noinspection JSCheckFunctionSignatures
+            new MutationObserver(this.observe.bind(this))
+                .observe(document.body, {
+                    childList: true,
+                    subtree: true,
+                    attributes: true,
+                    characterData: true,
+                    attributeOldValue: true,
+                    characterDataOldValue: true
+                });
+
+            this.mutationsObserved = true;
         }
     }
 

@@ -1,7 +1,7 @@
 {
-  "coverage": "97.26%",
-  "expectCount": 73,
-  "actualCount": 71,
+  "coverage": "97.29%",
+  "expectCount": 74,
+  "actualCount": 72,
   "files": {
     "lib/Animation.js": {
       "expectCount": 9,
@@ -19,8 +19,8 @@
       "undocumentLines": []
     },
     "lib/DomObserver.js": {
-      "expectCount": 14,
-      "actualCount": 14,
+      "expectCount": 15,
+      "actualCount": 15,
       "undocumentLines": []
     },
     "lib/Gauge.js": {

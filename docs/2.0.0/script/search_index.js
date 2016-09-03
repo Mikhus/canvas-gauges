@@ -618,6 +618,12 @@ window.esdocSearchIndex = [
     "method"
   ],
   [
+    "lib/domobserver.js~domobserver#mutationsobserved",
+    "class/lib/DomObserver.js~DomObserver.html#instance-member-mutationsObserved",
+    "lib/DomObserver.js~DomObserver#mutationsObserved",
+    "member"
+  ],
+  [
     "lib/domobserver.js~domobserver#observe",
     "class/lib/DomObserver.js~DomObserver.html#instance-method-observe",
     "lib/DomObserver.js~DomObserver#observe",

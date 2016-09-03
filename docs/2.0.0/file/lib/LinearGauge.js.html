@@ -723,7 +723,7 @@ function drawLinearMajorTicksNumbers(context, options) {
     let numRight = (width - barWidth) / 2 + barWidth + .2 * width;
     let textX, textY, textWidth, numberOffset, tick;
 
-    context.font = textHeight + &apos;px Arial&apos;;
+    context.font = textHeight + &apos;px &apos; + options.fontNumbers;
     context.fillStyle = options.colorNumbers;
     context.lineWidth = 0;
     context.textAlign = &apos;center&apos;;
@@ -782,7 +782,7 @@ function drawLinearTitle(context, options) {
     context.save();
     context.textAlign = &apos;center&apos;;
     context.fillStyle = options.colorTitle;
-    context.font = textHeight + &apos;px Arial&apos;;
+    context.font = textHeight + &apos;px &apos; + options.fontTitle;
     context.lineWidth = 0;
     context.fillText(options.title, textX, textY, isVertical ? width : length);
 }
@@ -807,7 +807,7 @@ function drawLinearUnits(context, options) {
     context.save();
     context.textAlign = &apos;center&apos;;
     context.fillStyle = options.colorTitle;
-    context.font = textHeight + &apos;px Arial&apos;;
+    context.font = textHeight + &apos;px &apos; + options.fontUnits;
     context.lineWidth = 0;
     context.fillText(options.units, textX, textY, isVertical ? width : length);
 }
