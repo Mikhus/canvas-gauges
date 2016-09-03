@@ -3,8 +3,9 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>Gauge Test</title>
-    <script src="../gauge.min.js"></script>
+    <link rel="stylesheet" href="../fonts/fonts.css">
     <style>body{padding:0;margin:0;background:#222}</style>
+    <script src="../gauge.min.js"></script>
 </head>
 <body style="width:100%;height:100%">
 <canvas data-type="gauge"
@@ -36,14 +37,16 @@
         data-value-box="true"
         data-animation-rule="bounce"
         data-animation-duration="500"
+        data-font-value="Led"
 ></canvas>
 <canvas data-type="gauge"></canvas>
 <script>
-if (!window.addEventListener) {
-    window.addEventListener = function(evt, listener) {
-        window.attachEvent('on' + evt, listener);
-    };
+function domReady(handler) {
+    if (window.addEventListener)
+        window.addEventListener('load', handler, false);
+    else window.attachEvent('onload', handler);
 }
+
 if (!Array.prototype.forEach) {
     Array.prototype.forEach = function(cb) {
         var i = 0, s = this.length;
@@ -52,13 +55,14 @@ if (!Array.prototype.forEach) {
         }
     }
 }
-// animage all gauges on a page
-window.addEventListener('load', function() {
+
+domReady(function() {
     Gauge.collection.forEach(function(gauge) {
-       setInterval(function() {
-           gauge.value = Math.random() * -gauge.options.maxValue +
-               gauge.options.maxValue;
-       }, gauge.animation.duration + 500);
+        gauge.draw();
+        setInterval(function() {
+            gauge.value = Math.random() * -gauge.options.maxValue +
+                gauge.options.maxValue;
+        }, gauge.animation.duration + 500);
     });
 });
 </script>

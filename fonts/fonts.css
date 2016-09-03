@@ -1,0 +1,6 @@
+@font-face {
+    font-family: 'Led';
+    src: url('digital-7-mono.eot');
+    src: url('digital-7-mono.eot?#iefix') format('embedded-opentype'),
+         url('digital-7-mono.ttf')  format('truetype');
+}
