@@ -1,22 +1,22 @@
 const sinon = require('sinon');
 const expect = require('chai').expect;
-const Gauge = require('../../lib/Gauge');
+const RadialGauge = require('../../lib/RadialGauge');
 const SmartCanvas = require('../../lib/SmartCanvas');
 const Animation = require('../../lib/Animation');
 
-sinon.spy(Gauge.prototype, 'draw');
+sinon.spy(RadialGauge.prototype, 'draw');
 
-describe('Gauge', () => {
+describe('RadialGauge', () => {
     beforeEach(() => {
-        Gauge.prototype.draw.reset();
+        RadialGauge.prototype.draw.reset();
     });
 
     it('should be a class', () => {
-        expect(Gauge).is.a('function');
-        expect(() => new Gauge()).to.throw(TypeError);
-        expect(() => new Gauge({})).to.throw(TypeError);
+        expect(RadialGauge).is.a('function');
+        expect(() => new RadialGauge()).to.throw(TypeError);
+        expect(() => new RadialGauge({})).to.throw(TypeError);
         expect(() =>
-            new Gauge({
+            new RadialGauge({
                 renderTo: document.createElement('canvas')
             })
         ).to.not.throw(Error);
@@ -26,7 +26,7 @@ describe('Gauge', () => {
         let gauge;
 
         beforeEach(() => {
-            gauge = new Gauge({
+            gauge = new RadialGauge({
                 renderTo: document.createElement('canvas')
             });
         });

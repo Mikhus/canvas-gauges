@@ -42,8 +42,10 @@ function es6concat(type = 'all') {
     ];
 
     switch (type.toLowerCase()) {
-        case 'gauge':
-            bundle.push('lib/Gauge.js');
+        case 'radial':
+        case 'radial-gauge':
+        case 'radialgauge':
+            bundle.push('lib/RadialGauge.js');
             break;
         case 'linear':
         case 'linear-gauge':
@@ -51,7 +53,7 @@ function es6concat(type = 'all') {
             bundle.push('lib/LinearGauge.js');
             break;
         default:
-            bundle.push('lib/Gauge.js', 'lib/LinearGauge.js');
+            bundle.push('lib/RadialGauge.js', 'lib/LinearGauge.js');
     }
 
     return gulp.src(bundle)

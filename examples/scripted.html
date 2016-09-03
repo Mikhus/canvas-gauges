@@ -11,7 +11,7 @@
 <canvas id="gauge2"></canvas>
 <div id="console"></div>
 <script>
-new Gauge({
+new RadialGauge({
     renderTo: 'gauge1',
     width: 400,
     height: 400,
@@ -45,7 +45,7 @@ new Gauge({
     animationDuration: 500
 }).draw();
 
-new Gauge({ renderTo: 'gauge2' }).draw();
+new RadialGauge({ renderTo: 'gauge2' }).draw();
 
 if (!window.addEventListener) {
     window.addEventListener = function(evt, listener) {
@@ -62,7 +62,7 @@ if (!Array.prototype.forEach) {
 }
 // animage all gauges on a page
 window.addEventListener('load', function() {
-    Gauge.collection.forEach(function(gauge) {
+    document.gauges.forEach(function(gauge) {
        setInterval(function() {
            gauge.value = Math.random() * -gauge.options.maxValue +
                gauge.options.maxValue;

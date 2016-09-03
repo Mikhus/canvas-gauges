@@ -138,7 +138,7 @@ describe('BadseGauge', () => {
 
             gauge.destroy();
 
-            expect(BaseGauge.collection).not.includes(gauge);
+            expect(document.gauges).not.includes(gauge);
         });
         it('should properly dereference all bound items', () => {
             let gauge = new TestGauge({
@@ -191,17 +191,17 @@ describe('BadseGauge', () => {
     });
 });
 
-describe('BaseGauge.collection', () => {
+describe('document.gauges', () => {
     it('should be an instance of Collection and Array', () => {
-        expect(BaseGauge.collection).instanceOf(Collection);
-        expect(BaseGauge.collection).instanceOf(Array);
+        expect(document.gauges).instanceOf(Collection);
+        expect(document.gauges).instanceOf(Array);
     });
 
     describe('get()', () => {
         let g1, g2, g3;
 
         beforeEach(() => {
-            BaseGauge.collection.splice(0, BaseGauge.collection.length);
+            document.gauges.splice(0, document.gauges.length);
 
             let c1 = document.createElement('canvas');
             let c2 = document.createElement('canvas');
@@ -217,16 +217,16 @@ describe('BaseGauge.collection', () => {
         });
 
         it('should find gauge by a given id', () => {
-            expect(BaseGauge.collection.get('gauge-1')).equals(g1);
+            expect(document.gauges.get('gauge-1')).equals(g1);
         });
         it('should find gauge by index', () => {
-            expect(BaseGauge.collection.get(1)).equals(g2);
+            expect(document.gauges.get(1)).equals(g2);
         });
         it('should return null if nothing found', () => {
-            expect(BaseGauge.collection.get('gauge-4')).equals(null);
+            expect(document.gauges.get('gauge-4')).equals(null);
         });
-        it('should return null if invalod locator given', () => {
-            expect(BaseGauge.collection.get({})).equals(null);
+        it('should return null if invalid locator given', () => {
+            expect(document.gauges.get({})).equals(null);
         });
     });
 });

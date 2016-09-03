@@ -8,7 +8,7 @@
     <script src="../gauge.min.js"></script>
 </head>
 <body style="width:100%;height:100%">
-<canvas data-type="gauge"
+<canvas data-type="radial-gauge"
         data-width="400"
         data-height="400"
         data-units="Km/h"
@@ -39,14 +39,30 @@
         data-animation-duration="500"
         data-font-value="Led"
 ></canvas>
-<canvas data-type="gauge"></canvas>
+<canvas data-type="radial-gauge"></canvas>
 <script>
-function domReady(handler) {
-    if (window.addEventListener)
-        window.addEventListener('load', handler, false);
-    else window.attachEvent('onload', handler);
-}
+//if (document.fonts) {
+//    document.fonts.ready.then(function(fontSet) {
+//        fontSet.forEach((fontFace) => {
+//            console.log(fontFace);
+//        });
+//        GAUGE_DEFER = false;
+//
+//        Gauge.collection.forEach(function(gauge) {
+//            gauge.draw();
+//            setInterval(function() {
+//                gauge.value = Math.random() * -gauge.options.maxValue +
+//                    gauge.options.maxValue;
+//            }, gauge.animation.duration + 500);
+//        });
+//    });
+//}
 
+if (!window.addEventListener) {
+    window.addEventListener = function(evt, listener) {
+        window.attachEvent('on' + evt, listener);
+    };
+}
 if (!Array.prototype.forEach) {
     Array.prototype.forEach = function(cb) {
         var i = 0, s = this.length;
@@ -55,10 +71,9 @@ if (!Array.prototype.forEach) {
         }
     }
 }
-
-domReady(function() {
-    Gauge.collection.forEach(function(gauge) {
-        gauge.draw();
+// animage all gauges on a page
+window.addEventListener('load', function() {
+    document.gauges.forEach(function(gauge) {
         setInterval(function() {
             gauge.value = Math.random() * -gauge.options.maxValue +
                 gauge.options.maxValue;

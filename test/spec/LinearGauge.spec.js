@@ -5,7 +5,7 @@ const SmartCanvas = require('../../lib/SmartCanvas');
 
 describe('LinearGauge', () => {
     it('should be a class', () => {
-        expect(Gauge).is.a('function');
+        expect(LinearGauge).is.a('function');
         expect(() => new LinearGauge).to.throw(TypeError);
         expect(() => new LinearGauge({})).to.throw(TypeError);
         expect(() =>
