@@ -205,7 +205,7 @@ gulp.task('watch', ['build'], () => {
  *
  * @task {gzip}
  */
-gulp.task('gzip', ['build'], () => {
+gulp.task('gzip', () => {
     return gulp.src('gauge.min.js')
         .pipe(gzip({ gzipOptions: { level: 9 } }))
         .pipe(gulp.dest('.'));

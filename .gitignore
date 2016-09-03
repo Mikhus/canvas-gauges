@@ -5,3 +5,4 @@ node_modules/
 *.gz
 errorShots/
 *.log
+debug.js
