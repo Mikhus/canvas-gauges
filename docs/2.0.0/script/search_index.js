@@ -552,12 +552,6 @@ window.esdocSearchIndex = [
     "member"
   ],
   [
-    "lib/basegauge.js~basegauge#typename",
-    "class/lib/BaseGauge.js~BaseGauge.html#instance-member-typeName",
-    "lib/BaseGauge.js~BaseGauge#typeName",
-    "member"
-  ],
-  [
     "lib/basegauge.js~basegauge#update",
     "class/lib/BaseGauge.js~BaseGauge.html#instance-method-update",
     "lib/BaseGauge.js~BaseGauge#update",
@@ -565,13 +559,13 @@ window.esdocSearchIndex = [
   ],
   [
     "lib/basegauge.js~basegauge#value",
-    "class/lib/BaseGauge.js~BaseGauge.html#instance-set-value",
+    "class/lib/BaseGauge.js~BaseGauge.html#instance-get-value",
     "lib/BaseGauge.js~BaseGauge#value",
     "member"
   ],
   [
     "lib/basegauge.js~basegauge#value",
-    "class/lib/BaseGauge.js~BaseGauge.html#instance-get-value",
+    "class/lib/BaseGauge.js~BaseGauge.html#instance-set-value",
     "lib/BaseGauge.js~BaseGauge#value",
     "member"
   ],
@@ -682,6 +676,12 @@ window.esdocSearchIndex = [
     "typedef/index.html#static-typedef-GaugeInterface",
     "lib/DomObserver.js~GaugeInterface",
     "typedef"
+  ],
+  [
+    "lib/domobserver.js~json",
+    "external/index.html",
+    "lib/DomObserver.js~JSON",
+    "external"
   ],
   [
     "lib/gauge.js",

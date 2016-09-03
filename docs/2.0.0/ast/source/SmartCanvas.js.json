@@ -6016,7 +6016,7 @@
                       "trailingComments": [
                         {
                           "type": "Line",
-                          "value": " derefecence all created elements",
+                          "value": " dereference all created elements",
                           "range": [
                             4456,
                             4491
@@ -6179,7 +6179,7 @@
                       "leadingComments": [
                         {
                           "type": "Line",
-                          "value": " derefecence all created elements",
+                          "value": " dereference all created elements",
                           "range": [
                             4456,
                             4491
@@ -10288,7 +10288,7 @@
     },
     {
       "type": "Line",
-      "value": " derefecence all created elements",
+      "value": " dereference all created elements",
       "range": [
         4456,
         4491
