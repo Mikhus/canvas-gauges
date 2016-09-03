@@ -24,12 +24,6 @@ window.esdocSearchIndex = [
     "class"
   ],
   [
-    "canv-gauge/lib/gauge.js~gauge",
-    "class/lib/Gauge.js~Gauge.html",
-    "<span>Gauge</span> <span class=\"search-result-import-path\">canv-gauge/lib/Gauge.js</span>",
-    "class"
-  ],
-  [
     "canv-gauge/lib/genericoptions.js~genericoptions",
     "variable/index.html#static-variable-GenericOptions",
     "<span>GenericOptions</span> <span class=\"search-result-import-path\">canv-gauge/lib/GenericOptions.js</span>",
@@ -39,6 +33,12 @@ window.esdocSearchIndex = [
     "canv-gauge/lib/lineargauge.js~lineargauge",
     "class/lib/LinearGauge.js~LinearGauge.html",
     "<span>LinearGauge</span> <span class=\"search-result-import-path\">canv-gauge/lib/LinearGauge.js</span>",
+    "class"
+  ],
+  [
+    "canv-gauge/lib/radialgauge.js~radialgauge",
+    "class/lib/RadialGauge.js~RadialGauge.html",
+    "<span>RadialGauge</span> <span class=\"search-result-import-path\">canv-gauge/lib/RadialGauge.js</span>",
     "class"
   ],
   [
@@ -570,12 +570,6 @@ window.esdocSearchIndex = [
     "member"
   ],
   [
-    "lib/basegauge.js~basegauge.collection",
-    "class/lib/BaseGauge.js~BaseGauge.html#static-get-collection",
-    "lib/BaseGauge.js~BaseGauge.collection",
-    "member"
-  ],
-  [
     "lib/basegauge.js~basegauge.initialize",
     "class/lib/BaseGauge.js~BaseGauge.html#static-method-initialize",
     "lib/BaseGauge.js~BaseGauge.initialize",
@@ -690,30 +684,6 @@ window.esdocSearchIndex = [
     "external"
   ],
   [
-    "lib/gauge.js",
-    "file/lib/Gauge.js.html",
-    "lib/Gauge.js",
-    "file"
-  ],
-  [
-    "lib/gauge.js~gauge#constructor",
-    "class/lib/Gauge.js~Gauge.html#instance-constructor-constructor",
-    "lib/Gauge.js~Gauge#constructor",
-    "method"
-  ],
-  [
-    "lib/gauge.js~gauge#draw",
-    "class/lib/Gauge.js~Gauge.html#instance-method-draw",
-    "lib/Gauge.js~Gauge#draw",
-    "method"
-  ],
-  [
-    "lib/gauge.js~gaugeoptions",
-    "typedef/index.html#static-typedef-GaugeOptions",
-    "lib/Gauge.js~GaugeOptions",
-    "typedef"
-  ],
-  [
     "lib/genericoptions.js",
     "file/lib/GenericOptions.js.html",
     "lib/GenericOptions.js",
@@ -759,6 +729,30 @@ window.esdocSearchIndex = [
     "lib/lineargauge.js~lineargaugeoptions",
     "typedef/index.html#static-typedef-LinearGaugeOptions",
     "lib/LinearGauge.js~LinearGaugeOptions",
+    "typedef"
+  ],
+  [
+    "lib/radialgauge.js",
+    "file/lib/RadialGauge.js.html",
+    "lib/RadialGauge.js",
+    "file"
+  ],
+  [
+    "lib/radialgauge.js~radialgauge#constructor",
+    "class/lib/RadialGauge.js~RadialGauge.html#instance-constructor-constructor",
+    "lib/RadialGauge.js~RadialGauge#constructor",
+    "method"
+  ],
+  [
+    "lib/radialgauge.js~radialgauge#draw",
+    "class/lib/RadialGauge.js~RadialGauge.html#instance-method-draw",
+    "lib/RadialGauge.js~RadialGauge#draw",
+    "method"
+  ],
+  [
+    "lib/radialgauge.js~radialgaugeoptions",
+    "typedef/index.html#static-typedef-RadialGaugeOptions",
+    "lib/RadialGauge.js~RadialGaugeOptions",
     "typedef"
   ],
   [

@@ -36,8 +36,8 @@
   <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/Animation.js~Animation.html">Animation</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/BaseGauge.js~BaseGauge.html">BaseGauge</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/DomObserver.js~DomObserver.html">DomObserver</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/Gauge.js~Gauge.html">Gauge</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/LinearGauge.js~LinearGauge.html">LinearGauge</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/RadialGauge.js~RadialGauge.html">RadialGauge</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/SmartCanvas.js~SmartCanvas.html">SmartCanvas</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-Collection">Collection</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-formatMajorTickNumber">formatMajorTickNumber</a></span></span></li>
@@ -54,10 +54,10 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-DrawEventCallback">DrawEventCallback</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-EndEventCallback">EndEventCallback</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-GaugeInterface">GaugeInterface</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-GaugeOptions">GaugeOptions</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-Highlight">Highlight</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-RenderTarget">RenderTarget</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-LinearGaugeOptions">LinearGaugeOptions</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-RadialGaugeOptions">RadialGaugeOptions</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/JSON">JSON</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array/indexOf">Array.indexOf</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object/assign">Object.assign</a></span></span></li>
@@ -71,7 +71,7 @@ const Animation = require(&apos;./Animation&apos;);
 const Collection = require(&apos;./Collection&apos;);
 const DomObserver = require(&apos;./DomObserver&apos;);
 
-let gaugesCollection = new Collection();
+let gauges = new Collection();
 
 /**
  * Basic abstract BaseGauge class implementing common functionality
@@ -113,7 +113,7 @@ export default class BaseGauge {
             throw new TypeError(&apos;Attempt to instantiate abstract class!&apos;);
         }
 
-        gaugesCollection.push(this);
+        gauges.push(this);
 
         /**
          * Gauge type class
@@ -210,7 +210,7 @@ export default class BaseGauge {
     /**
      * Updates gauge configuration options at runtime and redraws the gauge
      *
-     * @param {GaugeOptions} options
+     * @param {RadialGaugeOptions} options
      * @returns {BaseGauge}
      */
     update(options) {
@@ -231,12 +231,12 @@ export default class BaseGauge {
      * Performs destruction of this object properly
      */
     destroy() {
-        let index = gaugesCollection.indexOf(this);
+        let index = gauges.indexOf(this);
 
         /* istanbul ignore else */
         if (~index) {
             //noinspection JSUnresolvedFunction
-            gaugesCollection.splice(index, 1);
+            gauges.splice(index, 1);
         }
 
         this.canvas.destroy();
@@ -257,17 +257,6 @@ export default class BaseGauge {
     }
 
     /**
-     * Collection of the gauges on a page.
-     * The collection is singleton collection of the gauges spread
-     * across all gauge types.
-     *
-     * @return {Collection}
-     */
-    static get collection() {
-        return gaugesCollection;
-    }
-
-    /**
      * Inject given gauge object into DOM
      *
      * @param {string} Type
@@ -279,6 +268,7 @@ export default class BaseGauge {
 }
 
 window[&apos;BaseGauge&apos;] = BaseGauge;
+document[&apos;gauges&apos;] = gauges;
 
 module.exports = BaseGauge;
 </code></pre>
