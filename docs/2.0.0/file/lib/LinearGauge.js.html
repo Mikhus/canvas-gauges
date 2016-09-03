@@ -879,6 +879,23 @@ function drawLinearBarNeedle(context, options) {
 
 /* istanbul ignore next: private, not testable */
 /**
+ * Returns needle color style
+ *
+ * @access private
+ * @param {Canvas2DContext} context
+ * @param {LinearGaugeOptions} options
+ * @param {number} length
+ * @return {CanvasGradient|string}
+ */
+function needleStyle(context, options, length) {
+    return options.colorNeedleEnd ?
+        drawings.linearGradient(context, options.colorNeedleStart,
+            options.colorNeedleEnd, length) :
+        options.colorNeedleStart;
+}
+
+/* istanbul ignore next: private, not testable */
+/**
  * Draws line needle shape
  *
  * @access private
@@ -891,11 +908,8 @@ function drawLinearBarNeedle(context, options) {
  * @param {number} length
  */
 function drawLinearLineNeedle(context, options, sX, sY, eX, eY, length) {
-    context.lineWidth = width;
-    context.strokeStyle = options.colorNeedleEnd ?
-        drawings.linearGradient(context, options.colorNeedleStart,
-            options.colorNeedleEnd, length) :
-        options.colorNeedleStart;
+    context.lineWidth = options.needleWidth;
+    context.strokeStyle = needleStyle(context, options, length);
 
     context.beginPath();
     context.moveTo(sX, sY);
@@ -923,10 +937,7 @@ function drawLinearArrowNeedle(context, options, sX, sY, eX, eY, length) {
     let isVertical = sX === eX;
     let halfWidth = options.needleWidth / 2;
 
-    context.fillStyle = options.colorNeedleEnd ?
-        drawings.linearGradient(context, options.colorNeedleStart,
-            options.colorNeedleEnd, length) :
-        options.colorNeedleStart;
+    context.fillStyle = needleStyle(context, options, length);
 
     context.beginPath();
 
