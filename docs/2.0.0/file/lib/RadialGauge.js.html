@@ -246,7 +246,8 @@ function drawRadialHighlights(context, options) {
         let vd = (options.maxValue - options.minValue) / options.ticksAngle;
         let sa = drawings.radians(options.startAngle +
                 (hlt.from - options.minValue) / vd);
-        let ea = drawings.radians(options.startAngle + (hlt.to - options.minValue) / vd);
+        let ea = drawings.radians(options.startAngle +
+            (hlt.to - options.minValue) / vd);
         let ps = drawings.radialPoint(r2, sa);
         let pe = drawings.radialPoint(r1, sa);
         let ps1 = drawings.radialPoint(r1, ea);
