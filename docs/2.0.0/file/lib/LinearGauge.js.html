@@ -104,6 +104,9 @@ const SmartCanvas = require(&apos;./SmartCanvas&apos;);
  * @typedef {GenericOptions|{orientation: string, borderRadius: number, barBeginCircle: number, barWidth: number, barStrokeWidth: number, barProgress: boolean, colorBar: string, colorBarEnd: string, colorBarStroke: string, colorBarProgress: string, colorBarProgressEnd: string, tickSide: string, needleSide: string, numberSide: string}} LinearGaugeOptions
  */
 
+const round = Math.round;
+const abs = Math.abs;
+
 /**
  * Default linear gauge configuration options
  *
@@ -181,7 +184,7 @@ function barDimensions(context, options, x, y, w, h) {
     let width = isVertical ? w * .85 : h;
     let length = isVertical ? h : w;
 
-    x = isVertical ? Math.round(x + (w - width) / 2) : x;
+    x = isVertical ? round(x + (w - width) / 2) : x;
 
     let hasTitle = !!options.title;
     let hasUnits = !!options.units;
@@ -190,7 +193,7 @@ function barDimensions(context, options, x, y, w, h) {
     let unitsMargin;
 
     if (isVertical) {
-        unitsMargin = titleMargin = Math.round(length * .1);
+        unitsMargin = titleMargin = round(length * .1);
 
         if (hasTitle) {
             length -= titleMargin;
@@ -201,7 +204,7 @@ function barDimensions(context, options, x, y, w, h) {
     }
 
     else {
-        unitsMargin = titleMargin = Math.round(width * .15);
+        unitsMargin = titleMargin = round(width * .15);
 
         if (hasTitle) {
             width -= titleMargin;
@@ -213,18 +216,18 @@ function barDimensions(context, options, x, y, w, h) {
 
     let strokeWidth = options.barStrokeWidth * 2;
     let radius = options.barBeginCircle ?
-        Math.round(width * options.barBeginCircle / 200 - strokeWidth / 2) : 0;
+        round(width * options.barBeginCircle / 200 - strokeWidth / 2) : 0;
 
-    let barWidth = Math.round(width * options.barWidth / 100 - strokeWidth);
-    let barLength = Math.round(length * .85 - strokeWidth);
-    let barMargin = Math.round((length - barLength) / 2);
+    let barWidth = round(width * options.barWidth / 100 - strokeWidth);
+    let barLength = round(length * .85 - strokeWidth);
+    let barMargin = round((length - barLength) / 2);
 
     // coordinates for arc of the bar if configured
-    let x0 = Math.round(x + (
+    let x0 = round(x + (
         isVertical ?
             width / 2 :
             barMargin + radius));
-    let y0 = Math.round(y + (
+    let y0 = round(y + (
         isVertical ?
             length - barMargin - radius + strokeWidth / 2:
             width / 2));
@@ -301,14 +304,14 @@ function drawLinearBarShape(context, barOpWidth, barStrokeWidth, strokeColor,
         let cosAlpha = Math.cos(alpha);
         let sinAlpha = Math.sin(alpha);
 
-        let x1 = Math.round(x0 + (isVertical ?
+        let x1 = x0 + (isVertical ?
             radius * sinAlpha :
-            radius * cosAlpha - strokeWidth / 2));
-        let y1 = Math.round(isVertical ?
+            radius * cosAlpha - strokeWidth / 2);
+        let y1 = isVertical ?
             y0 - radius * cosAlpha:
-            y0 + radius * sinAlpha);
-        let cutRadius = isVertical ? Math.abs(y1 - y0) : Math.abs(x1 - x0);
-        // let radiusOffset = Math.round(radius - cutRadius);
+            y0 + radius * sinAlpha;
+        let cutRadius = isVertical ? abs(y1 - y0) : abs(x1 - x0);
+        // let radiusOffset = round(radius - cutRadius);
         //
         // if (isVertical) {
         //     y0 -= radiusOffset;
@@ -321,11 +324,11 @@ function drawLinearBarShape(context, barOpWidth, barStrokeWidth, strokeColor,
         // }
         // barLength -= radiusOffset;
 
-        context.barDimensions.barOffset = Math.round(cutRadius + radius);
+        context.barDimensions.barOffset = round(cutRadius + radius);
 
         // bottom point
-        let x2 = isVertical ? Math.round(x0 - radius * sinAlpha) : x1;
-        let y2 = isVertical ? y1 : Math.round(y0 - radius * sinAlpha);
+        let x2 = isVertical ? round(x0 - radius * sinAlpha) : x1;
+        let y2 = isVertical ? y1 : round(y0 - radius * sinAlpha);
 
         if (toValue !== false) {
             barLength = context.barDimensions.barOffset +
@@ -334,9 +337,9 @@ function drawLinearBarShape(context, barOpWidth, barStrokeWidth, strokeColor,
         }
 
         // bar ends at
-        let x3 = Math.round(x1 + barLength - context.barDimensions.barOffset +
+        let x3 = round(x1 + barLength - context.barDimensions.barOffset +
             strokeWidth / 2); // h
-        let y3 = Math.round(y1 - barLength + context.barDimensions.barOffset -
+        let y3 = round(y1 - barLength + context.barDimensions.barOffset -
             strokeWidth / 2); // v
 
         context.arc(x0, y0, radius, direction + alpha, direction - alpha);
@@ -358,9 +361,9 @@ function drawLinearBarShape(context, barOpWidth, barStrokeWidth, strokeColor,
 
     else {
         // simply rectangle
-        let rx = Math.round(isVertical ?
+        let rx = round(isVertical ?
             (X +  (width - barWidth) / 2) : (X + barMargin));
-        let ry = Math.round(isVertical ?
+        let ry = round(isVertical ?
             (Y + barLength + barMargin) : (Y +  (width - barWidth) / 2));
 
         if (toValue !== false) {
@@ -467,35 +470,37 @@ function drawLinearBarHighlights(context, options) {
     let s = options.highlights.length;
     let tickOffset = (width - barWidth) / 2;
     let interval = options.maxValue - options.minValue;
-    let eX = isVertical ? X + tickOffset : X + barMargin + barOffset;
-    let eH = .1 * width;
+    let eX = round(isVertical ? X + tickOffset : X + barMargin + barOffset);
+    let eH = (.1 * width);
     let eY = isVertical ? Y + length - barMargin - barOffset: Y + tickOffset;
+    let hLeft = round(.15 * width);
+    let hRight = round(barWidth + .05 * width);
 
     context.save();
 
     for (; i &lt; s; i++) {
         let entry = options.highlights[i];
-        let eW = ticksLength * Math.abs((entry.to - entry.from) / interval);
+        let eW = ticksLength * abs((entry.to - entry.from) / interval);
 
         context.beginPath();
         context.fillStyle = entry.color;
 
         if (isVertical) {
             if (hasLeft)
-                context.rect(eX - .15 * width, eY, eH, -eW);
+                context.rect(eX - hLeft, eY, eH, -eW);
 
             if (hasRight)
-                context.rect(eX + barWidth + .05 * width, eY, eH, -eW);
+                context.rect(eX + hRight, eY, eH, -eW);
 
             eY -= eW;
         }
 
         else {
             if (hasLeft)
-                context.rect(eX, eY - .15 * width, eW, eH);
+                context.rect(eX, eY - hLeft, eW, eH);
 
             if (hasRight)
-                context.rect(eX, eY + barWidth + .05 * width, eW, eH);
+                context.rect(eX, eY + hRight, eW, eH);
 
             eX += eW;
         }
@@ -545,8 +550,12 @@ function drawLinearTicks(context,  color, ticksSize, deltaLen,
     let {isVertical, length, barWidth, barOffset, barMargin,
         pixelRatio, width, X, Y, ticksLength} = context.barDimensions;
     let tickOffset = (width - barWidth) / 2;
-    let tickX, tickY, tickWidth, tickHeight;
+    let tickX, tickY;
     let i = 0;
+    let tickLen = lineLength * width;
+    let tickLeft = tickOffset - .05 * width;
+    let tickRight = tickOffset + barWidth + tickLen + .05 * width;
+    let tickSpace = ticksLength / (ticksSize - deltaLen);
 
     context.lineWidth = lineWidth * pixelRatio;
     context.strokeStyle = color;
@@ -554,36 +563,34 @@ function drawLinearTicks(context,  color, ticksSize, deltaLen,
 
     for (; i &lt; ticksSize; i++) {
         if (isVertical) {
-            tickWidth = lineLength * width;
-            tickY = Y + length - barMargin - barOffset -
-                i * ticksLength / (ticksSize - deltaLen);
+            tickY = Y + length - barMargin - barOffset - i * tickSpace;
 
             if (hasLeft) {
-                tickX = X + tickOffset - .05 * width;
-                drawLinearTick(context, tickX, tickY, tickX - tickWidth, tickY);
+                tickX = X + tickLeft;
+                drawLinearTick(context, tickX, tickY, round(tickX - tickLen),
+                    tickY);
             }
 
             if (hasRight) {
-                tickX = X + tickOffset + barWidth + tickWidth + .05 * width;
-                drawLinearTick(context, tickX, tickY, tickX - tickWidth, tickY);
+                tickX = X + tickRight;
+                drawLinearTick(context, tickX, tickY, round(tickX - tickLen),
+                    tickY);
             }
         }
 
         else {
-            tickHeight = lineLength * width;
-            tickX = X + barMargin + barOffset +
-                i * ticksLength / (ticksSize - deltaLen);
+            tickX = X + barMargin + barOffset + i * tickSpace;
 
             if (hasLeft) {
-                tickY = Y + tickOffset - .05 * width;
+                tickY = Y + tickLeft;
                 drawLinearTick(context, tickX, tickY, tickX,
-                    tickY - tickHeight);
+                    round(tickY - tickLen));
             }
 
             if (hasRight) {
-                tickY = Y + tickOffset + barWidth + tickHeight + .05 * width;
-                drawLinearTick(context, tickX, tickY, tickX,
-                    tickY - tickHeight);
+                tickY = Y + tickRight;
+                drawLinearTick(context, tickX, round(tickY), tickX,
+                    tickY - tickLen);
             }
         }
     }
@@ -636,12 +643,12 @@ function drawLinearMajorTicks(context, options) {
             eY = sY - ticksLength - lineWidth;
 
             if (hasLeft) {
-                eX = sX = Math.round(X + leftTicks);
+                eX = sX = round(X + leftTicks);
                 drawLinearTickStroke(context, sX, sY, eX, eY);
             }
 
             if (hasRight) {
-                eX = sX = Math.round(X + rightTicks);
+                eX = sX = round(X + rightTicks);
                 drawLinearTickStroke(context, sX, sY, eX, eY);
             }
         }
@@ -651,12 +658,12 @@ function drawLinearMajorTicks(context, options) {
             eX = sX + ticksLength + lineWidth;
 
             if (hasLeft) {
-                eY = sY = Math.round(Y + leftTicks);
+                eY = sY = round(Y + leftTicks);
                 drawLinearTickStroke(context, sX, sY, eX, eY);
             }
 
             if (hasRight) {
-                eY = sY = Math.round(Y + rightTicks);
+                eY = sY = round(Y + rightTicks);
                 drawLinearTickStroke(context, sX, sY, eX, eY);
             }
         }
@@ -711,6 +718,8 @@ function drawLinearMajorTicksNumbers(context, options) {
     let hasRight = options.numberSide !== &apos;left&apos;;
     let textHeight = 20 * width / 200;
     let i = 0;
+    let numLeft = (width - barWidth) / 2 - .2 * width;
+    let numRight = (width - barWidth) / 2 + barWidth + .2 * width;
     let textX, textY, textWidth, numberOffset, tick;
 
     context.font = textHeight + &apos;px Arial&apos;;
@@ -728,14 +737,12 @@ function drawLinearMajorTicksNumbers(context, options) {
 
             if (hasLeft) {
                 context.textAlign = &apos;right&apos;;
-                context.fillText(tick, Math.round(X + (width - barWidth) / 2 -
-                    .2 * width), textY);
+                context.fillText(tick, X + numLeft, textY);
             }
 
             if (hasRight) {
                 context.textAlign = &apos;left&apos;;
-                context.fillText(tick, Math.round(X + (width - barWidth) / 2 +
-                    barWidth + .2 * width), textY);
+                context.fillText(tick, X + numRight, textY);
             }
         }
 
@@ -744,13 +751,11 @@ function drawLinearMajorTicksNumbers(context, options) {
             textX = X + barMargin + barOffset + numberOffset;
 
             if (hasLeft) {
-                context.fillText(tick, textX,
-                    Y + (width - barWidth) / 2 - .2 * width);
+                context.fillText(tick, textX, Y + numLeft);
             }
 
             if (hasRight) {
-                context.fillText(tick, textX, Y + (width - barWidth) / 2 +
-                    barWidth + .2 * width + textHeight);
+                context.fillText(tick, textX, Y + numRight + textHeight);
             }
         }
     }
@@ -768,8 +773,8 @@ function drawLinearTitle(context, options) {
 
     let {isVertical, width, length, X, Y, titleMargin} = context.barDimensions;
     let textHeight = .125 * width;
-    let textX = Math.round(X + (isVertical ? width : length) / 2);
-    let textY = Math.round(Y + titleMargin / 2 -
+    let textX = round(X + (isVertical ? width : length) / 2);
+    let textY = round(Y + titleMargin / 2 -
         (isVertical ? textHeight : textHeight / 2) -
         .025 * (isVertical ? length : width));
 
@@ -793,8 +798,8 @@ function drawLinearUnits(context, options) {
 
     let {isVertical, width, length, X, Y, unitsMargin} = context.barDimensions;
     let textHeight = .125 * width;
-    let textX = Math.round(X + (isVertical ? width : length) / 2);
-    let textY = Math.round(Y + (isVertical ? length : width) +
+    let textX = round(X + (isVertical ? width : length) / 2);
+    let textY = round(Y + (isVertical ? length : width) +
         unitsMargin / 2 - textHeight / 2 -
         .025 * (isVertical ? length : width));
 
@@ -822,48 +827,49 @@ function drawLinearBarNeedle(context, options) {
     let hasRight = options.needleSide !== &apos;left&apos;;
     let position = ticksLength *
         options.value / (options.maxValue - options.minValue);
-    let baseLength = (barWidth / 2 + .15 * width);
+    let tickWidth = .15 * width;
+    let baseLength = (barWidth / 2 + tickWidth);
     let needleLength = baseLength * (options.needleEnd / 100);
     let sX, eX, sY, eY;
     let draw = options.needleType.toLowerCase() === &apos;arrow&apos; ?
         drawLinearArrowNeedle :
         drawLinearLineNeedle;
+    let barStart = (width - barWidth) / 2;
+    let needleStart = baseLength * (options.needleStart / 100);
+    let nLeft = barStart - tickWidth - needleStart;
+    let nRight = barStart + barWidth + tickWidth + needleStart;
 
     drawings.drawNeedleShadow(context, options);
 
     context.save();
 
     if (isVertical) {
-        sY = Math.round(Y + length - barMargin - barOffset - position);
+        sY = round(Y + length - barMargin - barOffset - position);
 
         if (hasLeft) {
-            sX = Math.round(X + (width - barWidth) / 2 - .15 * width -
-                baseLength * (options.needleStart / 100));
+            sX = round(X + nLeft);
             eX = sX + needleLength;
             draw(context, options, sX, sY, eX, sY, needleLength);
         }
 
         if (hasRight) {
-            sX = Math.round(X + (width - barWidth) / 2 + barWidth +
-                .15 * width + baseLength * (options.needleStart / 100));
+            sX = round(X + nRight);
             eX = sX - needleLength;
             draw(context, options, sX, sY, eX, sY, needleLength);
         }
     }
 
     else {
-        sX = Math.round(X + barMargin + barOffset + position);
+        sX = round(X + barMargin + barOffset + position);
 
         if (hasLeft) {
-            sY = Math.round(Y + (width - barWidth) / 2 - .15 * width -
-                baseLength * (options.needleStart / 100));
+            sY = round(Y + nLeft);
             eY = sY + needleLength;
             draw(context, options, sX, sY, sX, eY, needleLength);
         }
 
         if (hasRight) {
-            sY = Math.round(Y + (width - barWidth) / 2 + barWidth +
-                .15 * width + baseLength * (options.needleStart / 100));
+            sY = round(Y + nRight);
             eY = sY - needleLength;
             draw(context, options, sX, sY, sX, eY, needleLength);
         }
@@ -911,7 +917,7 @@ function drawLinearLineNeedle(context, options, sX, sY, eX, eY, length) {
  * @param {number} length
  */
 function drawLinearArrowNeedle(context, options, sX, sY, eX, eY, length) {
-    let peakLength = Math.round(length *.4);
+    let peakLength = round(length *.4);
     let bodyLength = length - peakLength;
     let isVertical = sX === eX;
     let halfWidth = options.needleWidth / 2;
@@ -1037,7 +1043,7 @@ export default class LinearGauge extends BaseGauge {
 
         /* istanbul ignore else */
         if (options.barStrokeWidth &gt;= options.barWidth) {
-            options.barStrokeWidth = Math.round(options.barWidth / 2);
+            options.barStrokeWidth = round(options.barWidth / 2);
         }
 
         super(options);

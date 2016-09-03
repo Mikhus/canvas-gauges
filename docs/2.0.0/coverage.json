@@ -37,7 +37,7 @@
       "expectCount": 4,
       "actualCount": 3,
       "undocumentLines": [
-        1002
+        1008
       ]
     },
     "lib/SmartCanvas.js": {
