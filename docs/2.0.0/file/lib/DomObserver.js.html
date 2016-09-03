@@ -207,11 +207,7 @@ export default class DomObserver {
 
         /* istanbul ignore next: this should be tested with end-to-end tests */
         for (; i &lt; s; i++) {
-            let node = elements[i];
-
-            if (this.isValidNode(node)) {
-                this.process(node);
-            }
+            this.process(elements[i]);
         }
 
         if (window.MutationObserver &amp;&amp; !this.mutationsObserved) {
@@ -256,11 +252,7 @@ export default class DomObserver {
                 let ss = record.addedNodes.length;
 
                 for (; ii &lt; ss; ii++) {
-                    let node = record.addedNodes[ii];
-
-                    if (this.isValidNode(node)) {
-                        this.process(node);
-                    }
+                    this.process(record.addedNodes[ii]);
                 }
             }
         }
@@ -306,9 +298,11 @@ export default class DomObserver {
      * Processes a given node, instantiating a proper type constructor for it
      *
      * @param {Node|HTMLElement} node
-     * @returns {GaugeInterface}
+     * @returns {GaugeInterface|null}
      */
     process(node) {
+        if (!this.isValidNode(node)) return null;
+
         let prop;
         let options = JSON.parse(JSON.stringify(this.options));
 
