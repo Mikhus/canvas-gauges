@@ -6,6 +6,13 @@
     <script src="../gauge.min.js"></script>
 </head>
 <body style="background:#222">
+
+<button onclick="animateGauges()">Animate</button>
+<button onclick="stopGaugesAnimation()">Stop animation</button>
+<a href="#" style="color:#fff">View Example Source</a>
+
+<hr>
+
 <canvas data-type="linear-gauge"
         data-width="160"
         data-height="600"
@@ -31,6 +38,7 @@
         data-title="Temperature"
         data-units="°C"
         data-color-value-box-shadow="false"
+        data-animated-value="true"
 ></canvas>
 
 <canvas data-type="linear-gauge"
@@ -77,7 +85,7 @@
         data-value-text-shadow="false"
 ></canvas>
 
-<br />
+<br>
 
 <canvas data-type="linear-gauge"
         data-width="600"
@@ -90,6 +98,8 @@
         data-value="75.5"
         data-bar-stroke-width="5"
 ></canvas>
+
+<br>
 
 <canvas data-type="linear-gauge"
         data-width="600"
@@ -107,29 +117,33 @@
         data-units="°C"
 ></canvas>
 <script>
-//if (!window.addEventListener) {
-//    window.addEventListener = function(evt, listener) {
-//        window.attachEvent('on' + evt, listener);
-//    };
-//}
-//if (!Array.prototype.forEach) {
-//    Array.prototype.forEach = function(cb) {
-//        var i = 0, s = this.length;
-//        for (; i < s; i++) {
-//            cb && cb(this[i], i, this);
-//        }
-//    }
-//}
-//// animage all gauges on a page
-//window.addEventListener('load', function() {
-//    document.gauges.forEach(function(gauge) {
-//        setInterval(function() {
-//            gauge.value = Math.random() *
-//                (gauge.options.maxValue - gauge.options.minValue) +
-//                gauge.options.minValue;
-//        }, gauge.animation.duration + 500);
-//    });
-//});
+if (!Array.prototype.forEach) {
+    Array.prototype.forEach = function(cb) {
+        var i = 0, s = this.length;
+        for (; i < s; i++) {
+            cb && cb(this[i], i, this);
+        }
+    }
+}
+
+var timers = [];
+
+function animateGauges() {
+    document.gauges.forEach(function(gauge) {
+        timers.push(setInterval(function() {
+            gauge.value = Math.random() *
+                (gauge.options.maxValue - gauge.options.minValue) +
+                gauge.options.minValue;
+        }, gauge.animation.duration + 500));
+    });
+}
+
+function stopGaugesAnimation() {
+    timers.forEach(function(timer) {
+        clearInterval(timer);
+    });
+}
 </script>
+
 </body>
 </html>

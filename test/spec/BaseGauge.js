@@ -110,13 +110,11 @@ describe('BadseGauge', () => {
             //noinspection BadExpressionStatementJS
             expect(gauge.draw.called).not.to.be.ok;
         });
-        it('should return upset value even if updateValueOnAnimation is ' +
-            'true', done =>
-        {
+        it('should return upset value even if animatedValue is true', done => {
             let gauge = new TestGauge({
                 renderTo: document.createElement('canvas'),
                 value: 0,
-                updateValueOnAnimation: true
+                animatedValue: true
             });
 
             gauge.value = 10;

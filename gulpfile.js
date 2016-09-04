@@ -314,7 +314,8 @@ gulp.task('lint', () => {
             '!node_modules/**',
             '!docs/**',
             '!**.min.js',
-            '!coverage/**'
+            '!coverage/**',
+            '!dist/**'
         ])
         .pipe(eslint())
         .pipe(eslint.format())
