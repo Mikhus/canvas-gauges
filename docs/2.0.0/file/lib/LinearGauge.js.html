@@ -102,11 +102,19 @@ const SmartCanvas = require(&apos;./SmartCanvas&apos;);
 /**
  * Linear gauge configuration options
  *
- * @typedef {GenericOptions|{orientation: string, borderRadius: number, barBeginCircle: number, barWidth: number, barStrokeWidth: number, barProgress: boolean, colorBar: string, colorBarEnd: string, colorBarStroke: string, colorBarProgress: string, colorBarProgressEnd: string, tickSide: string, needleSide: string, numberSide: string}} LinearGaugeOptions
+ * @typedef {GenericOptions|{orientation: string, borderRadius: number, barBeginCircle: number, barWidth: number, barStrokeWidth: number, barProgress: boolean, colorBar: string, colorBarEnd: string, colorBarStroke: string, colorBarProgress: string, colorBarProgressEnd: string, tickSide: string, needleSide: string, numberSide: string, ticksWidth: number, ticksWidthMinor: number, ticksPadding: number, barLength: number, fontNumbersSize: number, fontTitleSize: number, fontUnitsSize: number}} LinearGaugeOptions
  */
 
 const round = Math.round;
 const abs = Math.abs;
+
+let TICKS_WIDTH = .1;
+let TICKS_WIDTH_MINOR = TICKS_WIDTH / 2;
+let TICKS_PADDING = .05;
+let BAR_LENGTH = .85;
+let FONT_NUMBERS = 20;
+let FONT_TITLE = 26;
+let FONT_UNITS = 22;
 
 /**
  * Default linear gauge configuration options
@@ -136,7 +144,15 @@ let defaultLinearGaugeOptions = Object.assign({}, GenericOptions, {
     tickSide: &apos;both&apos;, // available: &apos;left&apos;, &apos;right&apos;, &apos;both&apos;
     needleSide: &apos;both&apos;, // available: &apos;left&apos;, &apos;right&apos;, &apos;both&apos;
 
-    numberSide: &apos;both&apos; // available: &apos;left&apos;, &apos;right&apos;, &apos;both&apos;
+    numberSide: &apos;both&apos;, // available: &apos;left&apos;, &apos;right&apos;, &apos;both&apos;
+
+    ticksWidth: TICKS_WIDTH * 100,
+    ticksWidthMinor: TICKS_WIDTH_MINOR * 100,
+    ticksPadding: TICKS_PADDING * 100,
+    barLength: BAR_LENGTH * 100,
+    fontNumbersSize: FONT_NUMBERS * 100,
+    fontTitleSize: FONT_TITLE * 100,
+    fontUnitsSize: FONT_UNITS * 100
 });
 
 /* istanbul ignore next: private, not testable */
@@ -220,7 +236,7 @@ function barDimensions(context, options, x, y, w, h) {
         round(width * options.barBeginCircle / 200 - strokeWidth / 2) : 0;
 
     let barWidth = round(width * options.barWidth / 100 - strokeWidth);
-    let barLength = round(length * .85 - strokeWidth);
+    let barLength = round(length * BAR_LENGTH - strokeWidth);
     let barMargin = round((length - barLength) / 2);
 
     // coordinates for arc of the bar if configured
@@ -233,9 +249,9 @@ function barDimensions(context, options, x, y, w, h) {
             length - barMargin - radius + strokeWidth / 2:
             width / 2));
     let dx = isVertical &amp;&amp; !(options.hasLeft &amp;&amp; options.hasRight) ?
-        (options.hasRight ? -1 : 1) * .15 * width : 0;
+        (options.hasRight ? -1 : 1) * TICKS_WIDTH * width : 0;
     let dy = !isVertical &amp;&amp; !(options.hasLeft &amp;&amp; options.hasRight) ?
-        (options.hasRight ? -1 : 1) * .15 * width : 0;
+        (options.hasRight ? -1 : 1) * TICKS_WIDTH * width : 0;
 
     //noinspection JSUndefinedPropertyAssignment
     context.barDimensions = {
@@ -501,10 +517,10 @@ function drawLinearBarHighlights(context, options) {
     let tickOffset = (width - barWidth) / 2;
     let interval = options.maxValue - options.minValue;
     let eX = round(isVertical ? X + tickOffset : X + barMargin + barOffset);
-    let eH = (.1 * width);
+    let eH = (TICKS_WIDTH * width);
     let eY = isVertical ? Y + length - barMargin - barOffset: Y + tickOffset;
-    let hLeft = round(.15 * width);
-    let hRight = round(barWidth + .05 * width);
+    let hLeft = round((TICKS_WIDTH + TICKS_PADDING) * width);
+    let hRight = round(barWidth + TICKS_PADDING * width);
 
     context.save();
 
@@ -583,8 +599,8 @@ function drawLinearTicks(context,  color, ticksSize, deltaLen,
     let tickX, tickY;
     let i = 0;
     let tickLen = lineLength * width;
-    let tickLeft = tickOffset - .05 * width;
-    let tickRight = tickOffset + barWidth + tickLen + .05 * width;
+    let tickLeft = tickOffset - TICKS_PADDING * width;
+    let tickRight = tickOffset + barWidth + tickLen + TICKS_PADDING * width;
     let tickSpace = ticksLength / (ticksSize - deltaLen);
 
     context.lineWidth = lineWidth * pixelRatio;
@@ -656,14 +672,15 @@ function drawLinearMajorTicks(context, options) {
     let [hasLeft, hasRight] = prepareTicks(options);
     let lineWidth = 2;
 
-    drawLinearTicks(context, options.colorMajorTicks,
-        options.majorTicks.length, 1, hasLeft, hasRight, lineWidth, .1);
+    drawLinearTicks(context, options.colorMajorTicks, options.majorTicks.length,
+        1, hasLeft, hasRight, lineWidth, TICKS_WIDTH);
 
     if (options.strokeTicks) {
         let {isVertical, length, width, barWidth, barMargin, barOffset, X, Y,
             ticksLength, pixelRatio} = context.barDimensions;
-        let rightTicks = (width - barWidth) / 2 + barWidth + .05 * width;
-        let leftTicks = (width - barWidth) / 2 - .05 * width;
+        let rightTicks = (width - barWidth) / 2 + barWidth +
+            TICKS_PADDING * width;
+        let leftTicks = (width - barWidth) / 2 - TICKS_PADDING * width;
         let sX, sY, eX, eY;
 
         lineWidth *= pixelRatio;
@@ -730,7 +747,7 @@ function drawLinearMinorTicks(context, options) {
 
     drawLinearTicks(context, options.colorMajorTicks,
         options.minorTicks * (options.majorTicks.length - 1), 0,
-        hasLeft, hasRight, 1, .05);
+        hasLeft, hasRight, 1, TICKS_WIDTH_MINOR);
 }
 
 /* istanbul ignore next: private, not testable */
@@ -746,10 +763,11 @@ function drawLinearMajorTicksNumbers(context, options) {
     let ticks = options.majorTicks.length;
     let hasLeft = options.numberSide !== &apos;right&apos;;
     let hasRight = options.numberSide !== &apos;left&apos;;
-    let textHeight = 20 * width / 200;
+    let textHeight = FONT_NUMBERS * width / 200;
     let i = 0;
-    let numLeft = (width - barWidth) / 2 - .2 * width;
-    let numRight = (width - barWidth) / 2 + barWidth + .2 * width;
+    let ticksWidth = (TICKS_WIDTH + TICKS_PADDING * 2) * width;
+    let numLeft = (width - barWidth) / 2 - ticksWidth;
+    let numRight = (width - barWidth) / 2 + barWidth + ticksWidth;
     let textX, textY, textWidth, numberOffset, tick;
 
     context.font = textHeight + &apos;px &apos; + options.fontNumbers;
@@ -803,7 +821,7 @@ function drawLinearTitle(context, options) {
 
     let {isVertical, width, length, baseX, baseY, titleMargin} =
         context.barDimensions;
-    let textHeight = .125 * width;
+    let textHeight = FONT_TITLE * width / 200;
     let textX = round(baseX + (isVertical ? width : length) / 2);
     let textY = round(baseY + titleMargin / 2 -
         (isVertical ? textHeight : textHeight / 2) -
@@ -829,11 +847,10 @@ function drawLinearUnits(context, options) {
 
     let {isVertical, width, length, baseX, baseY, unitsMargin} =
         context.barDimensions;
-    let textHeight = .125 * width;
+    let textHeight = FONT_UNITS * width / 200;
     let textX = round(baseX + (isVertical ? width : length) / 2);
     let textY = round(baseY + (isVertical ? length : width) +
-        unitsMargin / 2 - textHeight / 2 -
-        .025 * (isVertical ? length : width));
+        unitsMargin / 2 - textHeight / 2);
 
     context.save();
     context.textAlign = &apos;center&apos;;
@@ -859,7 +876,7 @@ function drawLinearBarNeedle(context, options) {
     let hasRight = options.needleSide !== &apos;left&apos;;
     let position = ticksLength *
         options.value / (options.maxValue - options.minValue);
-    let tickWidth = .15 * width;
+    let tickWidth = (TICKS_WIDTH + TICKS_PADDING) * width;
     let baseLength = (barWidth / 2 + tickWidth);
     let needleLength = baseLength * (options.needleEnd / 100);
     let sX, eX, sY, eY;
@@ -1099,6 +1116,16 @@ export default class LinearGauge extends BaseGauge {
         }
 
         options = Object.assign({}, defaultLinearGaugeOptions, options || {});
+
+        if (options.ticksWidth) TICKS_WIDTH = options.ticksWidth / 100;
+        if (options.ticksWidthMinor) TICKS_WIDTH_MINOR =
+            options.ticksWidthMinor / 100;
+        if (options.ticksPadding) TICKS_PADDING = options.ticksPadding / 100;
+        if (options.barLength) BAR_LENGTH = options.barLength / 100;
+        if (options.fontNumbersSize) FONT_NUMBERS =
+            options.fontNumbersSize / 100;
+        if (options.fontTitleSize) FONT_TITLE = options.fontTitleSize / 100;
+        if (options.fontUnitsSize) FONT_UNITS = options.fontUnitsSize / 100;
 
         /* istanbul ignore else */
         if (options.barStrokeWidth &gt;= options.barWidth) {
