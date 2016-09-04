@@ -1160,8 +1160,8 @@ export default class LinearGauge extends BaseGauge {
 
         drawLinearBarProgress(canvas.context, options, ...this.drawBox);
         drawLinearBarNeedle(canvas.context, options);
-        drawLinearValueBox(canvas.context, options, this.value,
-            ...this.drawBox);
+        drawLinearValueBox(canvas.context, options, options.animatedValue ?
+                this.options.value : this.value, ...this.drawBox);
 
         return this;
     }

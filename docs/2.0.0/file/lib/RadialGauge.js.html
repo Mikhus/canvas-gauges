@@ -685,7 +685,8 @@ export default class RadialGauge extends BaseGauge {
         canvas.context.drawImage(canvas.elementClone, x, y, w, h);
         canvas.context.save();
 
-        drawRadialValueBox(canvas.context, options, this.value);
+        drawRadialValueBox(canvas.context, options, options.animatedValue ?
+            this.options.value : this.value);
         drawRadialNeedle(canvas.context, options);
 
         return this;
