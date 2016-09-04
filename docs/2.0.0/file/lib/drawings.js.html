@@ -299,10 +299,13 @@ export function drawValueBox(context, options, value, x, y, max) {
     context.shadowOffsetY = null;
     context.shadowBlur = null;
     context.shadowColor = &apos;&apos;;
+    context.strokeStyle = null;
+    context.lineWidth = 0;
     context.save();
 
     context.font = 40 * (max / 200) + &apos;px &apos; + options.fontValue;
     context.save();
+    context.beginPath();
 
     if (options.valueBox) {
         let th = 0.12 * max;
@@ -340,6 +343,7 @@ export function drawValueBox(context, options, value, x, y, max) {
         context.fill();
     }
 
+    context.closePath();
     context.restore();
 
     if (options.valueTextShadow) {
@@ -352,7 +356,6 @@ export function drawValueBox(context, options, value, x, y, max) {
     context.fillStyle = options.colorValueText;
     context.textAlign = &apos;center&apos;;
     context.fillText(text, -x, y);
-
     context.restore();
 }
 
