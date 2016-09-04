@@ -851,9 +851,9 @@ function drawLinearBarNeedle(context, options) {
     let nLeft = barStart - tickWidth - needleStart;
     let nRight = barStart + barWidth + tickWidth + needleStart;
 
-    drawings.drawNeedleShadow(context, options);
-
     context.save();
+
+    drawings.drawNeedleShadow(context, options);
 
     if (isVertical) {
         sY = round(Y + length - barMargin - barOffset - position);
@@ -886,6 +886,8 @@ function drawLinearBarNeedle(context, options) {
             draw(context, options, sX, sY, sX, eY, needleLength);
         }
     }
+
+    context.restore();
 }
 
 /* istanbul ignore next: private, not testable */
