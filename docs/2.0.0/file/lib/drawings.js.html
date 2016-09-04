@@ -306,40 +306,48 @@ export function drawValueBox(context, options, value, x, y, max) {
 
     if (options.valueBox) {
         let th = 0.12 * max;
-        let tw = context.measureText(&apos;-&apos; + drawings.padValue(0, options)).width;
+        let tw = context.measureText(&apos;-&apos; + padValue(0, options)).width;
+        let bx = -tw / 2 - 0.025 * max;
+        let by = y - th - 0.04 * max;
+        let bw = tw + 0.05 * max;
+        let bh = th + 0.07 * max;
+        let br = max * options.valueBoxBorderRadius / 100;
 
-        drawings.roundRect(context,
-            -tw / 2 - 0.025 * max,
-            y - th - 0.04 * max,
-            tw + 0.05 * max,
-            th + 0.07 * max,
-            0.025 * max);
+        if (br) roundRect(context, bx, by, bw, bh, br);
+        else  context.rect(bx, by, bw, bh);
     }
 
     let gy = y - 0.12 * max - 0.025 * max + (0.12 * max + 0.045 * max) / 2;
-    let grd = context.createRadialGradient(x, gy, max / 10, x, gy, max / 5);
 
-    grd.addColorStop(0, options.colorValueBoxRectStart);
-    grd.addColorStop(1, options.colorValueBoxRectEnd);
+    if (options.valueBoxStroke) {
+        let grd = context.createRadialGradient(x, gy, max / 10, x, gy, max / 5);
 
-    context.strokeStyle = grd;
-    context.lineWidth = 0.05 * max;
-    context.stroke();
+        grd.addColorStop(0, options.colorValueBoxRectStart);
+        grd.addColorStop(1, options.colorValueBoxRectEnd);
+
+        context.strokeStyle = grd;
+        context.lineWidth = max * options.valueBoxStroke / 100;
+        context.stroke();
+    }
 
     if (options.colorValueBoxShadow) {
         context.shadowBlur = 0.012 * max;
         context.shadowColor = options.colorValueBoxShadow;
     }
 
-    context.fillStyle = options.colorValueBoxBackground;
-    context.fill();
+    if (options.colorValueBoxBackground) {
+        context.fillStyle = options.colorValueBoxBackground;
+        context.fill();
+    }
 
     context.restore();
 
-    context.shadowOffsetX = 0.004 * max;
-    context.shadowOffsetY = 0.004 * max;
-    context.shadowBlur = 0.012 * max;
-    context.shadowColor = options.colorValueTextShadow;
+    if (options.valueTextShadow) {
+        context.shadowOffsetX = 0.004 * max;
+        context.shadowOffsetY = 0.004 * max;
+        context.shadowBlur = 0.012 * max;
+        context.shadowColor = options.colorValueTextShadow;
+    }
 
     context.fillStyle = options.colorValueText;
     context.textAlign = &apos;center&apos;;
