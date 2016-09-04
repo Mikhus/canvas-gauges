@@ -96,7 +96,8 @@ gulp.task('build:es5', ['clean'], () => {
     es6concat(yargs.argv.type || 'all')
         .pipe(rename('gauge.es5.js'))
         .pipe(babel({
-            presets: ['es2015']
+            presets: ['es2015'],
+            compact: false
         }))
         .on('error', function(err) {
             gutil.log(err);
