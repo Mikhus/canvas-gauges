@@ -40,6 +40,7 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/RadialGauge.js~RadialGauge.html">RadialGauge</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/SmartCanvas.js~SmartCanvas.html">SmartCanvas</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-Collection">Collection</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-drawValueBox">drawValueBox</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-formatMajorTickNumber">formatMajorTickNumber</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-linearGradient">linearGradient</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-padValue">padValue</a></span></span></li>
@@ -109,8 +110,9 @@
  */
 
 /**
+ * Shared generic gauges options
  *
- * @type {{renderTo: RenderTarget, width: number, height: number, minValue: number, maxValue: number, value: number, units: string|boolean, majorTicks: number[]|string[], minorTicks: number, strokeTicks: boolean, updateValueOnAnimation: boolean, glow: boolean, title: string|boolean, borders: boolean, valueInt: number, valueDec: number, majorTicksInt: number, majorTicksDec: number, animation: boolean, animationDuration: number, animationRule: string|AnimationRule, colorPlate: string, colorMajorTicks: string, colorMinorTicks: string, colorTitle: string, colorUnits: string, colorNumbers: string, colorNeedleStart: string, colorNeedleEnd: string, colorValueText: string, colorValueTextShadow: string, colorBorderShadow: string, colorBorderOuterStart: string, colorBorderOuterEnd: string, colorBorderMiddleStart: string, colorBorderMiddleEnd: string, colorBorderInnerStart: string, colorBorderInnerEnd: string, needle: boolean, needleShadow: boolean, needleType: string, needleStart: number, needleEnd: number, needleWidth: number, borderOuterWidth: number, borderMiddleWidth: number, borderInnerWidth: number, borderShadowWidth: number, valueBox: boolean, valueText: string|boolean, highlights: Highlight[], fontNumbers: string, fontTitle: string, fontUnits: string, fontValue: string}} GenericOptions
+ * @type {{renderTo: RenderTarget, width: number, height: number, minValue: number, maxValue: number, value: number, units: string|boolean, majorTicks: number[]|string[], minorTicks: number, strokeTicks: boolean, updateValueOnAnimation: boolean, glow: boolean, title: string|boolean, borders: boolean, valueInt: number, valueDec: number, majorTicksInt: number, majorTicksDec: number, animation: boolean, animationDuration: number, animationRule: string|AnimationRule, colorPlate: string, colorMajorTicks: string, colorMinorTicks: string, colorTitle: string, colorUnits: string, colorNumbers: string, colorNeedleStart: string, colorNeedleEnd: string, colorValueText: string, colorValueTextShadow: string, colorBorderShadow: string, colorBorderOuterStart: string, colorBorderOuterEnd: string, colorBorderMiddleStart: string, colorBorderMiddleEnd: string, colorBorderInnerStart: string, colorBorderInnerEnd: string, colorValueBoxRectStart: string, colorValueBoxRectEnd: string, colorValueBoxBackground: string, colorValueBoxShadow: string, colorNeedleShadowUp: string, colorNeedleShadowDown: string, needle: boolean, needleShadow: boolean, needleType: string, needleStart: number, needleEnd: number, needleWidth: number, borderOuterWidth: number, borderMiddleWidth: number, borderInnerWidth: number, borderShadowWidth: number, valueBox: boolean, valueText: string|boolean, highlights: Highlight[], fontNumbers: string, fontTitle: string, fontUnits: string, fontValue: string}} GenericOptions
  */
 const GenericOptions = {
     // basic options
@@ -158,6 +160,12 @@ const GenericOptions = {
     colorBorderMiddleEnd: &apos;#f0f0f0&apos;,
     colorBorderInnerStart: &apos;#fafafa&apos;,
     colorBorderInnerEnd: &apos;#ccc&apos;,
+    colorValueBoxRectStart: &apos;#888&apos;,
+    colorValueBoxRectEnd: &apos;#666&apos;,
+    colorValueBoxBackground: &apos;#babab2&apos;,
+    colorValueBoxShadow: &apos;rgba(0,0,0,1)&apos;,
+    colorNeedleShadowUp: &apos;rgba(2,255,255,0.2)&apos;,
+    colorNeedleShadowDown: &apos;rgba(188,143,143,0.45)&apos;,
 
     fontNumbers: &apos;Arial&apos;,
     fontTitle: &apos;Arial&apos;,

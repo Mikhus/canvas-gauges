@@ -1,7 +1,7 @@
 {
-  "coverage": "97.26%",
-  "expectCount": 73,
-  "actualCount": 71,
+  "coverage": "97.29%",
+  "expectCount": 74,
+  "actualCount": 72,
   "files": {
     "lib/Animation.js": {
       "expectCount": 9,
@@ -32,7 +32,7 @@
       "expectCount": 4,
       "actualCount": 3,
       "undocumentLines": [
-        1094
+        1065
       ]
     },
     "lib/RadialGauge.js": {
@@ -46,10 +46,10 @@
       "undocumentLines": []
     },
     "lib/drawings.js": {
-      "expectCount": 7,
-      "actualCount": 6,
+      "expectCount": 8,
+      "actualCount": 7,
       "undocumentLines": [
-        213
+        282
       ]
     },
     "lib/vendorize.js": {

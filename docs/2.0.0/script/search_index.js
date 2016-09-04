@@ -48,6 +48,12 @@ window.esdocSearchIndex = [
     "class"
   ],
   [
+    "canv-gauge/lib/drawings.js~drawvaluebox",
+    "function/index.html#static-function-drawValueBox",
+    "<span>drawValueBox</span> <span class=\"search-result-import-path\">canv-gauge/lib/drawings.js</span>",
+    "function"
+  ],
+  [
     "canv-gauge/lib/drawings.js~drawings",
     "variable/index.html#static-variable-drawings",
     "<span>drawings</span> <span class=\"search-result-import-path\">canv-gauge/lib/drawings.js</span>",
@@ -559,13 +565,13 @@ window.esdocSearchIndex = [
   ],
   [
     "lib/basegauge.js~basegauge#value",
-    "class/lib/BaseGauge.js~BaseGauge.html#instance-get-value",
+    "class/lib/BaseGauge.js~BaseGauge.html#instance-set-value",
     "lib/BaseGauge.js~BaseGauge#value",
     "member"
   ],
   [
     "lib/basegauge.js~basegauge#value",
-    "class/lib/BaseGauge.js~BaseGauge.html#instance-set-value",
+    "class/lib/BaseGauge.js~BaseGauge.html#instance-get-value",
     "lib/BaseGauge.js~BaseGauge#value",
     "member"
   ],

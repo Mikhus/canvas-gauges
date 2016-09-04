@@ -40,6 +40,7 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/RadialGauge.js~RadialGauge.html">RadialGauge</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/SmartCanvas.js~SmartCanvas.html">SmartCanvas</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-Collection">Collection</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-drawValueBox">drawValueBox</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-formatMajorTickNumber">formatMajorTickNumber</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-linearGradient">linearGradient</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-padValue">padValue</a></span></span></li>
@@ -124,12 +125,6 @@ const defaultRadialGaugeOptions = Object.assign({}, GenericOptions, {
     colorNeedleCircleOuterEnd: &apos;#ccc&apos;,
     colorNeedleCircleInnerStart: &apos;#e8e8e8&apos;,
     colorNeedleCircleInnerEnd: &apos;#f5f5f5&apos;,
-    colorNeedleShadowUp: &apos;rgba(2,255,255,0.2)&apos;,
-    colorNeedleShadowDown: &apos;rgba(188,143,143,0.45)&apos;,
-    colorValueBoxRectStart: &apos;#888&apos;,
-    colorValueBoxRectEnd: &apos;#666&apos;,
-    colorValueBoxBackground: &apos;#babab2&apos;,
-    colorValueBoxShadow: &apos;rgba(0,0,0,1)&apos;,
 
     // needle
     needleCircleSize: 10,
@@ -574,57 +569,8 @@ function drawRadialNeedle(context, options) {
  * @param {number} value
  */
 function drawRadialValueBox(context, options, value) {
-    if (!options.valueText) return;
-
-    let max = context.max;
-    let text = drawings.padValue(value, options);
-    let y = max - max * .33;
-    let x = 0;
-
-    context.save();
-    context.font = 40 * (max / 200) + &apos;px &apos; + options.fontValue;
-    context.save();
-
-    if (options.valueBox) {
-        let th = 0.12 * max;
-        let tw = context.measureText(&apos;-&apos; + drawings.padValue(0, options)).width;
-
-        drawings.roundRect(context,
-            -tw / 2 - 0.025 * max,
-            y - th - 0.04 * max,
-            tw + 0.05 * max,
-            th + 0.07 * max,
-            0.025 * max);
-    }
-
-    let gy = y - 0.12 * max - 0.025 * max + (0.12 * max + 0.045 * max) / 2;
-    let grd = context.createRadialGradient(x, gy, max / 10, x, gy, max / 5);
-
-    grd.addColorStop(0, options.colorValueBoxRectStart);
-    grd.addColorStop(1, options.colorValueBoxRectEnd);
-
-    context.strokeStyle = grd;
-    context.lineWidth = 0.05 * max;
-    context.stroke();
-
-    context.shadowBlur = 0.012 * max;
-    context.shadowColor = options.colorValueBoxShadow;
-
-    context.fillStyle = options.colorValueBoxBackground;
-    context.fill();
-
-    context.restore();
-
-    context.shadowOffsetX = 0.004 * max;
-    context.shadowOffsetY = 0.004 * max;
-    context.shadowBlur = 0.012 * max;
-    context.shadowColor = options.colorValueTextShadow;
-
-    context.fillStyle = options.colorValueText;
-    context.textAlign = &apos;center&apos;;
-    context.fillText(text, -x, y);
-
-    context.restore();
+    drawings.drawValueBox(context, options, value, 0,
+        context.max - context.max * .33, context.max);
 }
 
 /**

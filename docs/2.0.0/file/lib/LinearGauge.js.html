@@ -40,6 +40,7 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/RadialGauge.js~RadialGauge.html">RadialGauge</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/SmartCanvas.js~SmartCanvas.html">SmartCanvas</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-Collection">Collection</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-drawValueBox">drawValueBox</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-formatMajorTickNumber">formatMajorTickNumber</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-linearGradient">linearGradient</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-padValue">padValue</a></span></span></li>
@@ -205,12 +206,16 @@ function barDimensions(context, options, x, y, w, h) {
 
     let hasTitle = !!options.title;
     let hasUnits = !!options.units;
+    let hasValue = !!options.valueBox;
 
     let titleMargin;
     let unitsMargin;
+    let valueMargin;
 
     if (isVertical) {
-        unitsMargin = titleMargin = round(length * .1);
+        unitsMargin = round(length * .05);
+        titleMargin = round(length * .075);
+        valueMargin = round(length * .075);
 
         if (hasTitle) {
             length -= titleMargin;
@@ -218,6 +223,7 @@ function barDimensions(context, options, x, y, w, h) {
         }
 
         if (hasUnits) length -= unitsMargin;
+        if (hasValue) length -= valueMargin;
     }
 
     else {
@@ -240,14 +246,10 @@ function barDimensions(context, options, x, y, w, h) {
     let barMargin = round((length - barLength) / 2);
 
     // coordinates for arc of the bar if configured
-    let x0 = round(x + (
-        isVertical ?
-            width / 2 :
-            barMargin + radius));
-    let y0 = round(y + (
-        isVertical ?
-            length - barMargin - radius + strokeWidth / 2:
-            width / 2));
+    let x0 = round(x + (isVertical ? width / 2 : barMargin + radius));
+    let y0 = round(y + ( isVertical ?
+        length - barMargin - radius + strokeWidth / 2:
+        width / 2));
     let dx = isVertical &amp;&amp; !(options.hasLeft &amp;&amp; options.hasRight) ?
         (options.hasRight ? -1 : 1) * TICKS_WIDTH * width : 0;
     let dy = !isVertical &amp;&amp; !(options.hasLeft &amp;&amp; options.hasRight) ?
@@ -288,45 +290,21 @@ function barDimensions(context, options, x, y, w, h) {
  *
  * @access private
  * @param {Canvas2DContext} context
- * @param {number} barOpWidth
- * @param {number} barStrokeWidth
- * @param {string} strokeColor
- * @param {number} circleRadius
- * @param {string} colorStart
- * @param {string} colorEnd
- * @param {number|boolean} toValue
- * @param {number} minValue
- * @param {number} maxValue
- * @param {string} title
- * @param {string} units
- * @param {boolean} hasLeft
- * @param {boolean} hasRight
+ * @param {LinearGaugeOptions} options
+ * @param {string} type
  * @param {number} x
  * @param {number} y
  * @param {number} w
  * @param {number} h
  */
-function drawLinearBarShape(context, barOpWidth, barStrokeWidth, strokeColor,
-                            circleRadius, colorStart, colorEnd, toValue,
-                            minValue, maxValue, title, units, hasLeft, hasRight,
-                            x, y, w, h)
-{
-    let {isVertical, width, barWidth, barLength, strokeWidth,
-        barMargin, radius, x0, y0, X, Y} =
-        barDimensions(context, {
-            barStrokeWidth: barStrokeWidth,
-            barBeginCircle: circleRadius,
-            barWidth: barOpWidth,
-            title: title,
-            units: units,
-            hasLeft: hasLeft,
-            hasRight: hasRight
-        }, x, y, w, h);
+function drawLinearBarShape(context, options, type, x, y, w, h) {
+    let {isVertical, width, barWidth, barLength, strokeWidth, barMargin, radius,
+        x0, y0, X, Y} = barDimensions(context, options, x, y, w, h);
 
     context.save();
     context.beginPath();
 
-    if (circleRadius) {
+    if (options.barBeginCircle) {
         let direction = drawings.radians(isVertical ? 270 : 0);
         let alpha = Math.asin(barWidth / 2 / radius);
         let cosAlpha = Math.cos(alpha);
@@ -358,10 +336,11 @@ function drawLinearBarShape(context, barOpWidth, barStrokeWidth, strokeColor,
         let x2 = isVertical ? round(x0 - radius * sinAlpha) : x1;
         let y2 = isVertical ? y1 : round(y0 - radius * sinAlpha);
 
-        if (toValue !== false) {
+        if (type === &apos;progress&apos;) {
             barLength = context.barDimensions.barOffset +
                 (barLength - context.barDimensions.barOffset) *
-                ((toValue - minValue) / (maxValue - minValue));
+                (options.value - options.minValue) /
+                (options.maxValue - options.minValue);
         }
 
         // bar ends at
@@ -394,32 +373,42 @@ function drawLinearBarShape(context, barOpWidth, barStrokeWidth, strokeColor,
         let ry = round(isVertical ?
             (Y + barLength + barMargin) : (Y +  (width - barWidth) / 2));
 
-        if (toValue !== false) {
-            barLength *= toValue / (maxValue - minValue);
+        if (type === &apos;progress&apos;) {
+            barLength *= (options.value - options.minValue) /
+                (options.maxValue - options.minValue);
         }
 
         if (isVertical) context.rect(rx, ry, barWidth, -barLength);
         else context.rect(rx, ry, barLength, barWidth);
     }
 
-    if (barStrokeWidth) {
+    if (type !== &apos;progress&apos; &amp;&amp; options.barStrokeWidth) {
         context.lineWidth = strokeWidth;
-        context.strokeStyle = strokeColor;
+        context.strokeStyle = options.colorBarStroke;
         //context.lineJoin = &apos;round&apos;;
         context.stroke();
     }
 
-    if (colorStart) {
-        context.fillStyle = colorEnd ?
-            drawings.linearGradient(context, colorStart, colorEnd, barLength):
-            colorStart;
+    if (type !== &apos;progress&apos; &amp;&amp; options.colorBar) {
+        context.fillStyle = options.colorBarEnd ?
+            drawings.linearGradient(context, options.colorBar,
+                options.colorBarEnd, barLength):
+            options.colorBar;
+        context.fill();
+    }
+
+    else if (type === &apos;progress&apos; &amp;&amp; options.colorBarProgress) {
+        context.fillStyle = options.colorBarProgressEnd ?
+            drawings.linearGradient(context, options.colorBarProgress,
+                options.colorBarProgressEnd, barLength):
+            options.colorBarProgress;
         context.fill();
     }
 
     context.closePath();
 
     // fix dimensions for further usage
-    if (circleRadius)
+    if (options.barBeginCircle)
         context.barDimensions.radius += strokeWidth;
 
     context.barDimensions.barWidth += strokeWidth;
@@ -437,21 +426,7 @@ function drawLinearBarShape(context, barOpWidth, barStrokeWidth, strokeColor,
  * @param {number} h height of the gauge
  */
 function drawLinearBar(context, options, x, y, w, h) {
-    drawLinearBarShape(context,
-        options.barWidth,
-        options.barStrokeWidth,
-        options.colorBarStroke,
-        options.barBeginCircle,
-        options.colorBar,
-        options.colorBarEnd,
-        false,
-        options.minValue,
-        options.maxValue,
-        options.title,
-        options.units,
-        hasTicksBar(&apos;right&apos;, options),
-        hasTicksBar(&apos;left&apos;, options),
-        x, y, w, h);
+    drawLinearBarShape(context, options, &apos;&apos;, x, y, w, h);
 }
 
 /* istanbul ignore next: private, not testable */
@@ -480,21 +455,8 @@ function hasTicksBar(notWhich, options) {
  * @param {number} h height of the gauge
  */
 function drawLinearBarProgress(context, options, x, y, w, h) {
-    options.barProgress &amp;&amp; drawLinearBarShape(context,
-        options.barWidth,
-        options.barStrokeWidth,
-        &apos;rgba(0,0,0,0)&apos;,
-        options.barBeginCircle,
-        options.colorBarProgress,
-        options.colorBarProgressEnd,
-        options.value,
-        options.minValue,
-        options.maxValue,
-        options.title,
-        options.units,
-        hasTicksBar(&apos;right&apos;, options),
-        hasTicksBar(&apos;left&apos;, options),
-        x, y, w, h);
+    options.barProgress &amp;&amp;
+    drawLinearBarShape(context, options, &apos;progress&apos;, x, y, w, h);
 }
 
 /* istanbul ignore next: private, not testable */
@@ -1023,13 +985,19 @@ function drawLinearArrowNeedle(context, options, sX, sY, eX, eY, length) {
  * @access private
  * @param {Canvas2DContext} context
  * @param {LinearGaugeOptions} options
+ * @param {number} value
  * @param {number} x
  * @param {number} y
  * @param {number} w
  * @param {number} h
  */
-function drawLinearValueBox(context, options, x, y, w, h) {
-
+function drawLinearValueBox(context, options, value, x, y, w, h) {
+    // currently value box is available only for vertical linear gauge,
+    // as far as by design it is hard to find a proper place for
+    // horizontal ones
+    context.barDimensions.isVertical &amp;&amp;
+    drawings.drawValueBox(context, options, value, x + w / 2,
+        y + h - (40 * (w / 300)), w);
 }
 
 /* istanbul ignore next: private, not testable */
@@ -1077,8 +1045,7 @@ function drawLinearPlate(context, options, x, y, w, h) {
     }
 
     context.shadowBlur = null;
-    //noinspection JSValidateTypes
-    context.shadowColor = null;
+    context.shadowColor = &apos;&apos;;
 
     if (options.borderMiddleWidth) {
         drawRectangle(context, --r, x2, y2, w2, h2,
@@ -1133,6 +1100,11 @@ export default class LinearGauge extends BaseGauge {
             options.barStrokeWidth = round(options.barWidth / 2);
         }
 
+        //noinspection JSUndefinedPropertyAssignment
+        options.hasLeft = hasTicksBar(&apos;right&apos;, options);
+        //noinspection JSUndefinedPropertyAssignment
+        options.hasRight = hasTicksBar(&apos;left&apos;, options);
+
         super(options);
     }
 
@@ -1186,7 +1158,8 @@ export default class LinearGauge extends BaseGauge {
 
         drawLinearBarProgress(canvas.context, options, ...this.drawBox);
         drawLinearBarNeedle(canvas.context, options);
-        drawLinearValueBox(canvas.context, options, ...this.drawBox);
+        drawLinearValueBox(canvas.context, options, this.value,
+            ...this.drawBox);
 
         return this;
     }
