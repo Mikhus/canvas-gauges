@@ -98,28 +98,29 @@
         data-units="°C"
 ></canvas>
 <script>
-//if (!window.addEventListener) {
-//    window.addEventListener = function(evt, listener) {
-//        window.attachEvent('on' + evt, listener);
-//    };
-//}
-//if (!Array.prototype.forEach) {
-//    Array.prototype.forEach = function(cb) {
-//        var i = 0, s = this.length;
-//        for (; i < s; i++) {
-//            cb && cb(this[i], i, this);
-//        }
-//    }
-//}
-//// animage all gauges on a page
-//window.addEventListener('load', function() {
-//    document.gauges.forEach(function(gauge) {
-//        setInterval(function() {
-//            gauge.value = Math.random() * -gauge.options.maxValue +
-//                gauge.options.maxValue;
-//        }, gauge.animation.duration + 500);
-//    });
-//});
+if (!window.addEventListener) {
+    window.addEventListener = function(evt, listener) {
+        window.attachEvent('on' + evt, listener);
+    };
+}
+if (!Array.prototype.forEach) {
+    Array.prototype.forEach = function(cb) {
+        var i = 0, s = this.length;
+        for (; i < s; i++) {
+            cb && cb(this[i], i, this);
+        }
+    }
+}
+// animage all gauges on a page
+window.addEventListener('load', function() {
+    document.gauges.forEach(function(gauge) {
+        setInterval(function() {
+            gauge.value = Math.random() *
+                (gauge.options.maxValue - gauge.options.minValue) +
+                gauge.options.minValue;
+        }, gauge.animation.duration + 500);
+    });
+});
 </script>
 </body>
 </html>

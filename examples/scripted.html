@@ -63,10 +63,11 @@ if (!Array.prototype.forEach) {
 // animage all gauges on a page
 window.addEventListener('load', function() {
     document.gauges.forEach(function(gauge) {
-       setInterval(function() {
-           gauge.value = Math.random() * -gauge.options.maxValue +
-               gauge.options.maxValue;
-       }, gauge.animation.duration + 500);
+        setInterval(function() {
+            gauge.value = Math.random() *
+                (gauge.options.maxValue - gauge.options.minValue) +
+                gauge.options.minValue;
+        }, gauge.animation.duration + 500);
     });
 });
 </script>

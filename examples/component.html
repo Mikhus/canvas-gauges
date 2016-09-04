@@ -41,23 +41,6 @@
 ></canvas>
 <canvas data-type="radial-gauge"></canvas>
 <script>
-//if (document.fonts) {
-//    document.fonts.ready.then(function(fontSet) {
-//        fontSet.forEach((fontFace) => {
-//            console.log(fontFace);
-//        });
-//        GAUGE_DEFER = false;
-//
-//        Gauge.collection.forEach(function(gauge) {
-//            gauge.draw();
-//            setInterval(function() {
-//                gauge.value = Math.random() * -gauge.options.maxValue +
-//                    gauge.options.maxValue;
-//            }, gauge.animation.duration + 500);
-//        });
-//    });
-//}
-
 if (!window.addEventListener) {
     window.addEventListener = function(evt, listener) {
         window.attachEvent('on' + evt, listener);
@@ -75,8 +58,9 @@ if (!Array.prototype.forEach) {
 window.addEventListener('load', function() {
     document.gauges.forEach(function(gauge) {
         setInterval(function() {
-            gauge.value = Math.random() * -gauge.options.maxValue +
-                gauge.options.maxValue;
+            gauge.value = Math.random() *
+                (gauge.options.maxValue - gauge.options.minValue) +
+                gauge.options.minValue;
         }, gauge.animation.duration + 500);
     });
 });
