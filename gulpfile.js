@@ -71,6 +71,88 @@ function es6concat(type = 'all') {
 gulp.task('help', () => usage(gulp));
 
 /**
+ * Builds production packages
+ *
+ * @task {build:prod}
+ */
+gulp.task('build:prod', done => {
+    rimraf('dist', () => {
+        let types = ['all', 'radial', 'linear'];
+
+        Promise.all(types.map(type => {
+            return new Promise(resolve => {
+                es6concat(type)
+                    .pipe(rename('gauge.es5.js'))
+                    .pipe(babel({
+                        presets: ['es2015'],
+                        compact: false
+                    }))
+                    .on('error', function(err) {
+                        gutil.log(err);
+                        this.emit('end');
+                        resolve();
+                    })
+                    .pipe(rename('gauge.min.js'))
+                    .pipe(replace(/^/, '(function() {'))
+                    .pipe(replace(/$/, '}());'))
+                    .pipe(uglify())
+                    .pipe(gulp.dest('dist/' + type))
+                    .on('end', () => {
+                        let pkg = JSON.parse(fs.readFileSync('./package.json'));
+
+                        delete pkg.devDependencies;
+                        delete pkg.scripts;
+                        delete pkg.directories;
+
+                        if (type !== 'all') {
+                            pkg.version += '-' + type;
+                            pkg.keywords.push(type + '-gauge');
+                        }
+
+                        else {
+                            for (let i = 1; i < types.length; i++) {
+                                pkg.keywords.push(types[i] + '-gauge');
+                            }
+                        }
+
+                        fs.writeFileSync('dist/' + type + '/package.json',
+                            JSON.stringify(pkg, '', 2));
+
+                        fs.writeFileSync('dist/' + type + '/README.md',
+                            fs.readFileSync('README.md'));
+
+                        fs.writeFileSync('dist/' + type + '/LICENSE',
+                            fs.readFileSync('LICENSE'));
+
+                        resolve();
+                    });
+            });
+        })).then(() => {
+            console.log(chalk.bold.green('Production packages are now ready!'));
+            console.log('To publish each production package, please run the ' +
+                'following commands:');
+
+            types.forEach(type => {
+                let version = require('./package.json').version;
+                let entry = type === 'all' ? './' : '../../';
+
+                console.log(chalk.grey('cd ' + entry + 'dist/' + type));
+
+                if (type === 'all') type = 'latest';
+                else version += '-' + type;
+
+
+                console.log(chalk.grey('npm publish'));
+                console.log(chalk.grey('npm dist-tag add canv-gauge@' +
+                    version + ' ' + type));
+            });
+
+            done();
+        });
+    });
+});
+
+/**
  * Currently there is no way to minify es6 code, so this task is
  * temporally useless. Awaiting for support of es6 in minifiers.
  *
@@ -125,6 +207,11 @@ gulp.task('clean', done => {
     rimraf('gauge.min.js.gz', done))));
 });
 
+/**
+ * Cleans docs directory
+ *
+ * @task {clean:docs}
+ */
 gulp.task('clean:docs', done => {
     rimraf('docs', done);
 });
