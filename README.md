@@ -19,6 +19,9 @@
       - [Borders Options](#borders-options)
       - [Value Box Options](#value-box-options)
       - [Fonts Customization Options](#fonts-customization-options)
+    + [Gauge-Specific Configuration Options](#gauge-specific-configuration-options)
+      - [Linear Gauge Options](#linear-gauge-options)
+      - [Radial Gauge Options](#radial-gauge-options)
   * [Using As Components](#using-as-components)
   * [Scripting API](#scripting-api)
 - [Sponsored By](#sponsored-by)
@@ -169,6 +172,18 @@ Canvas gauges enables use of custom fonts when drawing text elements. As far as 
  - **fontTitle**: specifies font family for title text.
  - **fontUnits**: specifies font family for units text.
  - **fontValue**: specifies font-family for value box text.
+
+#### Gauge-Specific Configuration Options
+
+Each type of the gauge in this library also has it's own specific configuration optoins available for customization.
+
+##### Linear Gauge Options
+
+TBD
+
+##### Radial Gauge Options
+
+TBD
 
 ### Using As Components
 
