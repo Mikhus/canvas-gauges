@@ -1,7 +1,7 @@
 {
-  "coverage": "97.29%",
-  "expectCount": 74,
-  "actualCount": 72,
+  "coverage": "97.33%",
+  "expectCount": 75,
+  "actualCount": 73,
   "files": {
     "lib/Animation.js": {
       "expectCount": 9,
@@ -19,8 +19,8 @@
       "undocumentLines": []
     },
     "lib/DomObserver.js": {
-      "expectCount": 15,
-      "actualCount": 15,
+      "expectCount": 16,
+      "actualCount": 16,
       "undocumentLines": []
     },
     "lib/GenericOptions.js": {

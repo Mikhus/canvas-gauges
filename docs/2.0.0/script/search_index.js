@@ -612,6 +612,12 @@ window.esdocSearchIndex = [
     "member"
   ],
   [
+    "lib/domobserver.js~domobserver#isobservable",
+    "class/lib/DomObserver.js~DomObserver.html#instance-member-isObservable",
+    "lib/DomObserver.js~DomObserver#isObservable",
+    "member"
+  ],
+  [
     "lib/domobserver.js~domobserver#isvalidnode",
     "class/lib/DomObserver.js~DomObserver.html#instance-method-isValidNode",
     "lib/DomObserver.js~DomObserver#isValidNode",
