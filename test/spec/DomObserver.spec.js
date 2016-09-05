@@ -83,15 +83,16 @@ describe('DomObserver', () => {
             class TestGauge {
                 constructor(options) { created = true; }
                 draw() {}
+                destroy() {}
             }
 
             window['TestGauge'] = TestGauge;
 
             sinon.spy(TestGauge.prototype, 'draw');
 
-            let typeOptions = { bg: '', color: '' };
-            let observer = new DomObserver(typeOptions, 'div', 'TestGauge');
-            let element = document.createElement('div');
+            let typeOptions = {bg: '', color: ''};
+            let observer = new DomObserver(typeOptions, 'canvas', 'TestGauge');
+            let element = document.createElement('canvas');
 
             element.setAttribute('data-type', 'test-gauge');
             element.setAttribute('data-bg', '#fff');
