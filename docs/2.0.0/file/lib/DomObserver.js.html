@@ -322,9 +322,6 @@ export default class DomObserver {
         instance.draw &amp;&amp; instance.draw();
 
         instance.observer = new MutationObserver(records =&gt; {
-            let i = 0;
-            let s = records.length;
-
             records.forEach(record =&gt; {
                 if (record.type === &apos;attributes&apos;) {
                     let attr = record.attributeName.toLowerCase();
@@ -351,12 +348,8 @@ export default class DomObserver {
             });
         });
 
-        instance.observer.observe(node, {
-            attributes: true,
-            characterData: true,
-            attributeOldValue: true,
-            characterDataOldValue: true
-        });
+        //noinspection JSCheckFunctionSignatures
+        instance.observer.observe(node, { attributes: true });
 
         return instance;
     }
