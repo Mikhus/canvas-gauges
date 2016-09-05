@@ -14469,10 +14469,10 @@
         "operator": "=",
         "left": {
           "type": "MemberExpression",
-          "computed": true,
+          "computed": false,
           "object": {
             "type": "Identifier",
-            "name": "window",
+            "name": "module",
             "range": [
               10521,
               10527
@@ -14489,142 +14489,34 @@
             }
           },
           "property": {
-            "type": "Literal",
-            "value": "DomObserver",
-            "raw": "'DomObserver'",
-            "range": [
-              10528,
-              10541
-            ],
-            "loc": {
-              "start": {
-                "line": 336,
-                "column": 7
-              },
-              "end": {
-                "line": 336,
-                "column": 20
-              }
-            }
-          },
-          "range": [
-            10521,
-            10542
-          ],
-          "loc": {
-            "start": {
-              "line": 336,
-              "column": 0
-            },
-            "end": {
-              "line": 336,
-              "column": 21
-            }
-          }
-        },
-        "right": {
-          "type": "Identifier",
-          "name": "DomObserver",
-          "range": [
-            10545,
-            10556
-          ],
-          "loc": {
-            "start": {
-              "line": 336,
-              "column": 24
-            },
-            "end": {
-              "line": 336,
-              "column": 35
-            }
-          }
-        },
-        "range": [
-          10521,
-          10556
-        ],
-        "loc": {
-          "start": {
-            "line": 336,
-            "column": 0
-          },
-          "end": {
-            "line": 336,
-            "column": 35
-          }
-        }
-      },
-      "range": [
-        10521,
-        10557
-      ],
-      "loc": {
-        "start": {
-          "line": 336,
-          "column": 0
-        },
-        "end": {
-          "line": 336,
-          "column": 36
-        }
-      }
-    },
-    {
-      "type": "ExpressionStatement",
-      "expression": {
-        "type": "AssignmentExpression",
-        "operator": "=",
-        "left": {
-          "type": "MemberExpression",
-          "computed": false,
-          "object": {
-            "type": "Identifier",
-            "name": "module",
-            "range": [
-              10559,
-              10565
-            ],
-            "loc": {
-              "start": {
-                "line": 338,
-                "column": 0
-              },
-              "end": {
-                "line": 338,
-                "column": 6
-              }
-            }
-          },
-          "property": {
             "type": "Identifier",
             "name": "exports",
             "range": [
-              10566,
-              10573
+              10528,
+              10535
             ],
             "loc": {
               "start": {
-                "line": 338,
+                "line": 336,
                 "column": 7
               },
               "end": {
-                "line": 338,
+                "line": 336,
                 "column": 14
               }
             }
           },
           "range": [
-            10559,
-            10573
+            10521,
+            10535
           ],
           "loc": {
             "start": {
-              "line": 338,
+              "line": 336,
               "column": 0
             },
             "end": {
-              "line": 338,
+              "line": 336,
               "column": 14
             }
           }
@@ -14633,46 +14525,46 @@
           "type": "Identifier",
           "name": "DomObserver",
           "range": [
-            10576,
-            10587
+            10538,
+            10549
           ],
           "loc": {
             "start": {
-              "line": 338,
+              "line": 336,
               "column": 17
             },
             "end": {
-              "line": 338,
+              "line": 336,
               "column": 28
             }
           }
         },
         "range": [
-          10559,
-          10587
+          10521,
+          10549
         ],
         "loc": {
           "start": {
-            "line": 338,
+            "line": 336,
             "column": 0
           },
           "end": {
-            "line": 338,
+            "line": 336,
             "column": 28
           }
         }
       },
       "range": [
-        10559,
-        10588
+        10521,
+        10550
       ],
       "loc": {
         "start": {
-          "line": 338,
+          "line": 336,
           "column": 0
         },
         "end": {
-          "line": 338,
+          "line": 336,
           "column": 29
         }
       }
@@ -14681,7 +14573,7 @@
   "sourceType": "module",
   "range": [
     2272,
-    10588
+    10550
   ],
   "loc": {
     "start": {
@@ -14689,7 +14581,7 @@
       "column": 0
     },
     "end": {
-      "line": 338,
+      "line": 336,
       "column": 29
     }
   },
