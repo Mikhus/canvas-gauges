@@ -85,7 +85,7 @@ Common configuration options are spread across all type of the gauges means they
 
 ##### Ticks Bar Options
 
-Tick bars on a gauge representing the measuring system which visualize the gauge measuring intervals and the currently upset value. It should be upset in mind that ticks configuration must be relied properly on a given *minValue* and *maxValue* or you could get confusing display otherwise.
+Tick bars on a gauge representing the measuring system which visualize the gauge measuring intervals and the currently upset value. It should be upset in mind that ticks configuration must be relied properly on a given *minValue* and *maxValue* or you could get confusing display result otherwise.
 
  - **majorTicks**: expected to be an array of numeric or string values which will be displayed on a gauge bar as major ticks.
  - **minorTicks**: is an integer number which defines how many minor ticks have to be drawn between two neighbour major ticks.
@@ -144,7 +144,7 @@ Gauge needle is an element which visualize the current position of the gauge val
 
 ##### Borders Options
 
-Canvas gauge plate provides a way to define the borders. There are 3 borders availabe to draw on the edge of the gauge plate. It is possible to combine the borders display, their with and colors to achieve exclusive visual look & feel of your gauge.
+Canvas gauge plate provides a way to define the borders. There are 3 borders availabe to draw on the edge of the gauge plate. It is possible to combine the borders display options, their widths and colors to achieve exclusive visual look & feel of your gauges.
 
  - **borders**: boolean, defines if a borders should be drawn or not.
  - **borderOuterWidth**: specifies a width in pixels of the outer border. If set to zero - border won't be drawn at all.
