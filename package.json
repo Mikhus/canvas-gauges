@@ -11,8 +11,9 @@
     "test:headless": "xvfb-run npm test --silent",
     "start": "./node_modules/.bin/gulp watch",
     "build": "./node_modules/.bin/gulp build --silent",
-    "doc": "./node_modules/.bin/gulp doc --silent",
-    "commit": "npm run build && npm run doc && npm test && git add --all . && git commit"
+    "doc": "npm run toc && ./node_modules/.bin/gulp doc --silent",
+    "commit": "npm run build && npm run doc && npm test && git add --all . && git commit",
+    "toc": "./node_modules/.bin/markdown-toc -i README.md"
   },
   "repository": {
     "type": "git",
@@ -107,6 +108,7 @@
     "karma-mocha-reporter": "^2.1.0",
     "karma-sinon": "^1.0.5",
     "karma-threshold-reporter": "^0.1.15",
+    "markdown-toc": "^0.12.16",
     "mocha": "^3.0.2",
     "rimraf": "^2.5.4",
     "selenium-standalone": "^5.5.0",
