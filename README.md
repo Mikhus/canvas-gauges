@@ -88,8 +88,8 @@ Common configuration options are spread across all type of the gauges means they
 Tick bars on a gauge representing the measuring system which visualize the gauge measuring intervals and the currently upset value. It should be upset in mind that ticks configuration must be relied properly on a given *minValue* and *maxValue* or you could get confusing display otherwise.
 
  - **majorTicks**: expected to be an array of numeric or string values which will be displayed on a gauge bar as major ticks.
-  - **minorTicks**: is an integer number which defines how many minor ticks have to be drawn between two neighbour major ticks.
-  - **strokeTicks**: boolean value defining if ticks bar of the gauge should be stroked or not. This relies only to a visual effect.
+ - **minorTicks**: is an integer number which defines how many minor ticks have to be drawn between two neighbour major ticks.
+ - **strokeTicks**: boolean value defining if ticks bar of the gauge should be stroked or not. This relies only to a visual effect.
  - **majorTicksInt**: integer which defines how many numeric positions should be used to display integer part of the tick number.
  - **majorTicksDec**: integer which defines how many positions should be used to display decimal part of the tick number.
  - **highlights**: an array of highlights objects, which configures color-highlighted areas on a ticks bar. Each highlight object defines an area to colorize starting **from** value **to** value and using a given **color**, like this: ```{ from: number, to: number, color: string }```
