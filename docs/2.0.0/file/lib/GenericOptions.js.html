@@ -112,7 +112,7 @@
 /**
  * Shared generic gauges options
  *
- * @type {{renderTo: RenderTarget, width: number, height: number, minValue: number, maxValue: number, value: number, units: string|boolean, majorTicks: number[]|string[], minorTicks: number, strokeTicks: boolean, updateValueOnAnimation: boolean, glow: boolean, title: string|boolean, borders: boolean, valueInt: number, valueDec: number, majorTicksInt: number, majorTicksDec: number, animation: boolean, animationDuration: number, animationRule: string|AnimationRule, colorPlate: string, colorMajorTicks: string, colorMinorTicks: string, colorTitle: string, colorUnits: string, colorNumbers: string, colorNeedleStart: string, colorNeedleEnd: string, colorValueText: string, colorValueTextShadow: string, colorBorderShadow: string, colorBorderOuterStart: string, colorBorderOuterEnd: string, colorBorderMiddleStart: string, colorBorderMiddleEnd: string, colorBorderInnerStart: string, colorBorderInnerEnd: string, colorValueBoxRectStart: string, colorValueBoxRectEnd: string, colorValueBoxBackground: string, colorValueBoxShadow: string, colorNeedleShadowUp: string, colorNeedleShadowDown: string, needle: boolean, needleShadow: boolean, needleType: string, needleStart: number, needleEnd: number, needleWidth: number, borderOuterWidth: number, borderMiddleWidth: number, borderInnerWidth: number, borderShadowWidth: number, valueBox: boolean, valueBoxStroke: number, valueText: string|boolean, valueTextShadow: boolean, valueBoxBorderRadius: number, highlights: Highlight[], fontNumbers: string, fontTitle: string, fontUnits: string, fontValue: string}} GenericOptions
+ * @type {{renderTo: RenderTarget, width: number, height: number, minValue: number, maxValue: number, value: number, units: string|boolean, majorTicks: number[]|string[], minorTicks: number, strokeTicks: boolean, animatedValue: boolean, glow: boolean, title: string|boolean, borders: boolean, valueInt: number, valueDec: number, majorTicksInt: number, majorTicksDec: number, animation: boolean, animationDuration: number, animationRule: string|AnimationRule, colorPlate: string, colorMajorTicks: string, colorMinorTicks: string, colorTitle: string, colorUnits: string, colorNumbers: string, colorNeedle: string, colorNeedleEnd: string, colorValueText: string, colorValueTextShadow: string, colorBorderShadow: string, colorBorderOuter: string, colorBorderOuterEnd: string, colorBorderMiddle: string, colorBorderMiddleEnd: string, colorBorderInner: string, colorBorderInnerEnd: string, colorValueBoxRect: string, colorValueBoxRectEnd: string, colorValueBoxBackground: string, colorValueBoxShadow: string, colorNeedleShadowUp: string, colorNeedleShadowDown: string, needle: boolean, needleShadow: boolean, needleType: string, needleStart: number, needleEnd: number, needleWidth: number, borderOuterWidth: number, borderMiddleWidth: number, borderInnerWidth: number, borderShadowWidth: number, valueBox: boolean, valueBoxStroke: number, valueText: string, valueTextShadow: boolean, valueBoxBorderRadius: number, highlights: Highlight[], fontNumbers: string, fontTitle: string, fontUnits: string, fontValue: string}} GenericOptions
  */
 const GenericOptions = {
     // basic options
@@ -149,18 +149,18 @@ const GenericOptions = {
     colorTitle: &apos;#888&apos;,
     colorUnits: &apos;#888&apos;,
     colorNumbers: &apos;#444&apos;,
-    colorNeedleStart: &apos;rgba(240,128,128,1)&apos;,
+    colorNeedle: &apos;rgba(240,128,128,1)&apos;,
     colorNeedleEnd: &apos;rgba(255,160,122,.9)&apos;,
     colorValueText: &apos;#444&apos;,
     colorValueTextShadow: &apos;rgba(0,0,0,0.3)&apos;,
     colorBorderShadow: &apos;rgba(0,0,0,0.5)&apos;,
-    colorBorderOuterStart: &apos;#ddd&apos;,
+    colorBorderOuter: &apos;#ddd&apos;,
     colorBorderOuterEnd: &apos;#aaa&apos;,
-    colorBorderMiddleStart: &apos;#eee&apos;,
+    colorBorderMiddle: &apos;#eee&apos;,
     colorBorderMiddleEnd: &apos;#f0f0f0&apos;,
-    colorBorderInnerStart: &apos;#fafafa&apos;,
+    colorBorderInner: &apos;#fafafa&apos;,
     colorBorderInnerEnd: &apos;#ccc&apos;,
-    colorValueBoxRectStart: &apos;#888&apos;,
+    colorValueBoxRect: &apos;#888&apos;,
     colorValueBoxRectEnd: &apos;#666&apos;,
     colorValueBoxBackground: &apos;#babab2&apos;,
     colorValueBoxShadow: &apos;rgba(0,0,0,1)&apos;,
@@ -189,7 +189,7 @@ const GenericOptions = {
     // value and highlights
     valueBox: true,
     valueBoxStroke: 5,
-    valueText: true,
+    valueText: &apos;&apos;,
     valueTextShadow: true,
     valueBoxBorderRadius: 2.5,
     highlights: [

@@ -106,7 +106,7 @@ const HPI = PI / 2;
 /**
  * Gauge configuration options
  *
- * @typedef {GenericOptions|{ticksAngle: number, startAngle: number, colorNeedleCircleOuterStart: string, colorNeedleCircleOuterEnd: string, colorNeedleCircleInnerStart: string, colorNeedleCircleInnerEnd: string, colorNeedleShadowUp: string, colorNeedleShadowDown: string, colorValueBoxRectStart: string, colorValueBoxRectEnd: string, colorValueBoxBackground: string, colorValueBoxShadow: string, needleStart: number, needleEnd: number, needleWidth: number, needleCircleSize: number, needleCircleInner: boolean, needleCircleOuter: boolean}} RadialGaugeOptions
+ * @typedef {GenericOptions|{ticksAngle: number, startAngle: number, colorNeedleCircleOuter: string, colorNeedleCircleOuterEnd: string, colorNeedleCircleInner: string, colorNeedleCircleInnerEnd: string, needleCircleSize: number, needleCircleInner: boolean, needleCircleOuter: boolean}} RadialGaugeOptions
  */
 
 /**
@@ -121,9 +121,9 @@ const defaultRadialGaugeOptions = Object.assign({}, GenericOptions, {
     startAngle: 45,
 
     // colors
-    colorNeedleCircleOuterStart: &apos;#f0f0f0&apos;,
+    colorNeedleCircleOuter: &apos;#f0f0f0&apos;,
     colorNeedleCircleOuterEnd: &apos;#ccc&apos;,
-    colorNeedleCircleInnerStart: &apos;#e8e8e8&apos;,
+    colorNeedleCircleInner: &apos;#e8e8e8&apos;,
     colorNeedleCircleInnerEnd: &apos;#f5f5f5&apos;,
 
     // needle
@@ -194,19 +194,19 @@ function drawRadialPlate(context, options) {
 
     if (options.borderOuterWidth) {
         drawRadialCircle(r0, context,
-            options.colorBorderOuterStart,
+            options.colorBorderOuter,
             options.colorBorderOuterEnd);
     }
 
     if (options.borderMiddleWidth) {
         drawRadialCircle(r1, context,
-            options.colorBorderMiddleStart,
+            options.colorBorderMiddle,
             options.colorBorderMiddleEnd);
     }
 
     if (options.borderInnerWidth) {
         drawRadialCircle(r2, context,
-            options.colorBorderInnerStart,
+            options.colorBorderInner,
             options.colorBorderInnerEnd);
     }
 
@@ -490,7 +490,7 @@ function drawRadialNeedle(context, options) {
 
     context.fillStyle = drawings.linearGradient(
         context,
-        options.colorNeedleStart,
+        options.colorNeedle,
         options.colorNeedleEnd,
         rIn - rOut);
 
@@ -536,7 +536,7 @@ function drawRadialNeedle(context, options) {
             context.arc(0, 0, r1, 0, PI * 2, true);
             context.fillStyle = drawings.linearGradient(
                 context,
-                options.colorNeedleCircleOuterStart,
+                options.colorNeedleCircleOuter,
                 options.colorNeedleCircleOuterEnd,
                 r1
             );
@@ -550,7 +550,7 @@ function drawRadialNeedle(context, options) {
             context.arc(0, 0, r2, 0, PI * 2, true);
             context.fillStyle = drawings.linearGradient(
                 context,
-                options.colorNeedleCircleInnerStart,
+                options.colorNeedleCircleInner,
                 options.colorNeedleCircleInnerEnd,
                 r2
             );

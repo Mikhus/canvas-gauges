@@ -69,13 +69,162 @@
 <div class="content" data-ice="content"><div data-ice="index" class="github-markdown"><h1 id="html-canvas-gauges-v2-0">HTML Canvas Gauges v2.0</h1>
 <p><a href="https://travis-ci.org/Mikhus/canv-gauge"><img src="https://travis-ci.org/Mikhus/canv-gauge.svg?branch=v2.0.0" alt="Build Status"></a> <img src="https://rawgit.com/Mikhus/canv-gauge/v2.0.0/test-coverage.svg" alt="Test Coverage"> <img src="https://rawgit.com/Mikhus/canv-gauge/v2.0.0/docs-coverage.svg" alt="Documentation Coverage"> <a href="https://raw.githubusercontent.com/Mikhus/canv-gauge/v2.0.0/LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="License"></a></p>
 <p><a href="https://rawgit.com/Mikhus/canv-gauge/v2.0.0/examples/component.html"><img src="https://raw.githubusercontent.com/Mikhus/blob/master/gauges.png" alt="Canvas Gauges"></a></p>
+<p><!-- toc -->
+</p>
+<ul>
+<li><a href="#installation">Installation</a></li>
+<li><a href="#using-gauges">Using Gauges</a><ul>
+<li><a href="#configuration-options">Configuration Options</a><ul>
+<li><a href="#common-configuration-options">Common Configuration options</a><ul>
+<li><a href="#mandatory-options">Mandatory Options</a></li>
+<li><a href="#basic-options">Basic Options</a></li>
+<li><a href="#ticks-bar-options">Ticks Bar Options</a></li>
+<li><a href="#animation-options">Animation Options</a></li>
+<li><a href="#coloring-options">Coloring Options</a></li>
+<li><a href="#needle-configuration-options">Needle Configuration Options</a></li>
+<li><a href="#borders-options">Borders Options</a></li>
+<li><a href="#value-box-options">Value Box Options</a></li>
+<li><a href="#fonts-customization-options">Fonts Customization Options</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#using-as-components">Using As Components</a></li>
+<li><a href="#scripting-api">Scripting API</a></li>
+</ul>
+</li>
+<li><a href="#sponsored-by">Sponsored By</a></li>
+<li><a href="#license">License</a></li>
+</ul>
+<p><!-- tocstop -->
+</p>
 <p>This is tiny implementation of highly configurable gauge using pure JavaScript and HTML5 canvas.
 No dependencies. Suitable for IoT devices because of minimum code base.</p>
-<h2 id="install">Install</h2>
-<p>Make it simple using npm:</p>
+<h2 id="installation">Installation</h2>
+<p>Canvas gauges can be simply installed using npm package manager. Depending on your needs there is possibility to install whole gauge library or only that part you really need for your project.
+To install the whole library, run:</p>
 <pre><code><code class="source-code prettyprint">$ npm install canv-gauge</code>
-</code></pre><h2 id="documentation">Documentation</h2>
-<p>coming soon...</p>
+</code></pre><p>If you only need the exact type of the gauge it can be installed using the appropriate npm tag. Currently the following gauges are supported: linear, radial.</p>
+<p>To install only linear gauge, run:</p>
+<pre><code><code class="source-code prettyprint">$ npm install canv-gauge@linear</code>
+</code></pre><p>To install only radial gauge, run:</p>
+<pre><code><code class="source-code prettyprint">$ npm install canv-gauge@radial</code>
+</code></pre><p>This strategy useful only if you need to minimize your code base and plan to use ONLY a specific gauge type. If you need to use various gauge types in your project it is recommended to use whole gauge package.</p>
+<h2 id="using-gauges">Using Gauges</h2>
+<p>There are two ways inject gauges into your web-page:</p>
+<ul>
+<li>as a web-component;</li>
+<li>using JavaScript.</li>
+</ul>
+<p>Whatever injecting type selected to use, first of all it is required to learn available gauge configuration options. Canvas gauges are <strong>highly customizable controls</strong>. You would be able to configure their look &amp; feel at an extreme level of customization options. By the way to get a working gauge on your page it is possible to start with the zero-level of configuration.</p>
+<h3 id="configuration-options">Configuration Options</h3>
+<p>Configuration options for the gauge usually passed to a constructor function and are a plain JavaScript object.</p>
+<h4 id="common-configuration-options">Common Configuration options</h4>
+<p>Common configuration options are spread across all type of the gauges means they are applicable to any gauge type. For been more informative and easy-to-find we split those options into groups below.</p>
+<h5 id="mandatory-options">Mandatory Options</h5>
+<ul>
+<li><strong>renderTo</strong>: render target in DOM tree. It is expected to be a canvas element or it&apos;s identifier in a DOM tree. This option is not required when the gauge injected as a web-component on the page.</li>
+</ul>
+<h5 id="basic-options">Basic Options</h5>
+<ul>
+<li><strong>width</strong>: number in pixels of the canvas element on which the gauge will be drawn.</li>
+<li><strong>height</strong>: number in pixels of the canvas element on which the gauge will be drawn.</li>
+<li><strong>minValue</strong>: numeric minimal value which will be shown on a gauge bar.</li>
+<li><strong>maxValue</strong>: numeric maximal value which will be shown on a gauge bar.</li>
+<li><strong>value</strong>: current gauge value which will be displayed.</li>
+<li><strong>units</strong>: should be a string explaining the units for the gauge value, or something falsy to hide this element on a gauge.</li>
+<li><strong>glow</strong>: boolean flag specifies if gauge should be drawn using glow effect or not.</li>
+<li><strong>title</strong>: should be a string to display gauge title or falsy value to hide this element.</li>
+</ul>
+<h5 id="ticks-bar-options">Ticks Bar Options</h5>
+<p>Tick bars on a gauge representing the measuring system which visualize the gauge measuring intervals and the currently upset value. It should be upset in mind that ticks configuration must be relied properly on a given <em>minValue</em> and <em>maxValue</em> or you could get confusing display otherwise.</p>
+<ul>
+<li><strong>majorTicks</strong>: expected to be an array of numeric or string values which will be displayed on a gauge bar as major ticks.<ul>
+<li><strong>minorTicks</strong>: is an integer number which defines how many minor ticks have to be drawn between two neighbour major ticks.</li>
+<li><strong>strokeTicks</strong>: boolean value defining if ticks bar of the gauge should be stroked or not. This relies only to a visual effect.</li>
+</ul>
+</li>
+<li><strong>majorTicksInt</strong>: integer which defines how many numeric positions should be used to display integer part of the tick number.</li>
+<li><strong>majorTicksDec</strong>: integer which defines how many positions should be used to display decimal part of the tick number.</li>
+<li><strong>highlights</strong>: an array of highlights objects, which configures color-highlighted areas on a ticks bar. Each highlight object defines an area to colorize starting <strong>from</strong> value <strong>to</strong> value and using a given <strong>color</strong>, like this: <code>{ from: number, to: number, color: string }</code></li>
+</ul>
+<h5 id="animation-options">Animation Options</h5>
+<p>Animations on the gauge can be turned on or off. Whenever the animation is turned on it will automatically run each time gauge changing it&apos;s value. During the animation gauge will animate its needle or progress bar from the old value to a new value it has been upset. If <em>animatedValue</em> option is turned on it will also constantly update the value displayed in a value box on each animation step.</p>
+<ul>
+<li><strong>animation</strong>: boolean flag signaling whenever the animation is possible on the gauge or not.</li>
+<li><strong>animationDuration</strong>: time in milliseconds of the animation duration.</li>
+<li><strong>animationRule</strong>: defines a type of animation behavior for the gauge. Canvas gauges already knows the most used types of animation rules or you can define your own animation rule providing the animation rule function within this option. Known rules could be bypassed as string names, which are: <em>&quot;linear&quot;, &quot;quad&quot;, &quot;quint&quot;, &quot;cycle&quot;, &quot;bounce&quot;, &quot;elastic&quot;</em> and their opposites: <em>&quot;dequad&quot;, &quot;dequint&quot;, &quot;decycle&quot;, &quot;debounce&quot;, &quot;delastic&quot;</em>.</li>
+<li><strong>animatedValue</strong>: boolean flag specifies if a value displayed in a value box of the gauge should be constantly updated during animation run. By default it is falsy, so the upset gauge value will be shown immediately and animation will run visually only on the gauge needle or progress bar.</li>
+</ul>
+<h5 id="coloring-options">Coloring Options</h5>
+<p>Canvas gauge provides highly customizable coloring options for the majority of gauge elements. Each color configuration is usually a string value representing the color in one of HEX (#000000-#FFFFFF), RGB (rgb(0, 0, 0)-rgb(255,255,255)) or RGBA (rgba(0,0,0,0)-rgba(255,255,255,1)) formats. Some elements supports gradients. In this case the color of an element could be configured as color start and color end parts.</p>
+<ul>
+<li><strong>colorPlate</strong>: defines background color of the gauge plate.</li>
+<li><strong>colorMajorTicks</strong>: color of the major ticks lines (also applied to stroke if <em>strokeTicks</em> option is true). </li>
+<li><strong>colorMinorTicks</strong>: color of the minor ticks lines.</li>
+<li><strong>colorTitle</strong>: color of the title text.</li>
+<li><strong>colorUnits</strong>: color of the units text.</li>
+<li><strong>colorNumbers</strong>: color of the text for the tick numbers.</li>
+<li><strong>colorNeedle</strong>: defines color of the gauge needle.</li>
+<li><strong>colorNeedleEnd</strong>: if defined it enables use of gradient for the gauge needle. If this is falsy, needle will be drown using solid color.</li>
+<li><strong>colorValueText</strong>: defines a color of the text in a value box.</li>
+<li><strong>colorValueTextShadow</strong>: defines a color of a text in a value box. If this value is falsy shadow won&apos;t be drawn.</li>
+<li><strong>colorBorderShadow</strong>: defines a shadow color of the gauge plate. If is falsy the shadow won&apos;t be drawn.</li>
+<li><strong>colorBorderOuter</strong>: defines a color of the outer border for the gauge plate.</li>
+<li><strong>colorBorderOuterEnd</strong>: if defined it enables use of gradient on the outer border.</li>
+<li><strong>colorBorderMiddle</strong>: defines a color of the middle border for the gauge plate.</li>
+<li><strong>colorBorderMiddleEnd</strong>: if defined it enables use of gradient on the middle border.</li>
+<li><strong>colorBorderInner</strong>: defines a color of the inner border for the gauge plate.</li>
+<li><strong>colorBorderInnerEnd</strong>:  if defined it enables use of gradient on the inner border.</li>
+<li><strong>colorValueBoxRect</strong>: defines a color of the value box rectangle stroke.</li>
+<li><strong>colorValueBoxRectEnd</strong>: if defined it enables use of gradient on value box rectangle stroke.</li>
+<li><strong>colorValueBoxBackground</strong>: defines background color for value box.</li>
+<li><strong>colorValueBoxShadow</strong>: defines a color of value box shadow. If falsy shadow won&apos;t be drawn.</li>
+<li><strong>colorNeedleShadowUp</strong>: defines upper half of the needle shadow color.</li>
+<li><strong>colorNeedleShadowDown</strong>: defines drop shadow needle color.</li>
+</ul>
+<h5 id="needle-configuration-options">Needle Configuration Options</h5>
+<p>Gauge needle is an element which visualize the current position of the gauge value on a measuring bar. Currently canvas gauge supports drawing of two different types of the needles for each gauge - &quot;line&quot; needle and &quot;arrow&quot; needle. By the way, whenever it may be required, needle may be not drawn at all.</p>
+<ul>
+<li><strong>needle</strong>: boolean, specifies if gauge should draw the needle or not.</li>
+<li><strong>needleShadow</strong>: boolean, specifies if needle should drop shadow or not.</li>
+<li><strong>needleType</strong>: string, one of &quot;arrow&quot; or &quot;line&quot; supported.</li>
+<li><strong>needleStart</strong>: tail part of the needle length, in relative units.</li>
+<li><strong>needleEnd</strong>: main needle length in relative units.</li>
+<li><strong>needleWidth</strong>: max width of the needle in the most wide needle place.</li>
+</ul>
+<h5 id="borders-options">Borders Options</h5>
+<p>Canvas gauge plate provides a way to define the borders. There are 3 borders availabe to draw on the edge of the gauge plate. It is possible to combine the borders display, their with and colors to achieve exclusive visual look &amp; feel of your gauge.</p>
+<ul>
+<li><strong>borders</strong>: boolean, defines if a borders should be drawn or not.</li>
+<li><strong>borderOuterWidth</strong>: specifies a width in pixels of the outer border. If set to zero - border won&apos;t be drawn at all.</li>
+<li><strong>borderMiddleWidth</strong>: specifies a width in pixels of the middle border. If set to zero - border won&apos;t be drawn at all.</li>
+<li><strong>borderInnerWidth</strong>: specifies a width in pixels of the inner border. If set to zero - border won&apos;t be drawn at all.</li>
+<li><strong>borderShadowWidth</strong>: specifies the width of the outer border drop shadow. If zero - shadow won&apos;t be drawn.</li>
+</ul>
+<h5 id="value-box-options">Value Box Options</h5>
+<p>Value box element on the gauge is intended to display the digital representation of the current value. it is the most accurate visualisation of the exact value shawn by the gauge on the measuring bar. Whenever it is not required it may be turned off and not drawn.</p>
+<ul>
+<li><strong>valueBox</strong>: boolean, defines if the value box should be drawn or not on the gauge.</li>
+<li><strong>valueBoxStroke</strong>: number in relative units which defines the width of stroke of the value box element.</li>
+<li><strong>valueText</strong>: text to display instead of showing the current value. It may be useful when it is required to display something different in value box.</li>
+<li><strong>valueTextShadow</strong>: specifies if value text shadow should be drawn or not.</li>
+<li><strong>valueBoxBorderRadius</strong>: number of radius to draw rounded corners of the value box.</li>
+<li><strong>valueInt</strong>: integer which defines how many numeric positions should be used to display integer part of the value number.</li>
+<li><strong>valueDec</strong>: integer which defines how many positions should be used to display decimal part of the value number.</li>
+</ul>
+<h5 id="fonts-customization-options">Fonts Customization Options</h5>
+<p>Canvas gauges enables use of custom fonts when drawing text elements. As far as gauges are build on principals of minimalistic code base there is no hardcoded fonts integrated with the gauges. Canvas gauges only provides a way to upset a custom font-family to its different text elements, but the font loading and initialization on the page is a part of the work user has to do himself.</p>
+<ul>
+<li><strong>fontNumbers</strong>: specifies font family for the tick numbers.</li>
+<li><strong>fontTitle</strong>: specifies font family for title text.</li>
+<li><strong>fontUnits</strong>: specifies font family for units text.</li>
+<li><strong>fontValue</strong>: specifies font-family for value box text.</li>
+</ul>
+<h3 id="using-as-components">Using As Components</h3>
+<p>TBD</p>
+<h3 id="scripting-api">Scripting API</h3>
+<p>TBD</p>
 <h2 id="sponsored-by">Sponsored By</h2>
 <p><a href="http://www.lohika.com/"><img src="http://www.lohika.com/wp-content/themes/gridalicious/images/lohika_full.svg" alt="Lohika"></a></p>
 <h2 id="license">License</h2>
