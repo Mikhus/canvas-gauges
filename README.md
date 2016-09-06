@@ -188,13 +188,19 @@ Each type of the gauge in this library also has it's own specific configuration 
 
 ##### Linear Gauge Options
 
+Linear gauge has some specific options for customization and some drawing rules which is good to know.
+
+First of all it can be drawn vertically or horizontally, depending on the upset width and height options for the canvas element. If width greater than height the gauge will be treated as horizontal, otherwise - as vertical.
+
+Horizontal gauge drawing has a limitation of drawing value box. In this orientation value box rendering is disabled as far as it is not possible to find a good place for it within the current design. So it has to be kept im mind when the horizontal orientation is selected to draw the gauge.
+
 ###### Borders Options
 
- - **borderRadius**: radius or founded corners for the gauge plate.
+ - **borderRadius**: radius for rounded corners of the gauge plate and its borders.
 
 ###### Bar Options
 
- - **barBeginCircle**: defines if a gauge bar should start with a circle element imitating flask view of the bar. If set to zero value it won't be drawn at all. 
+ - **barBeginCircle**: defines if a gauge bar should start with a circle element imitating flask view of the bar. If set to zero it won't be drawn at all. 
  - **barWidth**: bar width in percents in relation to overall width of the gauge. It is limited to 50% anyway.
  - **barLength**: defines bar length in percents in relation to overall gauge length.
  - **barStrokeWidth**: defines a width of a bar stroke. If set to zero - stroke won't be drawn.
@@ -227,6 +233,8 @@ Each type of the gauge in this library also has it's own specific configuration 
  - **fontUnitsSize**: Size of the font for units element text in relative units.
 
 ##### Radial Gauge Options
+
+Radial gauge controls has their specific customization options, which are enables to drastically customize its view to make it look, for example, like manometer or compass or any other radial-kind of the tool possible too imagine.
 
 ###### Bar Options 
  
