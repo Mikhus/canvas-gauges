@@ -174,18 +174,18 @@ td {
 pre {
     overflow: auto;
     margin-bottom: rem-calc(20);
-    padding: 5px;
     background-color: $code-background-color;
     border-radius: $global-radius;
 }
 pre code {
-    padding: rem-calc(2) rem-calc(5) rem-calc(1) rem-calc(0);
     border: 0;
+    display: block;
 }
 
 code {
     font-size: rem-calc(14);
     line-height: 1.5;
+    padding: 5px 10px;
 }
 
 
@@ -428,6 +428,7 @@ mark {
 .icon-tumblr:before,
 .icon-twitter:before,
 .icon-upload-to-cloud:before,
+.icon-user-guide:before,
 .icon-video:before,
 .icon-vimeo:before,
 .icon-warning:before,
@@ -502,8 +503,10 @@ mark {
 .icon-tumblr:before { content: "\f12c"; }
 .icon-twitter:before { content: "\f12d"; }
 .icon-upload-to-cloud:before { content: "\f12e"; }
+.icon-user-guide:before { content: "\f16e"; }
 .icon-video:before { content: "\f12f"; }
 .icon-vimeo:before { content: "\f130"; }
 .icon-warning:before { content: "\f131"; }
 .icon-xing:before { content: "\f135"; }
 .icon-youtube:before { content: "\f132"; }
+

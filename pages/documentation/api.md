@@ -5,8 +5,7 @@ title: "<span class='icon-api-docs'></span> Canvas Gauge API"
 subheadline: "Developer's Guide Documentation"
 permalink: "/documentation/api/"
 breadcrumb: true
-header:
-  image_fullwidth: "architect.jpg"
+header: false
 ---
 
 <script>
@@ -34,4 +33,4 @@ window.addEventListener('resize', function() {
     }, 200);
 });
 </script>
-<iframe id="docs-window" style="visibility:hidden;width:100%;height:100%" src="{{ site.url }}/docs/2.0.0/identifiers.html" frameborder="0" onload="fitme(this)"></iframe>
+<iframe id="docs-window" style="visibility:hidden;width:100%;height:100%" src="{{site.url}}/docs/2.0.0/identifiers.html" frameborder="0" onload="fitme(this)"></iframe>

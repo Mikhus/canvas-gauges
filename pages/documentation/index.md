@@ -7,19 +7,25 @@ title: "<span class='icon-docs'></span> About Docs"
 subheadline: "Canvas Gauge Documentation Page"
 permalink: "/documentation/"
 teaser: "Here you may find different types of documentation depending on your needs:"
-widget1:
-  title: "Starter User Guide"
+starter:
+  title: "Getting Started"
   url: "/documentation/getting-started/"
   icon: "startup"
   iconColor: "#a55"
-  text: 'Information about using canvas gauges in a web applications.'
-widget2:
+  text: 'Quick steps to start using canvas gauges in a web applications.'
+userGuide:
+  title: "User Guide"
+  url: "/documentation/user-guide/"
+  icon: "user-guide"
+  iconColor: "5a5a5a"
+  text: 'Complete user gude about canvas gauges.'
+devGuide:
   title: "Developer's API Docs"
   url: "/documentation/api/"
   icon: "api-docs"
   iconColor: "#5a5"
-  text: 'Application Programming Interface documentation for developers.'
-widget3:
+  text: 'API documentation for developers.'
+examples:
   title: "Usage Examples"
   url: "/documentation/examples/"
   icon: "examples"
@@ -27,14 +33,18 @@ widget3:
   text: 'Learn using gauges through existing configuration examples.'
 ---
 
-{% if page.widget1.title %}
-{% include _frontpage-widget.html widget=page.widget1 %}
+{% if page.starter.title %}
+{% include _frontpage-widget.html widget=page.starter %}
 {% endif %}
 
-{% if page.widget2.title %}
-{% include _frontpage-widget.html widget=page.widget2 %}
+{% if page.userGuide.title %}
+{% include _frontpage-widget.html widget=page.userGuide %}
 {% endif %}
 
-{% if page.widget3.title %}
-{% include _frontpage-widget.html widget=page.widget3 %}
+{% if page.devGuide.title %}
+{% include _frontpage-widget.html widget=page.devGuide %}
+{% endif %}
+
+{% if page.examples.title %}
+{% include _frontpage-widget.html widget=page.examples %}
 {% endif %}

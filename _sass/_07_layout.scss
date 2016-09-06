@@ -357,3 +357,16 @@ body.video cite { color: #fff; }
 .pr5  { padding-right: 5px !important; }
 .pr10 { padding-right: 10px !important; }
 .pr20 { padding-right: 20px !important; }
+
+.frontpage-widget a {
+    border: 1px dotted #ccc;
+    margin: 5px;
+    padding: 5px;
+    display: block;
+    min-height: 250px;
+}
+
+.frontpage-widget a p.text-center {
+    max-width: 250px;
+    margin: auto;
+}

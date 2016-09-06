@@ -78,6 +78,7 @@
 .icon-tumblr:before,
 .icon-twitter:before,
 .icon-upload-to-cloud:before,
+.icon-user-guide:before,
 .icon-video:before,
 .icon-vimeo:before,
 .icon-warning:before,
@@ -152,6 +153,7 @@
 .icon-tumblr:before { content: "\f12c"; }
 .icon-twitter:before { content: "\f12d"; }
 .icon-upload-to-cloud:before { content: "\f12e"; }
+.icon-user-guide:before { content: "\f16e"; }
 .icon-video:before { content: "\f12f"; }
 .icon-vimeo:before { content: "\f130"; }
 .icon-warning:before { content: "\f131"; }

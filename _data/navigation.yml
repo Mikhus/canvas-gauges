@@ -12,6 +12,9 @@
     url: "/documentation/getting-started/"
     side: left
     icon: startup
+  - title: "User Guide"
+    url: "/documentation/user-guide/"
+    icon: user-guide
   - title: "Developer's API Docs"
     url: "/documentation/api/"
     icon: api-docs
