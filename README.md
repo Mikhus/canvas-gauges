@@ -21,7 +21,16 @@
       - [Fonts Customization Options](#fonts-customization-options)
     + [Gauge-Specific Configuration Options](#gauge-specific-configuration-options)
       - [Linear Gauge Options](#linear-gauge-options)
+      - [Gauge Borders Options](#gauge-borders-options)
+        * [Bar Options](#bar-options)
+        * [Coloring Options](#coloring-options-1)
+        * [Element Positioning Options](#element-positioning-options)
+        * [Ticks Options](#ticks-options)
+        * [Fonts Options](#fonts-options)
       - [Radial Gauge Options](#radial-gauge-options)
+        * [Bar Options](#bar-options-1)
+        * [Coloring Options](#coloring-options-2)
+        * [Needle Options](#needle-options)
   * [Using As Components](#using-as-components)
   * [Scripting API](#scripting-api)
 - [Sponsored By](#sponsored-by)
@@ -179,11 +188,63 @@ Each type of the gauge in this library also has it's own specific configuration 
 
 ##### Linear Gauge Options
 
-TBD
+##### Gauge Borders Options
+
+ - **borderRadius**: radius or founded corners for the gauge plate.
+
+###### Bar Options
+
+ - **barBeginCircle**: defines if a gauge bar should start with a circle element imitating flask view of the bar. If set to zero value it won't be drawn at all. 
+ - **barWidth**: bar width in percents in relation to overall width of the gauge. It is limited to 50% anyway.
+ - **barLength**: defines bar length in percents in relation to overall gauge length.
+ - **barStrokeWidth**: defines a width of a bar stroke. If set to zero - stroke won't be drawn.
+ - **barProgress**: flag, defines if a progress bar should be drawn within this gauge.
+
+###### Coloring Options
+ 
+ - **colorBarStroke**: color of a bar stroke.
+ - **colorBar**: defines a bar background color.
+ - **colorBarEnd**: if given, bar background will be drawn as gradient. If falsy bar color will be solid.
+ - **colorBarProgress**: defines a progress bar color;
+ - **colorBarProgressEnd**: if given, progress bar color will be drawn as gradient. If falsy bar color will be solid.
+
+###### Element Positioning Options
+
+ - **tickSide**: defines a side on which ticks bar should be drawn. Available values are: *"left", "right", "both"*. Default value is "both" - on the both sides of a gauge bar. For horizontally aligned gauges "left" value means top position, "right" value means bottom position.
+ - **needleSide**: defines a side on which needle at the bar should be drawn. Available values are: *"left", "right", "both"*. Default value is "both" - on the both sides of a gauge bar. For horizontally aligned gauges "left" value means top position, "right" value means bottom position.
+ - **numberSide**: defines a side on which tick numbers should be drawn. Available values are: *"left", "right", "both"*. Default value is "both" - on the both sides of a gauge bar. For horizontally aligned gauges "left" value means top position, "right" value means bottom position.
+
+###### Ticks Options
+
+ - **ticksWidth**: defines a length of major ticks width (and width of ticks bar overall) in relative units.
+ - **ticksWidthMinor**: defines a length of minor tick lines in relative units.
+ - **ticksPadding**: defines a padding used for drawing ticks out of a bar, in relative units.
+ 
+###### Fonts Options
+
+ - **fontNumbersSize**: Size of the font for tick numbers in relative units.
+ - **fontTitleSize**: Size of the font for title element text in relative units.
+ - **fontUnitsSize**: Size of the font for units element text in relative units.
 
 ##### Radial Gauge Options
 
-TBD
+###### Bar Options 
+ 
+ - **ticksAngle**: defines a max angle for ticks bar. By default is 270 degrees. If 360 degrees specified ticks bar fills the whole circle.
+ - **startAngle**: defines a start angle using which ticks bar starts. By default is 45 degrees.
+
+###### Coloring Options
+
+ - **colorNeedleCircleOuter**: defines a color which should be used to draw outer decorative circle element at the middle of the gauge.
+ - **colorNeedleCircleOuterEnd**: if defined, outer decorative circle gauge element will be drawn as gradient. If falsy - outer circle will be drawn using solid color.
+ - **colorNeedleCircleInner**: defines a color which should be used to draw inner decorative circle element at the middle of the gauge.
+ - **colorNeedleCircleInnerEnd**: if defined, inner decorative circle gauge element will be drawn as gradient. If falsy - inner circle will be drawn using solid color.
+
+###### Needle Options
+
+ - **needleCircleSize**: defines the size in relative units of the decorative circles element of the gauge.
+ - **needleCircleInner**: boolean flag, turns on/off inner decorative circle element drawing.
+ - **needleCircleOuter**: boolean flag, turns on/off outer decorative circle element drawing.
 
 ### Using As Components
 
