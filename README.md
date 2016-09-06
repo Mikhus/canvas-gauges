@@ -21,7 +21,7 @@
       - [Fonts Customization Options](#fonts-customization-options)
     + [Gauge-Specific Configuration Options](#gauge-specific-configuration-options)
       - [Linear Gauge Options](#linear-gauge-options)
-      - [Gauge Borders Options](#gauge-borders-options)
+        * [Borders Options](#borders-options-1)
         * [Bar Options](#bar-options)
         * [Coloring Options](#coloring-options-1)
         * [Element Positioning Options](#element-positioning-options)
@@ -188,7 +188,7 @@ Each type of the gauge in this library also has it's own specific configuration 
 
 ##### Linear Gauge Options
 
-##### Gauge Borders Options
+###### Borders Options
 
  - **borderRadius**: radius or founded corners for the gauge plate.
 
