@@ -1,10 +1,9 @@
 <div class="medium-6 columns frontpage-widget">
 	{% capture widget_url %}{% if include.widget.url contains 'http' %}{{ include.widget.url }}{% else %}{{ site.url }}{{ site.baseurl }}{{ include.widget.url }}{% endif %}{% endcapture %}
 	<a href="{{ widget_url }}">
-	{% if include.widget.video %}
-		{{ include.widget.video }}
-	{% else %}
-
+		{% if include.widget.video %}
+			{{ include.widget.video }}
+		{% else %}
 			{% if include.widget.image %}
 				{%comment%}TODO lazy loading{%endcomment%}
 				{%comment%}<img class="lazy" data-src="{% if include.widget.image contains='http://' %}{{ include.widget.image }}{% else %}{{ site.urlimg }}{{ include.widget.image }}{% endif %}" alt="" />{%endcomment%}
@@ -13,10 +12,12 @@
 				<img src="{{widget_image}}" alt="" />
 				{%comment%}</noscript>{%endcomment%}
 			{% else if include.widget.icon %}
-			    <span class="widget-icon icon-{{ include.widget.icon }}"{% if include.widget.iconColor %} style="color:{{ include.widget.iconColor }}"{% endif %}></span>
+				<span class="widget-icon icon-{{ include.widget.icon }}"{% if include.widget.iconColor %} style="color:{{ include.widget.iconColor }}"{% endif %}></span>
 			{% endif %}
-	{% endif %}
-	<h2 class="font-size-h3 t20 text-center">{{ include.widget.title }}</h2>
-	<p class="text-center">{{ include.widget.text }}</p>
-  </a>
+		{% endif %}
+		<h2 class="font-size-h3 t20 text-center">{{ include.widget.title }}</h2>
+		<p class="text-center">
+			{{ include.widget.text }}
+		</p>
+    </a>
 </div>

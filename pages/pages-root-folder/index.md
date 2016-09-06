@@ -29,6 +29,4 @@ permalink: /index.html
 homepage: true
 ---
 
-# Coming soon... 
-
-## Meanwhile, [API Docs]({{ site.url }}/documentation/api/) are available.
+## [Documentation]({{site.url}}/documentation/).
