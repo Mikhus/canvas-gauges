@@ -88,8 +88,21 @@
 </ul>
 </li>
 <li><a href="#gauge-specific-configuration-options">Gauge-Specific Configuration Options</a><ul>
-<li><a href="#linear-gauge-options">Linear Gauge Options</a></li>
-<li><a href="#radial-gauge-options">Radial Gauge Options</a></li>
+<li><a href="#linear-gauge-options">Linear Gauge Options</a><ul>
+<li><a href="#borders-options-1">Borders Options</a></li>
+<li><a href="#bar-options">Bar Options</a></li>
+<li><a href="#coloring-options-1">Coloring Options</a></li>
+<li><a href="#element-positioning-options">Element Positioning Options</a></li>
+<li><a href="#ticks-options">Ticks Options</a></li>
+<li><a href="#fonts-options">Fonts Options</a></li>
+</ul>
+</li>
+<li><a href="#radial-gauge-options">Radial Gauge Options</a><ul>
+<li><a href="#bar-options-1">Bar Options</a></li>
+<li><a href="#coloring-options-2">Coloring Options</a></li>
+<li><a href="#needle-options">Needle Options</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -142,13 +155,11 @@ To install the whole library, run:</p>
 <li><strong>title</strong>: should be a string to display gauge title or falsy value to hide this element.</li>
 </ul>
 <h5 id="ticks-bar-options">Ticks Bar Options</h5>
-<p>Tick bars on a gauge representing the measuring system which visualize the gauge measuring intervals and the currently upset value. It should be upset in mind that ticks configuration must be relied properly on a given <em>minValue</em> and <em>maxValue</em> or you could get confusing display otherwise.</p>
+<p>Tick bars on a gauge representing the measuring system which visualize the gauge measuring intervals and the currently upset value. It should be upset in mind that ticks configuration must be relied properly on a given <em>minValue</em> and <em>maxValue</em> or you could get confusing display result otherwise.</p>
 <ul>
-<li><strong>majorTicks</strong>: expected to be an array of numeric or string values which will be displayed on a gauge bar as major ticks.<ul>
+<li><strong>majorTicks</strong>: expected to be an array of numeric or string values which will be displayed on a gauge bar as major ticks.</li>
 <li><strong>minorTicks</strong>: is an integer number which defines how many minor ticks have to be drawn between two neighbour major ticks.</li>
 <li><strong>strokeTicks</strong>: boolean value defining if ticks bar of the gauge should be stroked or not. This relies only to a visual effect.</li>
-</ul>
-</li>
 <li><strong>majorTicksInt</strong>: integer which defines how many numeric positions should be used to display integer part of the tick number.</li>
 <li><strong>majorTicksDec</strong>: integer which defines how many positions should be used to display decimal part of the tick number.</li>
 <li><strong>highlights</strong>: an array of highlights objects, which configures color-highlighted areas on a ticks bar. Each highlight object defines an area to colorize starting <strong>from</strong> value <strong>to</strong> value and using a given <strong>color</strong>, like this: <code>{ from: number, to: number, color: string }</code></li>
@@ -199,7 +210,7 @@ To install the whole library, run:</p>
 <li><strong>needleWidth</strong>: max width of the needle in the most wide needle place.</li>
 </ul>
 <h5 id="borders-options">Borders Options</h5>
-<p>Canvas gauge plate provides a way to define the borders. There are 3 borders availabe to draw on the edge of the gauge plate. It is possible to combine the borders display, their with and colors to achieve exclusive visual look &amp; feel of your gauge.</p>
+<p>Canvas gauge plate provides a way to define the borders. There are 3 borders availabe to draw on the edge of the gauge plate. It is possible to combine the borders display options, their widths and colors to achieve exclusive visual look &amp; feel of your gauges.</p>
 <ul>
 <li><strong>borders</strong>: boolean, defines if a borders should be drawn or not.</li>
 <li><strong>borderOuterWidth</strong>: specifies a width in pixels of the outer border. If set to zero - border won&apos;t be drawn at all.</li>
@@ -229,9 +240,67 @@ To install the whole library, run:</p>
 <h4 id="gauge-specific-configuration-options">Gauge-Specific Configuration Options</h4>
 <p>Each type of the gauge in this library also has it&apos;s own specific configuration optoins available for customization.</p>
 <h5 id="linear-gauge-options">Linear Gauge Options</h5>
-<p>TBD</p>
+<p>Linear gauge has some specific options for customization and some drawing rules which is good to know.</p>
+<p>First of all it can be drawn vertically or horizontally, depending on the upset width and height options for the canvas element. If width greater than height the gauge will be treated as horizontal, otherwise - as vertical.</p>
+<p>Horizontal gauge drawing has a limitation of drawing value box. In this orientation value box rendering is disabled as far as it is not possible to find a good place for it within the current design. So it has to be kept im mind when the horizontal orientation is selected to draw the gauge.</p>
+<h6 id="borders-options">Borders Options</h6>
+<ul>
+<li><strong>borderRadius</strong>: radius for rounded corners of the gauge plate and its borders.</li>
+</ul>
+<h6 id="bar-options">Bar Options</h6>
+<ul>
+<li><strong>barBeginCircle</strong>: defines if a gauge bar should start with a circle element imitating flask view of the bar. If set to zero it won&apos;t be drawn at all. </li>
+<li><strong>barWidth</strong>: bar width in percents in relation to overall width of the gauge. It is limited to 50% anyway.</li>
+<li><strong>barLength</strong>: defines bar length in percents in relation to overall gauge length.</li>
+<li><strong>barStrokeWidth</strong>: defines a width of a bar stroke. If set to zero - stroke won&apos;t be drawn.</li>
+<li><strong>barProgress</strong>: flag, defines if a progress bar should be drawn within this gauge.</li>
+</ul>
+<h6 id="coloring-options">Coloring Options</h6>
+<ul>
+<li><strong>colorBarStroke</strong>: color of a bar stroke.</li>
+<li><strong>colorBar</strong>: defines a bar background color.</li>
+<li><strong>colorBarEnd</strong>: if given, bar background will be drawn as gradient. If falsy bar color will be solid.</li>
+<li><strong>colorBarProgress</strong>: defines a progress bar color;</li>
+<li><strong>colorBarProgressEnd</strong>: if given, progress bar color will be drawn as gradient. If falsy bar color will be solid.</li>
+</ul>
+<h6 id="element-positioning-options">Element Positioning Options</h6>
+<ul>
+<li><strong>tickSide</strong>: defines a side on which ticks bar should be drawn. Available values are: <em>&quot;left&quot;, &quot;right&quot;, &quot;both&quot;</em>. Default value is &quot;both&quot; - on the both sides of a gauge bar. For horizontally aligned gauges &quot;left&quot; value means top position, &quot;right&quot; value means bottom position.</li>
+<li><strong>needleSide</strong>: defines a side on which needle at the bar should be drawn. Available values are: <em>&quot;left&quot;, &quot;right&quot;, &quot;both&quot;</em>. Default value is &quot;both&quot; - on the both sides of a gauge bar. For horizontally aligned gauges &quot;left&quot; value means top position, &quot;right&quot; value means bottom position.</li>
+<li><strong>numberSide</strong>: defines a side on which tick numbers should be drawn. Available values are: <em>&quot;left&quot;, &quot;right&quot;, &quot;both&quot;</em>. Default value is &quot;both&quot; - on the both sides of a gauge bar. For horizontally aligned gauges &quot;left&quot; value means top position, &quot;right&quot; value means bottom position.</li>
+</ul>
+<h6 id="ticks-options">Ticks Options</h6>
+<ul>
+<li><strong>ticksWidth</strong>: defines a length of major ticks width (and width of ticks bar overall) in relative units.</li>
+<li><strong>ticksWidthMinor</strong>: defines a length of minor tick lines in relative units.</li>
+<li><strong>ticksPadding</strong>: defines a padding used for drawing ticks out of a bar, in relative units.</li>
+</ul>
+<h6 id="fonts-options">Fonts Options</h6>
+<ul>
+<li><strong>fontNumbersSize</strong>: Size of the font for tick numbers in relative units.</li>
+<li><strong>fontTitleSize</strong>: Size of the font for title element text in relative units.</li>
+<li><strong>fontUnitsSize</strong>: Size of the font for units element text in relative units.</li>
+</ul>
 <h5 id="radial-gauge-options">Radial Gauge Options</h5>
-<p>TBD</p>
+<p>Radial gauge controls has their specific customization options, which are enables to drastically customize its view to make it look, for example, like manometer or compass or any other radial-kind of the tool possible too imagine.</p>
+<h6 id="bar-options">Bar Options</h6>
+<ul>
+<li><strong>ticksAngle</strong>: defines a max angle for ticks bar. By default is 270 degrees. If 360 degrees specified ticks bar fills the whole circle.</li>
+<li><strong>startAngle</strong>: defines a start angle using which ticks bar starts. By default is 45 degrees.</li>
+</ul>
+<h6 id="coloring-options">Coloring Options</h6>
+<ul>
+<li><strong>colorNeedleCircleOuter</strong>: defines a color which should be used to draw outer decorative circle element at the middle of the gauge.</li>
+<li><strong>colorNeedleCircleOuterEnd</strong>: if defined, outer decorative circle gauge element will be drawn as gradient. If falsy - outer circle will be drawn using solid color.</li>
+<li><strong>colorNeedleCircleInner</strong>: defines a color which should be used to draw inner decorative circle element at the middle of the gauge.</li>
+<li><strong>colorNeedleCircleInnerEnd</strong>: if defined, inner decorative circle gauge element will be drawn as gradient. If falsy - inner circle will be drawn using solid color.</li>
+</ul>
+<h6 id="needle-options">Needle Options</h6>
+<ul>
+<li><strong>needleCircleSize</strong>: defines the size in relative units of the decorative circles element of the gauge.</li>
+<li><strong>needleCircleInner</strong>: boolean flag, turns on/off inner decorative circle element drawing.</li>
+<li><strong>needleCircleOuter</strong>: boolean flag, turns on/off outer decorative circle element drawing.</li>
+</ul>
 <h3 id="using-as-components">Using As Components</h3>
 <p>TBD</p>
 <h3 id="scripting-api">Scripting API</h3>
