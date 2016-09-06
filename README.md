@@ -35,7 +35,7 @@ To install only radial gauge, run:
 
 This strategy useful only if you need to minimize your code base and plan to use ONLY a specific gauge type. If you need to use various gauge types in your project it is recommended to use whole gauge package.
 
-(More...)[http://mikhus.github.io/canv-gauge/documentation/user-guide/#installing]
+[More...](http://mikhus.github.io/canv-gauge/documentation/user-guide/#installing)
 
 ## Documentation
 
