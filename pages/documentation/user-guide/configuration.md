@@ -284,4 +284,3 @@ Radial gauge controls has their specific customization options, which are enable
 
 </div><!-- /.medium-8.columns -->
 </div><!-- /.row -->
-
