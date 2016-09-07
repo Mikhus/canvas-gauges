@@ -28,7 +28,7 @@
 						data-highlights="false"
 						data-color-value-box-shadow="false"
 						data-animation-rule="bounce"
-						data-animation-duration="1000"
+						data-animation-duration="750"
 						data-value-box-border-radius="0"
 				></canvas>
 				<canvas id="radial" data-type="radial-gauge"
@@ -46,7 +46,7 @@
 						data-title="Speed"
 						data-color-value-box-shadow="false"
 						data-animation-rule="linear"
-						data-animation-duration="1000"
+						data-animation-duration="750"
 						data-animated-value="true"
 						data-value-box-border-radius="0"
 				></canvas>
@@ -56,7 +56,7 @@
 							gauge.value = Math.random() *
 							(gauge.options.maxValue - gauge.options.minValue) +
 							gauge.options.minValue;
-						}, gauge.animation.duration + 100);
+						}, gauge.animation.duration + 50);
 					}
 					function stopGauge(gauge) {
 						clearInterval(gauge.timer);
