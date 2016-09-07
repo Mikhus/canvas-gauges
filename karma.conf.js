@@ -14,6 +14,7 @@ module.exports = config => {
 
         // list of files / patterns to load in the browser
         files: [
+            'test/globals.js',
             'lib/**/*.js',
             'test/spec/**/*.js'
         ],

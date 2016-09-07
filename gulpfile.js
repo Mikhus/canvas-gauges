@@ -60,7 +60,7 @@ function es6concat(type = 'all') {
         .pipe(concat('gauge.es6.js'))
         .pipe(replace(/((var|const|let)\s+.*?=\s*)?require\(.*?\);?/g, ''))
         .pipe(replace(/(module\.)?exports(.default)?\s+=\s*.*?\r?\n/g, ''))
-        .pipe(replace(/export\s+(default\s+)?(SharedOptions;)?/g, ''));
+        .pipe(replace(/export\s+(default\s+)?(GenericOptions;)?/g, ''));
 }
 
 /**
@@ -187,8 +187,18 @@ gulp.task('build:es5', ['clean'], () => {
         })
         //.pipe(gulp.dest('.'))
         .pipe(rename('gauge.min.js'))
-        .pipe(replace(/^/, '(function() {'))
-        .pipe(replace(/$/, '}());'))
+        .pipe(replace(/^/, '(function(ns) {'))
+        .pipe(replace(/$/,
+            ';typeof module !== "undefined" && Object.assign(ns, {' +
+                'Collection: Collection,' +
+                'GenericOptions: GenericOptions,' +
+                'Animation: Animation,' +
+                'BaseGauge: BaseGauge,' +
+                'drawings: drawings,' +
+                'SmartCanvas: SmartCanvas,' +
+                'vendorize: vendorize' +
+            '});' +
+            '}(typeof module !== "undefined" ?  module.exports : window));'))
         .pipe(sourcemaps.init({ loadMaps: true }))
         .pipe(uglify())
         .pipe(sourcemaps.write('.'))
@@ -230,7 +240,6 @@ gulp.task('doc', ['clean:docs'], done => {
             title: 'HTML5 Canvas Gauges API Documentation',
             styles: [
                 './assets/styles/docs.css',
-                //'../canv-gauge-site/_site/assets/css/styles.css'
             ]
         }))
         .on('finish', () => {
