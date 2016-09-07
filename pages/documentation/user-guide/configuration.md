@@ -10,17 +10,96 @@ breadcrumb: true
 ---
 <div class="row">
 <div class="medium-4 medium-push-8 columns" markdown="1">
-<div class="panel radius" markdown="1">
-Table of Contents
+<div class="panel radius toc" markdown="1">
+<h4>Table of Contents</h4>
 {: #toc }
 *  TOC
 {:toc}
+
+<h4>User Guide Chapters</h4>
+<ul>
+    <li><a href="{{site.url}}/documentation/user-guide/">Introduction</a></li>
+    <li><a href="{{site.url}}/documentation/user-guide/custom-builds">Creating Custom Builds</a></li>
+    <li><a href="{{site.url}}/documentation/user-guide/using-as-component">Using As Components</a></li>
+    <li><a href="{{site.url}}/documentation/user-guide/scripting-api">Scripting API</a></li>
+    <li><a href="{{site.url}}/documentation/user-guide/advanced-usage">Advanced Usage</a></li>
+</ul>
 </div>
 </div><!-- /.medium-4.columns -->
 
-
-
 <div class="medium-8 medium-pull-4 columns" markdown="1">
+
+Canvas gauges can be configured in two ways:
+
+ * using JavaScript API
+ * using HTML-component API
+
+JavaScript API provides two ways of bypassing configuration options: on the object instantiation via constructor; in runtime using update() method.
+
+HTML-component API simply provides an ability to add/change/remove configuration attributes on HTML gauge element.
+
+Semantically JavaScript and HTML use different naming conventions which are a standard in the industry for today: HTML attribute name is prefixed with "data-" and the option name is dash-splitted; JavaScript options names are following camelCase rule.
+
+JavaScript example:
+
+~~~javascript
+var options = {
+   minValue: -100,
+   maxValue: 100,
+   animationRule: 'elastic',
+   animationDuration: 500
+};
+~~~
+
+Equivalent example in HTML-definition would be:
+
+~~~html
+<canvas data-type="linear-gauge"
+        data-min-value="-100"
+        data-max-value="100"
+        data-animation-rule="elastic"
+        data-animation-duration="500"
+></canvas>
+~~~
+
+Sometimes, the values can be a complex-data structures, like arrays or objects. In this case in JavaScript them simply defined as standard notations, but in HTML-attributes definitions the following rules are applied:
+
+ - for arrays of primitives it is allowed to define a comma-separated string of values;
+ - it is allowed to define a value as valid JSON notation;
+
+Examples:
+
+Array of primitives:
+
+~~~html
+<canvas data-type="radial-gauge"
+        data-major-ticks="0,20,40,60,80,100"
+></canvas>
+
+<canvas data-type="radial-gauge"
+        data-major-ticks="N,NE,E,SE,S,SW,W,NW"
+></canvas>
+~~~
+
+JSON notations:
+
+~~~html
+<canvas data-type="radial-gauge"
+        data-major-ticks='["N","NE","E","SE","S","SW","W","NW"]'
+></canvas>
+
+<canvas data-type="radial-gauge"
+        data-highlights='[
+            { "from": 0, "to": 50, "color": "rgba(0,255,0,.15)" },
+            { "from": 50, "to": 100, "color": "rgba(255,255,0,.15)" },
+            { "from": 100, "to": 150, "color": "rgba(255,30,0,.25)" },
+            { "from": 150, "to": 200, "color": "rgba(255,0,225,.25)" },
+            { "from": 200, "to": 220, "color": "rgba(0,0,255,.25)" }
+        ]'
+></canvas>
+~~~
+
+All available options for configuring gauges are listed below.
 
 ## Common Configuration options
 
