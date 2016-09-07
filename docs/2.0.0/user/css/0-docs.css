@@ -1307,11 +1307,12 @@ code {
     font-family: "Lucida Console", Monaco, monospace;
     font-weight: normal;
     color: #333333;
-    background-color: #e3f1c7;
-    border-width: 1px;
-    border-style: solid;
-    border-color: #d1e8a4;
+    background-color: #eee;
     padding: 0.125rem 0.3125rem 0.0625rem;
+}
+pre code {
+    border: 0;
+    display: block;
 }
 ul,
 ol,
