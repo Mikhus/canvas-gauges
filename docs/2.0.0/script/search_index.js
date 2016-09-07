@@ -510,6 +510,12 @@ window.esdocSearchIndex = [
     "typedef"
   ],
   [
+    "lib/animation.js~ns",
+    "typedef/index.html#static-typedef-ns",
+    "lib/Animation.js~ns",
+    "typedef"
+  ],
+  [
     "lib/basegauge.js",
     "file/lib/BaseGauge.js.html",
     "lib/BaseGauge.js",
@@ -565,13 +571,13 @@ window.esdocSearchIndex = [
   ],
   [
     "lib/basegauge.js~basegauge#value",
-    "class/lib/BaseGauge.js~BaseGauge.html#instance-set-value",
+    "class/lib/BaseGauge.js~BaseGauge.html#instance-get-value",
     "lib/BaseGauge.js~BaseGauge#value",
     "member"
   ],
   [
     "lib/basegauge.js~basegauge#value",
-    "class/lib/BaseGauge.js~BaseGauge.html#instance-get-value",
+    "class/lib/BaseGauge.js~BaseGauge.html#instance-set-value",
     "lib/BaseGauge.js~BaseGauge#value",
     "member"
   ],
@@ -580,6 +586,12 @@ window.esdocSearchIndex = [
     "class/lib/BaseGauge.js~BaseGauge.html#static-method-initialize",
     "lib/BaseGauge.js~BaseGauge.initialize",
     "method"
+  ],
+  [
+    "lib/basegauge.js~ns",
+    "typedef/index.html#static-typedef-ns",
+    "lib/BaseGauge.js~ns",
+    "typedef"
   ],
   [
     "lib/collection.js",
@@ -696,6 +708,12 @@ window.esdocSearchIndex = [
     "external"
   ],
   [
+    "lib/domobserver.js~ns",
+    "typedef/index.html#static-typedef-ns",
+    "lib/DomObserver.js~ns",
+    "typedef"
+  ],
+  [
     "lib/genericoptions.js",
     "file/lib/GenericOptions.js.html",
     "lib/GenericOptions.js",
@@ -744,6 +762,12 @@ window.esdocSearchIndex = [
     "typedef"
   ],
   [
+    "lib/lineargauge.js~ns",
+    "typedef/index.html#static-typedef-ns",
+    "lib/LinearGauge.js~ns",
+    "typedef"
+  ],
+  [
     "lib/radialgauge.js",
     "file/lib/RadialGauge.js.html",
     "lib/RadialGauge.js",
@@ -765,6 +789,12 @@ window.esdocSearchIndex = [
     "lib/radialgauge.js~radialgaugeoptions",
     "typedef/index.html#static-typedef-RadialGaugeOptions",
     "lib/RadialGauge.js~RadialGaugeOptions",
+    "typedef"
+  ],
+  [
+    "lib/radialgauge.js~ns",
+    "typedef/index.html#static-typedef-ns",
+    "lib/RadialGauge.js~ns",
     "typedef"
   ],
   [
@@ -886,6 +916,12 @@ window.esdocSearchIndex = [
     "class/lib/SmartCanvas.js~SmartCanvas.html#static-method-redraw",
     "lib/SmartCanvas.js~SmartCanvas.redraw",
     "method"
+  ],
+  [
+    "lib/smartcanvas.js~ns",
+    "typedef/index.html#static-typedef-ns",
+    "lib/SmartCanvas.js~ns",
+    "typedef"
   ],
   [
     "lib/drawings.js",

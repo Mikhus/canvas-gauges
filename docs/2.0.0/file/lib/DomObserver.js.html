@@ -54,11 +54,17 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-AnimationRules">AnimationRules</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-DrawEventCallback">DrawEventCallback</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-EndEventCallback">EndEventCallback</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-ns">ns</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-ns">ns</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-GaugeInterface">GaugeInterface</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-ns">ns</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-Highlight">Highlight</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-RenderTarget">RenderTarget</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-LinearGaugeOptions">LinearGaugeOptions</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-ns">ns</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-RadialGaugeOptions">RadialGaugeOptions</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-ns">ns</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-ns">ns</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/JSON">JSON</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array/indexOf">Array.indexOf</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object/assign">Object.assign</a></span></span></li>
@@ -99,6 +105,9 @@
 /**
  * @typedef {{parse: function, stringify: function}} JSON
  * @external {JSON} https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/JSON
+ */
+/**
+ * @typedef {{MutationObserver: function}} ns
  */
 
 /**
@@ -159,7 +168,7 @@ export default class DomObserver {
          *
          * @type {Function}
          */
-        this.Type = window[Type];
+        this.Type = ns[Type];
 
         /* istanbul ignore next: this should be tested with end-to-end tests */
         DomObserver.domReady(this.traverse.bind(this));
@@ -177,7 +186,7 @@ export default class DomObserver {
          *
          * @type {boolean}
          */
-        this.isObservable = !!window.MutationObserver;
+        this.isObservable = !!ns.MutationObserver;
     }
 
     /**
@@ -187,6 +196,7 @@ export default class DomObserver {
      * @returns {boolean}
      */
     isValidNode(node) {
+        //noinspection JSUnresolvedVariable
         return !!(
             node.tagName &amp;&amp;
             node.tagName.toLowerCase() === this.element &amp;&amp;
@@ -208,8 +218,7 @@ export default class DomObserver {
         }
 
         if (this.isObservable &amp;&amp; !this.mutationsObserved) {
-            //noinspection JSCheckFunctionSignatures
-            new MutationObserver(this.observe.bind(this))
+            new ns.MutationObserver(this.observe.bind(this))
                 .observe(document.body, {
                     childList: true,
                     subtree: true,
@@ -241,7 +250,7 @@ export default class DomObserver {
                 this.isValidNode(record.target) &amp;&amp;
                 record.oldValue !== this.type) // skip false-positive mutations
             {
-                this.process(record.target);
+                setTimeout(() =&gt; this.process(record.target));
             }
 
             else if (record.addedNodes &amp;&amp; record.addedNodes.length) {
@@ -336,7 +345,7 @@ export default class DomObserver {
                     else if (attr.substr(0, 5) === &apos;data-&apos;) {
                         let prop = attr.substr(5).split(&apos;-&apos;).map((part, i) =&gt; {
                             return !i ? part :
-                                part.charAt(0).toUpperCase() + part.substr(1);
+                            part.charAt(0).toUpperCase() + part.substr(1);
                         }).join(&apos;&apos;);
                         let options = {};
 
@@ -392,13 +401,11 @@ export default class DomObserver {
      * @param {Function} handler
      */
     static domReady(handler) {
-        if (window.addEventListener) {
-            window.addEventListener(&apos;DOMContentLoaded&apos;, handler, false);
-        }
+        if (ns.addEventListener)
+            ns.addEventListener(&apos;DOMContentLoaded&apos;, handler, false);
 
-        else {
-            window.attachEvent(&apos;onload&apos;, handler);
-        }
+        else if (ns.attachEvent)
+            ns.attachEvent(&apos;onload&apos;, handler);
     }
 }
 

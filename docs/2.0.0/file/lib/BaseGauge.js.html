@@ -54,11 +54,17 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-AnimationRules">AnimationRules</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-DrawEventCallback">DrawEventCallback</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-EndEventCallback">EndEventCallback</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-ns">ns</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-ns">ns</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-GaugeInterface">GaugeInterface</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-ns">ns</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-Highlight">Highlight</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-RenderTarget">RenderTarget</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-LinearGaugeOptions">LinearGaugeOptions</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-ns">ns</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-RadialGaugeOptions">RadialGaugeOptions</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-ns">ns</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-ns">ns</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/JSON">JSON</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array/indexOf">Array.indexOf</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object/assign">Object.assign</a></span></span></li>
@@ -67,7 +73,9 @@
 </nav>
 
 <div class="content" data-ice="content"><h1 data-ice="title">lib/BaseGauge.js</h1>
-<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">const SmartCanvas = require(&apos;./SmartCanvas&apos;);
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">require(&apos;./polyfill&apos;);
+
+const SmartCanvas = require(&apos;./SmartCanvas&apos;);
 const Animation = require(&apos;./Animation&apos;);
 const Collection = require(&apos;./Collection&apos;);
 const DomObserver = require(&apos;./DomObserver&apos;);
@@ -121,7 +129,7 @@ export default class BaseGauge {
          *
          * @type {BaseGauge} type
          */
-        this.type = window[className];
+        this.type = ns[className];
 
         options.minValue = parseFloat(options.minValue);
         options.maxValue = parseFloat(options.maxValue);
@@ -268,8 +276,11 @@ export default class BaseGauge {
     }
 }
 
-window[&apos;BaseGauge&apos;] = BaseGauge;
-document[&apos;gauges&apos;] = gauges;
+
+/**
+ * @typedef {object} ns
+ */
+(ns.document || ns)[&apos;gauges&apos;] = gauges;
 
 module.exports = BaseGauge;
 </code></pre>
