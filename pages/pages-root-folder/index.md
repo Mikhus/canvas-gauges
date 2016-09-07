@@ -5,8 +5,8 @@
 # this work, you have to use › layout: frontpage
 #
 layout: frontpage
-header:
-  image_fullwidth: "tools-1.jpg"
+header: NULL
+#  image_fullwidth: "tools-1.jpg"
 #
 # Use the call for action to show a button on the frontpage
 #

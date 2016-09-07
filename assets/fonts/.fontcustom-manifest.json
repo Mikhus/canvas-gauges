@@ -1,7 +1,7 @@
 {
   "checksum": {
-    "previous": "46183ca66979bfc91dda1ae8039539e3e23a8478e2813ab97cb482b7464902a6",
-    "current": "46183ca66979bfc91dda1ae8039539e3e23a8478e2813ab97cb482b7464902a6"
+    "previous": "74916d8ca85f5edec9a08445abd36012965b076b4d7a41dd5ca47dfd23cb77cc",
+    "current": "74916d8ca85f5edec9a08445abd36012965b076b4d7a41dd5ca47dfd23cb77cc"
   },
   "fonts": [
     "./iconfont.ttf",
@@ -29,6 +29,10 @@
     "camera": {
       "codepoint": 61698,
       "source": "svg/camera.svg"
+    },
+    "canv-gauge": {
+      "codepoint": 61808,
+      "source": "svg/canv-gauge.svg"
     },
     "chat": {
       "codepoint": 61699,

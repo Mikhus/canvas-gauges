@@ -36,8 +36,8 @@ body.video p,
 body.video a,
 body.video blockquote:before,
 body.video blockquote:after,
-body.video cite a, { color: #fff; }
-body.video cite a:visited, { color: #fff; }
+body.video cite a { color: #fff; }
+body.video cite a:visited { color: #fff; }
 body.video cite { color: #fff; }
 
 
@@ -79,7 +79,7 @@ body.video cite { color: #fff; }
     text-shadow: 0 2px 3px rgba(0,0,0,.4);
 }
 #masthead-no-image-header {
-    height: 175px;
+    height: 350px;
 }
 #masthead-no-image-header #logo img {
     margin-top: 60px;
