@@ -28,6 +28,11 @@ const yargs = require('yargs');
 const replace = require('gulp-replace');
 const babel = require('gulp-babel');
 
+/**
+ * @typedef {{argv: object}} yargs
+ * @typedef {{parse:function, stringify:function}} JSON
+ */
+
 function es6concat(type = 'all') {
     let bundle = [
         'lib/polyfill.js',
@@ -116,7 +121,7 @@ gulp.task('build:prod', done => {
                         }
 
                         fs.writeFileSync('dist/' + type + '/package.json',
-                            JSON.stringify(pkg, '', 2));
+                            JSON.stringify(pkg, null, 2));
 
                         fs.writeFileSync('dist/' + type + '/README.md',
                             fs.readFileSync('README.md'));
@@ -249,7 +254,8 @@ gulp.task('doc', ['clean:docs'], done => {
 
             console.log(chalk.bold.green('Generating badge...'));
 
-            let coverage = require('./docs/coverage.json').coverage;
+            let coverageDataFile = './docs/coverage.json';
+            let coverage = require(coverageDataFile).coverage;
             let color = 'green';
 
             if (parseFloat(coverage) < 90) {
