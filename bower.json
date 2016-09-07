@@ -15,13 +15,19 @@
     "license": "MIT",
     "ignore": [
         "**/.*",
+        "*.log",
+        "*.gz",
         "node_modules",
         "bower_components",
         "test",
         "tests",
         "examples",
-        "build.bat",
-        "build.sh",
-        "compiler.jar"
+        "coverage",
+        "errorShots",
+        "dist",
+        "lib",
+        "debug.js",
+        "gulpfile.js",
+        "karma.conf.js"
     ]
 }
