@@ -1,4 +1,4 @@
-<div class="medium-6 columns frontpage-widget">
+<div class="medium-4 columns frontpage-widget">
 	{% capture widget_url %}{% if include.widget.url contains 'http' %}{{ include.widget.url }}{% else %}{{ site.url }}{{ site.baseurl }}{{ include.widget.url }}{% endif %}{% endcapture %}
 	<a href="{{ widget_url }}">
 		<div>

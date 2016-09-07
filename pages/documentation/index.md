@@ -33,9 +33,9 @@ examples:
   text: 'Learn using gauges through existing configuration examples.'
 ---
 
-{% if page.starter.title %}
-{% include _frontpage-widget.html widget=page.starter %}
-{% endif %}
+<!--{% if page.starter.title %}-->
+<!--{% include _frontpage-widget.html widget=page.starter %}-->
+<!--{% endif %}-->
 
 {% if page.userGuide.title %}
 {% include _frontpage-widget.html widget=page.userGuide %}

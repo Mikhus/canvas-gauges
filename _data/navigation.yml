@@ -8,10 +8,10 @@
   side: left
   icon: docs
   dropdown:
-  - title: Getting Started
-    url: "/documentation/getting-started/"
-    side: left
-    icon: startup
+#  - title: Getting Started
+#    url: "/documentation/getting-started/"
+#    side: left
+#    icon: startup
   - title: "User Guide"
     url: "/documentation/user-guide/"
     icon: user-guide
