@@ -49,7 +49,7 @@ $info-color: $ci-1;
 
 /* Grey Scale
 ------------------------------------------------------------------- */
-
+$grey-0: #eee;
 $grey-1: #E4E4E4;
 $grey-2: #D7D7D7;
 $grey-3: #CBCBCB;
@@ -121,7 +121,7 @@ $subfooter-link-color: $grey-12;
 /* Code
 ------------------------------------------------------------------- */
 
-$code-background-color: scale-color($secondary-color, $lightness: 70%);
+$code-background-color: $grey-0;
 
 $highlight-background: #ffffff;
 $highlight-comment: #999988;
