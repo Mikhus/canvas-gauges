@@ -33,6 +33,8 @@ const babel = require('gulp-babel');
  * @typedef {{parse:function, stringify:function}} JSON
  */
 
+let types = ['all', 'radial', 'linear'];
+
 function es6concat(type = 'all') {
     let bundle = [
         'lib/polyfill.js',
@@ -82,8 +84,6 @@ gulp.task('help', () => usage(gulp));
  */
 gulp.task('build:prod', done => {
     rimraf('dist', () => {
-        let types = ['all', 'radial', 'linear'];
-
         Promise.all(types.map(type => {
             return new Promise(resolve => {
                 es6concat(type)
@@ -162,7 +162,7 @@ gulp.task('build:prod', done => {
  * temporally useless. Awaiting for support of es6 in minifiers.
  *
  * @task {build:es6}
- * @arg {type} build type: 'gauge' - Gauge object only, 'linear-gauge' - LinearGauge object only, 'all' - everything (default)
+ * @arg {type} build type: 'radial' - Gauge object only, 'linear' - LinearGauge object only, 'all' - everything (default)
  */
 gulp.task('build:es6', ['clean'], () => {
     return gutil.log(chalk.red(
@@ -177,7 +177,7 @@ gulp.task('build:es6', ['clean'], () => {
  * Builds and minifies es5 code
  *
  * @task {build:es5}
- * @arg {type} build type: 'gauge' - Gauge object only, 'linear-gauge' - LinearGauge object only, 'all' - everything (default)
+ * @arg {type} build type: 'radial' - Gauge object only, 'linear' - LinearGauge object only, 'all' - everything (default)
  */
 gulp.task('build:es5', ['clean'], () => {
     es6concat(yargs.argv.type || 'all')
@@ -288,7 +288,7 @@ gulp.task('doc', ['clean:docs'], done => {
  *
  * @task {build}
  * @arg {target} compile target, could be 'es5' (default) or 'es6'
- * @arg {type} build type: 'gauge' - Gauge object only, 'linear-gauge' - LinearGauge object only, 'all' - everything (default)
+ * @arg {type} build type: 'radial' - Gauge object only, 'linear' - LinearGauge object only, 'all' - everything (default)
  */
 gulp.task('build', () => {
     //noinspection JSUnresolvedVariable
@@ -310,10 +310,13 @@ gulp.task('watch', ['build'], () => {
  *
  * @task {gzip}
  */
-gulp.task('gzip', () => {
-    return gulp.src('gauge.min.js')
-        .pipe(gzip({ gzipOptions: { level: 9 } }))
-        .pipe(gulp.dest('.'));
+gulp.task('gzip', ['build:prod'], done => {
+    Promise.all(types.map(type => new Promise(resolve => {
+        gulp.src('dist/' + type + '/gauge.min.js')
+            .pipe(gzip({ gzipOptions: { level: 9 } }))
+            .pipe(gulp.dest('dist/' + type))
+            .on('end', resolve);
+    }))).then(() => done());
 });
 
 /**
