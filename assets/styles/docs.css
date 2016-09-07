@@ -1307,7 +1307,7 @@ code {
     font-family: "Lucida Console", Monaco, monospace;
     font-weight: normal;
     color: #333333;
-    background-color: #e3f1c7;
+    background-color: #eee;
     padding: 0.125rem 0.3125rem 0.0625rem;
 }
 pre code {
