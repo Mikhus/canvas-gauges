@@ -79,7 +79,7 @@ body.video cite { color: #fff; }
     text-shadow: 0 2px 3px rgba(0,0,0,.4);
 }
 #masthead-no-image-header {
-    height: 350px;
+    height: 450px;
 }
 #masthead-no-image-header #logo img {
     margin-top: 60px;
@@ -377,4 +377,35 @@ article ul li {
 
 .toc ul li {
     margin-top: 0;
+}
+
+#logo svg path {
+    fill: #fff;
+}
+#logo svg {
+    height: 120px;
+    margin-top: 60px;
+    -webkit-filter: drop-shadow(2px 2px 2px #333 );
+    filter: drop-shadow(2px 2px 2px #333 );
+}
+
+#masthead-no-image-header {
+    overflow: hidden;
+}
+#masthead-no-image-header .gauges canvas {
+    margin-top: 60px;
+    margin-left: 50px;
+    cursor: pointer;
+    cursor: hand;
+    position: relative;
+    top: 0;
+
+    -moz-transition: all .3s ease-in-out;
+    -o-transition: all .3s ease-in-out;
+    -webkit-transition: all .3s ease-in-out;
+    -ms-transition: all .3s ease-in-out;
+    transition: all .3s ease-in-out;
+}
+#masthead-no-image-header .gauges canvas:hover {
+    top: -200px;
 }
