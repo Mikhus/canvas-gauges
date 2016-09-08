@@ -68,7 +68,12 @@ body.video cite { color: #fff; }
     background-color: $primary-color;
 }
 #masthead-no-image-header {
-    background-color: $primary-color;
+    background: $primary-color url(/images/circuit.svg) no-repeat center center;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -ms-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
 }
 #masthead-with-text {
     text-align: center;
