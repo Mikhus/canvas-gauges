@@ -422,3 +422,7 @@ article ul li {
 #masthead-no-image-header .gauges canvas:hover {
     top: -200px;
 }
+
+.breadcrumbs a.current span:before {
+    margin-right: 5px;
+}
