@@ -426,3 +426,20 @@ article ul li {
 .breadcrumbs a.current span:before {
     margin-right: 5px;
 }
+
+#header-home {
+    background: $ci-3;
+    display: table;
+    min-height: 150px;
+    width: 100%;
+}
+#header-home .row {
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+    padding: 30px;
+}
+#header-home .row .middle * {
+    color: $text-color;
+    text-shadow: 1px 1px 3px #eee;
+}
