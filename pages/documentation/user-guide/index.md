@@ -39,33 +39,33 @@ Canvas gauges are friendly to minimalistic code design, so whenever you need thi
 Canvas gauges can be simply installed using npm package manager. Depending on your needs there is possibility to install whole gauge library or only that part you really need for your project.
 To install the whole library, run:
 
-    $ npm install canv-gauge
+    $ npm install canvas-gauges
 
 If you only need the exact type of the gauge it can be installed using the appropriate npm tag. Currently the following gauges are supported: linear, radial.
 
 To install only linear gauge, run:
 
-    $ npm install canv-gauge@linear
+    $ npm install canvas-gauges@linear
 
 To install only radial gauge, run:
 
-    $ npm install canv-gauge@radial
+    $ npm install canvas-gauges@radial
 
 This strategy useful only if you need to minimize your code base and plan to use ONLY a specific gauge type. If you need to use various gauge types in your project it is recommended to use whole gauge package.
 
-Another way is to force installation directly from canv-gauge git repository, specifying in your ```package.json``` file a proper dependency, like:
+Another way is to force installation directly from canvas-gauges git repository, specifying in your ```package.json``` file a proper dependency, like:
 
 ~~~json
 {
   "dependencies": {
-    "canv-gauge": "git@github.com:Mikhus/canv-gauge.git#2.0.0"
+    "canvas-gauges": "git@github.com:Mikhus/canvas-gauges.git"
   }
 }
 ~~~
 
 Or you may simply clone git repository locally:
 
-    $ git clone git@github.com:Mikhus/canv-gauge.git
+    $ git clone git@github.com:Mikhus/canvas-gauges.git
 
 If it is not enough for you, please, refer to our [creating custom bulds tutorial]({{site.url}}/documentation/user-guide/custom-builds)
 

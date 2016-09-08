@@ -45,9 +45,9 @@ Possible problem here is that some old browsers may not understand compression. 
 
 Another problem is that in this case gauges may be injected into page only via http request by referring from a script tag. This problem can be ommited if you bundling the entire JavaScript code with your own build process. In this case you may gzip entire bundle.
 
-If you choose compressing gauge code outside your build process it can be easily done using canv-gauge tools.
+If you choose compressing gauge code outside your build process it can be easily done using canvas-gauges tools.
 
-    $ git clone git@github.com:Mikhus/canv-gauge.git
+    $ git clone git@github.com:Mikhus/canvas-gauges.git
     $ npm install
     $ ./node_modules/.bin/gulp gzip
 
