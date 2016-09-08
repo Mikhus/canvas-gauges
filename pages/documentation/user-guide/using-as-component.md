@@ -121,7 +121,6 @@ table tbody tr td:nth-child(2) {
 | minorTicks | data-minor-ticks | any | integer |
 | strokeTicks | data-stroke-ticks | any | boolean |
 | animatedValue | data-animated-value | any | boolean |
-| glow | data-glow | any | boolean |
 | borders | data-borders | any | boolean |
 | valueInt | data-value-int | any | integer |
 | valueDec | data-value-dec | any | integer |

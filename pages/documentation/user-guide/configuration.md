@@ -117,7 +117,6 @@ Common configuration options are spread across all type of the gauges means they
  - **maxValue**: numeric maximal value which will be shown on a gauge bar.
  - **value**: current gauge value which will be displayed.
  - **units**: should be a string explaining the units for the gauge value, or something falsy to hide this element on a gauge.
- - **glow**: boolean flag specifies if gauge should be drawn using glow effect or not.
  - **title**: should be a string to display gauge title or falsy value to hide this element.
 
 ### Ticks Bar Options

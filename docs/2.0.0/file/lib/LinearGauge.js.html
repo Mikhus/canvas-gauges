@@ -187,7 +187,6 @@ function drawRectangle(context, r, x, y, w, h, colorStart, colorEnd) {
 
     context.fill();
     context.closePath();
-    context.save();
 }
 
 /* istanbul ignore next: private, not testable */
@@ -1042,18 +1041,10 @@ function drawLinearPlate(context, options, x, y, w, h) {
     let y3 = y2 - (h3 - h2) / 2;
     let y4 = y3 - (h4 - h3) / 2;
 
-    if (options.glow) {
-        context.shadowBlur = options.borderShadowWidth;
-        context.shadowColor = options.colorBorderShadow;
-    }
-
     if (options.borderOuterWidth) {
         drawRectangle(context, r, x, y, w1, h1,
             options.colorBorderOuter, options.colorBorderOuterEnd);
     }
-
-    context.shadowBlur = null;
-    context.shadowColor = &apos;&apos;;
 
     if (options.borderMiddleWidth) {
         drawRectangle(context, --r, x2, y2, w2, h2,
@@ -1065,7 +1056,14 @@ function drawLinearPlate(context, options, x, y, w, h) {
             options.colorBorderInner, options.colorBorderInnerEnd);
     }
 
+    if (options.borderShadowWidth) {
+        context.shadowBlur = options.borderShadowWidth;
+        context.shadowColor = options.colorBorderShadow;
+    }
+
     drawRectangle(context, r, x4, y4, w4, h4, options.colorPlate);
+
+    context.restore();
 
     return [x4, y4, w4, h4];
 }

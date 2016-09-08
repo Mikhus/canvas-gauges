@@ -400,11 +400,11 @@ article ul li {
     position: relative;
     top: 0;
 
-    -moz-transition: all .3s ease-in-out;
-    -o-transition: all .3s ease-in-out;
-    -webkit-transition: all .3s ease-in-out;
-    -ms-transition: all .3s ease-in-out;
-    transition: all .3s ease-in-out;
+    -moz-transition: top .3s ease-in-out;
+    -o-transition: top .3s ease-in-out;
+    -webkit-transition: top .3s ease-in-out;
+    -ms-transition: top .3s ease-in-out;
+    transition: top .3s ease-in-out;
 }
 #masthead-no-image-header .gauges canvas:hover {
     top: -200px;

@@ -30,6 +30,7 @@
 						data-animation-rule="bounce"
 						data-animation-duration="750"
 						data-value-box-border-radius="0"
+                        data-color-border-shadow="#000"
 				></canvas>
 				<canvas id="radial" data-type="radial-gauge"
 						data-width="400"
@@ -49,6 +50,7 @@
 						data-animation-duration="750"
 						data-animated-value="true"
 						data-value-box-border-radius="0"
+                        data-color-border-shadow="#000"
 				></canvas>
 				<script>
 					function animateGauge(gauge) {
@@ -63,8 +65,10 @@
 						delete gauge.timer;
 					}
 					$('.gauges canvas').on('mouseover', function() {
+						$(this).attr('data-border-shadow-width', 7);
 						animateGauge(document.gauges.get($(this).attr('id')));
 					}).on('mouseout', function() {
+						$(this).attr('data-border-shadow-width', 0);
 						stopGauge(document.gauges.get($(this).attr('id')));
 					});
 				</script>
