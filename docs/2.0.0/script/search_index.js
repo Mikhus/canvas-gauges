@@ -1,104 +1,104 @@
 window.esdocSearchIndex = [
   [
-    "canv-gauge/lib/animation.js~animation",
+    "canvas-gauges/lib/animation.js~animation",
     "class/lib/Animation.js~Animation.html",
-    "<span>Animation</span> <span class=\"search-result-import-path\">canv-gauge/lib/Animation.js</span>",
+    "<span>Animation</span> <span class=\"search-result-import-path\">canvas-gauges/lib/Animation.js</span>",
     "class"
   ],
   [
-    "canv-gauge/lib/basegauge.js~basegauge",
+    "canvas-gauges/lib/basegauge.js~basegauge",
     "class/lib/BaseGauge.js~BaseGauge.html",
-    "<span>BaseGauge</span> <span class=\"search-result-import-path\">canv-gauge/lib/BaseGauge.js</span>",
+    "<span>BaseGauge</span> <span class=\"search-result-import-path\">canvas-gauges/lib/BaseGauge.js</span>",
     "class"
   ],
   [
-    "canv-gauge/lib/collection.js~collection",
+    "canvas-gauges/lib/collection.js~collection",
     "function/index.html#static-function-Collection",
-    "<span>Collection</span> <span class=\"search-result-import-path\">canv-gauge/lib/Collection.js</span>",
+    "<span>Collection</span> <span class=\"search-result-import-path\">canvas-gauges/lib/Collection.js</span>",
     "function"
   ],
   [
-    "canv-gauge/lib/domobserver.js~domobserver",
+    "canvas-gauges/lib/domobserver.js~domobserver",
     "class/lib/DomObserver.js~DomObserver.html",
-    "<span>DomObserver</span> <span class=\"search-result-import-path\">canv-gauge/lib/DomObserver.js</span>",
+    "<span>DomObserver</span> <span class=\"search-result-import-path\">canvas-gauges/lib/DomObserver.js</span>",
     "class"
   ],
   [
-    "canv-gauge/lib/genericoptions.js~genericoptions",
+    "canvas-gauges/lib/genericoptions.js~genericoptions",
     "variable/index.html#static-variable-GenericOptions",
-    "<span>GenericOptions</span> <span class=\"search-result-import-path\">canv-gauge/lib/GenericOptions.js</span>",
+    "<span>GenericOptions</span> <span class=\"search-result-import-path\">canvas-gauges/lib/GenericOptions.js</span>",
     "variable"
   ],
   [
-    "canv-gauge/lib/lineargauge.js~lineargauge",
+    "canvas-gauges/lib/lineargauge.js~lineargauge",
     "class/lib/LinearGauge.js~LinearGauge.html",
-    "<span>LinearGauge</span> <span class=\"search-result-import-path\">canv-gauge/lib/LinearGauge.js</span>",
+    "<span>LinearGauge</span> <span class=\"search-result-import-path\">canvas-gauges/lib/LinearGauge.js</span>",
     "class"
   ],
   [
-    "canv-gauge/lib/radialgauge.js~radialgauge",
+    "canvas-gauges/lib/radialgauge.js~radialgauge",
     "class/lib/RadialGauge.js~RadialGauge.html",
-    "<span>RadialGauge</span> <span class=\"search-result-import-path\">canv-gauge/lib/RadialGauge.js</span>",
+    "<span>RadialGauge</span> <span class=\"search-result-import-path\">canvas-gauges/lib/RadialGauge.js</span>",
     "class"
   ],
   [
-    "canv-gauge/lib/smartcanvas.js~smartcanvas",
+    "canvas-gauges/lib/smartcanvas.js~smartcanvas",
     "class/lib/SmartCanvas.js~SmartCanvas.html",
-    "<span>SmartCanvas</span> <span class=\"search-result-import-path\">canv-gauge/lib/SmartCanvas.js</span>",
+    "<span>SmartCanvas</span> <span class=\"search-result-import-path\">canvas-gauges/lib/SmartCanvas.js</span>",
     "class"
   ],
   [
-    "canv-gauge/lib/drawings.js~drawvaluebox",
+    "canvas-gauges/lib/drawings.js~drawvaluebox",
     "function/index.html#static-function-drawValueBox",
-    "<span>drawValueBox</span> <span class=\"search-result-import-path\">canv-gauge/lib/drawings.js</span>",
+    "<span>drawValueBox</span> <span class=\"search-result-import-path\">canvas-gauges/lib/drawings.js</span>",
     "function"
   ],
   [
-    "canv-gauge/lib/drawings.js~drawings",
+    "canvas-gauges/lib/drawings.js~drawings",
     "variable/index.html#static-variable-drawings",
-    "<span>drawings</span> <span class=\"search-result-import-path\">canv-gauge/lib/drawings.js</span>",
+    "<span>drawings</span> <span class=\"search-result-import-path\">canvas-gauges/lib/drawings.js</span>",
     "variable"
   ],
   [
-    "canv-gauge/lib/drawings.js~formatmajorticknumber",
+    "canvas-gauges/lib/drawings.js~formatmajorticknumber",
     "function/index.html#static-function-formatMajorTickNumber",
-    "<span>formatMajorTickNumber</span> <span class=\"search-result-import-path\">canv-gauge/lib/drawings.js</span>",
+    "<span>formatMajorTickNumber</span> <span class=\"search-result-import-path\">canvas-gauges/lib/drawings.js</span>",
     "function"
   ],
   [
-    "canv-gauge/lib/drawings.js~lineargradient",
+    "canvas-gauges/lib/drawings.js~lineargradient",
     "function/index.html#static-function-linearGradient",
-    "<span>linearGradient</span> <span class=\"search-result-import-path\">canv-gauge/lib/drawings.js</span>",
+    "<span>linearGradient</span> <span class=\"search-result-import-path\">canvas-gauges/lib/drawings.js</span>",
     "function"
   ],
   [
-    "canv-gauge/lib/drawings.js~padvalue",
+    "canvas-gauges/lib/drawings.js~padvalue",
     "function/index.html#static-function-padValue",
-    "<span>padValue</span> <span class=\"search-result-import-path\">canv-gauge/lib/drawings.js</span>",
+    "<span>padValue</span> <span class=\"search-result-import-path\">canvas-gauges/lib/drawings.js</span>",
     "function"
   ],
   [
-    "canv-gauge/lib/drawings.js~radialpoint",
+    "canvas-gauges/lib/drawings.js~radialpoint",
     "function/index.html#static-function-radialPoint",
-    "<span>radialPoint</span> <span class=\"search-result-import-path\">canv-gauge/lib/drawings.js</span>",
+    "<span>radialPoint</span> <span class=\"search-result-import-path\">canvas-gauges/lib/drawings.js</span>",
     "function"
   ],
   [
-    "canv-gauge/lib/drawings.js~radians",
+    "canvas-gauges/lib/drawings.js~radians",
     "function/index.html#static-function-radians",
-    "<span>radians</span> <span class=\"search-result-import-path\">canv-gauge/lib/drawings.js</span>",
+    "<span>radians</span> <span class=\"search-result-import-path\">canvas-gauges/lib/drawings.js</span>",
     "function"
   ],
   [
-    "canv-gauge/lib/drawings.js~roundrect",
+    "canvas-gauges/lib/drawings.js~roundrect",
     "function/index.html#static-function-roundRect",
-    "<span>roundRect</span> <span class=\"search-result-import-path\">canv-gauge/lib/drawings.js</span>",
+    "<span>roundRect</span> <span class=\"search-result-import-path\">canvas-gauges/lib/drawings.js</span>",
     "function"
   ],
   [
-    "canv-gauge/lib/vendorize.js~vendorize",
+    "canvas-gauges/lib/vendorize.js~vendorize",
     "function/index.html#static-function-vendorize",
-    "<span>vendorize</span> <span class=\"search-result-import-path\">canv-gauge/lib/vendorize.js</span>",
+    "<span>vendorize</span> <span class=\"search-result-import-path\">canvas-gauges/lib/vendorize.js</span>",
     "function"
   ],
   [
