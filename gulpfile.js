@@ -277,7 +277,7 @@ gulp.task('doc', ['clean:docs'], done => {
             //move to pages
 
             let version = require('./package.json').version;
-            let target = '../canv-gauge-site/docs/' + version;
+            let target = '../canvas-gauges-pages/docs/' + version;
 
             rimraf(target, () => fs.rename('docs', target, done));
         });
