@@ -148,7 +148,7 @@ gulp.task('build:prod', done => {
 
 
                 console.log(chalk.grey('npm publish'));
-                console.log(chalk.grey('npm dist-tag add canv-gauge@' +
+                console.log(chalk.grey('npm dist-tag add canvas-gauges@' +
                     version + ' ' + type));
             });
 
