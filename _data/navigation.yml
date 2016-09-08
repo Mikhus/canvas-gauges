@@ -8,10 +8,6 @@
   side: left
   icon: docs
   dropdown:
-#  - title: Getting Started
-#    url: "/documentation/getting-started/"
-#    side: left
-#    icon: startup
   - title: "User Guide"
     url: "/documentation/user-guide/"
     icon: user-guide
@@ -28,6 +24,6 @@
   icon: search
 
 - title: "Fork Me"
-  url: "http://github.com/Mikhus/canv-gauge"
+  url: "http://github.com/Mikhus/canvas-gauges"
   side: left
   icon: github
