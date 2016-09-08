@@ -7,12 +7,6 @@ title: "<span class='icon-docs'></span> Documentation"
 subheadline: "Canvas Gauge Documentation Page"
 permalink: "/documentation/"
 teaser: "Here you may find different types of documentation depending on your needs:"
-starter:
-  title: "Getting Started"
-  url: "/documentation/getting-started/"
-  icon: "startup"
-  iconColor: "#a55"
-  text: 'Quick steps to start using canvas gauges in a web applications.'
 userGuide:
   title: "User Guide"
   url: "/documentation/user-guide/"
@@ -32,10 +26,6 @@ examples:
   iconColor: "#55a"
   text: 'Learn using gauges through existing configuration examples.'
 ---
-
-<!--{% if page.starter.title %}-->
-<!--{% include _frontpage-widget.html widget=page.starter %}-->
-<!--{% endif %}-->
 
 {% if page.userGuide.title %}
 {% include _frontpage-widget.html widget=page.userGuide %}
