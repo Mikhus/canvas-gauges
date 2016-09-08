@@ -364,16 +364,24 @@ body.video cite { color: #fff; }
 .pr20 { padding-right: 20px !important; }
 
 .frontpage-widget a {
-    border: 1px dotted #ccc;
+    /*border: 1px dotted #ccc;*/
     margin: 5px;
     padding: 5px;
     display: block;
     min-height: 250px;
+    text-decoration: none;
+    border-bottom: 0 !important;
+}
+.frontpage-widget a:hover {
+    transition: none !important;
+    text-decoration: none !important;
+    border-bottom: 0 !important;
 }
 
 .frontpage-widget a p.text-center {
     max-width: 250px;
     margin: auto;
+    color: $text-color;
 }
 
 article ul li {
