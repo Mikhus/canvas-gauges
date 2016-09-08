@@ -41,8 +41,7 @@ This strategy useful only if you need to minimize your code base and plan to use
 
 You can find complete docs on the canvas gauges web-site:
 
- * [Quick Start Guide](http://canvas-gauges.com/documentation/getting-started/)
- * [Complete User Guide](http://canvas-gauges.com/documentation/user-guide/)
+ * [User Guide](http://canvas-gauges.com/documentation/user-guide/)
  * [Developer's Docs](http://canvas-gauges.com/documentation/api/)
  * [Examples](http://canvas-gauges.com/documentation/examples/)
 
