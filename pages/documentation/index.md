@@ -4,7 +4,7 @@ show_meta: false
 header:
   image_fullwidth: "architect.jpg"
 title: "<span class='icon-docs'></span> Documentation"
-subheadline: "Canvas Gauge Documentation Page"
+subheadline: "Canvas Gauges Documentation Page"
 permalink: "/documentation/"
 teaser: "Here you may find different types of documentation depending on your needs:"
 userGuide:
