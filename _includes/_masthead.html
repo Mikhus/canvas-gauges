@@ -18,7 +18,8 @@
 						data-height="400"
 						data-border-radius="20"
 						data-borders="false"
-						data-bar-stroke-width="20"
+                        data-bar-width="10"
+						data-bar-stroke-width="0"
 						data-minor-ticks="10"
 						data-min-value="35"
 						data-max-value="42"
@@ -31,6 +32,8 @@
 						data-animation-duration="750"
 						data-value-box-border-radius="0"
                         data-color-border-shadow="#000"
+                        data-color-major-ticks="#777"
+                        data-color-numbers="#777"
 				></canvas>
 				<canvas id="radial" data-type="radial-gauge"
 						data-width="400"
@@ -39,7 +42,7 @@
 						data-major-ticks="0,20,40,60,80,100,120,140,160,180,200,220"
 						data-minor-ticks="2"
 						data-stroke-ticks="true"
-						data-highlights='[{ "from": 160, "to": 220, "color": "rgba(255,0,0,.75)" }]'
+						data-highlights='[{ "from": 160, "to": 220, "color": "rgba(255,0,0,.6)" }]'
 						data-min-value="0"
 						data-max-value="220"
 						data-value="22.3"
@@ -51,6 +54,8 @@
 						data-animated-value="true"
 						data-value-box-border-radius="0"
                         data-color-border-shadow="#000"
+                        data-color-major-ticks="#777"
+                        data-color-numbers="#777"
 				></canvas>
 				<script>
 					function animateGauge(gauge) {
