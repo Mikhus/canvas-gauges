@@ -1,3 +1,3 @@
-# HTML5 Canvas Gauges WebSite
+# Canvas Gauges Web Site
 
-[Visit](http://canvas-gauges.com/)
+You may visit this site at [canvas-gauges.com](http://canvas-gauges.com/)
