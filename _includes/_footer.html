@@ -24,7 +24,7 @@
               {% endif %}
             {% endfor %}
 
-              <ul class="no-bullet shadow-black">
+              <ul class="no-bullet shadow-black footer-icons">
               {% for service_item in site.data.services %}
                 {% if service_item.url contains 'http' %}{% assign domain = '' %}{% else %}{% assign domain = site.url + site.baseurl %}{% endif %}
                   <li {% if service_item.class %}class="{{ service_item.class }}" {% endif %}>
@@ -42,11 +42,11 @@
               {% endif %}
             {% endfor %}
 
-            <ul class="no-bullet shadow-black">
+            <ul class="no-bullet shadow-black footer-icons">
             {% for network_item in site.data.network %}
               {% if network_item.url contains 'http' %}{% assign domain = '' %}{% else %}{% assign domain = site.url + site.baseurl %}{% endif %}
-                <li {% if network_item.class %}class="{{ network_item.class }}" {% endif %}>
-                  <a href="{{ domain }}{{ network_item.url }}" {% if network_item.url contains 'http' %}target="_blank" {% endif %} title="{{ network_item.title }}">{{ network_item.name }}</a>
+                <li {% if network_item.class %} {% endif %}>
+                  <a href="{{ domain }}{{ network_item.url }}" {% if network_item.url contains 'http' %}target="_blank" {% endif %} title="{{ network_item.title }}" class="{{ network_item.class }}">{{ network_item.name }}</a>
                 </li>
             {% endfor %}
             </ul>

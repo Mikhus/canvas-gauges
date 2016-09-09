@@ -1,4 +1,4 @@
-- name: GitHub
-  url: http://github.com/Mikhus/canvas-gauges
-  class: icon-github
-  title: Fork Canvas Gauges on GitHub...
+#- name: GitHub
+#  url: http://github.com/Mikhus/canvas-gauges
+#  class: icon-github
+#  title: Fork Canvas Gauges on GitHub...

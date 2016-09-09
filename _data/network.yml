@@ -1,3 +1,8 @@
+- menu_name: Network
+- name: GitHub
+  url: http://github.com/Mikhus/canvas-gauges
+  class: icon-github
+  title: Fork Canvas Gauges on GitHub...
 #- menu_name: "Dankeschön"
 #
 #- name: "Icons by Daniel Bruce"

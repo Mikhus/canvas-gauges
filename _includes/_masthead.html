@@ -13,7 +13,7 @@
 			<div class="gauges">
 				<script src="{{site.url}}/assets/js/gauge.min.js"></script>
 				<script src="{{site.url}}/assets/js/jquery-3.1.0.min.js"></script>
-				<canvas id="linear" data-type="linear-gauge"
+                <canvas id="linear" data-type="linear-gauge"
 						data-width="200"
 						data-height="400"
 						data-border-radius="20"
@@ -36,30 +36,30 @@
                         data-color-numbers="#777"
                         data-border-shadow-width="8"
 				></canvas>
-				<canvas id="radial" data-type="radial-gauge"
-						data-width="400"
-						data-height="400"
-						data-borders="false"
-						data-major-ticks="0,20,40,60,80,100,120,140,160,180,200,220"
-						data-minor-ticks="2"
-						data-stroke-ticks="true"
-						data-highlights='[{ "from": 160, "to": 220, "color": "rgba(255,0,0,.6)" }]'
-						data-min-value="0"
-						data-max-value="220"
-						data-value="22.3"
-						data-units="Km/h"
-						data-title="Speed"
-						data-color-value-box-shadow="false"
-						data-animation-rule="linear"
-						data-animation-duration="750"
-						data-animated-value="true"
-						data-value-box-border-radius="0"
+                <canvas id="radial" data-type="radial-gauge"
+                        data-width="400"
+                        data-height="400"
+                        data-borders="false"
+                        data-major-ticks="0,20,40,60,80,100,120,140,160,180,200,220"
+                        data-minor-ticks="2"
+                        data-stroke-ticks="true"
+                        data-highlights='[{ "from": 160, "to": 220, "color": "rgba(255,0,0,.6)" }]'
+                        data-min-value="0"
+                        data-max-value="220"
+                        data-value="22.3"
+                        data-units="Km/h"
+                        data-title="Speed"
+                        data-color-value-box-shadow="false"
+                        data-animation-rule="linear"
+                        data-animation-duration="750"
+                        data-animated-value="true"
+                        data-value-box-border-radius="0"
                         data-color-border-shadow="transparent"
                         data-color-major-ticks="#777"
                         data-color-numbers="#777"
                         data-border-shadow-width="8"
-				></canvas>
-				<script>
+                ></canvas>
+                <script>
 					function animateGauge(gauge) {
 						gauge.timer = setInterval(function() {
 							gauge.value = Math.random() *

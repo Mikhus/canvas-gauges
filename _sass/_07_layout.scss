@@ -405,6 +405,9 @@ article ul li {
 #masthead-no-image-header {
     overflow: hidden;
 }
+#masthead-no-image-header .gauges {
+    text-align: center;
+}
 #masthead-no-image-header .gauges canvas {
     margin-top: 60px;
     margin-left: 50px;
@@ -447,4 +450,15 @@ article ul li {
 #header-home .row .middle * {
     color: $text-color;
     text-shadow: 1px 1px 3px #eee;
+}
+
+.footer-icons li{
+    margin-left: 5px;
+}
+.footer-icons a {
+    text-decoration: underline;
+}
+.footer-icons a:before {
+    margin-right: 10px;
+    text-decoration: none;
 }
