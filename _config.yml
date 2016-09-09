@@ -142,7 +142,7 @@ defaults:
 #   ___/ / /___/ /_/ /
 #  /____/_____/\____/    Verify Website to Webmaster Tools
 
-google_author:             ''
+google_author:             'https://plus.google.com/u/0/+MykhailoStadnyk'
 google_site_verification:  'wFD3e9Rk0sQbJb7dF8PeEPXUaAFn-eSEZcYGCTfbWLo'
 bing_webmastertools_id:    '73C5C16D6349B184E8067E5619C15A35'
 # alexa_verify_id:         ''
