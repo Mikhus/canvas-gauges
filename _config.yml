@@ -14,7 +14,7 @@ title: 'Canvas Gauges'
 slogan: 'Minimalistic Gauges For Whatever Needs'
 
 # The description is used on homepage and in the footer to quickly describe your website. Use a maximum of 150 characters for SEO-purposes.
-description: 'Canv-gauge is an open source HTML5-based canvas gauge components for building rich minimalistic web applications'
+description: 'Canvas gauges is an open source minimalistic HTML5-based components for web applications.'
 
 # The credits show up in the includes/_footer.html – It would be nice of you to leave a link to Phlow or Feeling Responsive as a thank you :)
 credits: ''
