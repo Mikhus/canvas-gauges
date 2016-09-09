@@ -70,10 +70,14 @@
 						delete gauge.timer;
 					}
 					$('.gauges canvas').on('mouseover', function() {
-						$(this).attr('data-border-shadow-width', 7);
+						$(this).attr('data-border-shadow-width', 7)
+                               .attr('data-color-numbers', '#333')
+                               .attr('data-color-major-ticks', '#333');
 						animateGauge(document.gauges.get($(this).attr('id')));
 					}).on('mouseout', function() {
-						$(this).attr('data-border-shadow-width', 0);
+						$(this).attr('data-border-shadow-width', 0)
+                               .attr('data-color-numbers', '#777')
+                               .attr('data-color-major-ticks', '#777');
 						stopGauge(document.gauges.get($(this).attr('id')));
 					});
 				</script>
