@@ -277,7 +277,7 @@
                 animateGauge(gauge);
             }).on('mouseout', function() {
                 stopGauge(gauge);
-            });
+            }).attr('title', 'Click me to get my code!');
         });
     });
 }());
