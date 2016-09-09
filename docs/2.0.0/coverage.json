@@ -32,7 +32,7 @@
       "expectCount": 4,
       "actualCount": 3,
       "undocumentLines": [
-        1065
+        1054
       ]
     },
     "lib/RadialGauge.js": {

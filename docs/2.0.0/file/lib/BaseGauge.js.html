@@ -139,13 +139,6 @@ export default class BaseGauge {
                 options.borderOuterWidth = 0;
         }
 
-        /**
-         * Gauge options
-         *
-         * @type {GenericOptions} options
-         */
-        this.options = options || {};
-
         if (!options.renderTo) {
             throw TypeError(&apos;Canvas element was not specified when creating &apos; +
                 &apos;the Gauge object!&apos;);
@@ -155,6 +148,24 @@ export default class BaseGauge {
             options.renderTo :
             /* istanbul ignore next: to be tested with e2e tests */
             document.getElementById(options.renderTo);
+
+        if (!(canvas instanceof HTMLCanvasElement)) {
+            throw TypeError(&apos;Given gauge canvas element is invalid!&apos;);
+        }
+
+        if (!options.width || !options.height) {
+            if (!options.width) options.width = canvas.parentNode ?
+                canvas.parentNode.offsetWidth : canvas.offsetWidth;
+            if (!options.height) options.height = canvas.parentNode ?
+                canvas.parentNode.offsetHeight : canvas.offsetHeight;
+        }
+
+        /**
+         * Gauge options
+         *
+         * @type {GenericOptions} options
+         */
+        this.options = options || {};
 
         /**
          * @type {SmartCanvas} canvas

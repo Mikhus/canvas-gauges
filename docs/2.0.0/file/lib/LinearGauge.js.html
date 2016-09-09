@@ -131,8 +131,8 @@ let FONT_UNITS = 22;
 let defaultLinearGaugeOptions = Object.assign({}, GenericOptions, {
     // basic options
     borderRadius: 0,
-    width: 150,
-    height: 400,
+    // width: 150,
+    // height: 400,
 
     // bar
     barBeginCircle: 30, // percents
@@ -1078,17 +1078,6 @@ export default class LinearGauge extends BaseGauge {
      * @param {LinearGaugeOptions} options
      */
     constructor(options) {
-        /* istanbul ignore else */
-        if (!options.width) options.width = defaultLinearGaugeOptions.width;
-        /* istanbul ignore else */
-        if (!options.height) options.height = defaultLinearGaugeOptions.height;
-
-        /* istanbul ignore else */
-        if (!options.orientation) {
-            options.orientation = options.width &gt; options.height ?
-                &apos;horizontal&apos; : &apos;vertical&apos;;
-        }
-
         options = Object.assign({}, defaultLinearGaugeOptions, options || {});
 
         if (options.ticksWidth) TICKS_WIDTH = options.ticksWidth / 100;
