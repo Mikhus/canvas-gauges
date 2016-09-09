@@ -430,10 +430,15 @@ article ul li {
 #header-home {
     background: $ci-3;
     display: table;
-    min-height: 150px;
+    min-height: 130px;
     width: 100%;
 }
 #header-home .row {
+    h1, h2, h3, h4, h5, h6 {
+        padding:0;margin:0;
+        line-height: normal;
+    }
+
     display: table-cell;
     vertical-align: middle;
     text-align: center;
