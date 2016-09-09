@@ -72,6 +72,19 @@
     var body = $('body');
     var shade = $('#shade-cover');
 
+    function animateGauge(gauge) {
+        gauge.timer = setInterval(function() {
+            gauge.value = Math.random() *
+                (gauge.options.maxValue - gauge.options.minValue) +
+                gauge.options.minValue;
+        }, gauge.animation.duration + 50);
+    }
+
+    function stopGauge(gauge) {
+        clearInterval(gauge.timer);
+        delete gauge.timer;
+    }
+
     body.append(styles);
 
     if (!shade.length) {
@@ -255,6 +268,16 @@
         $(window).on('resize', function() {
             tabs.pos();
             shade.pos();
+        });
+    });
+
+    $(document).ready(function() {
+        document.gauges.forEach(function(gauge) {
+            $(gauge.options.renderTo).on('mouseover', function() {
+                animateGauge(gauge);
+            }).on('mouseout', function() {
+                stopGauge(gauge);
+            });
         });
     });
 }());
