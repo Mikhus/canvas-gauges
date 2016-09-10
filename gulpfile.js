@@ -118,6 +118,14 @@ gulp.task('build:prod', done => {
                             for (let i = 1; i < types.length; i++) {
                                 pkg.keywords.push(types[i] + '-gauge');
                             }
+
+                            if (!process.env.TRVIS) {
+                                fs.writeFileSync(
+                                    '../canvas-gauge-pages/' +
+                                        'assets/js/gauge.min.js',
+                                    fs.readFileSync('gauge.min.js')
+                                );
+                            }
                         }
 
                         fs.writeFileSync('dist/' + type + '/package.json',
