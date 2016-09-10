@@ -69,17 +69,17 @@
 
                     if (attr.name && attr.name !== 'data-type') {
                         code += '    ' +
-                            toOption(attr.name.replace(/^data-/, '')) + ':' +
+                            toOption(attr.name.replace(/^data-/, '')) + ': ' +
                             JSON.stringify(parse(attr.value), null, 4)
                                 .split(/\r?\n/)
                                 .map(function (line, i) {
                                     return (i ? '    ' : '') + line;
-                                }).join('\n') + (i == s - 1 ? '' : ',') + '\n';
+                                }).join('\n') + ',\n';
                     }
                 }
             }
 
-            code += '}).draw();\n';
+            code = code.replace(/,\n$/, '\n') + '}).draw();\n';
 
             return code;
         }
