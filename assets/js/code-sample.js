@@ -1,74 +1,6 @@
 (function() {
     'use strict';
 
-    var styles = $('<style>\
-        .tabs-container {\
-            margin: 0 auto;\
-            width: 50%;\
-            border: 25px solid rgba(255,230,106,1);\
-            background: #fff;\
-            overflow: hidden;\
-        }\
-        .tabs-container .icon-circle-with-cross {\
-            float: right;\
-            font-size: 24px;\
-            cursor: pointer;\
-            margin-right: 5px;\
-            color:#999;\
-        }\
-        .tabs-container .icon-circle-with-cross:hover {\
-            color:#222\
-        }\
-        .tabs-container input {\
-            visibility: hidden;\
-        }\
-        .tabs-container label {\
-            background: #fff;\
-            color: #888;\
-            cursor: pointer;\
-            display: block;\
-            float: left;\
-            font-size: 1em;\
-            height: 2.5em;\
-            line-height: 2.5em;\
-            padding: 0 1.5em;\
-            text-align: center;\
-        }\
-        .tabs-container input:hover + label {\
-            background: #eee;\
-            color: #222;\
-        }\
-        .tabs-container input:checked + label {\
-            background: #eee;\
-            color: #444;\
-            position: relative;\
-            z-index: 6;\
-        }\
-        .tabs-content {\
-            min-height: 20em;\
-            position: relative;\
-            width: 100%;\
-            z-index: 5;\
-        }\
-        .tabs-content pre {\
-            width: 100%;\
-            border: 0;\
-            opacity: 0;\
-            padding: 10px 15px;\
-            position: absolute;\
-            z-index: -100;\
-            overflow: auto;\
-            height: 100%;\
-        }\
-        .tabs-container input.tab-html:checked ~ .tabs-content .tab-html-content,\
-        .tabs-container input.tab-js:checked ~ .tabs-content .tab-js-content {\
-            opacity: 1;\
-            z-index: 100;\
-        }\
-        input.visible {\
-            visibility: visible !important;\
-        }\
-        </style>');
     var body = $('body');
     var shade = $('#shade-cover');
 
@@ -84,8 +16,6 @@
         clearInterval(gauge.timer);
         delete gauge.timer;
     }
-
-    body.append(styles);
 
     if (!shade.length) {
         shade = $('<div id="shade-cover">').css({
