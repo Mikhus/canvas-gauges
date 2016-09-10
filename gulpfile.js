@@ -27,6 +27,8 @@ const concat = require('gulp-concat');
 const yargs = require('yargs');
 const replace = require('gulp-replace');
 const babel = require('gulp-babel');
+const fsc = require('fs-cli');
+const semver = require('semver');
 
 /**
  * @typedef {{argv: object}} yargs
@@ -118,14 +120,6 @@ gulp.task('build:prod', done => {
                             for (let i = 1; i < types.length; i++) {
                                 pkg.keywords.push(types[i] + '-gauge');
                             }
-
-                            if (!process.env.TRVIS) {
-                                fs.writeFileSync(
-                                    '../canvas-gauge-pages/' +
-                                        'assets/js/gauge.min.js',
-                                    fs.readFileSync('gauge.min.js')
-                                );
-                            }
                         }
 
                         fs.writeFileSync('dist/' + type + '/package.json',
@@ -141,24 +135,34 @@ gulp.task('build:prod', done => {
                     });
             });
         })).then(() => {
+            let version = require('./package.json').version;
+
             console.log(chalk.bold.green('Production packages are now ready!'));
             console.log('To publish each production package, please run the ' +
                 'following commands:');
 
             types.forEach(type => {
-                let version = require('./package.json').version;
+                let v = version;
                 let entry = type === 'all' ? './' : '../../';
 
                 console.log(chalk.grey('cd ' + entry + 'dist/' + type));
 
                 if (type === 'all') type = 'latest';
-                else version += '-' + type;
+                else v += '-' + type;
 
 
                 console.log(chalk.grey('npm publish'));
                 console.log(chalk.grey('npm dist-tag add canvas-gauges@' +
-                    version + ' ' + type));
+                    v + ' ' + type));
             });
+
+            fsc.rm('../canvas-gauges-pages/download/' + version);
+            fsc.cp('dist', '../canvas-gauges-pages/download/' + version, true);
+            fs.unlink('../canvas-gauges-pages/download/latest', () => {});
+            let latest = semver.maxSatisfying(
+                fsc.ls('../canvas-gauges-pages/download'), '*');
+            fs.symlinkSync(latest, '../canvas-gauges-pages/download/latest',
+                'dir');
 
             done();
         });
@@ -215,7 +219,16 @@ gulp.task('build:es5', ['clean'], () => {
         .pipe(sourcemaps.init({ loadMaps: true }))
         .pipe(uglify())
         .pipe(sourcemaps.write('.'))
-        .pipe(gulp.dest('.'));
+        .pipe(gulp.dest('.'))
+        .on('end', () => {
+            if (!process.env.TRVIS) {
+                fs.writeFileSync(
+                    '../canvas-gauges-pages/' +
+                    'assets/js/gauge.min.js',
+                    fs.readFileSync('gauge.min.js')
+                );
+            }
+        });
 });
 
 /**
