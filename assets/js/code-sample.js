@@ -145,7 +145,7 @@
                 left: ((window.innerWidth - tabs.width()) / 2) + 'px',
                 top: ((window.innerHeight - tabs.height()) / 2) + (
                     document.body.scrollTop ||
-                    document.documentElement.scrollTop ||
+                    (document.documentElement && document.documentElement.scrollTop) ||
                     document.body.parentNode.scrollTop) + 'px'
             });
         };
