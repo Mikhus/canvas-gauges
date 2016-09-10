@@ -186,7 +186,9 @@
             return false;
         };
 
-        tabs.find('.icon-circle-with-cross').on('click', tabs.hide);
+        setTimeout(function() {
+            tabs.find('.icon-circle-with-cross').on('click', tabs.hide);
+        });
 
         tabs.toggle = function() {
             tabs[0].style.display === 'none' ? tabs.show() : tabs.hide();
