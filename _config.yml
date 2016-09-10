@@ -61,6 +61,8 @@ gems:
 paginate: 5                      # Paginates all X entries
 paginate_path: "blog/page:num"   # Pagination path › Important for blog page in /blog/ to work
 
+pre_release: '<b>ATTENTION!</b> <i>This website is providing information for upcoming release version. Something may not work, something may be changed.</i>'
+
 
 # Theme works best with Kramdown (using the table of contents function)
 markdown: kramdown

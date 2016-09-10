@@ -11,6 +11,8 @@ layout: compress
 	{% include _navigation.html %}
 	{% endunless %}
 
+    {% if site.pre_release %}<div class="info">{{ site.pre_release }}</div>{% endif %}
+
 	{% include _masthead.html %}
 	{{ content }}
 
