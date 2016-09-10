@@ -165,10 +165,10 @@
             tabs.find('#tab-html' + id).click();
             repos();
 
-            // setTimeout(function() {
-            //     tabs.find('#tab-html' + id).click();
-            //     repos();
-            // });
+            setTimeout(function() {
+                tabs.find('#tab-html' + id).click();
+                repos();
+            });
 
             return false;
         };
@@ -208,6 +208,7 @@
             return false;
         });
 
+        shade.on('click', tabs.hide);
         src.on('click', tabs.toggle);
 
         function repos() {
