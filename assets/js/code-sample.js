@@ -69,11 +69,11 @@
             keys.forEach(function (i) {
                 var attr = src.attributes[i];
 
-                if (attr.name.substr(0, 5) === 'data-' &&
-                    attr.name !== 'data-type')
+                if (attr.nodeName.substr(0, 5) === 'data-' &&
+                    attr.nodeName !== 'data-type')
                 {
-                    code += '    ' + toOption(attr.name) + ':' +
-                        JSON.stringify(parse(attr.value), null, 4)
+                    code += '    ' + toOption(attr.nodeName) + ':' +
+                        JSON.stringify(parse(attr.nodeValue), null, 4)
                             .split(/\r?\n/)
                             .map(function (line, i) {
                                 return (i ? '    ' : '') + line;
