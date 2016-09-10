@@ -25,7 +25,7 @@ function showCode(canvas) {
 
 Canvas Gauges are highly configurable library. So you may use your fantasy to draw different gauges of different look and feel, displaying different kind of information. Here we simply tried to show you what it can be, when simply changing default gauge options.
 
-**All gauges on this page are interactive. Click the gauge to get it's code!**
+**All gauges on this page are interactive. Click the gauge to get it's code. Mouse over to animate.**
 
 ## Zero Configuration Gauges
 
@@ -42,7 +42,7 @@ Compass wanted?
 
 ## Other Custom Views
 
-A bit more custom views.
+A bit more custom views:
 
 {% include examples/borders-colors.html %}
 
