@@ -23,10 +23,9 @@
 
     function toOption(attr) {
         return attr.split('-').map(function (part, i) {
-            return i ? (i === 1 ?
-                part.toLowerCase() :
-            part.charAt(0).toUpperCase() + part.substr(1).toLowerCase()) :
-                '';
+            return !i ? part.toLowerCase() :
+                part.charAt(0).toUpperCase() +
+                part.substr(1).toLowerCase();
         }).join('');
     }
 
@@ -49,8 +48,6 @@
         try {
             var code = 'var gauge = ';
             var type = src.getAttribute('data-type');
-            var keys = Object.keys(src.attributes);
-            var s = keys.length;
 
             if (type === 'linear-gauge') {
                 code += 'new LinearGauge({\n';
@@ -66,20 +63,21 @@
 
             code += '    renderTo: \'canvas-id\',\n';
 
-            keys.forEach(function (i) {
-                var attr = src.attributes[i];
+            if (src.hasAttributes()) {
+                for (var i = 0, s = src.attributes.length; i < s; i++) {
+                    var attr = src.attributes[i];
 
-                if (attr.nodeName.substr(0, 5) === 'data-' &&
-                    attr.nodeName !== 'data-type')
-                {
-                    code += '    ' + toOption(attr.nodeName) + ':' +
-                        JSON.stringify(parse(attr.nodeValue), null, 4)
-                            .split(/\r?\n/)
-                            .map(function (line, i) {
-                                return (i ? '    ' : '') + line;
-                            }).join('\n') + (i == s - 1 ? '' : ',') + '\n';
+                    if (attr.name && attr.name !== 'data-type') {
+                        code += '    ' +
+                            toOption(attr.name.replace(/^data-/, '')) + ':' +
+                            JSON.stringify(parse(attr.value), null, 4)
+                                .split(/\r?\n/)
+                                .map(function (line, i) {
+                                    return (i ? '    ' : '') + line;
+                                }).join('\n') + (i == s - 1 ? '' : ',') + '\n';
+                    }
                 }
-            });
+            }
 
             code += '}).draw();\n';
 
@@ -87,7 +85,6 @@
         }
 
         catch (e) {
-            alert(e);
             return '';
         }
     }
