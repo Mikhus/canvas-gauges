@@ -194,15 +194,13 @@
 
                 while (parent) {
                     if (parent === tabs[0] || parent === src[0]) {
-                        return false;
+                        return ;
                     }
 
                     parent = parent.parentNode;
                 }
 
                 tabs.hide();
-
-                return false;
             });
 
             shade.on('click', tabs.hide);
