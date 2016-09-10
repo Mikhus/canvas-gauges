@@ -42,4 +42,9 @@ Compass wanted?
 
 ## Other Custom Views
 
+A bit more custom views.
+
+{% include examples/borders-colors.html %}
+
+
 <script src="/assets/js/code-sample.js"></script>
