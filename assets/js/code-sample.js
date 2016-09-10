@@ -87,6 +87,7 @@
         }
 
         catch (e) {
+            alert(e);
             return '';
         }
     }
