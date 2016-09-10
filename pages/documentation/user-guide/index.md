@@ -177,7 +177,7 @@ First one is declarative by simply defining a gauge components in HTML, like
 </html>
 ~~~
 
-Read more: [Using gauges as components]({{site.url}}/documentation/user-guide/using-as-components)
+Read more: [Using gauges as components]({{site.url}}/documentation/user-guide/using-as-component)
 
 Another way is to use scripting API to inject gauges to the page:
 
