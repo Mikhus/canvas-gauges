@@ -115,7 +115,7 @@
                     <label for="tab-html' + id + '">HTML</label>\
                     <input id="tab-js' + id + '" type="radio" \
                            class="tab-js" name="tab-group">\
-                    <label for="tab-js' + id + '">JavaScript</label>\
+                    <label for="tab-js' + id + '">JS</label>\
                     <span class="icon-circle-with-cross"></span>\
                     <div class="tabs-content">\
                         <pre class="tab-html-content prettyprint lang-html"\
@@ -159,20 +159,8 @@
             };
 
             tabs.show = function () {
-                tabs.css({
-                    visibility: 'hidden',
-                    display: 'block'
-                });
-
+                tabs.css({display: 'block'});
                 body.css({overflow: 'hidden'});
-
-                // if (tabs[0].scrollHeight > tabs[0].offsetHeight) {
-                //     tabs.css({
-                //         width: tabs[0].offsetWidth + 20 + 'px'
-                //     });
-                // }
-
-                tabs.css({visibility: 'visible'});
                 shade.css({display: 'block'});
                 shade.lockTo = tabs;
 
