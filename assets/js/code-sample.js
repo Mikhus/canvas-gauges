@@ -1,30 +1,90 @@
 (function() {
     'use strict';
 
-    try {
+    function animateGauge(gauge) {
+        gauge.timer = setInterval(function () {
+            gauge.value = Math.random() *
+                (gauge.options.maxValue - gauge.options.minValue) +
+                gauge.options.minValue;
+        }, gauge.animation.duration + 50);
+    }
 
+    function stopGauge(gauge) {
+        clearInterval(gauge.timer);
+        delete gauge.timer;
+    }
+
+    function docHeight() {
+        var html = document.documentElement;
+
+        return Math.max(body[0].scrollHeight, body[0].offsetHeight,
+            html.clientHeight, html.scrollHeight, html.offsetHeight);
+    }
+
+    function toOption(attr) {
+        return attr.split('-').map(function (part, i) {
+            return i ? (i === 1 ?
+                part.toLowerCase() :
+            part.charAt(0).toUpperCase() + part.substr(1).toLowerCase()) :
+                '';
+        }).join('');
+    }
+
+    function parse(value) {
+        if (value === 'true') return true;
+        if (value === 'false') return false;
+        if (value === 'undefined') return undefined;
+        if (value === 'null') return null;
+        if (/^[\w\d\s]+(?:,[\w\d\s]+)+$/.test(value)) {
+            return value.split(',');
+        }
+        try {
+            return JSON.parse(value);
+        } catch (e) {
+        }
+        return value;
+    }
+
+    function toJs(src) {
+        var code = 'var gauge = ';
+        var type = src.getAttribute('data-type');
+        var keys = Object.keys(src.attributes);
+        var s = keys.length;
+
+        if (type === 'linear-gauge') {
+            code += 'new LinearGauge({\n';
+        }
+
+        else if (type === 'radial-gauge') {
+            code += 'new RadialGauge({\n';
+        }
+
+        else {
+            return '';
+        }
+
+        code += '    renderTo: \'canvas-id\',\n';
+
+        keys.forEach(function (i) {
+            var attr = src.attributes[i];
+
+            if (attr.name.substr(0, 5) === 'data-' && attr.name !== 'data-type') {
+                code += '    ' + toOption(attr.name) + ':' +
+                    JSON.stringify(parse(attr.value), null, 4).split(/\r?\n/)
+                        .map(function (line, i) {
+                            return (i ? '    ' : '') + line;
+                        }).join('\n') + (i == s - 1 ? '' : ',') + '\n';
+            }
+        });
+
+        code += '}).draw();\n';
+
+        return code;
+    }
+
+    try {
         var body = $('body');
         var shade = $('#shade-cover');
-
-        function animateGauge(gauge) {
-            gauge.timer = setInterval(function () {
-                gauge.value = Math.random() *
-                    (gauge.options.maxValue - gauge.options.minValue) +
-                    gauge.options.minValue;
-            }, gauge.animation.duration + 50);
-        }
-
-        function stopGauge(gauge) {
-            clearInterval(gauge.timer);
-            delete gauge.timer;
-        }
-
-        function docHeight() {
-            var html = document.documentElement;
-
-            return Math.max(body[0].scrollHeight, body[0].offsetHeight,
-                html.clientHeight, html.scrollHeight, html.offsetHeight);
-        }
 
         if (!shade.length) {
             shade = $('<div id="shade-cover">').css({
@@ -44,67 +104,6 @@
             });
         };
 
-        function toOption(attr) {
-            return attr.split('-').map(function (part, i) {
-                return i ? (i === 1 ?
-                    part.toLowerCase() :
-                part.charAt(0).toUpperCase() + part.substr(1).toLowerCase()) :
-                    '';
-            }).join('');
-        }
-
-        function parse(value) {
-            if (value === 'true') return true;
-            if (value === 'false') return false;
-            if (value === 'undefined') return undefined;
-            if (value === 'null') return null;
-            if (/^[\w\d\s]+(?:,[\w\d\s]+)+$/.test(value)) {
-                return value.split(',');
-            }
-            try {
-                return JSON.parse(value);
-            } catch (e) {
-            }
-            return value;
-        }
-
-        function toJs(src) {
-            var code = 'var gauge = ';
-            var type = src.getAttribute('data-type');
-            var keys = Object.keys(src.attributes);
-            var s = keys.length;
-
-            if (type === 'linear-gauge') {
-                code += 'new LinearGauge({\n';
-            }
-
-            else if (type === 'radial-gauge') {
-                code += 'new RadialGauge({\n';
-            }
-
-            else {
-                return '';
-            }
-
-            code += '    renderTo: \'canvas-id\',\n';
-
-            keys.forEach(function (i) {
-                var attr = src.attributes[i];
-
-                if (attr.name.substr(0, 5) === 'data-' && attr.name !== 'data-type') {
-                    code += '    ' + toOption(attr.name) + ':' +
-                        JSON.stringify(parse(attr.value), null, 4).split(/\r?\n/)
-                            .map(function (line, i) {
-                                return (i ? '    ' : '') + line;
-                            }).join('\n') + (i == s - 1 ? '' : ',') + '\n';
-                }
-            });
-
-            code += '}).draw();\n';
-
-            return code;
-        }
-
         $('.example').each(function (id) {
             var tabs = $('\
         <div id="tabs-container' + id + '" class="tabs-container">\
@@ -118,17 +117,18 @@
                 <pre class="tab-js-content prettyprint lang-javascript"> </pre>\
             </div>\
         </div>');
-
+            var repos = function() {
+                tabs.pos();
+                shade.pos();
+            };
             var src = $(this);
             var code = src.html().replace(/^\s+|\s+$/g, '');
-
             var bodyOverflow = body[0].style.overflow;
             var boxHtml = tabs.find('.tab-html-content');
             var boxJs = tabs.find('.tab-js-content');
 
             tabs.find('*').each(function () {
-                this.onclick = function () {
-                };
+                this.onclick = function () {};
             });
 
             if (code.length > 80) {
@@ -218,11 +218,6 @@
             shade.on('click', tabs.hide);
             src.on('click', tabs.toggle);
 
-            function repos() {
-                tabs.pos();
-                shade.pos();
-            }
-
             $(window).on('resize', repos);
         });
 
@@ -235,7 +230,5 @@
                 }).attr('title', 'Click me to get my code!');
             });
         });
-    } catch (e) {
-        document.write(e.stack);
-    }
+    } catch (e) { }
 }());
