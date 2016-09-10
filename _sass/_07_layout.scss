@@ -471,10 +471,10 @@ article ul li {
     overflow: hidden;
 }
 .tabs-container .icon-circle-with-cross {
-    float: right;
+    position: absolute;
     font-size: 24px;
     cursor: pointer;
-    margin-right: 5px;
+    right: 5px;
     color:#999;
 }
 .tabs-container .icon-circle-with-cross:hover {
