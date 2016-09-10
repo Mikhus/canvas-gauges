@@ -168,7 +168,7 @@
             setTimeout(function() {
                 tabs.find('#tab-html' + id).click();
                 repos();
-            });
+            }, 100);
 
             return false;
         };
