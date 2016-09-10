@@ -46,40 +46,49 @@
     }
 
     function toJs(src) {
-        var code = 'var gauge = ';
-        var type = src.getAttribute('data-type');
-        var keys = Object.keys(src.attributes);
-        var s = keys.length;
+        try {
+            var code = 'var gauge = ';
+            var type = src.getAttribute('data-type');
+            var keys = Object.keys(src.attributes);
+            var s = keys.length;
 
-        if (type === 'linear-gauge') {
-            code += 'new LinearGauge({\n';
+            if (type === 'linear-gauge') {
+                code += 'new LinearGauge({\n';
+            }
+
+            else if (type === 'radial-gauge') {
+                code += 'new RadialGauge({\n';
+            }
+
+            else {
+                return '';
+            }
+
+            code += '    renderTo: \'canvas-id\',\n';
+
+            keys.forEach(function (i) {
+                var attr = src.attributes[i];
+
+                if (attr.name.substr(0, 5) === 'data-' &&
+                    attr.name !== 'data-type')
+                {
+                    code += '    ' + toOption(attr.name) + ':' +
+                        JSON.stringify(parse(attr.value), null, 4)
+                            .split(/\r?\n/)
+                            .map(function (line, i) {
+                                return (i ? '    ' : '') + line;
+                            }).join('\n') + (i == s - 1 ? '' : ',') + '\n';
+                }
+            });
+
+            code += '}).draw();\n';
+
+            return code;
         }
 
-        else if (type === 'radial-gauge') {
-            code += 'new RadialGauge({\n';
-        }
-
-        else {
+        catch (e) {
             return '';
         }
-
-        code += '    renderTo: \'canvas-id\',\n';
-
-        keys.forEach(function (i) {
-            var attr = src.attributes[i];
-
-            if (attr.name.substr(0, 5) === 'data-' && attr.name !== 'data-type') {
-                code += '    ' + toOption(attr.name) + ':' +
-                    JSON.stringify(parse(attr.value), null, 4).split(/\r?\n/)
-                        .map(function (line, i) {
-                            return (i ? '    ' : '') + line;
-                        }).join('\n') + (i == s - 1 ? '' : ',') + '\n';
-            }
-        });
-
-        code += '}).draw();\n';
-
-        return code;
     }
 
     try {
@@ -87,13 +96,7 @@
         var shade = $('#shade-cover');
 
         if (!shade.length) {
-            shade = $('<div id="shade-cover">').css({
-                position: 'absolute',
-                top: 0,
-                left: 0,
-                zIndex: 1,
-                background: 'rgba(36,101,192, .85)'
-            }).hide();
+            shade = $('<div id="shade-cover">').hide();
             body.append(shade);
         }
 
@@ -106,17 +109,21 @@
 
         $('.example').each(function (id) {
             var tabs = $('\
-        <div id="tabs-container' + id + '" class="tabs-container">\
-            <input id="tab-html' + id + '" type="radio" class="tab-html" name="tab-group">\
-            <label for="tab-html' + id + '">HTML</label>\
-            <input id="tab-js' + id + '" type="radio" class="tab-js" name="tab-group">\
-            <label for="tab-js' + id + '">JavaScript</label>\
-            <span class="icon-circle-with-cross"></span>\
-            <div class="tabs-content">\
-                <pre class="tab-html-content prettyprint lang-html"></pre>\
-                <pre class="tab-js-content prettyprint lang-javascript"> </pre>\
-            </div>\
-        </div>');
+                <div id="tabs-container' + id + '" class="tabs-container">\
+                    <input id="tab-html' + id + '" type="radio" \
+                           class="tab-html" name="tab-group">\
+                    <label for="tab-html' + id + '">HTML</label>\
+                    <input id="tab-js' + id + '" type="radio" \
+                           class="tab-js" name="tab-group">\
+                    <label for="tab-js' + id + '">JavaScript</label>\
+                    <span class="icon-circle-with-cross"></span>\
+                    <div class="tabs-content">\
+                        <pre class="tab-html-content prettyprint lang-html"\
+                        ></pre>\
+                        <pre class="tab-js-content prettyprint lang-javascript"\
+                        ></pre>\
+                    </div>\
+                </div>').hide();
             var repos = function() {
                 tabs.pos();
                 shade.pos();
@@ -140,18 +147,13 @@
             boxHtml.text(code);
             boxJs.text(toJs($(this).find('canvas')[0]));
 
-            tabs.css({
-                position: 'absolute',
-                display: 'none',
-                zIndex: 2
-            });
-
             tabs.pos = function () {
                 tabs.css({
                     left: ((window.innerWidth - tabs.width()) / 2) + 'px',
                     top: ((window.innerHeight - tabs.height()) / 2) + (
                     document.body.scrollTop ||
-                    (document.documentElement && document.documentElement.scrollTop) ||
+                    (document.documentElement &&
+                        document.documentElement.scrollTop) ||
                     document.body.parentNode.scrollTop) + 'px'
                 });
             };
@@ -164,11 +166,11 @@
 
                 body.css({overflow: 'hidden'});
 
-                if (tabs[0].scrollHeight > tabs[0].offsetHeight) {
-                    tabs.css({
-                        width: tabs[0].offsetWidth + 20 + 'px'
-                    });
-                }
+                // if (tabs[0].scrollHeight > tabs[0].offsetHeight) {
+                //     tabs.css({
+                //         width: tabs[0].offsetWidth + 20 + 'px'
+                //     });
+                // }
 
                 tabs.css({visibility: 'visible'});
                 shade.css({display: 'block'});
@@ -195,7 +197,9 @@
             tabs.find('.icon-circle-with-cross').on('click', tabs.hide);
 
             tabs.toggle = function () {
-                tabs[0].style.display === 'none' ? tabs.show() : tabs.hide();
+                tabs[0].style.display === 'none' ?
+                    tabs.show() : tabs.hide();
+
                 return false;
             };
 
@@ -230,5 +234,5 @@
                 }).attr('title', 'Click me to get my code!');
             });
         });
-    } catch (e) { }
+    } catch (e) {}
 }());

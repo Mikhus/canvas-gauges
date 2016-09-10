@@ -469,6 +469,8 @@ article ul li {
     border: 25px solid rgba(255,230,106,1);
     background: #fff;
     overflow: hidden;
+    position: absolute;
+    z-index: 2;
 }
 .tabs-container .icon-circle-with-cross {
     position: absolute;
@@ -528,6 +530,13 @@ article ul li {
 }
 input.visible {
     visibility: visible !important;
+}
+#shade-cover {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    background: rgba(36,101,192, .85);
 }
 @media #{$small-only} {
     .tabs-container {
