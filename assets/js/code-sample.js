@@ -118,6 +118,10 @@
         var boxHtml = tabs.find('.tab-html-content');
         var boxJs = tabs.find('.tab-js-content');
 
+        tabs.find('*').each(function() {
+            this.onclick=function(){};
+        });
+
         if (code.length > 80) {
             code = code.replace(/(\w+=".*?")\s/g, '$1\n    ')
                 .replace(/(\w+=".*?")>/g, '$1\n>');
