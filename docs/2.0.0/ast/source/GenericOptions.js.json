@@ -1267,8 +1267,8 @@
                 },
                 "value": {
                   "type": "Literal",
-                  "value": 250,
-                  "raw": "250",
+                  "value": 500,
+                  "raw": "500",
                   "range": [
                     3688,
                     3691
@@ -5978,8 +5978,8 @@
                   },
                   "value": {
                     "type": "Literal",
-                    "value": 250,
-                    "raw": "250",
+                    "value": 500,
+                    "raw": "500",
                     "range": [
                       3688,
                       3691

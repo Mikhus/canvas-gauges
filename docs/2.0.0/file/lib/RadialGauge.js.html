@@ -484,9 +484,9 @@ function drawRadialNeedle(context, options) {
     let pad2 = max / 100 * options.needleWidth / 2;
     let pixelRatio = SmartCanvas.pixelRatio;
 
-    drawings.drawNeedleShadow(context, options);
-
     context.save();
+
+    drawings.drawNeedleShadow(context, options);
 
     context.rotate(drawings.radians(
         options.startAngle + (value - options.minValue) /
@@ -530,8 +530,6 @@ function drawRadialNeedle(context, options) {
         context.fill();
     }
 
-    context.restore();
-
     if (options.needleCircleSize) {
         drawings.drawNeedleShadow(context, options);
 
@@ -545,7 +543,6 @@ function drawRadialNeedle(context, options) {
                 r1
             );
             context.fill();
-            context.restore();
             context.closePath();
         }
 
@@ -561,6 +558,8 @@ function drawRadialNeedle(context, options) {
             context.fill();
             context.closePath();
         }
+
+        context.restore();
     }
 }
 
