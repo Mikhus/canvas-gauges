@@ -12,7 +12,7 @@
     "start": "./node_modules/.bin/gulp watch",
     "build": "./node_modules/.bin/gulp build --silent",
     "doc": "npm run toc && ./node_modules/.bin/gulp doc --silent",
-    "commit": "npm run build && npm run doc && npm test && git add --all . && git commit",
+    "commit": "npm run build && npm run doc && npm test && ./node_modules/.bin/gulp build:prod && git add --all . && git commit",
     "toc": "./node_modules/.bin/markdown-toc -i README.md"
   },
   "repository": {
@@ -84,6 +84,7 @@
     "chai": "^3.5.0",
     "chalk": "^1.1.3",
     "eslint": "^3.3.1",
+    "fs-cli": "^0.1.1",
     "gulp": "^3.9.1",
     "gulp-babel": "^6.1.2",
     "gulp-concat": "^2.6.0",
@@ -112,6 +113,7 @@
     "mocha": "^3.0.2",
     "rimraf": "^2.5.4",
     "selenium-standalone": "^5.5.0",
+    "semver": "^5.3.0",
     "sinon": "^1.17.5",
     "utils-merge": "^1.0.0",
     "vinyl-buffer": "^1.0.0",

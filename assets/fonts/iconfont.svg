@@ -1,11 +1,11 @@
 <?xml version="1.0" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd" >
 <!--
-2016-9-8: Created.
+2016-9-11: Created.
 -->
 <svg xmlns="http://www.w3.org/2000/svg">
 <metadata>
-Created by FontForge 20120731 at Thu Sep  8 01:15:00 2016
+Created by FontForge 20120731 at Sun Sep 11 01:41:45 2016
  By Mykhailo Stadnyk,,,
 Created by Mykhailo Stadnyk,,, with FontForge 2.0 (http://fontforge.sf.net)
 </metadata>
@@ -22,7 +22,7 @@ Created by Mykhailo Stadnyk,,, with FontForge 2.0 (http://fontforge.sf.net)
     bbox="-0.12793 -64.0282 512.128 448.011"
     underline-thickness="25.6"
     underline-position="-51.2"
-    unicode-range="U+0020-F170"
+    unicode-range="U+0020-F171"
   />
     <missing-glyph />
     <glyph glyph-name="space" unicode=" " horiz-adv-x="200" 
@@ -97,6 +97,8 @@ h230.399z" />
     <glyph glyph-name="uniF11C" unicode="&#xf11c;" 
 d="M487.04 356.173c-111.514 -65.4336 -103.526 -199.834 -181.657 -260.48c-58.8037 -45.6445 -141.773 -22.5273 -189.748 -2.89258c0 0 -32.5117 -41.0361 -55.833 -95.7441c-7.80859 -18.3545 -42.0869 1.86914 -36.0703 17.4082
 c76.2363 196.736 335.616 294.887 335.616 294.887s-183.015 7.75684 -305.332 -152.064c-3.27637 36.5059 -8.7041 135.271 86.0166 195.84c128.409 82.2021 373.043 18.3047 347.008 3.04688z" />
+    <glyph glyph-name="uniF171" unicode="&#xf171;" 
+d="M256 128l-128 128h64v192h128v-192h64zM432 288l80 -160v-192h-512v192l80 160h35.7764l-80 -160h92.2236l64 -96h128l64 96h92.2246l-80 160h35.7754z" />
     <glyph glyph-name="uniF119" unicode="&#xf119;" 
 d="M478.003 166.4h-42.8027v-153.601c0 -11.3916 -4.9668 -25.5996 -25.6006 -25.5996h-102.399v153.6h-102.4v-153.6h-102.399c-20.6338 0 -25.6006 14.208 -25.6006 25.5996v153.601h-42.8027c-15.3086 0 -12.0322 8.29395 -1.53613 19.1484l205.414 205.619
 c4.99219 5.1709 11.5459 7.73145 18.125 7.9873c6.5791 -0.255859 13.1328 -2.79004 18.125 -7.9873l205.389 -205.594c10.5215 -10.8799 13.7988 -19.1738 -1.51074 -19.1738z" />
