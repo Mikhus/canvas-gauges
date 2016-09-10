@@ -103,11 +103,11 @@
     $('.example').each(function(id) {
         var tabs = $('\
         <div id="tabs-container' + id + '" class="tabs-container">\
+            <span class="icon-circle-with-cross"></span>\
             <input id="tab-html' + id + '" type="radio" class="tab-html" name="tab-group">\
             <label for="tab-html' + id + '">HTML</label>\
             <input id="tab-js' + id + '" type="radio" class="tab-js" name="tab-group">\
             <label for="tab-js' + id + '">JavaScript</label>\
-            <span class="icon-circle-with-cross"></span>\
             <div class="tabs-content">\
                 <pre class="tab-html-content prettyprint lang-html"></pre>\
                 <pre class="tab-js-content prettyprint lang-javascript"> </pre>\
@@ -143,10 +143,10 @@
         tabs.pos = function() {
             tabs.css({
                 left: ((window.innerWidth - tabs.width()) / 2) + 'px',
-                top: ((window.innerHeight - tabs.height()) / 2) +
-                    (document.documentElement ||
-                    document.body.parentNode ||
-                    document.body).scrollTop + 'px'
+                top: ((window.innerHeight - tabs.height()) / 2) + (
+                    document.body.scrollTop ||
+                    document.documentElement.scrollTop ||
+                    document.body.parentNode.scrollTop) + 'px'
             });
         };
 
