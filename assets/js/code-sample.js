@@ -17,6 +17,13 @@
         delete gauge.timer;
     }
 
+    function docHeight() {
+        var html = document.documentElement;
+
+        return Math.max(body[0].scrollHeight, body[0].offsetHeight,
+            html.clientHeight, html.scrollHeight, html.offsetHeight);
+    }
+
     if (!shade.length) {
         shade = $('<div id="shade-cover">').css({
             position: 'absolute',
@@ -29,13 +36,9 @@
     }
 
     shade.pos = function() {
-        var html = document.documentElement;
-        var height = Math.max(body[0].scrollHeight, body[0].offsetHeight,
-            html.clientHeight, html.scrollHeight, html.offsetHeight);
-
         shade.css({
             width: body.width() + 'px',
-            height: height + 'px'
+            height: docHeight() + 'px'
         });
     };
 
@@ -80,15 +83,15 @@
 
         code += '    renderTo: \'canvas-id\',\n';
 
-
         keys.forEach(function (i) {
             var attr = src.attributes[i];
 
             if (attr.name.substr(0, 5) === 'data-' && attr.name !== 'data-type') {
                 code += '    ' + toOption(attr.name) + ':' +
-                    JSON.stringify(parse(attr.value), null, 4).split(/\r?\n/).map(function(line, i) {
-                        return (i ? '    ' : '') + line;
-                    }).join('\n') + (i == s - 1 ? '' : ',') + '\n';
+                    JSON.stringify(parse(attr.value), null, 4).split(/\r?\n/)
+                        .map(function(line, i) {
+                            return (i ? '    ' : '') + line;
+                        }).join('\n') + (i == s - 1 ? '' : ',') + '\n';
             }
         });
 
@@ -140,7 +143,10 @@
         tabs.pos = function() {
             tabs.css({
                 left: ((window.innerWidth - tabs.width()) / 2) + 'px',
-                top: ((window.innerHeight - tabs.height()) / 2) + body[0].scrollTop + 'px',
+                top: ((window.innerHeight - tabs.height()) / 2) +
+                    (document.documentElement ||
+                    document.body.parentNode ||
+                    document.body).scrollTop + 'px'
             });
         };
 
@@ -164,11 +170,6 @@
 
             tabs.find('#tab-html' + id).click();
             repos();
-
-            setTimeout(function() {
-                tabs.find('#tab-html' + id).click();
-                repos();
-            }, 500);
 
             return false;
         };
