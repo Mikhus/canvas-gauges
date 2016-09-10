@@ -103,11 +103,11 @@
     $('.example').each(function(id) {
         var tabs = $('\
         <div id="tabs-container' + id + '" class="tabs-container">\
-            <span class="icon-circle-with-cross"></span>\
             <input id="tab-html' + id + '" type="radio" class="tab-html" name="tab-group">\
             <label for="tab-html' + id + '">HTML</label>\
             <input id="tab-js' + id + '" type="radio" class="tab-js" name="tab-group">\
             <label for="tab-js' + id + '">JavaScript</label>\
+            <span class="icon-circle-with-cross"></span>\
             <div class="tabs-content">\
                 <pre class="tab-html-content prettyprint lang-html"></pre>\
                 <pre class="tab-js-content prettyprint lang-javascript"> </pre>\
@@ -168,7 +168,7 @@
             shade.css({ display: 'block' });
             shade.lockTo = tabs;
 
-            tabs.find('#tab-html' + id).click();
+            tabs.find('#tab-html' + id)[0].checked = true;
             repos();
 
             return false;
@@ -186,9 +186,7 @@
             return false;
         };
 
-        setTimeout(function() {
-            tabs.find('.icon-circle-with-cross').on('click', tabs.hide);
-        });
+        tabs.find('.icon-circle-with-cross').on('click', tabs.hide);
 
         tabs.toggle = function() {
             tabs[0].style.display === 'none' ? tabs.show() : tabs.hide();
