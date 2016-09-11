@@ -18,6 +18,11 @@
     url: "/documentation/examples/"
     icon: examples
 
+- title: "Download"
+  url: /download/
+  side: left
+  icon: download
+
 - title: "Search"
   url: "/search/"
   side: right
