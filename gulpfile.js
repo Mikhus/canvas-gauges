@@ -156,13 +156,43 @@ gulp.task('build:prod', done => {
                     v + ' ' + type));
             });
 
-            fsc.rm('../canvas-gauges-pages/download/' + version);
-            fsc.cp('dist', '../canvas-gauges-pages/download/' + version, true);
-            fsc.rm('../canvas-gauges-pages/download/latest');
-            let latest = semver.maxSatisfying(
-                fsc.ls('../canvas-gauges-pages/download'), '*');
-            fsc.cp('../canvas-gauges-pages/download/' + latest,
-                '../canvas-gauges-pages/download/latest');
+            let dst = '../canvas-gauges-pages/download';
+
+            fsc.rm(dst + '/' + version);
+            fsc.cp('dist', dst + '/' + version, true);
+            fsc.rm(dst + '/latest');
+
+            let releases = fsc.ls(dst);
+            let latest = semver.maxSatisfying(releases, '*');
+
+            fsc.cp(dst + '/' + latest, dst + '/latest');
+
+            let info = {};
+
+            releases.forEach(release => {
+                info[release] = {};
+
+                types.forEach(type => {
+                    info[release][type] = {
+                        bytes: fs.statSync(dst + '/' + release + '/' + type +
+                            '/gauge.min.js').size
+                    };
+
+                    info[release][type].kb = (info[release][type].bytes / 1024)
+                        .toFixed(1);
+
+                    info[release][type].mb = (info[release][type].bytes /
+                        (1024 * 1024)).toFixed(1);
+
+                    info[release][type].gb = (info[release][type].bytes /
+                        (1024 * 1024 * 1024)).toFixed(1);
+                });
+            });
+
+            info.latest = info[latest];
+
+            fs.writeFileSync('../canvas-gauges-pages/_data/releases.json',
+                JSON.stringify(info, null, 2));
 
             done();
         });
