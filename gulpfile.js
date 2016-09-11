@@ -257,6 +257,11 @@ gulp.task('build:es5', ['clean'], () => {
                     'assets/js/gauge.min.js',
                     fs.readFileSync('gauge.min.js')
                 );
+                fs.writeFileSync(
+                    '../canvas-gauges-pages/' +
+                    'assets/js/gauge.min.js.map',
+                    fs.readFileSync('gauge.min.js.map')
+                );
             }
         });
 });
