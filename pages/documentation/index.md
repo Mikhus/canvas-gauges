@@ -11,7 +11,7 @@ userGuide:
   title: "User Guide"
   url: "/documentation/user-guide/"
   icon: "user-guide"
-  iconColor: "5a5a5a"
+  iconColor: "#a55"
   text: 'Complete user guide about canvas gauges.'
 devGuide:
   title: "Developer's API Docs"

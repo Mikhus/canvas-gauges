@@ -250,7 +250,7 @@ body.video cite { color: #fff; }
 ------------------------------------------------------------------- */
 
 #up-to-top {
-    padding: 160px 0 10px 0;
+    padding:0 0 0 10px 0;
 }
 #up-to-top a {
     font-size: 24px;
@@ -560,4 +560,173 @@ input.visible {
     padding: 10px;
     background-color: #eaa;
     text-align: center;
+}
+
+// thanks slick slider
+/* Slider */
+
+.slick-slider {
+    position: relative;
+    display: block;
+    box-sizing: border-box;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -ms-touch-action: pan-y;
+    touch-action: pan-y;
+    -webkit-tap-highlight-color: transparent;
+}
+.slick-list {
+    position: relative;
+    overflow: hidden;
+    display: block;
+    margin: 0;
+    padding: 0;
+
+    &:focus {
+        outline: none;
+    }
+
+    &.dragging {
+        cursor: pointer;
+        cursor: hand;
+    }
+}
+.slick-slider .slick-track,
+.slick-slider .slick-list {
+    -webkit-transform: translate3d(0, 0, 0);
+    -moz-transform: translate3d(0, 0, 0);
+    -ms-transform: translate3d(0, 0, 0);
+    -o-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+}
+
+.slick-track {
+    position: relative;
+    left: 0;
+    top: 0;
+    display: block;
+
+    &:before,
+    &:after {
+        content: "";
+        display: table;
+    }
+
+    &:after {
+        clear: both;
+    }
+
+    .slick-loading & {
+        visibility: hidden;
+    }
+}
+.slick-slide {
+    float: left;
+    height: 100%;
+    min-height: 1px;
+    [dir="rtl"] & {
+        float: right;
+    }
+    img {
+        display: block;
+    }
+    &.slick-loading img {
+        display: none;
+    }
+
+    display: none;
+
+    &.dragging img {
+        pointer-events: none;
+    }
+
+    .slick-initialized & {
+        display: block;
+    }
+
+    .slick-loading & {
+        visibility: hidden;
+    }
+
+    .slick-vertical & {
+        display: block;
+        height: auto;
+        border: 1px solid transparent;
+    }
+}
+.slick-arrow.slick-hidden {
+    display: none;
+}
+
+.thanks {
+    background: $grey-4;
+}
+
+.thanks .row {
+    padding: 30px 0;
+}
+
+.thanks .org img {
+    -webkit-filter: grayscale(100%);
+    filter: grayscale(100%);
+    height: 50px;
+    opacity: .8;
+    margin-bottom: 30px;
+
+    -webkit-transition: all .5s ease;
+    -moz-transition: all .5s ease;
+    -o-transition: all .5s ease;
+    transition: all .5s ease;
+}
+.thanks .org img:hover {
+    -webkit-filter: grayscale(0%);
+    filter: grayscale(0%);
+    opacity: 1;
+}
+.thanks button {
+    display: none !important;
+}
+
+.thanks ul.slick-dots {
+    padding:0;
+    margin:20px 0 0 0;
+    text-align: left;
+}
+.thanks ul.slick-dots li {
+    display: inline-block;
+    list-style-type: none;
+}
+.thanks ul.slick-dots li:before {
+    content: "•";
+    display: block;
+    width: 20px;
+    height: 20px;
+    color: $grey-7;
+    cursor: pointer;
+    font-size: 1.5em;
+}
+.thanks ul.slick-dots li.slick-active:before {
+    color: $grey-9;
+}
+.thanks p {
+    a {
+        color: $grey-10;
+        border: 0 !important;
+        font-weight: normal !important;
+        text-decoration: underline !important;
+        -webkit-transition: none !important;
+        -moz-transition: none !important;
+        -o-transition: none !important;
+        transition: none !important;
+    }
+    color: $grey-9;
+    font-size: 1.1em;
+    font-style: italic;
+}
+.thanks *:focus {
+    outline: none;
 }

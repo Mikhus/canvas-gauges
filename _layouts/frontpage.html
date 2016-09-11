@@ -23,7 +23,6 @@ format: frontpage
 		{% include _frontpage-widget.html widget=page.widget1 %}
 	{% endif %}
 
-
 	{% if page.widget2.title %}
 		{% include _frontpage-widget.html widget=page.widget2 %}
 	{% endif %}
@@ -33,8 +32,6 @@ format: frontpage
 		{% include _frontpage-widget.html widget=page.widget3 %}
 	{% endif %}
 </div><!-- /.row -->
-
-
 
 {% comment %}
 *
@@ -96,7 +93,6 @@ format: frontpage
             {% endfor %}
         </div><!-- /.medium-5.columns -->
 
-
         <div class="medium-6 columns">
             <p><strong>{{ site.data.language.more_articles }}</strong></p>
             {% include list-posts entries='3' offset='1' %}
@@ -114,3 +110,9 @@ format: frontpage
 <div class="row">
     {{ content }}
 </div><!-- /.row -->
+
+<div class="thanks">
+    <div class="row t60">
+        {% include _thanks.html %}
+    </div>
+</div>
