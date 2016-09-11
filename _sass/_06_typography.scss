@@ -360,11 +360,11 @@ mark {
 
 @font-face {
   font-family: 'iconfont';
-  src: url('../fonts/iconfont.eot'); /* IE9 Compat Modes */
-  src: url('../fonts/iconfont.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
-       url('../fonts/iconfont.woff') format('woff'), /* Pretty Modern Browsers */
-       url('../fonts/iconfont.ttf')  format('truetype'), /* Safari, Android, iOS */
-       url('../fonts/iconfont.svg#svgFontName') format('svg'); /* Legacy iOS */
+  src: url('../fonts/iconfont.eot?v2'); /* IE9 Compat Modes */
+  src: url('../fonts/iconfont.eot?v2#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('../fonts/iconfont.woff?v2') format('woff'), /* Pretty Modern Browsers */
+       url('../fonts/iconfont.ttf?v2')  format('truetype'), /* Safari, Android, iOS */
+       url('../fonts/iconfont.svg?v2#svgFontName') format('svg'); /* Legacy iOS */
 }
 
 .iconfont       { font-family: iconfont; }
