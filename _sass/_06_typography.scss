@@ -373,7 +373,9 @@ mark {
 [data-icon]:before { content: attr(data-icon); }
 
 [data-icon]:before,
+.icon-android:before,
 .icon-api-docs:before,
+.icon-apple:before,
 .icon-archive:before,
 .icon-browser:before,
 .icon-calendar:before,
@@ -385,6 +387,7 @@ mark {
 .icon-chevron-left:before,
 .icon-chevron-right:before,
 .icon-chevron-up:before,
+.icon-chrome:before,
 .icon-circle-with-cross:before,
 .icon-circle-with-minus:before,
 .icon-circle-with-plus:before,
@@ -394,13 +397,16 @@ mark {
 .icon-docs:before,
 .icon-download:before,
 .icon-dropbox:before,
+.icon-edge:before,
 .icon-edit:before,
 .icon-examples:before,
+.icon-explorer:before,
 .icon-export:before,
 .icon-eye:before,
 .icon-facebook:before,
 .icon-feather:before,
 .icon-finder:before,
+.icon-firefox:before,
 .icon-github:before,
 .icon-globe:before,
 .icon-heart:before,
@@ -414,11 +420,13 @@ mark {
 .icon-message:before,
 .icon-mic:before,
 .icon-network:before,
+.icon-opera:before,
 .icon-paper-plane:before,
 .icon-pinterest:before,
 .icon-price-tag:before,
 .icon-rocket:before,
 .icon-rss:before,
+.icon-safari:before,
 .icon-search:before,
 .icon-soundcloud:before,
 .icon-star:before,
@@ -450,7 +458,9 @@ mark {
     font-smoothing: antialiased;
 }
 
+.icon-android:before { content: "\f172"; }
 .icon-api-docs:before { content: "\f16c"; }
+.icon-apple:before { content: "\f173"; }
 .icon-archive:before { content: "\f100"; }
 .icon-browser:before { content: "\f101"; }
 .icon-calendar:before { content: "\f133"; }
@@ -462,6 +472,7 @@ mark {
 .icon-chevron-left:before { content: "\f106"; }
 .icon-chevron-right:before { content: "\f107"; }
 .icon-chevron-up:before { content: "\f108"; }
+.icon-chrome:before { content: "\f174"; }
 .icon-circle-with-cross:before { content: "\f109"; }
 .icon-circle-with-minus:before { content: "\f10a"; }
 .icon-circle-with-plus:before { content: "\f10b"; }
@@ -471,13 +482,16 @@ mark {
 .icon-docs:before { content: "\f16a"; }
 .icon-download:before { content: "\f171"; }
 .icon-dropbox:before { content: "\f10f"; }
+.icon-edge:before { content: "\f175"; }
 .icon-edit:before { content: "\f110"; }
 .icon-examples:before { content: "\f16d"; }
+.icon-explorer:before { content: "\f176"; }
 .icon-export:before { content: "\f111"; }
 .icon-eye:before { content: "\f112"; }
 .icon-facebook:before { content: "\f113"; }
 .icon-feather:before { content: "\f114"; }
 .icon-finder:before { content: "\f168"; }
+.icon-firefox:before { content: "\f177"; }
 .icon-github:before { content: "\f115"; }
 .icon-globe:before { content: "\f116"; }
 .icon-heart:before { content: "\f117"; }
@@ -491,11 +505,13 @@ mark {
 .icon-message:before { content: "\f11f"; }
 .icon-mic:before { content: "\f120"; }
 .icon-network:before { content: "\f121"; }
+.icon-opera:before { content: "\f178"; }
 .icon-paper-plane:before { content: "\f122"; }
 .icon-pinterest:before { content: "\f123"; }
 .icon-price-tag:before { content: "\f124"; }
 .icon-rocket:before { content: "\f125"; }
 .icon-rss:before { content: "\f126"; }
+.icon-safari:before { content: "\f179"; }
 .icon-search:before { content: "\f169"; }
 .icon-soundcloud:before { content: "\f127"; }
 .icon-star:before { content: "\f128"; }

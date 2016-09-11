@@ -1,7 +1,7 @@
 {
   "checksum": {
-    "previous": "5f4f24d7a1b67577799da95cbb7acf9ae23e8c58288e85ef96458c08f74539f6",
-    "current": "5f4f24d7a1b67577799da95cbb7acf9ae23e8c58288e85ef96458c08f74539f6"
+    "previous": "e88718fa075538f1e030036cc3638abc4532131e1cef7cb730e1cd5d3b3c7965",
+    "current": "e88718fa075538f1e030036cc3638abc4532131e1cef7cb730e1cd5d3b3c7965"
   },
   "fonts": [
     "./iconfont.ttf",
@@ -10,9 +10,17 @@
     "./iconfont.eot"
   ],
   "glyphs": {
+    "android": {
+      "codepoint": 61810,
+      "source": "svg/android.svg"
+    },
     "api-docs": {
       "codepoint": 61804,
       "source": "svg/api-docs.svg"
+    },
+    "apple": {
+      "codepoint": 61811,
+      "source": "svg/apple.svg"
     },
     "archive": {
       "codepoint": 61696,
@@ -58,6 +66,10 @@
       "codepoint": 61704,
       "source": "svg/chevron-up.svg"
     },
+    "chrome": {
+      "codepoint": 61812,
+      "source": "svg/chrome.svg"
+    },
     "circle-with-cross": {
       "codepoint": 61705,
       "source": "svg/circle-with-cross.svg"
@@ -94,6 +106,10 @@
       "codepoint": 61711,
       "source": "svg/dropbox.svg"
     },
+    "edge": {
+      "codepoint": 61813,
+      "source": "svg/edge.svg"
+    },
     "edit": {
       "codepoint": 61712,
       "source": "svg/edit.svg"
@@ -101,6 +117,10 @@
     "examples": {
       "codepoint": 61805,
       "source": "svg/examples.svg"
+    },
+    "explorer": {
+      "codepoint": 61814,
+      "source": "svg/explorer.svg"
     },
     "export": {
       "codepoint": 61713,
@@ -121,6 +141,10 @@
     "finder": {
       "codepoint": 61800,
       "source": "svg/finder.svg"
+    },
+    "firefox": {
+      "codepoint": 61815,
+      "source": "svg/firefox.svg"
     },
     "github": {
       "codepoint": 61717,
@@ -174,6 +198,10 @@
       "codepoint": 61729,
       "source": "svg/network.svg"
     },
+    "opera": {
+      "codepoint": 61816,
+      "source": "svg/opera.svg"
+    },
     "paper-plane": {
       "codepoint": 61730,
       "source": "svg/paper-plane.svg"
@@ -193,6 +221,10 @@
     "rss": {
       "codepoint": 61734,
       "source": "svg/rss.svg"
+    },
+    "safari": {
+      "codepoint": 61817,
+      "source": "svg/safari.svg"
     },
     "search": {
       "codepoint": 61801,
