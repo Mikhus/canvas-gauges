@@ -6,7 +6,6 @@ header:
 title: "<span class='icon-docs'></span> Documentation"
 subheadline: "Canvas Gauges Documentation Page"
 permalink: "/documentation/"
-teaser: "Here you may find different types of documentation depending on your needs:"
 userGuide:
   title: "User Guide"
   url: "/documentation/user-guide/"

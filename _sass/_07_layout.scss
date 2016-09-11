@@ -730,3 +730,19 @@ input.visible {
 .thanks *:focus {
     outline: none;
 }
+
+.frontpage-content {
+    h1,h2,h3,h4,h5 {
+        margin-top: 0;
+    }
+    .frontpage-widget {
+        margin-top: 30px;
+    }
+}
+
+.frontpage-widget {
+    .widget-icon {
+        background-color: #fff;
+        border-radius: 5px;
+    }
+}
