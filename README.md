@@ -8,7 +8,7 @@
 
 - [Installation](#installation)
 - [Documentation](#documentation)
-- [Special Thanks To](#special-thanks-to)
+- [Special Thanks](#special-thanks)
 - [License](#license)
 
 <!-- tocstop -->
@@ -35,7 +35,7 @@ To install only radial gauge, run:
 
 This strategy useful only if you need to minimize your code base and plan to use ONLY a specific gauge type. If you need to use various gauge types in your project it is recommended to use whole gauge package.
 
-[More...](http://mikhus.github.io/canv-gauge/documentation/user-guide/#installing)
+[More...](http://canvas-gauges.com/documentation/user-guide/#installing)
 
 ## Documentation
 
@@ -45,7 +45,7 @@ You can find complete docs on the canvas gauges web-site:
  * [Developer's Docs](http://canvas-gauges.com/documentation/api/)
  * [Examples](http://canvas-gauges.com/documentation/examples/)
 
-## Special Thanks To
+## Special Thanks
 
 [![Lohika](http://www.lohika.com/wp-content/themes/gridalicious/images/lohika_full.svg)](http://www.lohika.com/)
 
