@@ -30,9 +30,11 @@ There are plenty of options obtaining canvas gauges: downloading packages for lo
 
 ## Download Minified Packages
 
- * [All-in-one]({{site.url}}/download/latest/all/gauge.min.js)
- * [Only radial gauge]({{site.url}}/download/latest/radial/gauge.min.js)
- * [Only linear gauge]({{site.url}}/download/latest/linear/gauge.min.js)
+Use right-click and "Save link as..." to download minified packages to your local device. If you wish simply refer it from your code - it is possible, but much preferable to use [CDN](#loading-from-cdn) for this.
+
+ * [All-in-one]({{site.url}}/download/latest/all/gauge.min.js) ({{ site.data.releases.latest.all.kb }} Kb)
+ * [Only radial gauge]({{site.url}}/download/latest/radial/gauge.min.js) ({{ site.data.releases.latest.radial.kb }} Kb)
+ * [Only linear gauge]({{site.url}}/download/latest/linear/gauge.min.js) ({{ site.data.releases.latest.linear.kb }} Kb)
 
 ## Installing From NPM
 
