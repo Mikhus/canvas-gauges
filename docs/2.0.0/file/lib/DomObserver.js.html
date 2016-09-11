@@ -330,7 +330,9 @@ export default class DomObserver {
         instance = new (this.Type)(options);
         instance.draw &amp;&amp; instance.draw();
 
-        instance.observer = new MutationObserver(records =&gt; {
+        if (!this.isObservable) return instance;
+
+        instance.observer = new ns.MutationObserver(records =&gt; {
             records.forEach(record =&gt; {
                 if (record.type === &apos;attributes&apos;) {
                     let attr = record.attributeName.toLowerCase();
