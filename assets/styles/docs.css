@@ -16,7 +16,7 @@
 /* line 369, /home/mikhus/Projects/canv-gauge-site/_sass/_03_settings_mixins_media_queries.scss */
 body {
     background: #fdfdfd;
-    color: #111;
+    color: #555;
     padding: 0;
     margin: 0;
     font-family: "Lato", "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -1394,7 +1394,7 @@ abbr,
 acronym {
     text-transform: uppercase;
     font-size: 90%;
-    color: #111;
+    color: #555;
     cursor: help;
 }
 
