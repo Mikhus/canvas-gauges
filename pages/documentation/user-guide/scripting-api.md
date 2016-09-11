@@ -92,6 +92,8 @@ After the gauge object is instantiated and mapped with canvas element, it is req
 radial.draw();
 ~~~
 
+> Please, take into account that ```draw()``` method will not  re-render entire gauge for performance reasons. Actually the most elements which are not taking their part in animation will be drawn initially only once. By the way, sometimes it may be required to redraw gauge completely (for example if upseting some new font face to static gauge elements). In this case preferable way to draw a gauge is to use ```update()``` method call.
+
 ### Updating Values
 
 Of course, statically drawn gauge provides almost no benefits in comparison to statically drawn image. The power of gauges is that it is able to dynamically re-render itself when you changing the value. It is quite simple to do updating gauge ```value``` property.
@@ -106,9 +108,9 @@ gauge.value = 33.2;
 
 If animation is enabled on the gauge, when changing the value it will be executed. If animation is disabled - gauge will be simply re-drawn in one operation to display the new given value (visually it may look like "jumping").
 
-Gauges was designed and can be used to constantly display some changing values, for example which are regularly collected from some sensors or obtained from remote servers. It is up to you as developer to define is it require animation and animation params, like duration and animation rules. It may happen that values you get to display comes more often that animation duration. For gauge itself it is safe as newly started animation will not collapse with the previous one, but in such a case gauge may never show the exact value, but will actually display only it's trending changes. So it is up to developer to define this behavior properly and find correct timings. In some cases you may even need to reach those kind of effect.
+> Gauges was designed and can be used to constantly display some changing values, for example which are regularly collected from some sensors or obtained from remote servers. It is up to you as developer to define is it require animation and animation params, like duration and animation rules. It may happen that values you get to display comes more often that animation duration. For gauge itself it is safe as newly started animation will not collapse with the previous one, but in such a case gauge may never show the exact value, but will actually display only it's trending changes. So it is up to developer to define this behavior properly and find correct timings. In some cases you may even need to reach those kind of effect.
 
-### Re-configuring Gauges At Runtime
+### Re-Configuring And Re-Drawing Gauges At Runtime
 
 There are two ways re-configuring gauges at runtime:
 
@@ -141,6 +143,8 @@ By the way, the API call is more efficient way to update gauge config for severa
  - it does not modify DOM element, so it is more efficient in terms of performance.
 
 From other hand if you refer to a data-binding strategy it can break it. In this case, changing config options via attributes is more preferable.
+
+> Please, take into account that updating gauge value through ```update()``` API call or by changing HTML-attribute may cause performance issues as far as updating gauge config will result in complete redraw, instead of redrawing only animated elements.
 
 ### Gauge Interface Summary
 

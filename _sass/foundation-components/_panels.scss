@@ -12,7 +12,7 @@ $include-html-panel-classes: $include-html-classes !default;
 // We use these to control the background and border styles
 $panel-bg: scale-color($white, $lightness: -5%) !default;
 $panel-border-style: solid !default;
-$panel-border-size: 1px !default;
+$panel-border-size: 0px !default;
 
 // We use this % to control how much we darken things on hover
 $panel-function-factor: -11% !default;

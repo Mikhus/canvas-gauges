@@ -136,10 +136,10 @@ If you are targeting to a newest browser only it's not that hard to do. All you 
 ></canvas>
 <script>
 document.fonts.forEach(font => {
-    fontFace.loaded.then(() => {
+    font.loaded.then(() => {
         if (font.family === 'Orbitron') {
             let gauge =  document.gauges[0];
-            gauge.draw();
+            gauge.update();
             gauge.options.renderTo.style.visibility = 'visible';
         }
     });

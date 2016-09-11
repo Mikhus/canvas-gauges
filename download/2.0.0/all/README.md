@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/Mikhus/canvas-gauges.svg?branch=v2.0.0)](https://travis-ci.org/Mikhus/canvas-gauges) ![Test Coverage](https://rawgit.com/Mikhus/canvas-gauges/v2.0.0/test-coverage.svg) ![Documentation Coverage](https://rawgit.com/Mikhus/canvas-gauges/v2.0.0/docs-coverage.svg) [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/Mikhus/canvas-gauges/v2.0.0/LICENSE)
 
-[![Canvas Gauges](https://raw.githubusercontent.com/Mikhus/blob/master/gauges.png)](https://rawgit.com/Mikhus/canvas-gauges/v2.0.0/examples/component.html)
+[![Canvas Gauges](https://raw.githubusercontent.com/Mikhus/blob/master/gauges.png)](https://rawgit.com/Mikhus/canvas-gauges/v2.0.0/examples/radial-component.html)
 
 <!-- toc -->
 

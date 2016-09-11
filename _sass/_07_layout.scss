@@ -449,7 +449,7 @@ article ul li {
 }
 #header-home .row .middle * {
     color: $text-color;
-    text-shadow: 1px 1px 3px #eee;
+    text-shadow: 1px 1px 3px $grey-0;
 }
 
 .footer-icons li{
@@ -498,11 +498,11 @@ article ul li {
     text-align: center;
 }
 .tabs-container input:hover + label {
-    background: #eee;
+    background: $grey-0;
     color: #222;
 }
 .tabs-container input:checked + label {
-    background: #eee;
+    background: $grey-0;
     color: #444;
     position: relative;
     z-index: 6;
@@ -745,4 +745,12 @@ input.visible {
         background-color: #fff;
         border-radius: 5px;
     }
+}
+
+.panel, code, pre {
+    background-color: $grey-0 !important;
+
+    -webkit-border-radius: 0px !important;
+    -moz-border-radius: 0px !important;
+    border-radius: 0px !important;
 }
