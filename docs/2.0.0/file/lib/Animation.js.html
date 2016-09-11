@@ -331,9 +331,9 @@ export default class Animation {
     animate(draw, end) {
         //noinspection JSUnresolvedVariable
         const start = vendorize(&apos;animationStartTime&apos;) ||
-            ns.performance &amp;&amp; ns.performance.now ?
+            (ns.performance &amp;&amp; ns.performance.now ?
                 ns.performance.now() :
-                Date.now();
+                Date.now());
 
         draw = draw || this.draw;
         end = end || this.end;
