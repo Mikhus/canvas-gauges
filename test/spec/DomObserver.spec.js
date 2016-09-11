@@ -15,16 +15,21 @@ describe('DomObserver', () => {
             expect(DomObserver.parse('false')).equals(false);
         });
         it('should return an array if given comma-separated values', () => {
-            let arrNum = DomObserver.parse('1,2,3,4,5,6');
-            let arrStr = DomObserver.parse('aa,bb,cc,dd,ee');
+            let testData = {
+                '-40,-30,-20,-10,0,+10,+20,+30,+40,':
+                    ['-40','-30','-20','-10','0','+10','+20','+30','+40',''],
+                '1,2,3,4,5,6': ['1','2','3','4','5','6'],
+                'aa,bb,cc,dd,ee': ['aa','bb','cc','dd','ee'],
+                'aa.bb,cc.dd,dd.ee': ['aa.bb','cc.dd','dd.ee'],
+                '-1.05,a,+b.45,-d.12': ['-1.05','a','+b.45','-d.12']
+            };
 
-            expect(arrNum).to.be.an('array');
-            expect(arrNum.length).equals(6);
-            expect(arrNum).to.eql(['1','2','3','4','5','6']);
+            Object.keys(testData).forEach(key => {
+                let res = DomObserver.parse(key);
 
-            expect(arrStr).to.be.an('array');
-            expect(arrStr.length).equals(5);
-            expect(arrStr).to.eql(['aa','bb','cc','dd','ee']);
+                expect(res).to.be.an('array');
+                expect(res).to.eql(testData[key]);
+            });
 
             expect(DomObserver.parse('rgba(0,1,2,0.5)')).not.to.be.an('array');
         });

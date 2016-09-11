@@ -158,11 +158,11 @@ gulp.task('build:prod', done => {
 
             fsc.rm('../canvas-gauges-pages/download/' + version);
             fsc.cp('dist', '../canvas-gauges-pages/download/' + version, true);
-            fs.unlink('../canvas-gauges-pages/download/latest', () => {});
+            fsc.rm('../canvas-gauges-pages/download/latest');
             let latest = semver.maxSatisfying(
                 fsc.ls('../canvas-gauges-pages/download'), '*');
-            fs.symlinkSync(latest, '../canvas-gauges-pages/download/latest',
-                'dir');
+            fsc.cp('../canvas-gauges-pages/download/' + latest,
+                '../canvas-gauges-pages/download/latest');
 
             done();
         });
