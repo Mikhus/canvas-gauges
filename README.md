@@ -8,7 +8,7 @@
 
 - [Installation](#installation)
 - [Documentation](#documentation)
-- [Sponsored By](#sponsored-by)
+- [Special Thanks To](#special-thanks-to)
 - [License](#license)
 
 <!-- tocstop -->
@@ -45,9 +45,17 @@ You can find complete docs on the canvas gauges web-site:
  * [Developer's Docs](http://canvas-gauges.com/documentation/api/)
  * [Examples](http://canvas-gauges.com/documentation/examples/)
 
-## Sponsored By
+## Special Thanks To
 
 [![Lohika](http://www.lohika.com/wp-content/themes/gridalicious/images/lohika_full.svg)](http://www.lohika.com/)
+
+For supporting development!
+
+[![SauceLabs](http://info.saucelabs.com/rs/468-XBT-687/images/ink-logo.png)](http://saucelabs.com/)
+
+For testing support!
+
+And to all [contributors](https://github.com/Mikhus/canvas-gauges/graphs/contributors)!
 
 ## License
 
