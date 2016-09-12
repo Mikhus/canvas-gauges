@@ -730,7 +730,9 @@ input.visible {
 .thanks *:focus {
     outline: none;
 }
-
+.thanks .org {
+    padding: 10px;
+}
 .frontpage-content {
     h1,h2,h3,h4,h5 {
         margin-top: 0;
