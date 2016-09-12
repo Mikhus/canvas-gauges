@@ -692,7 +692,7 @@ input.visible {
 }
 
 .thanks ul.slick-dots {
-    padding:0;
+    padding:0 15px;
     margin:20px 0 0 0;
     text-align: left;
 }
@@ -730,7 +730,9 @@ input.visible {
 .thanks *:focus {
     outline: none;
 }
-
+.thanks .org {
+    padding:0 15px;
+}
 .frontpage-content {
     h1,h2,h3,h4,h5 {
         margin-top: 0;
