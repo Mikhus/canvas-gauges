@@ -69,7 +69,7 @@ Or you may simply clone git repository locally:
 
 There are more options obtaining canvas gauges. Please, follow [download]({{site.url}}/download/) page.
 
-If it is not enough for you, please, refer to our [creating custom bulds tutorial]({{site.url}}/documentation/user-guide/custom-builds)
+If it is not enough for you, please, refer to our [creating custom builds tutorial]({{site.url}}/documentation/user-guide/custom-builds)
 
 ## Configuring
 
