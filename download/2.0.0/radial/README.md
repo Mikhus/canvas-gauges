@@ -1,8 +1,8 @@
 # HTML Canvas Gauges v2.0
 
-[![Build Status](https://travis-ci.org/Mikhus/canvas-gauges.svg?branch=master)](https://travis-ci.org/Mikhus/canvas-gauges) ![Test Coverage](https://rawgit.com/Mikhus/canvas-gauges/test-coverage.svg) ![Documentation Coverage](https://rawgit.com/Mikhus/canvas-gauges/docs-coverage.svg) [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/Mikhus/canvas-gauges/LICENSE)
+[![Build Status](https://travis-ci.org/Mikhus/canvas-gauges.svg?branch=master)](https://travis-ci.org/Mikhus/canvas-gauges) ![Test Coverage](https://rawgit.com/Mikhus/canvas-gauges/master/test-coverage.svg) ![Documentation Coverage](https://rawgit.com/Mikhus/canvas-gauges/master/docs-coverage.svg) [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://rawgit.com/Mikhus/canvas-gauges/master/LICENSE)
 
-[![Canvas Gauges](https://raw.githubusercontent.com/Mikhus/blob/master/gauges.png)](https://rawgit.com/Mikhus/canvas-gauges/examples/radial-component.html)
+[![Canvas Gauges](https://raw.githubusercontent.com/Mikhus/blob/master/gauges.png)](https://rawgit.com/Mikhus/canvas-gauges/master/examples/radial-component.html)
 
 <!-- toc -->
 
@@ -59,4 +59,4 @@ And to all [contributors](https://github.com/Mikhus/canvas-gauges/graphs/contrib
 
 ## License
 
-This code is subject to [MIT](https://raw.githubusercontent.com/Mikhus/canvas-gauges/LICENSE) license.
+This code is subject to [MIT](https://rawgit.com/Mikhus/canvas-gauges/master/LICENSE) license.
