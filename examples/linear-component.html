@@ -1,0 +1,148 @@
+<!doctype html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Gauge Test</title>
+    <script src="../gauge.min.js"></script>
+</head>
+<body style="background:#222">
+
+<button onclick="animateGauges()">Animate</button>
+<button onclick="stopGaugesAnimation()">Stop animation</button>
+
+<hr>
+
+<canvas data-type="linear-gauge"
+        data-width="160"
+        data-height="600"
+        data-border-radius="20"
+        data-borders="0"
+        data-bar-stroke-width="20"
+        data-minor-ticks="10"
+        data-major-ticks="0,10,20,30,40,50,60,70,80,90,100"
+        data-value="22.3"
+        data-units="°C"
+        data-color-value-box-shadow="false"
+></canvas>
+
+<canvas data-type="linear-gauge"
+        data-width="160"
+        data-height="600"
+        data-border-radius="20"
+        data-borders="0"
+        data-bar-stroke-width="0"
+        data-minor-ticks="20"
+        data-animation-rule="cycle"
+        data-animation-duration="1000"
+        data-title="Temperature"
+        data-units="°C"
+        data-color-value-box-shadow="false"
+        data-animated-value="true"
+></canvas>
+
+<canvas data-type="linear-gauge"
+        data-width="160"
+        data-height="600"
+        data-border-radius="0"
+        data-borders="0"
+        data-bar-begin-circle="25"
+        data-minor-ticks="10"
+        data-value="36.6"
+        data-min-value="35"
+        data-max-value="42"
+        data-title="°C"
+        data-major-ticks="35,36,37,38,39,40,41,42"
+        data-ticks-width="18"
+        data-ticks-width-minor="7.5"
+        data-bar-width="5"
+        data-highlights="false"
+        data-color-value-box-shadow="false"
+        data-value-box-stroke="0"
+        data-color-value-box-background="false"
+        data-value-int="2"
+        data-value-dec="1"
+></canvas>
+
+<canvas data-type="linear-gauge"
+        data-width="160"
+        data-height="600"
+        data-border-radius="20"
+        data-borders="0"
+        data-bar-begin-circle="false"
+        data-title="Temperature"
+        data-units="°C"
+        data-minor-ticks="10"
+        data-value="99"
+        data-major-ticks="0,10,20,30,40,50,60,70,80,90,100"
+        data-tick-side="right"
+        data-number-side="right"
+        data-needle-side="right"
+        data-animation-rule="bounce"
+        data-animation-duration="750"
+        data-bar-stroke-width="5"
+        data-value-box-border-radius="0"
+        data-value-text-shadow="false"
+></canvas>
+
+<br>
+
+<canvas data-type="linear-gauge"
+        data-width="600"
+        data-height="160"
+        data-border-radius="0"
+        data-borders="0"
+        data-bar-begin-circle="false"
+        data-title="Temperature"
+        data-units="°C"
+        data-value="75.5"
+        data-bar-stroke-width="5"
+></canvas>
+
+<br>
+
+<canvas data-type="linear-gauge"
+        data-width="600"
+        data-height="160"
+        data-border-radius="20"
+        data-borders="0"
+        data-bar-stroke-width="0"
+        data-value="66.6"
+        data-tick-side="left"
+        data-number-side="left"
+        data-needle-side="left"
+        data-animation-rule="bounce"
+        data-animation-duration="750"
+        data-title="Temperature"
+        data-units="°C"
+></canvas>
+<script>
+if (!Array.prototype.forEach) {
+    Array.prototype.forEach = function(cb) {
+        var i = 0, s = this.length;
+        for (; i < s; i++) {
+            cb && cb(this[i], i, this);
+        }
+    }
+}
+
+var timers = [];
+
+function animateGauges() {
+    document.gauges.forEach(function(gauge) {
+        timers.push(setInterval(function() {
+            gauge.value = Math.random() *
+                (gauge.options.maxValue - gauge.options.minValue) +
+                gauge.options.minValue;
+        }, gauge.animation.duration + 500));
+    });
+}
+
+function stopGaugesAnimation() {
+    timers.forEach(function(timer) {
+        clearInterval(timer);
+    });
+}
+</script>
+
+</body>
+</html>

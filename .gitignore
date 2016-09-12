@@ -1,1 +1,9 @@
-.idea
+.idea/
+docs/
+coverage/
+node_modules/
+*.gz
+errorShots/
+*.log
+debug.js
+dist/

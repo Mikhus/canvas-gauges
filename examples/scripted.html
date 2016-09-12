@@ -1,0 +1,75 @@
+<!doctype html>
+<html style="width:100%;height:100%">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Gauge Test</title>
+    <script src="../gauge.min.js"></script>
+    <style>body{padding:0;margin:0;background:#222}</style>
+</head>
+<body style="width:100%;height:100%">
+<canvas id="gauge1"></canvas>
+<canvas id="gauge2"></canvas>
+<div id="console"></div>
+<script>
+new RadialGauge({
+    renderTo: 'gauge1',
+    width: 400,
+    height: 400,
+    units: 'Km/h',
+    title: false,
+    value: 0,
+    minValue: 0,
+    maxValue: 220,
+    majorTicks: [
+        '0','20','40','60','80','100','120','140','160','180','200','220'
+    ],
+    minorTicks: 2,
+    strokeTicks: false,
+    highlights: [
+        { from: 0, to: 50, color: 'rgba(0,255,0,.15)' },
+        { from: 50, to: 100, color: 'rgba(255,255,0,.15)' },
+        { from: 100, to: 150, color: 'rgba(255,30,0,.25)' },
+        { from: 150, to: 200, color: 'rgba(255,0,225,.25)' },
+        { from: 200, to: 220, color: 'rgba(0,0,255,.25)' }
+    ],
+    colorPlate: '#222',
+    colorMajorTicks: '#f5f5f5',
+    colorMinorTicks: '#ddd',
+    colorTitle: '#fff',
+    colorUnits: '#ccc',
+    colorNumbers: '#eee',
+    colorNeedle: 'rgba(240, 128, 128, 1)',
+    colorNeedleEnd: 'rgba(255, 160, 122, .9)',
+    valueBox: true,
+    animationRule: 'bounce',
+    animationDuration: 500
+}).draw();
+
+new RadialGauge({ renderTo: 'gauge2' }).draw();
+
+if (!window.addEventListener) {
+    window.addEventListener = function(evt, listener) {
+        window.attachEvent('on' + evt, listener);
+    };
+}
+if (!Array.prototype.forEach) {
+    Array.prototype.forEach = function(cb) {
+        var i = 0, s = this.length;
+        for (; i < s; i++) {
+            cb && cb(this[i], i, this);
+        }
+    }
+}
+// animage all gauges on a page
+window.addEventListener('load', function() {
+    document.gauges.forEach(function(gauge) {
+        setInterval(function() {
+            gauge.value = Math.random() *
+                (gauge.options.maxValue - gauge.options.minValue) +
+                gauge.options.minValue;
+        }, gauge.animation.duration + 500);
+    });
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,51 @@
+<!doctype html>
+<html style="width:100%;height:100%">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Gauge Test</title>
+    <script src="../gauge.min.js"></script>
+    <style>body{padding:0;margin:0;background:#222}</style>
+</head>
+
+<body style="width:100%;height:100%">
+
+<!-- customized gauge -->
+<canvas data-type="radial-gauge"
+        data-width="400"
+        data-glow="false"
+        data-height="400"
+        data-units="km/h"
+        data-title="speed"
+        data-value="22"
+        data-min-value="0"
+        data-max-value="220"
+        data-major-ticks="0,20,40,60,80,100,120,140,160,180,200,220"
+        data-minor-ticks="2"
+        data-stroke-ticks="false"
+        data-highlights='[
+            { "from": 0, "to": 50, "color": "rgba(0,255,0,.15)" },
+            { "from": 50, "to": 100, "color": "rgba(255,255,0,.15)" },
+            { "from": 100, "to": 150, "color": "rgba(255,30,0,.25)" },
+            { "from": 150, "to": 200, "color": "rgba(255,0,225,.25)" },
+            { "from": 200, "to": 220, "color": "rgba(0,0,255,.25)" }
+        ]'
+        data-color-plate="#222"
+        data-color-major-ticks="#f5f5f5"
+        data-color-minor-ticks="#ddd"
+        data-color-title="#666"
+        data-color-units="#666"
+        data-color-numbers="#eee"
+        data-color-needle-start="rgba(240, 128, 128, 1)"
+        data-color-needle-end="rgba(255, 160, 122, .9)"
+        data-value-box="true"
+        data-animation-rule="bounce"
+        data-animation-duration="500"
+        data-needle-shadow="false"
+></canvas>
+
+<!-- default gauge -->
+<canvas data-type="radial-gauge" data-width="200" data-height="200"></canvas>
+
+</body>
+</html>

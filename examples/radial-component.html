@@ -1,0 +1,216 @@
+<!doctype html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Gauge Test</title>
+    <link rel="stylesheet" href="../fonts/fonts.css">
+    <script src="../gauge.min.js"></script>
+    <style>canvas { visibility: hidden }</style>
+</head>
+<body style="background: #222">
+
+<button onclick="animateGauges()">Animate</button>
+<button onclick="stopGaugesAnimation()">Stop animation</button>
+
+<hr>
+
+<canvas data-type="radial-gauge"
+        data-width="400"
+        data-height="400"
+        data-units="Km/h"
+        data-title="false"
+        data-value="0"
+        data-min-value="0"
+        data-max-value="220"
+        data-major-ticks="0,20,40,60,80,100,120,140,160,180,200,220"
+        data-minor-ticks="2"
+        data-stroke-ticks="false"
+        data-highlights='[
+            { "from": 0, "to": 50, "color": "rgba(0,255,0,.15)" },
+            { "from": 50, "to": 100, "color": "rgba(255,255,0,.15)" },
+            { "from": 100, "to": 150, "color": "rgba(255,30,0,.25)" },
+            { "from": 150, "to": 200, "color": "rgba(255,0,225,.25)" },
+            { "from": 200, "to": 220, "color": "rgba(0,0,255,.25)" }
+        ]'
+        data-color-plate="#222"
+        data-color-major-ticks="#f5f5f5"
+        data-color-minor-ticks="#ddd"
+        data-color-title="#fff"
+        data-color-units="#ccc"
+        data-color-numbers="#eee"
+        data-color-needle-start="rgba(240, 128, 128, 1)"
+        data-color-needle-end="rgba(255, 160, 122, .9)"
+        data-value-box="true"
+        data-animation-rule="bounce"
+        data-animation-duration="500"
+        data-font-value="Led"
+        data-font-numbers="Led"
+        data-animated-value="true"
+></canvas>
+
+<canvas data-type="radial-gauge"
+        data-width="400"
+        data-height="400"
+        data-units="Km/h"
+        data-title="false"
+        data-value="0"
+        data-min-value="10"
+        data-max-value="210"
+        data-major-ticks="10,30,50,70,90,110,130,150,170,190,210"
+        data-minor-ticks="2"
+        data-stroke-ticks="true"
+        data-highlights='[{"from": 160, "to": 210, "color": "rgba(200, 50, 50, .75)"}]'
+        data-color-plate="#222"
+        data-color-major-ticks="#f5f5f5"
+        data-color-minor-ticks="#ddd"
+        data-color-title="#fff"
+        data-color-units="#ccc"
+        data-color-numbers="#eee"
+        data-color-needle-start="rgba(240, 128, 128, 1)"
+        data-color-needle-end="rgba(255, 160, 122, .9)"
+        data-value-box="true"
+        data-font-value="Led"
+        data-font-numbers="Led"
+        data-animated-value="true"
+        data-borders="false"
+        data-border-shadow-width="0"
+        data-needle-type="arrow"
+        data-needle-width="2"
+        data-needle-circle-size="7"
+        data-needle-circle-outer="true"
+        data-needle-circle-inner="false"
+        data-animation-duration="1500"
+        data-animation-rule="linear"
+        data-ticks-angle="250"
+        data-start-angle="55"
+        data-color-needle-shadow-down="#333"
+></canvas>
+
+<canvas data-type="radial-gauge"
+        data-width="400"
+        data-height="400"
+        data-min-value="0"
+        data-max-value="360"
+        data-major-ticks="N,NE,E,SE,S,SW,W,NW,N"
+        data-minor-ticks="22"
+        data-ticks-angle="360"
+        data-start-angle="180"
+        data-stroke-ticks="false"
+        data-highlights="false"
+        data-color-plate="#222"
+        data-color-major-ticks="#f5f5f5"
+        data-color-minor-ticks="#ddd"
+        data-color-numbers="#ccc"
+        data-color-needle="rgba(240, 128, 128, 1)"
+        data-color-needle-end="rgba(255, 160, 122, .9)"
+        data-value-box="false"
+        data-value-text-shadow="false"
+        data-color-circle-inner="#fff"
+        data-color-needle-circle-outer="#ccc"
+        data-needle-circle-size="15"
+        data-needle-circle-outer="false"
+        data-animation-rule="linear"
+        data-needle-type="line"
+        data-needle-start="75"
+        data-needle-end="99"
+        data-needle-width="3"
+        data-borders="true"
+        data-border-inner-width="0"
+        data-border-middle-width="0"
+        data-border-outer-width="10"
+        data-color-border-outer="#ccc"
+        data-color-border-outer-end="#ccc"
+        data-color-needle-shadow-down="#222"
+        data-border-shadow-width="0"
+        data-font-value="Led"
+></canvas>
+
+<canvas data-type="radial-gauge"
+        data-width="400"
+        data-height="400"
+        data-units="°C"
+        data-title="Temperature"
+        data-min-value="-50"
+        data-max-value="50"
+        data-major-ticks="[-50,-40,-30,-20,-10,0,10,20,30,40,50]"
+        data-minor-ticks="2"
+        data-stroke-ticks="true"
+        data-highlights='[
+                    {"from": -50, "to": 0, "color": "rgba(0,0, 255, .3)"},
+                    {"from": 0, "to": 50, "color": "rgba(255, 0, 0, .3)"}
+                ]'
+        data-ticks-angle="225"
+        data-start-angle="67.5"
+        data-color-major-ticks="#ddd"
+        data-color-minor-ticks="#ddd"
+        data-color-title="#eee"
+        data-color-units="#ccc"
+        data-color-numbers="#eee"
+        data-color-plate="#222"
+        data-border-shadow-width="0"
+        data-borders="true"
+        data-needle-type="arrow"
+        data-needle-width="2"
+        data-needle-circle-size="7"
+        data-needle-circle-outer="true"
+        data-needle-circle-inner="false"
+        data-animation-duration="1500"
+        data-animation-rule="linear"
+        data-color-border-outer="#333"
+        data-color-border-outer-end="#111"
+        data-color-border-middle="#222"
+        data-color-border-middle-end="#111"
+        data-color-border-inner="#111"
+        data-color-border-inner-end="#333"
+        data-color-needle-shadow-down="#333"
+        data-color-needle-circle-outer="#333"
+        data-color-needle-circle-outer-end="#111"
+        data-color-needle-circle-inner="#111"
+        data-color-needle-circle-inner-end="#222"
+        data-value-box-border-radius="0"
+        data-color-value-box-rect="#222"
+        data-color-value-box-rect-end="#333"
+        data-font-value="Led"
+></canvas>
+
+<script>
+if (!Array.prototype.forEach) {
+    Array.prototype.forEach = function(cb) {
+        var i = 0, s = this.length;
+        for (; i < s; i++) {
+            cb && cb(this[i], i, this);
+        }
+    }
+}
+
+document.fonts && document.fonts.forEach(function(font) {
+    font.loaded.then(function() {
+        if (font.family === 'Led') {
+            document.gauges.forEach(function(gauge) {
+                gauge.update();
+                gauge.options.renderTo.style.visibility = 'visible';
+            });
+        }
+    });
+});
+
+var timers = [];
+
+function animateGauges() {
+    document.gauges.forEach(function(gauge) {
+        timers.push(setInterval(function() {
+            gauge.value = Math.random() *
+                (gauge.options.maxValue - gauge.options.minValue) +
+                gauge.options.minValue;
+        }, gauge.animation.duration + 50));
+    });
+}
+
+function stopGaugesAnimation() {
+    timers.forEach(function(timer) {
+        clearInterval(timer);
+    });
+}
+</script>
+</body>
+</html>
