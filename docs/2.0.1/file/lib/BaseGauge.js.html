@@ -279,11 +279,11 @@ export default class BaseGauge {
     /**
      * Inject given gauge object into DOM
      *
-     * @param {string} Type
+     * @param {string} type
      * @param {GenericOptions} options
      */
-    static initialize(Type, options) {
-        new DomObserver(options, &apos;canvas&apos;, Type);
+    static initialize(type, options) {
+        new DomObserver(options, &apos;canvas&apos;, type);
     }
 }
 

@@ -100,7 +100,7 @@
  * SOFTWARE.
  */
 /**
- * @typedef {{ constructor: function(options: object): GaugeInterface, draw: function(): GaugeInterface }} GaugeInterface
+ * @typedef {{ constructor: function(options: GenericOptions): GaugeInterface, draw: function(): GaugeInterface, destroy: function, update: function(options: GenericOptions) }} GaugeInterface
  */
 /**
  * @typedef {{parse: function, stringify: function}} JSON
@@ -138,12 +138,12 @@ export default class DomObserver {
      * @constructor
      * @param {object} options
      * @param {string} element
-     * @param {string} Type
+     * @param {string} type
      */
-    constructor(options, element, Type) {
+    constructor(options, element, type) {
         //noinspection JSUnresolvedVariable
         /**
-         * Default instantiation options for the given Type
+         * Default instantiation options for the given type
          *
          * @type {Object}
          */
@@ -161,14 +161,14 @@ export default class DomObserver {
          *
          * @type {string}
          */
-        this.type = DomObserver.toDashed(Type);
+        this.type = DomObserver.toDashed(type);
 
         /**
          * Actual type constructor to instantiate for each found element
          *
          * @type {Function}
          */
-        this.Type = ns[Type];
+        this.Type = ns[type];
 
         /* istanbul ignore next: this should be tested with end-to-end tests */
         DomObserver.domReady(this.traverse.bind(this));

@@ -9612,7 +9612,7 @@
               "trailingComments": [
                 {
                   "type": "Block",
-                  "value": "*\n     * Inject given gauge object into DOM\n     *\n     * @param {string} Type\n     * @param {GenericOptions} options\n     ",
+                  "value": "*\n     * Inject given gauge object into DOM\n     *\n     * @param {string} type\n     * @param {GenericOptions} options\n     ",
                   "range": [
                     5228,
                     5355
@@ -9657,7 +9657,7 @@
                 "params": [
                   {
                     "type": "Identifier",
-                    "name": "Type",
+                    "name": "type",
                     "range": [
                       5378,
                       5382
@@ -9757,7 +9757,7 @@
                           },
                           {
                             "type": "Identifier",
-                            "name": "Type",
+                            "name": "type",
                             "range": [
                               5438,
                               5442
@@ -9856,7 +9856,7 @@
               "leadingComments": [
                 {
                   "type": "Block",
-                  "value": "*\n     * Inject given gauge object into DOM\n     *\n     * @param {string} Type\n     * @param {GenericOptions} options\n     ",
+                  "value": "*\n     * Inject given gauge object into DOM\n     *\n     * @param {string} type\n     * @param {GenericOptions} options\n     ",
                   "range": [
                     5228,
                     5355
@@ -10870,7 +10870,7 @@
     },
     {
       "type": "Block",
-      "value": "*\n     * Inject given gauge object into DOM\n     *\n     * @param {string} Type\n     * @param {GenericOptions} options\n     ",
+      "value": "*\n     * Inject given gauge object into DOM\n     *\n     * @param {string} type\n     * @param {GenericOptions} options\n     ",
       "range": [
         5228,
         5355
