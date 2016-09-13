@@ -170,7 +170,9 @@ gulp.task('build:prod', done => {
             let info = {};
 
             releases.forEach(release => {
-                info[release] = {};
+                info[release] = {
+                    name: release
+                };
 
                 types.forEach(type => {
                     info[release][type] = {
@@ -188,9 +190,6 @@ gulp.task('build:prod', done => {
                         (1024 * 1024 * 1024)).toFixed(1);
                 });
             });
-
-            info.latest = JSON.parse(JSON.stringify(info[latest]));
-            info.latest.ref = latest;
 
             fs.writeFileSync('../canvas-gauges-pages/_data/releases.json',
                 JSON.stringify(info, null, 2));
