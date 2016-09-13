@@ -146,7 +146,7 @@ gulp.task('build:prod', done => {
                 let v = version;
                 let entry = type === 'linear' ? './' : '../../';
 
-                if (cmd) cmd += '&& ';
+                if (cmd) cmd += ' && ';
 
                 cmd += 'cd ' + entry + 'dist/' + type;
 
@@ -154,7 +154,10 @@ gulp.task('build:prod', done => {
                 else v += '-' + type;
 
                 cmd += ' && npm publish';
-                cmd += ' && npm dist-tag add canvas-gauges@' + v + ' ' + type;
+
+                if (type !== 'latest')
+                    cmd += ' && npm dist-tag add canvas-gauges@' + v + ' ' +
+                        type;
             });
 
             console.log(chalk.grey(cmd));
