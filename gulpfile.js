@@ -140,7 +140,7 @@ gulp.task('build:prod', done => {
 
             console.log(chalk.bold.green('Production packages are now ready!'));
             console.log('To publish each production package, please run the ' +
-                'following commands:');
+                'following command:');
 
             types.reverse().forEach(type => {
                 let v = version;
