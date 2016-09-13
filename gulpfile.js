@@ -136,6 +136,7 @@ gulp.task('build:prod', done => {
             });
         })).then(() => {
             let version = require('./package.json').version;
+            let cmd = '';
 
             console.log(chalk.bold.green('Production packages are now ready!'));
             console.log('To publish each production package, please run the ' +
@@ -145,16 +146,18 @@ gulp.task('build:prod', done => {
                 let v = version;
                 let entry = type === 'linear' ? './' : '../../';
 
-                console.log(chalk.grey('cd ' + entry + 'dist/' + type));
+                if (cmd) cmd += '&& ';
+
+                cmd += 'cd ' + entry + 'dist/' + type;
 
                 if (type === 'all') type = 'latest';
                 else v += '-' + type;
 
-
-                console.log(chalk.grey('npm publish'));
-                console.log(chalk.grey('npm dist-tag add canvas-gauges@' +
-                    v + ' ' + type));
+                cmd += ' && npm publish';
+                cmd += ' && npm dist-tag add canvas-gauges@' + v + ' ' + type;
             });
+
+            console.log(chalk.grey(cmd));
 
             let dst = '../canvas-gauges-pages/download';
 
