@@ -77,7 +77,7 @@ function es6concat(type = 'all') {
  *
  * @task {help}
  */
-gulp.task('help', () => usage(gulp));
+gulp.task('help', () => usage(gulp, { emptyLineBetweenTasks: false }));
 
 /**
  * Builds production packages
