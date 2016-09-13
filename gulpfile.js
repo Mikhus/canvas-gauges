@@ -141,9 +141,9 @@ gulp.task('build:prod', done => {
             console.log('To publish each production package, please run the ' +
                 'following commands:');
 
-            types.forEach(type => {
+            types.reverse().forEach(type => {
                 let v = version;
-                let entry = type === 'all' ? './' : '../../';
+                let entry = type === 'linear' ? './' : '../../';
 
                 console.log(chalk.grey('cd ' + entry + 'dist/' + type));
 
