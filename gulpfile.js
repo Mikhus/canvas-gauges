@@ -189,7 +189,7 @@ gulp.task('build:prod', done => {
                 });
             });
 
-            info.latest = info[latest];
+            info.latest = JSON.parse(JSON.stringify(info[latest]));
             info.latest.ref = latest;
 
             fs.writeFileSync('../canvas-gauges-pages/_data/releases.json',
