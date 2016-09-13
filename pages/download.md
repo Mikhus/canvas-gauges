@@ -36,6 +36,8 @@ Use right-click and "Save link as..." to download minified packages to your loca
  * [Only radial gauge]({{site.url}}/download/latest/radial/gauge.min.js) ({{ site.data.releases.latest.radial.kb }} Kb)
  * [Only linear gauge]({{site.url}}/download/latest/linear/gauge.min.js) ({{ site.data.releases.latest.linear.kb }} Kb)
 
+[Older releases]({{site.url}}/old-releases/)
+
 ## Installing From NPM
 
  * All-in-one  

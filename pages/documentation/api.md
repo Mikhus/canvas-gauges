@@ -33,4 +33,4 @@ window.addEventListener('resize', function() {
     }, 200);
 });
 </script>
-<iframe id="docs-window" style="visibility:hidden;width:100%;height:100%" src="{{site.url}}/docs/2.0.0/identifiers.html" frameborder="0" onload="fitme(this)"></iframe>
+<iframe id="docs-window" style="visibility:hidden;width:100%;height:100%" src="{{site.url}}/docs/{{site.data.releases.latest.ref}}/identifiers.html" frameborder="0" onload="fitme(this)"></iframe>

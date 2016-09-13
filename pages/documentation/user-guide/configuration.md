@@ -281,5 +281,9 @@ Radial gauge controls has their specific customization options, which are enable
  - **needleCircleInner**: boolean flag, turns on/off inner decorative circle element drawing.
  - **needleCircleOuter**: boolean flag, turns on/off outer decorative circle element drawing.
 
+#### Animation Options
+
+ - **animationTarget**: defines which part of the gauge should be animated when changing the value. Could be one of 'needle' (default) or 'plate' values. When 'plate' is selected then gauge will animate ticks bar instead of animating the needle.
+
 </div><!-- /.medium-8.columns -->
 </div><!-- /.row -->

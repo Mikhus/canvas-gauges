@@ -201,6 +201,7 @@ table tbody tr td:nth-child(2) {
 | needleCircleSize | data-needle-circle-size | radial | number |
 | needleCircleInner | data-needle-circle-inner | radial | boolean |
 | needleCircleOuter | data-needle-circle-outer | radial | boolean |
+| animationTarget | data-animation-target | radial | string |
 
 Read more: [all configuration options]({{site.url}}/documentation/user-guide/configuration)
 
