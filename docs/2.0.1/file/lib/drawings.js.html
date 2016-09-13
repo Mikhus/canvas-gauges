@@ -309,7 +309,8 @@ export function drawValueBox(context, options, value, x, y, max) {
     context.lineWidth = 0;
     context.save();
 
-    context.font = 40 * (max / 200) + &apos;px &apos; + options.fontValue;
+    context.font = options.fontValueSize * (max / 200) + &apos;px &apos; +
+        options.fontValue;
     context.save();
     context.beginPath();
 

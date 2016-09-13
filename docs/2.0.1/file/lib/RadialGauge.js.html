@@ -427,7 +427,8 @@ function drawRadialNumbers(context, options) {
 
         points[angle] = true;
 
-        context.font = 20 * (context.max / 200) + &apos;px &apos; + options.fontNumbers;
+        context.font = options.fontNumbersSize *
+            (context.max / 200) + &apos;px &apos; + options.fontNumbers;
         context.fillStyle = options.colorNumbers;
         context.lineWidth = 0;
         context.textAlign = &apos;center&apos;;
@@ -449,7 +450,8 @@ function drawRadialTitle(context, options) {
     if (!options.title) return;
 
     context.save();
-    context.font = 24 * (context.max / 200) + &apos;px &apos; + options.fontTitle;
+    context.font = options.fontTitleSize *
+        (context.max / 200) + &apos;px &apos; + options.fontTitle;
     context.fillStyle = options.colorTitle;
     context.textAlign = &apos;center&apos;;
     context.fillText(options.title, 0, -context.max / 4.25, context.max * .8);
@@ -468,7 +470,8 @@ function drawRadialUnits(context, options) {
     if (!options.units) return;
 
     context.save();
-    context.font = 22 * (context.max / 200) + &apos;px &apos; + options.fontUnits;
+    context.font = options.fontUnitsSize *
+        (context.max / 200) + &apos;px &apos; + options.fontUnits;
     context.fillStyle = options.colorUnits;
     context.textAlign = &apos;center&apos;;
     context.fillText(options.units, 0, context.max / 3.25, context.max * .8);

@@ -109,7 +109,7 @@ const SmartCanvas = require(&apos;./SmartCanvas&apos;);
 /**
  * Linear gauge configuration options
  *
- * @typedef {GenericOptions|{orientation: string, borderRadius: number, barBeginCircle: number, barWidth: number, barStrokeWidth: number, barProgress: boolean, colorBar: string, colorBarEnd: string, colorBarStroke: string, colorBarProgress: string, colorBarProgressEnd: string, tickSide: string, needleSide: string, numberSide: string, ticksWidth: number, ticksWidthMinor: number, ticksPadding: number, barLength: number, fontNumbersSize: number, fontTitleSize: number, fontUnitsSize: number}} LinearGaugeOptions
+ * @typedef {GenericOptions|{orientation: string, borderRadius: number, barBeginCircle: number, barWidth: number, barStrokeWidth: number, barProgress: boolean, colorBar: string, colorBarEnd: string, colorBarStroke: string, colorBarProgress: string, colorBarProgressEnd: string, tickSide: string, needleSide: string, numberSide: string, ticksWidth: number, ticksWidthMinor: number, ticksPadding: number, barLength: number}} LinearGaugeOptions
  */
 
 const round = Math.round;
@@ -119,9 +119,6 @@ let TICKS_WIDTH = .1;
 let TICKS_WIDTH_MINOR = TICKS_WIDTH / 2;
 let TICKS_PADDING = .05;
 let BAR_LENGTH = .85;
-let FONT_NUMBERS = 20;
-let FONT_TITLE = 26;
-let FONT_UNITS = 22;
 
 /**
  * Default linear gauge configuration options
@@ -157,9 +154,7 @@ let defaultLinearGaugeOptions = Object.assign({}, GenericOptions, {
     ticksWidthMinor: TICKS_WIDTH_MINOR * 100,
     ticksPadding: TICKS_PADDING * 100,
     barLength: BAR_LENGTH * 100,
-    fontNumbersSize: FONT_NUMBERS * 100,
-    fontTitleSize: FONT_TITLE * 100,
-    fontUnitsSize: FONT_UNITS * 100
+    fontTitleSize: 26
 });
 
 /* istanbul ignore next: private, not testable */
@@ -730,7 +725,7 @@ function drawLinearMajorTicksNumbers(context, options) {
     let ticks = options.majorTicks.length;
     let hasLeft = options.numberSide !== &apos;right&apos;;
     let hasRight = options.numberSide !== &apos;left&apos;;
-    let textHeight = FONT_NUMBERS * width / 200;
+    let textHeight = options.fontNumbersSize * width / 200;
     let i = 0;
     let ticksWidth = (TICKS_WIDTH + TICKS_PADDING * 2) * width;
     let numLeft = (width - barWidth) / 2 - ticksWidth;
@@ -788,7 +783,7 @@ function drawLinearTitle(context, options) {
 
     let {isVertical, width, length, baseX, baseY, titleMargin} =
         context.barDimensions;
-    let textHeight = FONT_TITLE * width / 200;
+    let textHeight = options.fontTitleSize * width / 200;
     let textX = round(baseX + (isVertical ? width : length) / 2);
     let textY = round(baseY + titleMargin / 2 -
         (isVertical ? textHeight : textHeight / 2) -
@@ -814,7 +809,7 @@ function drawLinearUnits(context, options) {
 
     let {isVertical, width, length, baseX, baseY, unitsMargin} =
         context.barDimensions;
-    let textHeight = FONT_UNITS * width / 200;
+    let textHeight = options.fontUnitsSize * width / 200;
     let textX = round(baseX + (isVertical ? width : length) / 2);
     let textY = round(baseY + (isVertical ? length : width) +
         unitsMargin / 2 - textHeight / 2);
@@ -1085,10 +1080,6 @@ export default class LinearGauge extends BaseGauge {
             options.ticksWidthMinor / 100;
         if (options.ticksPadding) TICKS_PADDING = options.ticksPadding / 100;
         if (options.barLength) BAR_LENGTH = options.barLength / 100;
-        if (options.fontNumbersSize) FONT_NUMBERS =
-            options.fontNumbersSize / 100;
-        if (options.fontTitleSize) FONT_TITLE = options.fontTitleSize / 100;
-        if (options.fontUnitsSize) FONT_UNITS = options.fontUnitsSize / 100;
 
         /* istanbul ignore else */
         if (options.barStrokeWidth &gt;= options.barWidth) {
