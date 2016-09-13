@@ -407,7 +407,7 @@ function drawRadialNumbers(context, options) {
     let s = options.majorTicks.length;
     let isAnimated = options.animationTarget !== &apos;needle&apos;;
 
-    let plateValueAngle = isAnimated ? (options.value - options.minValue) /
+    let plateValueAngle = isAnimated ? -(options.value - options.minValue) /
         (options.maxValue - options.minValue) * options.ticksAngle : 0;
 
     if (isAnimated) {
@@ -713,7 +713,7 @@ export default class RadialGauge extends BaseGauge {
         }
 
         else {
-            let plateValueAngle = drawings.radians((
+            let plateValueAngle = -drawings.radians((
                 (options.value - options.minValue) /
                 (options.maxValue - options.minValue) * options.ticksAngle));
 

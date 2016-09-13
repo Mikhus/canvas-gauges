@@ -128,9 +128,20 @@
             };
             var src = $(this);
             var code = src.html().replace(/^\s+|\s+$/g, '');
+            var dom = $(code);
+            var doc = document.createDocumentFragment();
             var bodyOverflow = body[0].style.overflow;
             var boxHtml = tabs.find('.tab-html-content');
             var boxJs = tabs.find('.tab-js-content');
+
+            // filter code
+            doc.appendChild($('<div>')[0]);
+            dom.each(function() {
+                if (this.tagName && this.tagName.toLowerCase() === 'canvas') {
+                    doc.childNodes[0].appendChild(this);
+                }
+            });
+            code = doc.childNodes[0].innerHTML;
 
             tabs.find('*').each(function () {
                 this.onclick = function () {};

@@ -291,7 +291,11 @@ export default class BaseGauge {
 /**
  * @typedef {object} ns
  */
-(ns.document || ns)[&apos;gauges&apos;] = gauges;
+/* istanbul ignore if */
+if (typeof ns !== &apos;undefined&apos;) {
+    ns[&apos;BaseGauge&apos;] = BaseGauge;
+    (ns.document || ns)[&apos;gauges&apos;] = gauges;
+}
 
 module.exports = BaseGauge;
 </code></pre>

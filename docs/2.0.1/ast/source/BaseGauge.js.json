@@ -9943,6 +9943,24 @@
                 "column": 3
               }
             }
+          },
+          {
+            "type": "Block",
+            "value": " istanbul ignore if ",
+            "range": [
+              5487,
+              5511
+            ],
+            "loc": {
+              "start": {
+                "line": 219,
+                "column": 0
+              },
+              "end": {
+                "line": 219,
+                "column": 24
+              }
+            }
           }
         ]
       },
@@ -9998,129 +10016,13 @@
               "column": 3
             }
           }
-        }
-      ]
-    },
-    {
-      "type": "ExpressionStatement",
-      "expression": {
-        "type": "AssignmentExpression",
-        "operator": "=",
-        "left": {
-          "type": "MemberExpression",
-          "computed": true,
-          "object": {
-            "type": "LogicalExpression",
-            "operator": "||",
-            "left": {
-              "type": "MemberExpression",
-              "computed": false,
-              "object": {
-                "type": "Identifier",
-                "name": "ns",
-                "range": [
-                  5488,
-                  5490
-                ],
-                "loc": {
-                  "start": {
-                    "line": 219,
-                    "column": 1
-                  },
-                  "end": {
-                    "line": 219,
-                    "column": 3
-                  }
-                }
-              },
-              "property": {
-                "type": "Identifier",
-                "name": "document",
-                "range": [
-                  5491,
-                  5499
-                ],
-                "loc": {
-                  "start": {
-                    "line": 219,
-                    "column": 4
-                  },
-                  "end": {
-                    "line": 219,
-                    "column": 12
-                  }
-                }
-              },
-              "range": [
-                5488,
-                5499
-              ],
-              "loc": {
-                "start": {
-                  "line": 219,
-                  "column": 1
-                },
-                "end": {
-                  "line": 219,
-                  "column": 12
-                }
-              }
-            },
-            "right": {
-              "type": "Identifier",
-              "name": "ns",
-              "range": [
-                5503,
-                5505
-              ],
-              "loc": {
-                "start": {
-                  "line": 219,
-                  "column": 16
-                },
-                "end": {
-                  "line": 219,
-                  "column": 18
-                }
-              }
-            },
-            "range": [
-              5488,
-              5505
-            ],
-            "loc": {
-              "start": {
-                "line": 219,
-                "column": 1
-              },
-              "end": {
-                "line": 219,
-                "column": 18
-              }
-            }
-          },
-          "property": {
-            "type": "Literal",
-            "value": "gauges",
-            "raw": "'gauges'",
-            "range": [
-              5507,
-              5515
-            ],
-            "loc": {
-              "start": {
-                "line": 219,
-                "column": 20
-              },
-              "end": {
-                "line": 219,
-                "column": 28
-              }
-            }
-          },
+        },
+        {
+          "type": "Block",
+          "value": " istanbul ignore if ",
           "range": [
             5487,
-            5516
+            5511
           ],
           "loc": {
             "start": {
@@ -10129,55 +10031,408 @@
             },
             "end": {
               "line": 219,
-              "column": 29
+              "column": 24
             }
           }
-        },
-        "right": {
-          "type": "Identifier",
-          "name": "gauges",
+        }
+      ]
+    },
+    {
+      "type": "IfStatement",
+      "test": {
+        "type": "BinaryExpression",
+        "operator": "!==",
+        "left": {
+          "type": "UnaryExpression",
+          "operator": "typeof",
+          "argument": {
+            "type": "Identifier",
+            "name": "ns",
+            "range": [
+              5523,
+              5525
+            ],
+            "loc": {
+              "start": {
+                "line": 220,
+                "column": 11
+              },
+              "end": {
+                "line": 220,
+                "column": 13
+              }
+            }
+          },
+          "prefix": true,
           "range": [
-            5519,
+            5516,
             5525
           ],
           "loc": {
             "start": {
-              "line": 219,
-              "column": 32
+              "line": 220,
+              "column": 4
             },
             "end": {
-              "line": 219,
-              "column": 38
+              "line": 220,
+              "column": 13
+            }
+          }
+        },
+        "right": {
+          "type": "Literal",
+          "value": "undefined",
+          "raw": "'undefined'",
+          "range": [
+            5530,
+            5541
+          ],
+          "loc": {
+            "start": {
+              "line": 220,
+              "column": 18
+            },
+            "end": {
+              "line": 220,
+              "column": 29
             }
           }
         },
         "range": [
-          5487,
-          5525
+          5516,
+          5541
         ],
         "loc": {
           "start": {
-            "line": 219,
-            "column": 0
+            "line": 220,
+            "column": 4
           },
           "end": {
-            "line": 219,
-            "column": 38
+            "line": 220,
+            "column": 29
           }
         }
       },
+      "consequent": {
+        "type": "BlockStatement",
+        "body": [
+          {
+            "type": "ExpressionStatement",
+            "expression": {
+              "type": "AssignmentExpression",
+              "operator": "=",
+              "left": {
+                "type": "MemberExpression",
+                "computed": true,
+                "object": {
+                  "type": "Identifier",
+                  "name": "ns",
+                  "range": [
+                    5549,
+                    5551
+                  ],
+                  "loc": {
+                    "start": {
+                      "line": 221,
+                      "column": 4
+                    },
+                    "end": {
+                      "line": 221,
+                      "column": 6
+                    }
+                  }
+                },
+                "property": {
+                  "type": "Literal",
+                  "value": "BaseGauge",
+                  "raw": "'BaseGauge'",
+                  "range": [
+                    5552,
+                    5563
+                  ],
+                  "loc": {
+                    "start": {
+                      "line": 221,
+                      "column": 7
+                    },
+                    "end": {
+                      "line": 221,
+                      "column": 18
+                    }
+                  }
+                },
+                "range": [
+                  5549,
+                  5564
+                ],
+                "loc": {
+                  "start": {
+                    "line": 221,
+                    "column": 4
+                  },
+                  "end": {
+                    "line": 221,
+                    "column": 19
+                  }
+                }
+              },
+              "right": {
+                "type": "Identifier",
+                "name": "BaseGauge",
+                "range": [
+                  5567,
+                  5576
+                ],
+                "loc": {
+                  "start": {
+                    "line": 221,
+                    "column": 22
+                  },
+                  "end": {
+                    "line": 221,
+                    "column": 31
+                  }
+                }
+              },
+              "range": [
+                5549,
+                5576
+              ],
+              "loc": {
+                "start": {
+                  "line": 221,
+                  "column": 4
+                },
+                "end": {
+                  "line": 221,
+                  "column": 31
+                }
+              }
+            },
+            "range": [
+              5549,
+              5577
+            ],
+            "loc": {
+              "start": {
+                "line": 221,
+                "column": 4
+              },
+              "end": {
+                "line": 221,
+                "column": 32
+              }
+            }
+          },
+          {
+            "type": "ExpressionStatement",
+            "expression": {
+              "type": "AssignmentExpression",
+              "operator": "=",
+              "left": {
+                "type": "MemberExpression",
+                "computed": true,
+                "object": {
+                  "type": "LogicalExpression",
+                  "operator": "||",
+                  "left": {
+                    "type": "MemberExpression",
+                    "computed": false,
+                    "object": {
+                      "type": "Identifier",
+                      "name": "ns",
+                      "range": [
+                        5583,
+                        5585
+                      ],
+                      "loc": {
+                        "start": {
+                          "line": 222,
+                          "column": 5
+                        },
+                        "end": {
+                          "line": 222,
+                          "column": 7
+                        }
+                      }
+                    },
+                    "property": {
+                      "type": "Identifier",
+                      "name": "document",
+                      "range": [
+                        5586,
+                        5594
+                      ],
+                      "loc": {
+                        "start": {
+                          "line": 222,
+                          "column": 8
+                        },
+                        "end": {
+                          "line": 222,
+                          "column": 16
+                        }
+                      }
+                    },
+                    "range": [
+                      5583,
+                      5594
+                    ],
+                    "loc": {
+                      "start": {
+                        "line": 222,
+                        "column": 5
+                      },
+                      "end": {
+                        "line": 222,
+                        "column": 16
+                      }
+                    }
+                  },
+                  "right": {
+                    "type": "Identifier",
+                    "name": "ns",
+                    "range": [
+                      5598,
+                      5600
+                    ],
+                    "loc": {
+                      "start": {
+                        "line": 222,
+                        "column": 20
+                      },
+                      "end": {
+                        "line": 222,
+                        "column": 22
+                      }
+                    }
+                  },
+                  "range": [
+                    5583,
+                    5600
+                  ],
+                  "loc": {
+                    "start": {
+                      "line": 222,
+                      "column": 5
+                    },
+                    "end": {
+                      "line": 222,
+                      "column": 22
+                    }
+                  }
+                },
+                "property": {
+                  "type": "Literal",
+                  "value": "gauges",
+                  "raw": "'gauges'",
+                  "range": [
+                    5602,
+                    5610
+                  ],
+                  "loc": {
+                    "start": {
+                      "line": 222,
+                      "column": 24
+                    },
+                    "end": {
+                      "line": 222,
+                      "column": 32
+                    }
+                  }
+                },
+                "range": [
+                  5582,
+                  5611
+                ],
+                "loc": {
+                  "start": {
+                    "line": 222,
+                    "column": 4
+                  },
+                  "end": {
+                    "line": 222,
+                    "column": 33
+                  }
+                }
+              },
+              "right": {
+                "type": "Identifier",
+                "name": "gauges",
+                "range": [
+                  5614,
+                  5620
+                ],
+                "loc": {
+                  "start": {
+                    "line": 222,
+                    "column": 36
+                  },
+                  "end": {
+                    "line": 222,
+                    "column": 42
+                  }
+                }
+              },
+              "range": [
+                5582,
+                5620
+              ],
+              "loc": {
+                "start": {
+                  "line": 222,
+                  "column": 4
+                },
+                "end": {
+                  "line": 222,
+                  "column": 42
+                }
+              }
+            },
+            "range": [
+              5582,
+              5621
+            ],
+            "loc": {
+              "start": {
+                "line": 222,
+                "column": 4
+              },
+              "end": {
+                "line": 222,
+                "column": 43
+              }
+            }
+          }
+        ],
+        "range": [
+          5543,
+          5623
+        ],
+        "loc": {
+          "start": {
+            "line": 220,
+            "column": 31
+          },
+          "end": {
+            "line": 223,
+            "column": 1
+          }
+        }
+      },
+      "alternate": null,
       "range": [
-        5487,
-        5526
+        5512,
+        5623
       ],
       "loc": {
         "start": {
-          "line": 219,
+          "line": 220,
           "column": 0
         },
         "end": {
-          "line": 219,
-          "column": 39
+          "line": 223,
+          "column": 1
         }
       },
       "leadingComments": [
@@ -10198,6 +10453,24 @@
               "column": 3
             }
           }
+        },
+        {
+          "type": "Block",
+          "value": " istanbul ignore if ",
+          "range": [
+            5487,
+            5511
+          ],
+          "loc": {
+            "start": {
+              "line": 219,
+              "column": 0
+            },
+            "end": {
+              "line": 219,
+              "column": 24
+            }
+          }
         }
       ]
     },
@@ -10213,16 +10486,16 @@
             "type": "Identifier",
             "name": "module",
             "range": [
-              5528,
-              5534
+              5625,
+              5631
             ],
             "loc": {
               "start": {
-                "line": 221,
+                "line": 225,
                 "column": 0
               },
               "end": {
-                "line": 221,
+                "line": 225,
                 "column": 6
               }
             }
@@ -10231,31 +10504,31 @@
             "type": "Identifier",
             "name": "exports",
             "range": [
-              5535,
-              5542
+              5632,
+              5639
             ],
             "loc": {
               "start": {
-                "line": 221,
+                "line": 225,
                 "column": 7
               },
               "end": {
-                "line": 221,
+                "line": 225,
                 "column": 14
               }
             }
           },
           "range": [
-            5528,
-            5542
+            5625,
+            5639
           ],
           "loc": {
             "start": {
-              "line": 221,
+              "line": 225,
               "column": 0
             },
             "end": {
-              "line": 221,
+              "line": 225,
               "column": 14
             }
           }
@@ -10264,46 +10537,46 @@
           "type": "Identifier",
           "name": "BaseGauge",
           "range": [
-            5545,
-            5554
+            5642,
+            5651
           ],
           "loc": {
             "start": {
-              "line": 221,
+              "line": 225,
               "column": 17
             },
             "end": {
-              "line": 221,
+              "line": 225,
               "column": 26
             }
           }
         },
         "range": [
-          5528,
-          5554
+          5625,
+          5651
         ],
         "loc": {
           "start": {
-            "line": 221,
+            "line": 225,
             "column": 0
           },
           "end": {
-            "line": 221,
+            "line": 225,
             "column": 26
           }
         }
       },
       "range": [
-        5528,
-        5555
+        5625,
+        5652
       ],
       "loc": {
         "start": {
-          "line": 221,
+          "line": 225,
           "column": 0
         },
         "end": {
-          "line": 221,
+          "line": 225,
           "column": 27
         }
       }
@@ -10312,7 +10585,7 @@
   "sourceType": "module",
   "range": [
     0,
-    5555
+    5652
   ],
   "loc": {
     "start": {
@@ -10320,7 +10593,7 @@
       "column": 0
     },
     "end": {
-      "line": 221,
+      "line": 225,
       "column": 27
     }
   },
@@ -10628,6 +10901,24 @@
         "end": {
           "line": 218,
           "column": 3
+        }
+      }
+    },
+    {
+      "type": "Block",
+      "value": " istanbul ignore if ",
+      "range": [
+        5487,
+        5511
+      ],
+      "loc": {
+        "start": {
+          "line": 219,
+          "column": 0
+        },
+        "end": {
+          "line": 219,
+          "column": 24
         }
       }
     }
