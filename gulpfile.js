@@ -192,6 +192,7 @@ gulp.task('build:prod', done => {
             });
 
             info.latest = JSON.parse(JSON.stringify(info[latest]));
+            info.latest.isLatest = true;
 
             fs.writeFileSync('../canvas-gauges-pages/_data/releases.json',
                 JSON.stringify(info, null, 2));
