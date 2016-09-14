@@ -1,6 +1,5 @@
 ---
 layout: frontpage
-header: no
 permalink: /index.html
 homepage: true
 userGuide:
