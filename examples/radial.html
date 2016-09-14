@@ -70,10 +70,9 @@ if (!Array.prototype.forEach) {
 
 document.fonts && document.fonts.forEach(function(font) {
     font.loaded.then(function() {
-        if (font.family === 'Led') {
+        if (font.family.match(/Led/)) {
             document.gauges.forEach(function(gauge) {
                 gauge.update();
-                gauge.options.renderTo.style.visibility = 'visible';
             });
         }
     });

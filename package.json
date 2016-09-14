@@ -13,7 +13,8 @@
     "build": "./node_modules/.bin/gulp build --silent",
     "doc": "npm run toc && ./node_modules/.bin/gulp doc --silent",
     "commit": "npm run build && npm run doc && npm test && ./node_modules/.bin/gulp build:prod && git add --all . && git commit",
-    "toc": "./node_modules/.bin/markdown-toc -i README.md"
+    "toc": "./node_modules/.bin/markdown-toc -i README.md",
+    "build:all": "npm run build && npm run doc && npm run test:headless && ./node_modules/.bin/gulp build:prod"
   },
   "repository": {
     "type": "git",
