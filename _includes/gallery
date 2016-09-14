@@ -21,8 +21,6 @@
 *
 *   {% include gallery %}
 *
-*   Check out the example page › http://phlow.github.io/feeling-responsive/design/gallery/
-*
 {% endcomment %}
 <div>
 	<ul class="clearing-thumbs small-block-grid-4" data-clearing>
