@@ -1,4 +1,4 @@
-(function() {
+!function() {
     'use strict';
 
     function animateGauge(gauge) {
@@ -221,17 +221,23 @@
         });
 
         $(document).ready(function () {
-            document.gauges.forEach(function (gauge) {
-                var animateHandler = function () { animateGauge(gauge); };
-                var stopHandler = function () { stopGauge(gauge); };
+            setTimeout(function() {
+                document.gauges.forEach(function (gauge) {
+                    var animateHandler = function () {
+                        animateGauge(gauge);
+                    };
+                    var stopHandler = function () {
+                        stopGauge(gauge);
+                    };
 
-                $(gauge.options.renderTo)
-                    .on('mouseover', animateHandler)
-                    .on('mouseout', stopHandler)
-                    .on('touchstart', animateHandler)
-                    .on('touchend', stopHandler)
-                    .attr('title', 'Click me to get my code!');
-            });
+                    $(gauge.options.renderTo)
+                        .on('mouseover', animateHandler)
+                        .on('mouseout', stopHandler)
+                        .on('touchstart', animateHandler)
+                        .on('touchend', stopHandler)
+                        .attr('title', 'Click me to get my code!');
+                });
+            }, 100);
         });
-    } catch (e) {}
-}());
+    } catch (e) {console.error(e);}
+}();

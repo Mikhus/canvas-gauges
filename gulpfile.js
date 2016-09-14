@@ -3,7 +3,7 @@ const concat = require('gulp-concat');
 const uglify = require('gulp-uglify');
 const sourcemaps = require('gulp-sourcemaps');
 
-gulp.task('default', () => {
+gulp.task('default', done => {
     gulp.src([
             'assets/js/javascript.min.js',
             'assets/js/modernizr.js',
@@ -16,5 +16,6 @@ gulp.task('default', () => {
         .pipe(concat('bundle.js'))
         .pipe(uglify())
         .pipe(sourcemaps.write('.'))
-        .pipe(gulp.dest('assets/js'));
+        .pipe(gulp.dest('assets/js'))
+        .on('end', () => done());
 });
