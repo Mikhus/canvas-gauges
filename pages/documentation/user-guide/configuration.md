@@ -138,6 +138,7 @@ Animations on the gauge can be turned on or off. Whenever the animation is turne
  - **animationDuration**: time in milliseconds of the animation duration.
  - **animationRule**: defines a type of animation behavior for the gauge. Canvas gauges already knows the most used types of animation rules or you can define your own animation rule providing the animation rule function within this option. Known rules could be bypassed as string names, which are: *"linear", "quad", "quint", "cycle", "bounce", "elastic"* and their opposites: *"dequad", "dequint", "decycle", "debounce", "delastic"*.
  - **animatedValue**: boolean flag specifies if a value displayed in a value box of the gauge should be constantly updated during animation run. By default it is falsy, so the upset gauge value will be shown immediately and animation will run visually only on the gauge needle or progress bar.
+ - **animateOnInit**: boolean flag, which specifies if gauge should be animated on the first draw, by default is false.
 
 ### Coloring Options
 

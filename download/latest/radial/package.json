@@ -1,6 +1,6 @@
 {
   "name": "canvas-gauges",
-  "version": "2.0.1-radial",
+  "version": "2.1.0-radial",
   "description": "Minimalistic HTML5 Canvas Gauges",
   "main": "gauge.min.js",
   "repository": {
