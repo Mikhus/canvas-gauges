@@ -1,6 +1,4 @@
-<script src="{{site.url}}/assets/js/gauge.min.js"></script>
-<script src="{{ url }}/assets/js/jquery-3.1.0.min.js"></script>
-<script src="{{ url }}/assets/js/modernizr.min.js"></script>
+<script src="{{ url }}/assets/js/bundle.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.5.18/webfont.js"></script>
 <script>
     WebFont.load({
@@ -14,7 +12,6 @@
     <link href='http://fonts.googleapis.com/css?family=Lato:400,700,400italic%7CVolkhov' rel='stylesheet' type='text/css'>
 </noscript>
 
-<script src="{{ url }}/assets/js/slick.min.js"></script>
 <script>
 $('.orgs').slick({
     dots: true,
@@ -24,48 +21,39 @@ $('.orgs').slick({
     autoplay: true,
     autoplaySpeed: 7000
 });
-</script>
-
-{% if page.examples == true %}
-<script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
-<script src="/assets/js/code-sample.js"></script>
-{% endif %}
 
 {% if page.header == NULL and page.header.image_fullwidth == NULL and page.header.pattern == NULL and page.header.background-color == NULL and page.header.title == NULL %}
-<script>
-    function animateGauge(gauge) {
-        gauge.timer = setInterval(function() {
-            gauge.value = Math.random() *
-                    (gauge.options.maxValue - gauge.options.minValue) +
-                    gauge.options.minValue;
-        }, gauge.animation.duration + 50);
-    }
-    function stopGauge(gauge) {
-        clearInterval(gauge.timer);
-        delete gauge.timer;
-    }
-    $('.gauges canvas').on('mouseover', function() {
-        $(this).attr('data-color-border-shadow', '#000')
-                .attr('data-color-numbers', '#333')
-                .attr('data-color-major-ticks', '#333');
-        animateGauge(document.gauges.get($(this).attr('id')));
-    }).on('mouseout', function() {
-        $(this).attr('data-color-border-shadow', 'transparent')
-                .attr('data-color-numbers', '#777')
-                .attr('data-color-major-ticks', '#777');
-        stopGauge(document.gauges.get($(this).attr('id')));
-    });
-</script>
+
+function animateGauge(gauge) {
+    gauge.timer = setInterval(function() {
+        gauge.value = Math.random() *
+                (gauge.options.maxValue - gauge.options.minValue) +
+                gauge.options.minValue;
+    }, gauge.animation.duration + 50);
+}
+function stopGauge(gauge) {
+    clearInterval(gauge.timer);
+    delete gauge.timer;
+}
+$('.gauges canvas').on('mouseover', function() {
+    $(this).attr('data-color-border-shadow', '#000')
+            .attr('data-color-numbers', '#333')
+            .attr('data-color-major-ticks', '#333');
+    animateGauge(document.gauges.get($(this).attr('id')));
+}).on('mouseout', function() {
+    $(this).attr('data-color-border-shadow', 'transparent')
+            .attr('data-color-numbers', '#777')
+            .attr('data-color-major-ticks', '#777');
+    stopGauge(document.gauges.get($(this).attr('id')));
+});
 {% endif %}
+</script>
 
 {% if page.mediaplayer == true %}
 <script>
 $('audio,video').mediaelementplayer();
 </script>
 {% endif %}
-
-
-<script src="{{ site.url }}{{ site.baseurl }}/assets/js/javascript.min.js"></script>
 
 
 {% if page.header.image_fullwidth %}

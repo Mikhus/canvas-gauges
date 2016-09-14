@@ -1,0 +1,31 @@
+{
+  "name": "canvas-gauges-pages",
+  "version": "1.0.0",
+  "description": "You may visit this site at [canvas-gauges.com](http://canvas-gauges.com/)",
+  "dependencies": {},
+  "devDpendencies": {
+    "gulp": "^3.9.1",
+    "gulp-concat": "^2.6.0",
+    "gulp-uglify": "^2.0.0",
+    "gulp-sourcemaps": "^1.6.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Mikhus/canvas-gauges.git"
+  },
+  "author": "Mykhailo Stadnyk <mikhus@gmail.com>",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/Mikhus/canvas-gauges/issues"
+  },
+  "homepage": "https://github.com/Mikhus/canvas-gauges#readme",
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-concat": "^2.6.0",
+    "gulp-sourcemaps": "^1.6.0",
+    "gulp-uglify": "^2.0.0"
+  }
+}
