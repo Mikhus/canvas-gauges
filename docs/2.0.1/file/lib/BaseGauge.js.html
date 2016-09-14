@@ -189,11 +189,11 @@ export default class BaseGauge {
      * @param {number} value
      */
     set value(value) {
+        let fromValue = this.options.value;
+
         if (value === this.options.value) return;
 
         if (this.options.animation) {
-            let fromValue = this.options.value;
-
             /**
              * @type {number}
              * @access private

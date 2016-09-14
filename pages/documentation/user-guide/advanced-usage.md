@@ -137,7 +137,8 @@ If you are targeting to a newest browser only it's not that hard to do. All you 
 <script>
 document.fonts.forEach(font => {
     font.loaded.then(() => {
-        if (font.family === 'Orbitron') {
+        // using match, because in FF it contains quote marks
+        if (font.family.match(/Orbitron/)) {
             let gauge =  document.gauges[0];
             gauge.update();
             gauge.options.renderTo.style.visibility = 'visible';

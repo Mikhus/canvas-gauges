@@ -32,7 +32,7 @@
       "expectCount": 4,
       "actualCount": 3,
       "undocumentLines": [
-        1045
+        1026
       ]
     },
     "lib/RadialGauge.js": {
@@ -49,7 +49,7 @@
       "expectCount": 8,
       "actualCount": 7,
       "undocumentLines": [
-        293
+        301
       ]
     },
     "lib/vendorize.js": {

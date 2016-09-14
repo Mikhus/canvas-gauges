@@ -257,10 +257,18 @@ export function radialPoint(radius, angle) {
  * @param {string} colorFrom
  * @param {string} colorTo
  * @param {number} length
+ * @param {boolean} [isVertical]
+ * @param {number} [from]
  * @returns {CanvasGradient}
  */
-export function linearGradient(context, colorFrom, colorTo, length) {
-    let grad = context.createLinearGradient(0, 0, 0, length);
+export function linearGradient(context, colorFrom, colorTo, length,
+                               isVertical = true, from = 0)
+{
+    let grad = context.createLinearGradient(
+        isVertical ? 0 : from,
+        isVertical ? from : 0,
+        isVertical ? 0 : length,
+        isVertical ? length : 0);
 
     grad.addColorStop(0, colorFrom);
     grad.addColorStop(1, colorTo);

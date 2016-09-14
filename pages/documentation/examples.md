@@ -32,11 +32,15 @@ Compass wanted?
 {% include examples/compass.html %}
 
 
-## Other Custom Views
+## Other Custom Radial Gauges
 
 A bit more custom views:
 
-{% include examples/borders-colors.html %}
+{% include examples/radial-gauges.html %}
+
+## Other Custom Linear Gauges
+
+{% include examples/linear-gauges.html %}
 
 
 <script src="/assets/js/code-sample.js"></script>

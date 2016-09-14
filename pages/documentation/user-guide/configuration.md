@@ -144,6 +144,7 @@ Animations on the gauge can be turned on or off. Whenever the animation is turne
 Canvas gauge provides highly customizable coloring options for the majority of gauge elements. Each color configuration is usually a string value representing the color in one of HEX (#000000-#FFFFFF), RGB (rgb(0, 0, 0)-rgb(255,255,255)) or RGBA (rgba(0,0,0,0)-rgba(255,255,255,1)) formats. Some elements supports gradients. In this case the color of an element could be configured as color start and color end parts.
 
  - **colorPlate**: defines background color of the gauge plate.
+ - **colorPlateEnd**: if specified wil use gradient fill for the plate.
  - **colorMajorTicks**: color of the major ticks lines (also applied to stroke if *strokeTicks* option is true). 
  - **colorMinorTicks**: color of the minor ticks lines.
  - **colorTitle**: color of the title text.
@@ -208,6 +209,10 @@ Canvas gauges enables use of custom fonts when drawing text elements. As far as 
  - **fontTitle**: specifies font family for title text.
  - **fontUnits**: specifies font family for units text.
  - **fontValue**: specifies font-family for value box text.
+ - **fontNumbersSize**: Size of the font for tick numbers in relative units.
+ - **fontTitleSize**: Size of the font for title element text in relative units.
+ - **fontUnitsSize**: Size of the font for units element text in relative units.
+ - **fontValueSize**: Size of the font using for drawing value in value box.
 
 ## Gauge-Specific Configuration Options
 
@@ -252,12 +257,6 @@ Horizontal gauge drawing has a limitation of drawing value box. In this orientat
  - **ticksWidth**: defines a length of major ticks width (and width of ticks bar overall) in relative units.
  - **ticksWidthMinor**: defines a length of minor tick lines in relative units.
  - **ticksPadding**: defines a padding used for drawing ticks out of a bar, in relative units.
- 
-#### Fonts Options
-
- - **fontNumbersSize**: Size of the font for tick numbers in relative units.
- - **fontTitleSize**: Size of the font for title element text in relative units.
- - **fontUnitsSize**: Size of the font for units element text in relative units.
 
 ### Radial Gauge Options
 
