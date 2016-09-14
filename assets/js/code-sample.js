@@ -221,7 +221,7 @@
         });
 
         $(document).ready(function () {
-            setTimeout(function() {
+            window.examplePage && setTimeout(function() {
                 document.gauges.forEach(function (gauge) {
                     var animateHandler = function () {
                         animateGauge(gauge);
