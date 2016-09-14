@@ -1,3 +1,4 @@
+<script src="{{site.url}}/assets/js/gauge.min.js"></script>
 <script src="{{ url }}/assets/js/jquery-3.1.0.min.js"></script>
 <script src="{{ url }}/assets/js/modernizr.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.5.18/webfont.js"></script>
@@ -24,6 +25,11 @@ $('.orgs').slick({
     autoplaySpeed: 7000
 });
 </script>
+
+{% if page.examples %}
+<script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+<script src="/assets/js/code-sample.js"></script>
+{% endif %}
 
 {% if page.header == NULL and page.header.image_fullwidth == NULL and page.header.pattern == NULL and page.header.background-color == NULL and page.header.title == NULL %}
 <script>

@@ -222,11 +222,15 @@
 
         $(document).ready(function () {
             document.gauges.forEach(function (gauge) {
-                $(gauge.options.renderTo).on('mouseover', function () {
-                    animateGauge(gauge);
-                }).on('mouseout', function () {
-                    stopGauge(gauge);
-                }).attr('title', 'Click me to get my code!');
+                var animateHandler = function () { animateGauge(gauge); };
+                var stopHandler = function () { stopGauge(gauge); };
+
+                $(gauge.options.renderTo)
+                    .on('mouseover', animateHandler)
+                    .on('mouseout', stopHandler)
+                    .on('touchstart', animateHandler)
+                    .on('touchend', stopHandler)
+                    .attr('title', 'Click me to get my code!');
             });
         });
     } catch (e) {}
