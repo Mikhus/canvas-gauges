@@ -11,8 +11,6 @@
 			</a>
 
 			<div class="gauges">
-				<script src="{{site.url}}/assets/js/gauge.min.js"></script>
-				<script src="{{site.url}}/assets/js/jquery-3.1.0.min.js"></script>
                 <canvas id="linear" data-type="linear-gauge"
 						data-width="200"
 						data-height="400"
@@ -61,30 +59,6 @@
                         data-border-shadow-width="7"
 						data-animate-on-init="true"
                 ></canvas>
-                <script>
-					function animateGauge(gauge) {
-						gauge.timer = setInterval(function() {
-							gauge.value = Math.random() *
-							(gauge.options.maxValue - gauge.options.minValue) +
-							gauge.options.minValue;
-						}, gauge.animation.duration + 50);
-					}
-					function stopGauge(gauge) {
-						clearInterval(gauge.timer);
-						delete gauge.timer;
-					}
-					$('.gauges canvas').on('mouseover', function() {
-						$(this).attr('data-color-border-shadow', '#000')
-                               .attr('data-color-numbers', '#333')
-                               .attr('data-color-major-ticks', '#333');
-						animateGauge(document.gauges.get($(this).attr('id')));
-					}).on('mouseout', function() {
-						$(this).attr('data-color-border-shadow', 'transparent')
-                               .attr('data-color-numbers', '#777')
-                               .attr('data-color-major-ticks', '#777');
-						stopGauge(document.gauges.get($(this).attr('id')));
-					});
-				</script>
 			</div>
 
 		</div><!-- /.small-12.columns -->
