@@ -77,7 +77,7 @@ function es6concat(type = 'all') {
  *
  * @task {help}
  */
-gulp.task('help', () => usage(gulp));
+gulp.task('help', () => usage(gulp, { emptyLineBetweenTasks: false }));
 
 /**
  * Builds production packages
@@ -136,25 +136,31 @@ gulp.task('build:prod', done => {
             });
         })).then(() => {
             let version = require('./package.json').version;
+            let cmd = '';
 
             console.log(chalk.bold.green('Production packages are now ready!'));
             console.log('To publish each production package, please run the ' +
-                'following commands:');
+                'following command:');
 
-            types.forEach(type => {
+            types.reverse().forEach(type => {
                 let v = version;
-                let entry = type === 'all' ? './' : '../../';
+                let entry = type === 'linear' ? './' : '../../';
 
-                console.log(chalk.grey('cd ' + entry + 'dist/' + type));
+                if (cmd) cmd += ' && ';
+
+                cmd += 'cd ' + entry + 'dist/' + type;
 
                 if (type === 'all') type = 'latest';
                 else v += '-' + type;
 
+                cmd += ' && npm publish';
 
-                console.log(chalk.grey('npm publish'));
-                console.log(chalk.grey('npm dist-tag add canvas-gauges@' +
-                    v + ' ' + type));
+                if (type !== 'latest')
+                    cmd += ' && npm dist-tag add canvas-gauges@' + v + ' ' +
+                        type;
             });
+
+            console.log(chalk.grey(cmd));
 
             let dst = '../canvas-gauges-pages/download';
 
@@ -170,7 +176,9 @@ gulp.task('build:prod', done => {
             let info = {};
 
             releases.forEach(release => {
-                info[release] = {};
+                info[release] = {
+                    name: release
+                };
 
                 types.forEach(type => {
                     info[release][type] = {
@@ -189,7 +197,7 @@ gulp.task('build:prod', done => {
                 });
             });
 
-            info.latest = info[latest];
+            info.latest = JSON.parse(JSON.stringify(info[latest]));
 
             fs.writeFileSync('../canvas-gauges-pages/_data/releases.json',
                 JSON.stringify(info, null, 2));

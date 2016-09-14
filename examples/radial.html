@@ -11,6 +11,12 @@
     }</style>
 </head>
 <body>
+
+<button onclick="animateGauges()">Animate</button>
+<button onclick="stopGaugesAnimation()">Stop animation</button>
+
+<hr>
+
 <canvas  data-type="radial-gauge"
          data-min-value="0"
          data-max-value="360"
@@ -32,7 +38,6 @@
          data-color-needle-circle-outer="#ccc"
          data-needle-circle-size="15"
          data-needle-circle-outer="false"
-         data-animation-rule="linear"
          data-needle-type="line"
          data-needle-start="75"
          data-needle-end="99"
@@ -44,223 +49,52 @@
          data-color-border-outer="#ccc"
          data-color-border-outer-end="#ccc"
          data-color-needle-shadow-down="#222"
+         data-animation-target="plate"
+         data-animation-duration="1500"
+         data-animation-rule="linear"
+         data-width="500"
+         data-height="500"
+         data-units="ᵍ"
+         data-value="0"
 ></canvas>
-<!--<canvas id="gauge-speed"></canvas>
-<canvas id="gauge-temperature"></canvas>
-<canvas id="gauge-speed2"></canvas>
-<div id="console"></div>-->
+
 <script>
-//window.onload = function () {
-//    var gaugeSpeed = new Gauge({
-//        renderTo: 'gauge-speed',
-//        width: 400,
-//        height: 400,
-//        glow: false,
-//        units: 'Km/h',
-//        title: false,
-//        minValue: 0,
-//        maxValue: 220,
-//        majorTicks: ['0', '20', '40', '60', '80', '100', '120', '140', '160', '180', '200', '220'],
-//        minorTicks: 2,
-//        strokeTicks: true,
-//        highlights: [{from: 160, to: 220, color: 'rgba(200, 50, 50, .75)'}],
-//        colors: {
-//            plate: '#222',
-//            majorTicks: '#f5f5f5',
-//            minorTicks: '#ddd',
-//            title: '#fff',
-//            units: '#ccc',
-//            numbers: '#eee',
-//            needle: {
-//                start: 'rgba(200, 50, 50, .75)',
-//                end: 'rgba(200, 50, 50, .75)',
-//                circle: {
-//                    outerStart: 'rgba(200, 200, 200, 1)',
-//                    outerEnd: 'rgba(200, 200, 200, 1)'
-//                },
-//                shadowUp: true,
-//                shadowDown: false
-//            }
-//        },
-//        valueBox: {
-//            visible: false
-//        },
-//        valueText: {
-//            visible: false
-//        },
-//        circles: {
-//            outerVisible: false,
-//            middleVisible: false,
-//            innerVisible: false
-//        },
-//        needle: {
-//            type: 'arrow',
-//            width: 2,
-//            end: 72,
-//            circle: {
-//                size: 7,
-//                inner: false,
-//                outer: true
-//            }
-//        },
-//        animation: {
-//            duration: 1500,
-//            fn: 'linear'
-//        }
-//    });
-//
-//    gaugeSpeed.onready = function () {
-//        setInterval(function () {
-//            gaugeSpeed.setValue(Math.random() * (165 - 120) + 120);
-//        }, 1500);
-//    };
-//
-//    gaugeSpeed.draw();
-//
-//    var gaugeTemperature = new Gauge({
-//        renderTo    : 'gauge-temperature',
-//        width       : 400,
-//        height      : 400,
-//        glow        : false,
-//        units       : '°C',
-//        title       : 'Temperature',
-//        minValue    : -50,
-//        maxValue    : 50,
-//        majorTicks  : ['-50','-40','-30','-20','-10','0','10','20','30','40','50'],
-//        minorTicks  : 10,
-//        strokeTicks : false,
-//        highlights  : [
-//            { from : -50, to : 0, color : 'rgba(0,   0, 255, .3)' },
-//            { from : 0, to : 50, color : 'rgba(255, 0, 0, .3)' }
-//        ],
-//        colors      : {
-//            plate: '#222',
-//            majorTicks: '#f5f5f5',
-//            minorTicks: '#ddd',
-//            title: '#fff',
-//            units: '#ccc',
-//            numbers: '#eee',
-//            needle     : {
-//                start : 'rgba(240, 128, 128, 1)',
-//                end : 'rgba(255, 160, 122, .9)',
-//                circle: {
-//                    outerStart: '#333',
-//                    outerEnd: '#111',
-//                    innerStart: '#111',
-//                    innerEnd: '#222'
-//                },
-//                shadowUp: false,
-//                shadowDown: false
-//            },
-//            circle: {
-//                shadow: false,
-//                outerStart: '#333',
-//                outerEnd: '#111',
-//                middleStart: '#222',
-//                middleEnd: '#111',
-//                innerStart: '#111',
-//                innerEnd: '#333'
-//            },
-//            valueBox: {
-//                rectStart: '#222',
-//                rectEnd: '#333',
-//                background: '#babab2',
-//                shadow: 'rgba(0, 0, 0, 1)'
-//            }
-//        },
-//        animation : {
-//            duration: 1000,
-//            fn : 'bounce'
-//        }
-//    });
-//
-//    gaugeTemperature.onready = function() {
-//        setInterval(function() {
-//            gaugeTemperature.setValue(
-//                (Math.random() * 1 > .5 ? -1 : 1) * Math.random() * 50
-//            );
-//        }, 1500);
-//    };
-//
-//    gaugeTemperature.draw();
-//
-//    var gaugeSpeed2 = new Gauge({
-//        renderTo: 'gauge-speed2',
-//        width: 400,
-//        height: 400,
-//        glow: false,
-//        units: 'Km/h',
-//        title: false,
-//        minValue: 0,
-//        maxValue: 220,
-//        majorTicks: ['0', '20', '40', '60', '80', '100', '120', '140', '160', '180', '200', '220'],
-//        minorTicks: 2,
-//        strokeTicks: true,
-//        highlights: [{from: 160, to: 220, color: 'rgba(200, 50, 50, .75)'}],
-//        colors: {
-//            plate: '#222',
-//            majorTicks: '#f5f5f5',
-//            minorTicks: '#ddd',
-//            title: '#fff',
-//            units: '#ccc',
-//            numbers: '#eee',
-//            needle: {
-//                start: 'rgba(200, 50, 50, .75)',
-//                end: 'rgba(200, 50, 50, .75)',
-//                circle: {
-//                    outerStart: 'rgba(200, 200, 200, 1)',
-//                    outerEnd: 'rgba(200, 200, 200, 1)'
-//                },
-//                shadowUp: true,
-//                shadowDown: false
-//            },
-//            circle: {
-//                shadow: false,
-//                outerStart: '#333',
-//                outerEnd: '#111',
-//                middleStart: '#222',
-//                middleEnd: '#111',
-//                innerStart: '#111',
-//                innerEnd: '#333'
-//            },
-//            valueBox: {
-//                rectStart: '#222',
-//                rectEnd: '#333',
-//                background: '#babab2',
-//                shadow: 'rgba(0, 0, 0, 1)'
-//            }
-//        },
-//        valueBox: {
-//            visible: true
-//        },
-//        valueText: {
-//            visible: true
-//        },
-//        needle: {
-//            type: 'arrow',
-//            width: 2,
-//            end: 72,
-//            circle: {
-//                size: 7,
-//                inner: false,
-//                outer: true
-//            }
-//        },
-//        animation: {
-//            duration: 1500,
-//            fn: 'linear'
-//        },
-//        updateValueOnAnimation: true
-//    });
-//
-//    gaugeSpeed2.onready = function () {
-//        setInterval(function () {
-//            gaugeSpeed2.setValue(Math.random() * (165 - 120) + 120);
-//        }, 1500);
-//    };
-//
-//    gaugeSpeed2.draw();
-//};
+if (!Array.prototype.forEach) {
+    Array.prototype.forEach = function(cb) {
+        var i = 0, s = this.length;
+        for (; i < s; i++) {
+            cb && cb(this[i], i, this);
+        }
+    }
+}
+
+document.fonts && document.fonts.forEach(function(font) {
+    font.loaded.then(function() {
+        if (font.family.match(/Led/)) {
+            document.gauges.forEach(function(gauge) {
+                gauge.update();
+            });
+        }
+    });
+});
+
+var timers = [];
+
+function animateGauges() {
+    document.gauges.forEach(function(gauge) {
+        timers.push(setInterval(function() {
+            gauge.value = Math.random() *
+                (gauge.options.maxValue - gauge.options.minValue) / 4 +
+                gauge.options.minValue / 4;
+        }, gauge.animation.duration + 50));
+    });
+}
+
+function stopGaugesAnimation() {
+    timers.forEach(function(timer) {
+        clearInterval(timer);
+    });
+}
 </script>
 
 </html>

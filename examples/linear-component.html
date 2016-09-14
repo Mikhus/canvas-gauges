@@ -23,6 +23,9 @@
         data-value="22.3"
         data-units="°C"
         data-color-value-box-shadow="false"
+        data-tick-side="left"
+        data-number-side="left"
+        data-needle-side="left"
 ></canvas>
 
 <canvas data-type="linear-gauge"
@@ -96,6 +99,7 @@
         data-units="°C"
         data-value="75.5"
         data-bar-stroke-width="5"
+        data-highlights='[{"from":50, "to":75, "color": "red"}]'
 ></canvas>
 
 <br>
@@ -114,6 +118,32 @@
         data-animation-duration="750"
         data-title="Temperature"
         data-units="°C"
+></canvas>
+
+<canvas data-type="linear-gauge"
+        data-width="400"
+        data-height="150"
+        data-min-value="0"
+        data-max-value="220"
+        data-major-ticks="0,20,40,60,80,100,120,140,160,180,200,220"
+        data-minor-ticks="2"
+        data-stroke-ticks="true"
+        data-highlights='false'
+        data-color-plate="#fff"
+        data-border-shadow-width="0"
+        data-borders="false"
+        data-bar-begin-circle="false"
+        data-bar-width="10"
+        data-tick-side="left"
+        data-number-side="left"
+        data-needle-side="left"
+        data-needle-type="line"
+        data-needle-width="3"
+        data-color-needle="#222"
+        data-color-needle-end="#222"
+        data-animation-duration="1500"
+        data-animation-rule="linear"
+        data-animation-target="plate"
 ></canvas>
 <script>
 if (!Array.prototype.forEach) {
