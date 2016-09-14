@@ -15,6 +15,6 @@ gulp.task('default', () => {
         .pipe(sourcemaps.init())
         .pipe(concat('bundle.js'))
         .pipe(uglify())
-        .pipe(sourcemaps.write('assets/js'))
+        .pipe(sourcemaps.write('.'))
         .pipe(gulp.dest('assets/js'));
 });
