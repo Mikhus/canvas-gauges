@@ -42,10 +42,10 @@
 	<meta property="og:title" content="{{ title }}">
 	<meta property="og:description" content="{{ description }}">
 	<meta property="og:url" content="https:{{ url }}{{ page.url }}">
-	<meta property="og:locale" content="{% if site.og_locale == nil %}en_EN{% else %}{{ site.og_locale }}{% endif %}">
+	<meta property="og:locale" content="{% if site.og_locale == nil %}en_US{% else %}{{ site.og_locale }}{% endif %}">
 	<meta property="og:type" content="website">
 	<meta property="og:site_name" content="{{ site.title }}">
-	<meta property="og:image" content="https:{{ site.urlimg }}thumbnail.png">
+	<meta property="og:image" content="https:{{ site.urlimg }}{{site.og_image}}">
 	{% if site.socialmedia.facebook %}<meta property="article:author" content="https://www.facebook.com/{{ site.socialmedia.facebook }}">{% endif %}
 
 
