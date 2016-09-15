@@ -39,7 +39,7 @@ JavaScript API provides two ways of bypassing configuration options: on the obje
 
 HTML-component API simply provides an ability to add/change/remove configuration attributes on HTML gauge element.
 
-Semantically JavaScript and HTML use different naming conventions which are a standard in the industry for today: HTML attribute name is prefixed with "data-" and the option name is dash-splitted; JavaScript options names are following camelCase rule.
+Semantically JavaScript and HTML use different naming conventions which are standard in the industry for today: HTML attribute name is prefixed with "data-" and the option name is dash-split; JavaScript options names are following camelCase rule.
 
 JavaScript example:
 
@@ -66,7 +66,7 @@ Equivalent example in HTML-definition would be:
 Sometimes, the values can be a complex-data structures, like arrays or objects. In this case in JavaScript them simply defined as standard notations, but in HTML-attributes definitions the following rules are applied:
 
  - for arrays of primitives it is allowed to define a comma-separated string of values;
- - it is allowed to define a value as valid JSON notation;
+ - it is allowed to define the value as valid JSON notation;
 
 Examples:
 
