@@ -30,13 +30,13 @@ breadcrumb: true
 
 <div class="medium-8 medium-pull-4 columns" markdown="1">
 
-By default canvas gauges delivered with the good level of optimization. Up to your choice you can refer to a minified package which will include only that you need.
+By default canvas gauges delivered with a good level of optimization. Up to your choice you can refer to a minified package which will include only that part you need.
 
-By the way there is possible some tricks to make the packages more efficient in terms of disk space usage or you may need to create your own extended build for some other reasons.
+By the way there are possible some tricks to make gauge packages more efficient in terms of disk space usage, or you may need to create your own extended build for some other reasons.
 
 ## Optimizing Disk Space Usage
 
-This can be critical when the gauges used, for example, with IoT devices which has limited disk space. Here is a trick how to save up to 3-4 times of overall bytes of canvas gauges.
+This can be critical when the gauges used, for example, with IoT devices, which has limited disk space. Here is a trick how to save up to 3-4 times of overall bytes of canvas gauges.
 
   1. Get the required minified code only.
   1. Gzip it
