@@ -9,9 +9,9 @@ header: false
 examples: true
 ---
 <script>var examplePage=true</script>
-Canvas Gauges are highly configurable library. So you may use your fantasy to draw different gauges of different look and feel, displaying different kind of information. Here we simply tried to show you what it can be, when simply changing default gauge options.
+Canvas Gauges are highly configurable library. So you may use your fantasy to draw variety of gauges of different look and feel, displaying different kind of information.
 
-**All gauges on this page are interactive. Click the gauge to get it's code. Mouse over to animate.**
+**All gauges on this page are interactive. Click the gauge to get it's code. Mouse over to animate (or touch and wait for animation on mobile devices).**
 
 ## Zero Configuration Gauges
 
