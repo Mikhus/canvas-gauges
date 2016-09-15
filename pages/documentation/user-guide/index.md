@@ -33,11 +33,11 @@ breadcrumb: true
 
 <div class="medium-8 medium-pull-4 columns" markdown="1">
 
-Canvas gauges are friendly to minimalistic code design, so whenever you need this gauges to use on a desktop, mobile or **IoT devices with limited resources**, you can be assured it will provide you the best options to get the minimum amount of code for your solution.
+Canvas gauges are friendly to minimalistic code design, so whenever you need these gauges to use on a desktop, mobile or **IoT devices with limited resources**, you can be assured it will provide you the best options to get the minimum amount of code for your solution.
 
 ## Installing
 
-Canvas gauges can be simply installed using npm package manager. Depending on your needs there is possibility to install whole gauge library or only that part you really need for your project.
+Canvas gauges can be simply installed using npm package manager. Depending on your needs there is a possibility to install whole gauge library or only that part you really need for your project.
 To install the whole library, run:
 
     $ npm install canvas-gauges
@@ -52,7 +52,7 @@ To install only radial gauge, run:
 
     $ npm install canvas-gauges@radial
 
-This strategy useful only if you need to minimize your code base and plan to use ONLY a specific gauge type. If you need to use various gauge types in your project it is recommended to use whole gauge package.
+This strategy is useful only if you need to minimize your code base and plan to use ONLY a specific gauge type. If you need to use various gauge types in your project, it is recommended to use whole gauge package.
 
 Another way is to force installation directly from canvas-gauges git repository, specifying in your ```package.json``` file a proper dependency, like:
 
@@ -76,13 +76,13 @@ If it is not enough for you, please, refer to our [creating custom builds tutori
 
 [All Configuration Options]({{site.url}}/documentation/user-guide/configuration)
 
-Canvas gauges are **highly configurable web-components**. There are plenty of options which could help you build a unique pretty gauges for your web-pages.
+Canvas gauges are **highly configurable web components**. There are plenty of options which could help you build a unique pretty gauges for your web pages.
 
-Configuration options for the gauge usually passed to a constructor or update functions and are a plain JavaScript object or specified as an attributes of an HTML-element.
+Configuration options for the gauge usually passed to a constructor or update functions and are a plain JavaScript object or can be specified as attributes of HTML-elements.
 
-Naming rules are simple and follows the best practices accepted in the industry. All attributes are started with "data-" prefix (to produce valid HTML) and name part is dash-splitted words. For JavaScript naming it is used camelCase naming conventions.
+Naming rules are simple and follows the best practices accepted in the industry. All attributes are started with “data-“ prefix (to produce valid HTML) and name part is dash-split words. For JavaScript naming it is used camelCase naming conventions.
 
-For example, using these options are similar in terms of configuration:
+For example, using these options is similar in terms of configuration:
 
 ~~~javascript
 var gauge = new LinearGauge({
