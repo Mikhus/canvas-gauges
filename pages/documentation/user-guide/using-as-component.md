@@ -30,9 +30,9 @@ breadcrumb: true
 
 <div class="medium-8 medium-pull-4 columns" markdown="1">
 
-Canvas gauges provides a declarative way of injection gauges into HTML-page. Each gauge is a simply HTML canvas element. When the custom element obtains attribute "data-type" with one of "linear-gauge" or "radial-gauge" values it automatically becomes treated as gauge component and is rendered correspondingly.
+Canvas gauges provides a declarative way to injection gauges into HTML-page. Each gauge is a simply HTML canvas element. When the custom element obtains attribute "data-type" with one of "linear-gauge" or "radial-gauge" values, it automatically becomes treated as gauge component and is rendered correspondingly.
 
-Gauges support in-runtime injection/modifying config options via adding/changing/removing configuration attributes. All configuration attributes should start with "data-" prefix to produce valid HTML output. All attribute names correspondingly mapped into gauge configuration options.
+Gauges support injection/modification of config options via adding/changing/removing configuration attributes at runtime. All configuration attributes should start with "data-" prefix to produce valid HTML output. All attribute names correspondingly mapped into gauge configuration options.
 
 ## Declaring Gauges
 
@@ -73,9 +73,9 @@ With some configuration options:
 
 ## Mutating Gauges
 
-Canvas gauges supports in-runtime mutations, so you can easily re-configure gauge by simply changing attributes values. Even gauge type can be changed in-runtime. 
+Canvas gauges support mutations at runtime, so you can easily re-configure gauge by simply changing attributes values. Even gauge type can be changed. 
 
-There are some configuration options which are defined for a certain type of gauge only. By the way even if you will declare attributes which gauge does not support it won't break it - them will just won't be parsed and took into account during rendering. So switching gauge type in-runtime always safe.
+There are some configuration options which are defined for a certain type of gauge only. By the way even if you will declare attributes which gauge does not support it won't break anything - them will just won't be parsed and took into account during rendering. So switching gauge type in-runtime always safe.
 
 For example:
 
