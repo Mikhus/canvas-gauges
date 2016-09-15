@@ -23,7 +23,7 @@ breadcrumb: true
     <li><a href="{{site.url}}/documentation/user-guide/custom-builds">Creating Custom Builds</a></li>
     <li><a href="{{site.url}}/documentation/user-guide/using-as-component">Using As Components</a></li>
     <li><a href="{{site.url}}/documentation/user-guide/scripting-api">Scripting API</a></li>
-    <li>a href="{{site.url}}/migration/">Migration Guide</a></li>
+    <li><a href="{{site.url}}/migration/">Migration Guide</a></li>
 </ul>
 </div>
 </div><!-- /.medium-4.columns -->
