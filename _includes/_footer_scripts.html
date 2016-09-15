@@ -1,17 +1,10 @@
+<link rel="stylesheet" type="text/css" href="{{ url }}/assets/css/styles.css">
+
+{% if site.asciidoctor-enabled == true %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.0/css/font-awesome.min.css">
+{% endif %}
+
 <script src="{{ url }}/assets/js/bundle.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/webfont/1.5.18/webfont.js"></script>
-<script>
-    WebFont.load({
-        google: {
-            families: [ 'Lato:400,700,400italic:latin', 'Volkhov::latin' ]
-        }
-    });
-</script>
-
-<noscript>
-    <link href='http://fonts.googleapis.com/css?family=Lato:400,700,400italic%7CVolkhov' rel='stylesheet' type='text/css'>
-</noscript>
-
 <script>
 $('.orgs').slick({
     dots: true,
@@ -21,9 +14,7 @@ $('.orgs').slick({
     autoplay: true,
     autoplaySpeed: 7000
 });
-
 {% if page.header == NULL and page.header.image_fullwidth == NULL and page.header.pattern == NULL and page.header.background-color == NULL and page.header.title == NULL %}
-
 function animateGauge(gauge) {
     gauge.timer = setInterval(function() {
         gauge.value = Math.random() *
@@ -48,13 +39,26 @@ $('.gauges canvas').on('mouseover', function() {
 });
 {% endif %}
 </script>
+<script>
+function fontReady() {
+    WebFont.load({
+        google: {
+            families: ['Lato:400,700,400italic:latin', 'Volkhov::latin']
+        }
+    });
+}
+</script>
+<script async src="https://ajax.googleapis.com/ajax/libs/webfont/1.5.18/webfont.js" onload="fontReady()"></script>
+
+<noscript>
+    <link href='http://fonts.googleapis.com/css?family=Lato:400,700,400italic%7CVolkhov' rel='stylesheet' type='text/css'>
+</noscript>
 
 {% if page.mediaplayer == true %}
-<script>
-$('audio,video').mediaelementplayer();
-</script>
+<script src="{{ url }}/assets/mediaelement_js/mediaelement-and-player.min.js"></script>
+<link rel="stylesheet" href="{{ url }}/assets/mediaelement_js/mediaelementplayer.min.css">
+<script>$('audio,video').mediaelementplayer();</script>
 {% endif %}
-
 
 {% if page.header.image_fullwidth %}
 <script>
@@ -62,8 +66,6 @@ $('audio,video').mediaelementplayer();
     $("#masthead-with-text").backstretch("{{ site.urlimg }}{{ page.header.image_fullwidth }}", {fade: 700});
 </script>
 {% endif %}
-
-
 
 {% if site.google_analytics_tracking_id %}
 <script>
@@ -78,8 +80,6 @@ $('audio,video').mediaelementplayer();
 
 </script>
 {% endif %}
-
-
 
 {% comment %}
 #  Start of Tawk.to Script
