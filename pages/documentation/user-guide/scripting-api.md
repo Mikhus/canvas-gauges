@@ -32,13 +32,14 @@ breadcrumb: true
 
 ## User API
 
-Canvas gauges provide three global elements which are available to the user:
+Canvas gauges provide four global elements which are available to end user:
 
+ 1. ```BaseGauge``` abstract constructor
  1. ```LinearGauge``` constructor
  2. ```RadialGauge``` constructor
  3. ```document.gauges``` collection
 
-Both LinearGauge and RadialGauge classes has the same public interface, main difference only in the set of configuration [options]({{site.url}}/documentation/user-guide/configuration) they could understand.
+Both LinearGauge and RadialGauge classes has the same public interface, main difference only in the set of configuration [options]({{site.url}}/documentation/user-guide/configuration) they could understand. BaseGauge abstract class provides a way to re-use some common functionality if there is a need to implement some custom gauge.
 
 ### Instantiating And Drawing Gauges
 
@@ -47,9 +48,9 @@ var linear = new LinearGauge('linear-gauge-id');
 var radial = new RadialGauge(document.createElement('canvas'));
 ~~~
 
-As you may see the only mandatory options required to properly instantiate zero-configured gauge is ```renderTo``` option which should be either identifier of canvas element on HTML page or the canvas element itself.
+As you may see the only mandatory option required to properly instantiate zero-configured gauge is ```renderTo```, which should be either identifier of canvas element on HTML page or a canvas element itself.
 
-Canvas gauges support dynamic configuration change at runtime and/or at construction. So it is safe to bypass all required config options when instantiating the gauge:
+Canvas gauges support dynamic changing of configuration at runtime and/or at construction.
 
 ~~~javascript
 var radial = new RadialGauge({
@@ -93,7 +94,7 @@ After the gauge object is instantiated and mapped with canvas element, it is req
 radial.draw();
 ~~~
 
-> Please, take into account that ```draw()``` method will not  re-render entire gauge for performance reasons. Actually the most elements which are not taking their part in animation will be drawn initially only once. By the way, sometimes it may be required to redraw gauge completely (for example if upseting some new font face to static gauge elements). In this case preferable way to draw a gauge is to use ```update()``` method call.
+> Please, take into account that ```draw()``` method will not  re-render entire gauge for performance reasons. Actually the most elements which are not taking their part in animation will be drawn initially only once. By the way, sometimes it may be required to redraw gauge completely (for example if upsetting some new font face to static gauge elements). In this case preferable way to draw a gauge is to use ```update()``` method call.
 
 ### Updating Values
 
