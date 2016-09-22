@@ -100,8 +100,19 @@ gulp.task('build:prod', done => {
                         resolve();
                     })
                     .pipe(rename('gauge.min.js'))
-                    .pipe(replace(/^/, '(function() {'))
-                    .pipe(replace(/$/, '}());'))
+                    .pipe(replace(/^/, '(function(ns) {'))
+                    .pipe(replace(/$/,
+                        ';typeof module !== "undefined" && Object.assign(ns, {' +
+                        'Collection: Collection,' +
+                        'GenericOptions: GenericOptions,' +
+                        'Animation: Animation,' +
+                        'BaseGauge: BaseGauge,' +
+                        'drawings: drawings,' +
+                        'SmartCanvas: SmartCanvas,' +
+                        'vendorize: vendorize' +
+                        '});' +
+                        '}(typeof module !== "undefined" ? ' +
+                            'module.exports : window));'))
                     .pipe(uglify())
                     .pipe(gulp.dest('dist/' + type))
                     .on('end', () => {
