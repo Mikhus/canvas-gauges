@@ -44,8 +44,10 @@ Both LinearGauge and RadialGauge classes has the same public interface, main dif
 ### Instantiating And Drawing Gauges
 
 ~~~javascript
-var linear = new LinearGauge('linear-gauge-id');
-var radial = new RadialGauge(document.createElement('canvas'));
+var linear = new LinearGauge({ renderTo: 'linear-gauge-id' });
+var radial = new RadialGauge({
+    renderTo: document.createElement('canvas')
+});
 ~~~
 
 As you may see the only mandatory option required to properly instantiate zero-configured gauge is ```renderTo```, which should be either identifier of canvas element on HTML page or a canvas element itself.
