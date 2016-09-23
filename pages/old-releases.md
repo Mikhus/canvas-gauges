@@ -26,12 +26,12 @@ code {
 
 <div class="medium-8 medium-pull-4 columns" markdown="1" style="min-height:600px">
 
-{% for release in site.data.releases %}
-{% if release[1].name != site.data.releases.latest.name %}
-
 On this page you can find old canvas gauges releases, available for download. To download a proper release just right-click the item you need and choose "Save link as..." in a context-menu.
 
 If you are looking for a latest release, please, go to [download]({{site.url}}/download/) page.
+
+{% for release in site.data.releases %}
+{% if release[1].name != site.data.releases.latest.name %}
 
 ### Version {{release[1].name}}
 
