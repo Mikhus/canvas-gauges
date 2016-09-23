@@ -205,7 +205,7 @@ Value box element on the gauge is intended to display the digital representation
  
 ### Fonts Customization Options
 
-Canvas gauges enables use of custom fonts when drawing text elements. As far as gauges are build on principals of minimalistic code base there is no hardcoded fonts integrated with the gauges. Canvas gauges only provides a way to upset a custom font-family to its different text elements, but the font loading and initialization on the page is a part of the work user has to do himself.
+Canvas gauges enables use of custom fonts when drawing text elements. As far as gauges are build on principals of minimalist code base there is no hardcoded fonts integrated with the gauges. Canvas gauges only provides a way to upset a custom font-family to its different text elements, but the font loading and initialization on the page is a part of the work user has to do himself.
 
  - **fontNumbers**: specifies font family for the tick numbers.
  - **fontTitle**: specifies font family for title text.

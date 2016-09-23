@@ -118,7 +118,7 @@ It is done with generic configuration options:
 
 By the way there could be some issues to solve if you are going to use custom loaded fonts on a web page.
 
-As far as gauges are rendered as-fast-as-possible it means that the font can be loaded on the page **after** the gauge has been rendered. And it requires to re-draw the gauge after the font loading. As far as canvas gauge library follow the strategy of providing a minimalistic code it won't try to detect font loading, as far as majority of the users may even not need this feature. Those who require this feature have to take care about font loading themselves.
+As far as gauges are rendered as-fast-as-possible it means that the font can be loaded on the page **after** the gauge has been rendered. And it requires to re-draw the gauge after the font loading. As far as canvas gauge library follow the strategy of providing a minimalist code it won't try to detect font loading, as far as majority of the users may even not need this feature. Those who require this feature have to take care about font loading themselves.
 
 But font loading detection could be not that simple task, especially for old browsers. Modern browsers provide experimental ```document.fonts``` interface which is referring to [CSS Font Loading API](https://developer.mozilla.org/en-US/docs/Web/API/CSS_Font_Loading_API)
 
@@ -153,7 +153,7 @@ If there is a need to support older browsers it may require to write your own so
 
 ## DOM Mutations Support In Old Browsers
 
-In old browsers canvas gauge may not work properly as a web-component. Due to a strategy of minimalistic code we were not include any polyfill for [MutationObserver](https://developer.mozilla.org/docs/Web/API/MutationObserver). So if you need to support this feature for some old platforms you have to load some polyfill for MutationObserver **before** loading canvas gauge library code.
+In old browsers canvas gauge may not work properly as a web-component. Due to a strategy of minimalist code we were not include any polyfill for [MutationObserver](https://developer.mozilla.org/docs/Web/API/MutationObserver). So if you need to support this feature for some old platforms you have to load some polyfill for MutationObserver **before** loading canvas gauge library code.
 
 For example you can use [this one](https://github.com/webcomponents/webcomponentsjs) or it's [ancestor](https://github.com/Polymer/MutationObservers) (because of minimalism, despite the fact it's deprecated).
 

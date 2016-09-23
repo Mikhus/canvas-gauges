@@ -33,7 +33,7 @@ breadcrumb: true
 
 <div class="medium-8 medium-pull-4 columns" markdown="1">
 
-Canvas gauges are friendly to minimalistic code design, so whenever you need these gauges to use on a desktop, mobile or **IoT devices with limited resources**, you can be assured it will provide you the best options to get the minimum amount of code for your solution.
+Canvas gauges are friendly to minimalist code design, so whenever you need these gauges to use on a desktop, mobile or **IoT devices with limited resources**, you can be assured it will provide you the best options to get the minimum amount of code for your solution.
 
 ## Installing
 
