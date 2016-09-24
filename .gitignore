@@ -7,3 +7,4 @@ errorShots/
 *.log
 debug.js
 dist/
+.vscode
