@@ -342,12 +342,11 @@ function radialTicksRadius(context, options) {
  */
 function drawRadialMajorTicks(context, options) {
     let r = radialTicksRadius(context, options);
-    let i;
+    let i, colors;
     let s = options.majorTicks.length;
     let pixelRatio = SmartCanvas.pixelRatio;
-
+    
     context.lineWidth = 2 * pixelRatio;
-    context.strokeStyle = options.colorMajorTicks;
     context.save();
 
     if (s === 0) {
@@ -358,8 +357,12 @@ function drawRadialMajorTicks(context, options) {
         s = 2;
     }
 
+    colors = options.colorMajorTicks instanceof Array ?
+        options.colorMajorTicks : Array(s).fill(options.colorMajorTicks);
+
     i = 0;
     for (; i &lt; s; ++i) {
+        context.strokeStyle = colors[i];        
         context.rotate(drawings.radians(radialNextAngle(options, i, s)));
 
         context.beginPath();
@@ -369,6 +372,7 @@ function drawRadialMajorTicks(context, options) {
     }
 
     if (options.strokeTicks) {
+        context.strokeStyle = colors[0];
         context.rotate(HPI);
 
         context.beginPath();
@@ -413,6 +417,8 @@ function drawRadialNumbers(context, options) {
     let i = 0;
     let s = options.majorTicks.length;
     let isAnimated = options.animationTarget !== &apos;needle&apos;;
+    let colors = options.colorNumbers instanceof Array ?
+        options.colorNumbers : Array(s).fill(options.colorNumbers);
 
     let plateValueAngle = isAnimated ? -(options.value - options.minValue) /
         (options.maxValue - options.minValue) * options.ticksAngle : 0;
@@ -436,7 +442,7 @@ function drawRadialNumbers(context, options) {
 
         context.font = options.fontNumbersSize *
             (context.max / 200) + &apos;px &apos; + options.fontNumbers;
-        context.fillStyle = options.colorNumbers;
+        context.fillStyle = colors[i];
         context.lineWidth = 0;
         context.textAlign = &apos;center&apos;;
         context.fillText(options.majorTicks[i], point.x, point.y + 3);

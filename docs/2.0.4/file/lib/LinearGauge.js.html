@@ -543,12 +543,14 @@ function drawLinearTicks(context,  color, ticksSize, deltaLen,
     let tickLeft = tickOffset - ticksPadding * width;
     let tickRight = tickOffset + barWidth + tickLen + ticksPadding * width;
     let tickSpace = ticksLength / (ticksSize - deltaLen);
+    let colors = color instanceof Array ? color : Array(ticksSize).fill(color);
 
     context.lineWidth = lineWidth * pixelRatio;
-    context.strokeStyle = color;
     context.save();
 
     for (; i &lt; ticksSize; i++) {
+        context.strokeStyle = colors[i];
+
         if (isVertical) {
             tickY = Y + length - barMargin - barOffset - i * tickSpace;
 
@@ -612,6 +614,9 @@ function prepareTicks(options) {
 function drawLinearMajorTicks(context, options) {
     let [hasLeft, hasRight] = prepareTicks(options);
     let lineWidth = 2;
+    let colors = options.colorMajorTicks instanceof Array ?
+        options.colorMajorTicks :
+        Array(options.colorMajorTicks.length).fill(options.colorMajorTicks);
 
     drawLinearTicks(context, options.colorMajorTicks, options.majorTicks.length,
         1, hasLeft, hasRight, lineWidth, options.ticksWidth / 100);
@@ -623,6 +628,8 @@ function drawLinearMajorTicks(context, options) {
             ticksPadding * width;
         let leftTicks = (width - barWidth) / 2 - ticksPadding * width;
         let sX, sY, eX, eY;
+
+        context.strokeStyle = colors[0];
 
         lineWidth *= pixelRatio;
 
@@ -686,7 +693,7 @@ function drawLinearTickStroke(context, sX, sY, eX, eY) {
 function drawLinearMinorTicks(context, options) {
     let [hasLeft, hasRight] = prepareTicks(options);
 
-    drawLinearTicks(context, options.colorMajorTicks,
+    drawLinearTicks(context, options.colorMinorTicks,
         options.minorTicks * (options.majorTicks.length - 1), 0,
         hasLeft, hasRight, 1, options.ticksWidthMinor / 100);
 }
@@ -711,13 +718,15 @@ function drawLinearMajorTicksNumbers(context, options) {
     let numLeft = (width - barWidth) / 2 - ticksWidth;
     let numRight = (width - barWidth) / 2 + barWidth + ticksWidth;
     let textX, textY, textWidth, numberOffset, tick;
+    let colors = options.colorNumbers instanceof Array ?
+        options.colorNumbers : Array(ticks).fill(options.colorNumbers);
 
     context.font = textHeight + &apos;px &apos; + options.fontNumbers;
-    context.fillStyle = options.colorNumbers;
     context.lineWidth = 0;
     context.textAlign = &apos;center&apos;;
 
     for (; i &lt; ticks; i++) {
+        context.fillStyle = colors[i];
         tick = options.majorTicks[i];
         numberOffset = i * ticksLength / (ticks - 1);
 
