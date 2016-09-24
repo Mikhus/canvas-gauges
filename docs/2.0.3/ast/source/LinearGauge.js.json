@@ -74883,10 +74883,10 @@
         "trailingComments": [
           {
             "type": "Block",
-            "value": "*\n * @typedef {object} ns\n ",
+            "value": "*\n * @ignore\n * @typedef {object} ns\n ",
             "range": [
               32934,
-              32965
+              32976
             ],
             "loc": {
               "start": {
@@ -74894,7 +74894,7 @@
                 "column": 0
               },
               "end": {
-                "line": 1065,
+                "line": 1066,
                 "column": 3
               }
             }
@@ -74903,16 +74903,16 @@
             "type": "Block",
             "value": " istanbul ignore if ",
             "range": [
-              32966,
-              32990
+              32977,
+              33001
             ],
             "loc": {
               "start": {
-                "line": 1066,
+                "line": 1067,
                 "column": 0
               },
               "end": {
-                "line": 1066,
+                "line": 1067,
                 "column": 24
               }
             }
@@ -74956,10 +74956,10 @@
       "trailingComments": [
         {
           "type": "Block",
-          "value": "*\n * @typedef {object} ns\n ",
+          "value": "*\n * @ignore\n * @typedef {object} ns\n ",
           "range": [
             32934,
-            32965
+            32976
           ],
           "loc": {
             "start": {
@@ -74967,7 +74967,7 @@
               "column": 0
             },
             "end": {
-              "line": 1065,
+              "line": 1066,
               "column": 3
             }
           }
@@ -74976,16 +74976,16 @@
           "type": "Block",
           "value": " istanbul ignore if ",
           "range": [
-            32966,
-            32990
+            32977,
+            33001
           ],
           "loc": {
             "start": {
-              "line": 1066,
+              "line": 1067,
               "column": 0
             },
             "end": {
-              "line": 1066,
+              "line": 1067,
               "column": 24
             }
           }
@@ -75004,32 +75004,32 @@
             "type": "Identifier",
             "name": "ns",
             "range": [
-              33002,
-              33004
+              33013,
+              33015
             ],
             "loc": {
               "start": {
-                "line": 1067,
+                "line": 1068,
                 "column": 11
               },
               "end": {
-                "line": 1067,
+                "line": 1068,
                 "column": 13
               }
             }
           },
           "prefix": true,
           "range": [
-            32995,
-            33004
+            33006,
+            33015
           ],
           "loc": {
             "start": {
-              "line": 1067,
+              "line": 1068,
               "column": 4
             },
             "end": {
-              "line": 1067,
+              "line": 1068,
               "column": 13
             }
           }
@@ -75039,31 +75039,31 @@
           "value": "undefined",
           "raw": "'undefined'",
           "range": [
-            33009,
-            33020
+            33020,
+            33031
           ],
           "loc": {
             "start": {
-              "line": 1067,
+              "line": 1068,
               "column": 18
             },
             "end": {
-              "line": 1067,
+              "line": 1068,
               "column": 29
             }
           }
         },
         "range": [
-          32995,
-          33020
+          33006,
+          33031
         ],
         "loc": {
           "start": {
-            "line": 1067,
+            "line": 1068,
             "column": 4
           },
           "end": {
-            "line": 1067,
+            "line": 1068,
             "column": 29
           }
         }
@@ -75083,16 +75083,16 @@
                   "type": "Identifier",
                   "name": "ns",
                   "range": [
-                    33028,
-                    33030
+                    33039,
+                    33041
                   ],
                   "loc": {
                     "start": {
-                      "line": 1068,
+                      "line": 1069,
                       "column": 4
                     },
                     "end": {
-                      "line": 1068,
+                      "line": 1069,
                       "column": 6
                     }
                   }
@@ -75102,31 +75102,31 @@
                   "value": "LinearGauge",
                   "raw": "'LinearGauge'",
                   "range": [
-                    33031,
-                    33044
+                    33042,
+                    33055
                   ],
                   "loc": {
                     "start": {
-                      "line": 1068,
+                      "line": 1069,
                       "column": 7
                     },
                     "end": {
-                      "line": 1068,
+                      "line": 1069,
                       "column": 20
                     }
                   }
                 },
                 "range": [
-                  33028,
-                  33045
+                  33039,
+                  33056
                 ],
                 "loc": {
                   "start": {
-                    "line": 1068,
+                    "line": 1069,
                     "column": 4
                   },
                   "end": {
-                    "line": 1068,
+                    "line": 1069,
                     "column": 21
                   }
                 }
@@ -75135,88 +75135,88 @@
                 "type": "Identifier",
                 "name": "LinearGauge",
                 "range": [
-                  33048,
-                  33059
+                  33059,
+                  33070
                 ],
                 "loc": {
                   "start": {
-                    "line": 1068,
+                    "line": 1069,
                     "column": 24
                   },
                   "end": {
-                    "line": 1068,
+                    "line": 1069,
                     "column": 35
                   }
                 }
               },
               "range": [
-                33028,
-                33059
+                33039,
+                33070
               ],
               "loc": {
                 "start": {
-                  "line": 1068,
+                  "line": 1069,
                   "column": 4
                 },
                 "end": {
-                  "line": 1068,
+                  "line": 1069,
                   "column": 35
                 }
               }
             },
             "range": [
-              33028,
-              33060
+              33039,
+              33071
             ],
             "loc": {
               "start": {
-                "line": 1068,
+                "line": 1069,
                 "column": 4
               },
               "end": {
-                "line": 1068,
+                "line": 1069,
                 "column": 36
               }
             }
           }
         ],
         "range": [
-          33022,
-          33062
+          33033,
+          33073
         ],
         "loc": {
           "start": {
-            "line": 1067,
+            "line": 1068,
             "column": 31
           },
           "end": {
-            "line": 1069,
+            "line": 1070,
             "column": 1
           }
         }
       },
       "alternate": null,
       "range": [
-        32991,
-        33062
+        33002,
+        33073
       ],
       "loc": {
         "start": {
-          "line": 1067,
+          "line": 1068,
           "column": 0
         },
         "end": {
-          "line": 1069,
+          "line": 1070,
           "column": 1
         }
       },
       "leadingComments": [
         {
           "type": "Block",
-          "value": "*\n * @typedef {object} ns\n ",
+          "value": "*\n * @ignore\n * @typedef {object} ns\n ",
           "range": [
             32934,
-            32965
+            32976
           ],
           "loc": {
             "start": {
@@ -75224,7 +75224,7 @@
               "column": 0
             },
             "end": {
-              "line": 1065,
+              "line": 1066,
               "column": 3
             }
           }
@@ -75233,16 +75233,16 @@
           "type": "Block",
           "value": " istanbul ignore if ",
           "range": [
-            32966,
-            32990
+            32977,
+            33001
           ],
           "loc": {
             "start": {
-              "line": 1066,
+              "line": 1067,
               "column": 0
             },
             "end": {
-              "line": 1066,
+              "line": 1067,
               "column": 24
             }
           }
@@ -75260,16 +75260,16 @@
             "type": "Identifier",
             "name": "BaseGauge",
             "range": [
-              33064,
-              33073
+              33075,
+              33084
             ],
             "loc": {
               "start": {
-                "line": 1071,
+                "line": 1072,
                 "column": 0
               },
               "end": {
-                "line": 1071,
+                "line": 1072,
                 "column": 9
               }
             }
@@ -75278,31 +75278,31 @@
             "type": "Identifier",
             "name": "initialize",
             "range": [
-              33074,
-              33084
+              33085,
+              33095
             ],
             "loc": {
               "start": {
-                "line": 1071,
+                "line": 1072,
                 "column": 10
               },
               "end": {
-                "line": 1071,
+                "line": 1072,
                 "column": 20
               }
             }
           },
           "range": [
-            33064,
-            33084
+            33075,
+            33095
           ],
           "loc": {
             "start": {
-              "line": 1071,
+              "line": 1072,
               "column": 0
             },
             "end": {
-              "line": 1071,
+              "line": 1072,
               "column": 20
             }
           }
@@ -75313,16 +75313,16 @@
             "value": "LinearGauge",
             "raw": "'LinearGauge'",
             "range": [
-              33085,
-              33098
+              33096,
+              33109
             ],
             "loc": {
               "start": {
-                "line": 1071,
+                "line": 1072,
                 "column": 21
               },
               "end": {
-                "line": 1071,
+                "line": 1072,
                 "column": 34
               }
             }
@@ -75331,47 +75331,47 @@
             "type": "Identifier",
             "name": "defaultLinearGaugeOptions",
             "range": [
-              33100,
-              33125
+              33111,
+              33136
             ],
             "loc": {
               "start": {
-                "line": 1071,
+                "line": 1072,
                 "column": 36
               },
               "end": {
-                "line": 1071,
+                "line": 1072,
                 "column": 61
               }
             }
           }
         ],
         "range": [
-          33064,
-          33126
+          33075,
+          33137
         ],
         "loc": {
           "start": {
-            "line": 1071,
+            "line": 1072,
             "column": 0
           },
           "end": {
-            "line": 1071,
+            "line": 1072,
             "column": 62
           }
         }
       },
       "range": [
-        33064,
-        33127
+        33075,
+        33138
       ],
       "loc": {
         "start": {
-          "line": 1071,
+          "line": 1072,
           "column": 0
         },
         "end": {
-          "line": 1071,
+          "line": 1072,
           "column": 63
         }
       }
@@ -75388,16 +75388,16 @@
             "type": "Identifier",
             "name": "module",
             "range": [
-              33129,
-              33135
+              33140,
+              33146
             ],
             "loc": {
               "start": {
-                "line": 1073,
+                "line": 1074,
                 "column": 0
               },
               "end": {
-                "line": 1073,
+                "line": 1074,
                 "column": 6
               }
             }
@@ -75406,31 +75406,31 @@
             "type": "Identifier",
             "name": "exports",
             "range": [
-              33136,
-              33143
+              33147,
+              33154
             ],
             "loc": {
               "start": {
-                "line": 1073,
+                "line": 1074,
                 "column": 7
               },
               "end": {
-                "line": 1073,
+                "line": 1074,
                 "column": 14
               }
             }
           },
           "range": [
-            33129,
-            33143
+            33140,
+            33154
           ],
           "loc": {
             "start": {
-              "line": 1073,
+              "line": 1074,
               "column": 0
             },
             "end": {
-              "line": 1073,
+              "line": 1074,
               "column": 14
             }
           }
@@ -75439,46 +75439,46 @@
           "type": "Identifier",
           "name": "LinearGauge",
           "range": [
-            33146,
-            33157
+            33157,
+            33168
           ],
           "loc": {
             "start": {
-              "line": 1073,
+              "line": 1074,
               "column": 17
             },
             "end": {
-              "line": 1073,
+              "line": 1074,
               "column": 28
             }
           }
         },
         "range": [
-          33129,
-          33157
+          33140,
+          33168
         ],
         "loc": {
           "start": {
-            "line": 1073,
+            "line": 1074,
             "column": 0
           },
           "end": {
-            "line": 1073,
+            "line": 1074,
             "column": 28
           }
         }
       },
       "range": [
-        33129,
-        33158
+        33140,
+        33169
       ],
       "loc": {
         "start": {
-          "line": 1073,
+          "line": 1074,
           "column": 0
         },
         "end": {
-          "line": 1073,
+          "line": 1074,
           "column": 29
         }
       }
@@ -75487,7 +75487,7 @@
   "sourceType": "module",
   "range": [
     1249,
-    33158
+    33169
   ],
   "loc": {
     "start": {
@@ -75495,7 +75495,7 @@
       "column": 0
     },
     "end": {
-      "line": 1073,
+      "line": 1074,
       "column": 29
     }
   },
@@ -76888,10 +76888,10 @@
     },
     {
       "type": "Block",
-      "value": "*\n * @typedef {object} ns\n ",
+      "value": "*\n * @ignore\n * @typedef {object} ns\n ",
       "range": [
         32934,
-        32965
+        32976
       ],
       "loc": {
         "start": {
@@ -76899,7 +76899,7 @@
           "column": 0
         },
         "end": {
-          "line": 1065,
+          "line": 1066,
           "column": 3
         }
       }
@@ -76908,16 +76908,16 @@
       "type": "Block",
       "value": " istanbul ignore if ",
       "range": [
-        32966,
-        32990
+        32977,
+        33001
       ],
       "loc": {
         "start": {
-          "line": 1066,
+          "line": 1067,
           "column": 0
         },
         "end": {
-          "line": 1066,
+          "line": 1067,
           "column": 24
         }
       }
