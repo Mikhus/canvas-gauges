@@ -155,6 +155,9 @@ export default class BaseGauge {
             throw TypeError(&apos;Given gauge canvas element is invalid!&apos;);
         }
 
+        options.width = parseFloat(options.width) || 0;
+        options.height = parseFloat(options.height) || 0;
+
         if (!options.width || !options.height) {
             if (!options.width) options.width = canvas.parentNode ?
                 canvas.parentNode.offsetWidth : canvas.offsetWidth;
