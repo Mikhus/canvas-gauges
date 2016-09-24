@@ -147,7 +147,7 @@ const defaultRadialGaugeOptions = Object.assign({}, GenericOptions, {
  */
 function drawRadialCircle(radius, context, start, end) {
     context.beginPath();
-    context.arc(0, 0, radius, 0, PI * 2, true);
+    context.arc(0, 0, abs(radius), 0, PI * 2, true);
     context.fillStyle = drawings.linearGradient(context, start, end, radius);
     context.fill();
     context.closePath();
@@ -215,7 +215,7 @@ function drawRadialPlate(context, options) {
     }
 
     context.beginPath();
-    context.arc(0, 0, r3, 0, PI * 2, true);
+    context.arc(0, 0, abs(r3), 0, PI * 2, true);
 
     if (options.colorPlateEnd) {
         grad = context.createRadialGradient(0, 0, r3 / 2, 0, 0, r3);
@@ -246,8 +246,8 @@ function drawRadialPlate(context, options) {
 function drawRadialHighlights(context, options) {
     context.save();
 
-    let r1 = radialTicksRadius(context, options);
-    let r2 = r1 - context.max * .15;
+    let r1 = abs(radialTicksRadius(context, options));
+    let r2 = abs(r1 - context.max * .15);
     let i = 0, s = options.highlights.length;
 
     for (; i &lt; s; i++) {
@@ -341,7 +341,7 @@ function radialTicksRadius(context, options) {
  * @param {RadialGaugeOptions} options
  */
 function drawRadialMajorTicks(context, options) {
-    let r = radialTicksRadius(context, options);
+    let r = abs(radialTicksRadius(context, options));
     let i, colors;
     let s = options.majorTicks.length;
     let pixelRatio = SmartCanvas.pixelRatio;
@@ -504,12 +504,12 @@ function drawRadialNeedle(context, options) {
 
     let value = options.value;
     let max = maxRadialRadius(context, options);
-    let r1 = max / 100 * options.needleCircleSize;
-    let r2 = max / 100 * options.needleCircleSize * 0.75;
-    let rIn = max / 100 * options.needleEnd;
-    let rStart = options.needleStart ?
-            max / 100 * options.needleStart : 0,
-            rOut = max * .2;
+    let r1 = abs(max / 100 * options.needleCircleSize);
+    let r2 = abs(max / 100 * options.needleCircleSize * 0.75);
+    let rIn = abs(max / 100 * options.needleEnd);
+    let rStart = abs(options.needleStart ?
+            max / 100 * options.needleStart : 0);
+    let rOut = abs(max * .2);
     let pad1 = max / 100 * options.needleWidth;
     let pad2 = max / 100 * options.needleWidth / 2;
     let pixelRatio = SmartCanvas.pixelRatio;
