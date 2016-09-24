@@ -30,6 +30,45 @@ breadcrumb: true
 
 <div class="medium-8 medium-pull-4 columns" markdown="1">
 
+## Async Loading
+
+Canvas gauges support async loading of their code. If you are using gauges as HTML-components on your page async load of the script is usually safe. So it is enough just to load gauges gode as following:
+
+~~~html
+<script async src="gauge.min.js"></script>
+~~~
+From other hand if you are using scripting on a page for gauges initialization async loading may break your code execution. In this case it is better to wrap gauges initialization with the function which then should be used as handler for gauge script loading, for example:
+
+~~~html
+<!doctype html>
+<html>
+<head>
+  <title>Canvas Gauges Async Scripting</title>
+</head>
+<body>
+
+<!-- ... some code before ... -->
+
+<canvas id="scripted-gauge"></canvas>
+
+<script>
+function initGauge() {
+    var gauge = new RadialGauge({
+        renderTo: 'scripted-gauge',
+        width: 300,
+        height: 300
+    }).draw();
+}
+</script>
+
+<script async src="gauge.min.js" onload="initGauge()"></script>
+
+<!-- ... some code after ... -->
+
+</body>
+</html>
+~~~
+
 ## Advanced Animations
 
 ### Improving Performance On Old Browsers
