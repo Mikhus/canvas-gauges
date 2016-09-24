@@ -30,7 +30,7 @@ On this page you can find old canvas gauges releases, available for download. To
 
 > It is recommended to use the latest release, because older releases may contain critical bugs and problems which were found and fixed in newer releases. So if you are looking for the most stable working gauges, please, consider using the latest release. If you are looking for a latest release, please, go to [download]({{site.url}}/download/) page. By the way, if for some specific need you are looking older code, you can find older releases on this page below.
 
-{% for release in site.data.releases %}
+{% for release in site.data.releases reversed %}
 {% if release[1].name != site.data.releases.latest.name %}
 
 ### Version {{release[1].name}}
