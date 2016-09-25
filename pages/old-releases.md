@@ -42,6 +42,10 @@ On this page you can find old canvas gauges releases, available for download. To
 {% endif %}
 {% endfor %}
 
+### Releases 1.x.x
+
+Very old releases are not available for download, by the way old code can be accesses in git repository. The latest version 1 branch is [v1.0.5](https://github.com/Mikhus/canvas-gauges/tree/v1.0.5).
+
 {% if site.data.releases.length > 6 %}
 If you are looking for a latest release, please, go to [download]({{site.url}}/download/) page.
 {% endif %}
