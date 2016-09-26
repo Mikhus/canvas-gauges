@@ -53,19 +53,19 @@ Use right-click and "Save link as..." to download minified packages to your loca
  * All-in-one  
 
 ~~~html
-<script src="//cdn.rawgit.com/Mikhus/canvas-gauges/gh-pages/download/latest/all/gauge.min.js"></script>
+<script src="//cdn.rawgit.com/Mikhus/canvas-gauges/gh-pages/download/{{site.data.releases.latest.name}}/all/gauge.min.js"></script>
 ~~~
  
  * Only radial gauge  
 
 ~~~html
-<script src="//cdn.rawgit.com/Mikhus/canvas-gauges/gh-pages/download/latest/radial/gauge.min.js"></script>
+<script src="//cdn.rawgit.com/Mikhus/canvas-gauges/gh-pages/download/{{site.data.releases.latest.name}}/radial/gauge.min.js"></script>
 ~~~
 
  * Only linear gauge  
 
 ~~~html
-<script src="//cdn.rawgit.com/Mikhus/canvas-gauges/gh-pages/download/latest/linear/gauge.min.js"></script>
+<script src="//cdn.rawgit.com/Mikhus/canvas-gauges/gh-pages/download/{{site.data.releases.latest.name}}/linear/gauge.min.js"></script>
 ~~~
 
 
