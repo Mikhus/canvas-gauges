@@ -535,7 +535,7 @@
     "access": null,
     "description": null,
     "lineNumber": 24,
-    "content": "/*!\n * The MIT License (MIT)\n *\n * Copyright (c) 2016 Mykhailo Stadnyk <mikhus@gmail.com>\n *\n * Permission is hereby granted, free of charge, to any person obtaining a copy\n * of this software and associated documentation files (the \"Software\"), to deal\n * in the Software without restriction, including without limitation the rights\n * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell\n * copies of the Software, and to permit persons to whom the Software is\n * furnished to do so, subject to the following conditions:\n *\n * The above copyright notice and this permission notice shall be included in\n * all copies or substantial portions of the Software.\n *\n * THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\n * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\n * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\n * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\n * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\n * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\n * SOFTWARE.\n */\nrequire('./polyfill');\n\nconst SmartCanvas = require('./SmartCanvas');\nconst Animation = require('./Animation');\nconst Collection = require('./Collection');\nconst DomObserver = require('./DomObserver');\n\nconst round = Math.round;\nconst abs = Math.abs;\n\nlet gauges = new Collection();\n\n/**\n * Basic abstract BaseGauge class implementing common functionality\n * for different type of gauges.\n *\n * It should not be instantiated directly but must be extended by a final\n * gauge implementation.\n *\n * @abstract\n * @example\n *\n * class MyCoolGauge extends BaseGauge {\n *\n *     // theses methods below MUST be implemented:\n *\n *     constructor(options) {\n *        // ... do something with options\n *        super(options);\n *        // ... implement anything else\n *     }\n *\n *     draw() {\n *         // ... some implementation here\n *         return this;\n *     }\n * }\n */\nexport default class BaseGauge {\n\n    /**\n     * @constructor\n     * @abstract\n     * @param {GenericOptions} options\n     */\n    constructor(options) {\n        let className = this.constructor.name;\n\n        if (className === 'BaseGauge') {\n            throw new TypeError('Attempt to instantiate abstract class!');\n        }\n\n        gauges.push(this);\n\n        /**\n         * Gauge type class\n         *\n         * @type {BaseGauge} type\n         */\n        this.type = ns[className];\n\n        /**\n         * True if gauge has been drawn for the first time, false otherwise.\n         *\n         * @type {boolean}\n         */\n        this.initialized = false;\n\n        options.minValue = parseFloat(options.minValue);\n        options.maxValue = parseFloat(options.maxValue);\n        options.value = parseFloat(options.value) || 0;\n\n        if (!options.borders) {\n            options.borderInnerWidth = options.borderMiddleWidth =\n                options.borderOuterWidth = 0;\n        }\n\n        if (!options.renderTo) {\n            throw TypeError('Canvas element was not specified when creating ' +\n                'the Gauge object!');\n        }\n\n        let canvas = options.renderTo.tagName ?\n            options.renderTo :\n            /* istanbul ignore next: to be tested with e2e tests */\n            document.getElementById(options.renderTo);\n\n        if (!(canvas instanceof HTMLCanvasElement)) {\n            throw TypeError('Given gauge canvas element is invalid!');\n        }\n\n        options.width = parseFloat(options.width) || 0;\n        options.height = parseFloat(options.height) || 0;\n\n        if (!options.width || !options.height) {\n            if (!options.width) options.width = canvas.parentNode ?\n                canvas.parentNode.offsetWidth : canvas.offsetWidth;\n            if (!options.height) options.height = canvas.parentNode ?\n                canvas.parentNode.offsetHeight : canvas.offsetHeight;\n        }\n\n        /**\n         * Gauge options\n         *\n         * @type {GenericOptions} options\n         */\n        this.options = options || {};\n\n        if (this.options.animateOnInit) {\n            this._value = this.options.value;\n            this.options.value = this.options.minValue;\n        }\n\n        /**\n         * @type {SmartCanvas} canvas\n         */\n        this.canvas = new SmartCanvas(canvas, options.width, options.height);\n        this.canvas.onRedraw = this.draw.bind(this);\n\n        /**\n         * @type {Animation} animation\n         */\n        this.animation = new Animation(\n            options.animationRule,\n            options.animationDuration);\n    }\n\n    /**\n     * Sets new value for this gauge.\n     * If gauge is animated by configuration it will trigger a proper animation.\n     * Upsetting a value triggers gauge redraw.\n     *\n     * @param {number} value\n     */\n    set value(value) {\n        let fromValue = this.options.value;\n\n        if (value === this.options.value) return;\n\n        if (this.options.animation) {\n            /**\n             * @type {number}\n             * @access private\n             */\n            this._value = value;\n\n            this.animation.animate(percent => {\n                this.options.value = fromValue + (value - fromValue) * percent;\n\n                this.draw();\n            }, () => {\n                this.options.value = value;\n                delete this._value;\n                this.draw();\n            });\n        }\n\n        else {\n            this.options.value = value;\n            this.draw();\n        }\n    }\n\n    /**\n     * Returns current value of the gauge\n     *\n     * @return {number}\n     */\n    get value() {\n        return typeof this._value === 'undefined' ?\n            this.options.value : this._value;\n    }\n\n    /**\n     * Updates gauge configuration options at runtime and redraws the gauge\n     *\n     * @param {RadialGaugeOptions} options\n     * @returns {BaseGauge}\n     */\n    update(options) {\n        Object.assign(this.options, options || {});\n\n        this.canvas.width = this.options.width;\n        this.canvas.height = this.options.height;\n\n        this.animation.rule = this.options.animationRule;\n        this.animation.duration = this.options.animationDuration;\n\n        this.canvas.redraw();\n\n        return this;\n    }\n\n    /**\n     * Performs destruction of this object properly\n     */\n    destroy() {\n        let index = gauges.indexOf(this);\n\n        /* istanbul ignore else */\n        if (~index) {\n            //noinspection JSUnresolvedFunction\n            gauges.splice(index, 1);\n        }\n\n        this.canvas.destroy();\n        this.canvas = null;\n\n        this.animation.destroy();\n        this.animation = null;\n    }\n\n    /**\n     * Triggering gauge render on a canvas.\n     *\n     * @abstract\n     * @returns {BaseGauge}\n     */\n    draw() {\n        if (this.options.animateOnInit && !this.initialized) {\n            this.value = this._value;\n            this.initialized = true;\n        }\n    }\n\n    /**\n     * Inject given gauge object into DOM\n     *\n     * @param {string} type\n     * @param {GenericOptions} options\n     */\n    static initialize(type, options) {\n        new DomObserver(options, 'canvas', type);\n    }\n}\n\n\n/**\n * @ignore\n * @typedef {object} ns\n */\n/* istanbul ignore if */\nif (typeof ns !== 'undefined') {\n    ns['BaseGauge'] = BaseGauge;\n    (ns.document || ns)['gauges'] = gauges;\n}\n\nmodule.exports = BaseGauge;\n"
+    "content": "/*!\n * The MIT License (MIT)\n *\n * Copyright (c) 2016 Mykhailo Stadnyk <mikhus@gmail.com>\n *\n * Permission is hereby granted, free of charge, to any person obtaining a copy\n * of this software and associated documentation files (the \"Software\"), to deal\n * in the Software without restriction, including without limitation the rights\n * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell\n * copies of the Software, and to permit persons to whom the Software is\n * furnished to do so, subject to the following conditions:\n *\n * The above copyright notice and this permission notice shall be included in\n * all copies or substantial portions of the Software.\n *\n * THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\n * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\n * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\n * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\n * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\n * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\n * SOFTWARE.\n */\nrequire('./polyfill');\n\nconst SmartCanvas = require('./SmartCanvas');\nconst Animation = require('./Animation');\nconst Collection = require('./Collection');\nconst DomObserver = require('./DomObserver');\n\nconst round = Math.round;\nconst abs = Math.abs;\n\nlet gauges = new Collection();\n\n/**\n * Basic abstract BaseGauge class implementing common functionality\n * for different type of gauges.\n *\n * It should not be instantiated directly but must be extended by a final\n * gauge implementation.\n *\n * @abstract\n * @example\n *\n * class MyCoolGauge extends BaseGauge {\n *\n *     // theses methods below MUST be implemented:\n *\n *     constructor(options) {\n *        // ... do something with options\n *        super(options);\n *        // ... implement anything else\n *     }\n *\n *     draw() {\n *         // ... some implementation here\n *         return this;\n *     }\n * }\n */\nexport default class BaseGauge {\n\n    /**\n     * @constructor\n     * @abstract\n     * @param {GenericOptions} options\n     */\n    constructor(options) {\n        let className = this.constructor.name;\n\n        if (className === 'BaseGauge') {\n            throw new TypeError('Attempt to instantiate abstract class!');\n        }\n\n        gauges.push(this);\n\n        /**\n         * Gauge type class\n         *\n         * @type {BaseGauge} type\n         */\n        this.type = ns[className];\n\n        /**\n         * True if gauge has been drawn for the first time, false otherwise.\n         *\n         * @type {boolean}\n         */\n        this.initialized = false;\n\n        options.minValue = parseFloat(options.minValue);\n        options.maxValue = parseFloat(options.maxValue);\n        options.value = parseFloat(options.value) || 0;\n\n        if (!options.borders) {\n            options.borderInnerWidth = options.borderMiddleWidth =\n                options.borderOuterWidth = 0;\n        }\n\n        if (!options.renderTo) {\n            throw TypeError('Canvas element was not specified when creating ' +\n                'the Gauge object!');\n        }\n\n        let canvas = options.renderTo.tagName ?\n            options.renderTo :\n            /* istanbul ignore next: to be tested with e2e tests */\n            document.getElementById(options.renderTo);\n\n        if (!(canvas instanceof HTMLCanvasElement)) {\n            throw TypeError('Given gauge canvas element is invalid!');\n        }\n\n        options.width = parseFloat(options.width) || 0;\n        options.height = parseFloat(options.height) || 0;\n\n        if (!options.width || !options.height) {\n            if (!options.width) options.width = canvas.parentNode ?\n                canvas.parentNode.offsetWidth : canvas.offsetWidth;\n            if (!options.height) options.height = canvas.parentNode ?\n                canvas.parentNode.offsetHeight : canvas.offsetHeight;\n        }\n\n        /**\n         * Gauge options\n         *\n         * @type {GenericOptions} options\n         */\n        this.options = options || {};\n\n        if (this.options.animateOnInit) {\n            this._value = this.options.value;\n            this.options.value = this.options.minValue;\n        }\n\n        /**\n         * @type {SmartCanvas} canvas\n         */\n        this.canvas = new SmartCanvas(canvas, options.width, options.height);\n        this.canvas.onRedraw = this.draw.bind(this);\n\n        /**\n         * @type {Animation} animation\n         */\n        this.animation = new Animation(\n            options.animationRule,\n            options.animationDuration);\n    }\n\n    /**\n     * Sets new value for this gauge.\n     * If gauge is animated by configuration it will trigger a proper animation.\n     * Upsetting a value triggers gauge redraw.\n     *\n     * @param {number} value\n     */\n    set value(value) {\n        value = parseFloat(value);\n\n        if (isNaN(value) || !isFinite(value)) {\n            value = this.options.minValue;\n        }\n\n        let fromValue = this.options.value;\n\n        if (value === this.options.value) return;\n\n        if (this.options.animation) {\n            /**\n             * @type {number}\n             * @access private\n             */\n            this._value = value;\n\n            this.animation.animate(percent => {\n                this.options.value = fromValue + (value - fromValue) * percent;\n\n                this.draw();\n            }, () => {\n                this.options.value = value;\n                delete this._value;\n                this.draw();\n            });\n        }\n\n        else {\n            this.options.value = value;\n            this.draw();\n        }\n    }\n\n    /**\n     * Returns current value of the gauge\n     *\n     * @return {number}\n     */\n    get value() {\n        return typeof this._value === 'undefined' ?\n            this.options.value : this._value;\n    }\n\n    /**\n     * Updates gauge configuration options at runtime and redraws the gauge\n     *\n     * @param {RadialGaugeOptions} options\n     * @returns {BaseGauge}\n     */\n    update(options) {\n        Object.assign(this.options, options || {});\n\n        this.canvas.width = this.options.width;\n        this.canvas.height = this.options.height;\n\n        this.animation.rule = this.options.animationRule;\n        this.animation.duration = this.options.animationDuration;\n\n        this.canvas.redraw();\n\n        return this;\n    }\n\n    /**\n     * Performs destruction of this object properly\n     */\n    destroy() {\n        let index = gauges.indexOf(this);\n\n        /* istanbul ignore else */\n        if (~index) {\n            //noinspection JSUnresolvedFunction\n            gauges.splice(index, 1);\n        }\n\n        this.canvas.destroy();\n        this.canvas = null;\n\n        this.animation.destroy();\n        this.animation = null;\n    }\n\n    /**\n     * Triggering gauge render on a canvas.\n     *\n     * @abstract\n     * @returns {BaseGauge}\n     */\n    draw() {\n        if (this.options.animateOnInit && !this.initialized) {\n            this.value = this._value;\n            this.initialized = true;\n        }\n    }\n\n    /**\n     * Inject given gauge object into DOM\n     *\n     * @param {string} type\n     * @param {GenericOptions} options\n     */\n    static initialize(type, options) {\n        new DomObserver(options, 'canvas', type);\n    }\n}\n\n\n/**\n * @ignore\n * @typedef {object} ns\n */\n/* istanbul ignore if */\nif (typeof ns !== 'undefined') {\n    ns['BaseGauge'] = BaseGauge;\n    (ns.document || ns)['gauges'] = gauges;\n}\n\nmodule.exports = BaseGauge;\n"
   },
   {
     "__docId__": 22,
@@ -894,7 +894,7 @@
     "longname": "lib/BaseGauge.js~BaseGauge#_value",
     "access": "private",
     "description": "",
-    "lineNumber": 168,
+    "lineNumber": 174,
     "type": {
       "nullable": null,
       "types": [
@@ -914,7 +914,7 @@
     "longname": "lib/BaseGauge.js~BaseGauge#value",
     "access": null,
     "description": "Returns current value of the gauge",
-    "lineNumber": 192,
+    "lineNumber": 198,
     "return": {
       "nullable": null,
       "types": [
@@ -940,7 +940,7 @@
     "longname": "lib/BaseGauge.js~BaseGauge#update",
     "access": null,
     "description": "Updates gauge configuration options at runtime and redraws the gauge",
-    "lineNumber": 203,
+    "lineNumber": 209,
     "unknown": [
       {
         "tagName": "@returns",
@@ -979,7 +979,7 @@
     "longname": "lib/BaseGauge.js~BaseGauge#destroy",
     "access": null,
     "description": "Performs destruction of this object properly",
-    "lineNumber": 220,
+    "lineNumber": 226,
     "params": [],
     "generator": false
   },
@@ -993,7 +993,7 @@
     "longname": "lib/BaseGauge.js~BaseGauge#canvas",
     "access": null,
     "description": null,
-    "lineNumber": 230,
+    "lineNumber": 236,
     "undocument": true,
     "type": {
       "types": [
@@ -1011,7 +1011,7 @@
     "longname": "lib/BaseGauge.js~BaseGauge#animation",
     "access": null,
     "description": null,
-    "lineNumber": 233,
+    "lineNumber": 239,
     "undocument": true,
     "type": {
       "types": [
@@ -1029,7 +1029,7 @@
     "longname": "lib/BaseGauge.js~BaseGauge#draw",
     "access": null,
     "description": "Triggering gauge render on a canvas.",
-    "lineNumber": 242,
+    "lineNumber": 248,
     "unknown": [
       {
         "tagName": "@returns",
@@ -1058,7 +1058,7 @@
     "longname": "lib/BaseGauge.js~BaseGauge#value",
     "access": null,
     "description": null,
-    "lineNumber": 244,
+    "lineNumber": 250,
     "undocument": true,
     "type": {
       "types": [
@@ -1076,7 +1076,7 @@
     "longname": "lib/BaseGauge.js~BaseGauge#initialized",
     "access": null,
     "description": null,
-    "lineNumber": 245,
+    "lineNumber": 251,
     "undocument": true,
     "type": {
       "types": [
@@ -1094,7 +1094,7 @@
     "longname": "lib/BaseGauge.js~BaseGauge.initialize",
     "access": null,
     "description": "Inject given gauge object into DOM",
-    "lineNumber": 255,
+    "lineNumber": 261,
     "params": [
       {
         "nullable": null,
@@ -1129,7 +1129,7 @@
     "longname": "lib/BaseGauge.js~ns",
     "access": null,
     "description": "",
-    "lineNumber": 266,
+    "lineNumber": 272,
     "ignore": true,
     "type": {
       "types": [
