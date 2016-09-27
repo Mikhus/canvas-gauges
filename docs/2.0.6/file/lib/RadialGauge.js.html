@@ -561,6 +561,8 @@ function drawRadialNeedle(context, options) {
     }
 
     if (options.needleCircleSize) {
+        context.restore();
+
         drawings.drawNeedleShadow(context, options);
 
         if (options.needleCircleOuter) {
