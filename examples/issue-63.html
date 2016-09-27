@@ -1,0 +1,102 @@
+<!doctype htm>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Gauge Test</title>
+    <script src="../gauge.min.js"></script>
+    <style>body {
+        padding: 0;
+        margin: 0;
+        background: #fff
+    }</style>
+</head>
+<body>
+
+<a href="#" onclick="gaugePS.value=570">570</a>
+<a href="#" onclick="gaugePS.value=583">583</a>
+<a href="#" onclick="gaugePS.value=830">830</a>
+<canvas id="gauge-ps"></canvas>
+
+<script>
+var gaugePS = new RadialGauge({
+    renderTo: 'gauge-ps',
+    width: 400,
+    height: 400,
+    units: 'PS',
+    minValue: 0,
+    maxValue: 1000,
+    majorTicks: [
+        '0',
+        '100',
+        '200',
+        '300',
+        '400',
+        '500',
+        '600',
+        '700',
+        '800',
+        '900',
+        '1000'
+    ],
+    minorTicks: 2,
+    ticksAngle: 270,
+    startAngle: 45,
+    strokeTicks: true,
+    highlights  : [
+        { from : 457,  to : 880, color : 'rgba(78,   78, 76, 0.5)' },
+        { from : 880, to : 1000, color : 'rgba(225, 7, 23, 0.75)' }
+    ],
+    valueInt: 1,
+    valueDec: 0,
+    colorPlate: "#fff",
+    colorMajorTicks: "#686868",
+    colorMinorTicks: "#686868",
+    colorTitle: "#000",
+    colorUnits: "#000",
+    colorNumbers: "#686868",
+    valueBox: true,
+    colorValueText: "#000",
+    colorValueBoxRect: "#fff",
+    colorValueBoxRectEnd: "#fff",
+    colorValueBoxBackground: "#fff",
+    colorValueBoxShadow: false,
+    colorValueTextShadow: false,
+    colorNeedleShadowUp: true,
+    colorNeedleShadowDown: false,
+    colorNeedle: "rgba(200, 50, 50, .75)",
+    colorNeedleEnd: "rgba(200, 50, 50, .75)",
+    colorNeedleCircleOuter: "rgba(200, 200, 200, 1)",
+    colorNeedleCircleOuterEnd: "rgba(200, 200, 200, 1)",
+    borderShadowWidth: 0,
+    borders: true,
+    borderInnerWidth: 0,
+    borderMiddleWidth: 0,
+    borderOuterWidth: 5,
+    colorBorderOuter: "#fafafa",
+    colorBorderOuterEnd: "#cdcdcd",
+    needleType: "arrow",
+    needleWidth: 2,
+    needleCircleSize: 7,
+    needleCircleOuter: true,
+    needleCircleInner: false,
+    animationDuration: 1500,
+    animationRule: "dequint",
+    fontNumbers: "Verdana",
+    fontTitle: "Verdana",
+    fontUnits: "Verdana",
+    fontValue: "Led",
+    fontValueStyle: 'italic',
+    fontNumbersSize: 20,
+    fontNumbersStyle: 'italic',
+    fontNumbersWeight: 'bold',
+    fontTitleSize: 24,
+    fontUnitsSize: 22,
+    fontValueSize: 50,
+    animatedValue: true
+});
+gaugePS.draw();
+gaugePS.value = "510";
+</script>
+
+</body>
+</html>

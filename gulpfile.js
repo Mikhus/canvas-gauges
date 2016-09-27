@@ -29,6 +29,7 @@ const replace = require('gulp-replace');
 const babel = require('gulp-babel');
 const fsc = require('fs-cli');
 const semver = require('semver');
+const inject = require('gulp-inject-string');
 
 /**
  * @typedef {{argv: object}} yargs
@@ -72,6 +73,16 @@ function es6concat(type = 'all') {
         .pipe(replace(/export\s+(default\s+)?(GenericOptions;)?/g, ''));
 }
 
+function license() {
+    let src = fs.readFileSync('./LICENSE')
+        .toString()
+        .split(/\r?\n/);
+
+    src.pop();
+
+    return '/*!\n * ' + src.join('\n * ') + '\n */\n';
+}
+
 /**
  * Displays this usage information.
  *
@@ -100,7 +111,7 @@ gulp.task('build:prod', done => {
                         resolve();
                     })
                     .pipe(rename('gauge.min.js'))
-                    .pipe(replace(/^/, '(function(ns) {'))
+                    .pipe(replace(/^/, license() + '(function(ns) {'))
                     .pipe(replace(/$/,
                         ';typeof module !== "undefined" && Object.assign(ns, {' +
                         'Collection: Collection,' +
@@ -113,7 +124,9 @@ gulp.task('build:prod', done => {
                         '});' +
                         '}(typeof module !== "undefined" ? ' +
                             'module.exports : window));'))
-                    .pipe(uglify())
+                    .pipe(uglify({
+                        preserveComments: (node, comment) => comment.line === 1
+                    }))
                     .pipe(gulp.dest('dist/' + type))
                     .on('end', () => {
                         let pkg = JSON.parse(fs.readFileSync('./package.json'));
@@ -253,7 +266,7 @@ gulp.task('build:es5', ['clean'], () => {
         })
         //.pipe(gulp.dest('.'))
         .pipe(rename('gauge.min.js'))
-        .pipe(replace(/^/, '(function(ns) {'))
+        .pipe(replace(/^/, license() + '(function(ns) {'))
         .pipe(replace(/$/,
             ';typeof module !== "undefined" && Object.assign(ns, {' +
                 'Collection: Collection,' +
@@ -266,7 +279,9 @@ gulp.task('build:es5', ['clean'], () => {
             '});' +
             '}(typeof module !== "undefined" ?  module.exports : window));'))
         .pipe(sourcemaps.init({ loadMaps: true }))
-        .pipe(uglify())
+        .pipe(uglify({
+            preserveComments: (node, comment) => comment.line === 1
+        }))
         .pipe(sourcemaps.write('.'))
         .pipe(gulp.dest('.'))
         .on('end', () => {
