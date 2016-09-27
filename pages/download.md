@@ -28,7 +28,7 @@ code {
 
 There are plenty of options obtaining canvas gauges: downloading packages for local use on your website; installing packages from node package manager; using content delivery network or using a source code.
 
-## Download Minified Packages
+## Download Latest Minified Packages (v{{site.data.releases.latest.name}})
 
 Use right-click and "Save link as..." to download minified packages to your local device. If you wish simply refer it from your code - it is possible, but much preferable to use [CDN](#loading-from-cdn) for this.
 
