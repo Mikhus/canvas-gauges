@@ -29,6 +29,7 @@ const replace = require('gulp-replace');
 const babel = require('gulp-babel');
 const fsc = require('fs-cli');
 const semver = require('semver');
+const inject = require('gulp-inject-string');
 
 /**
  * @typedef {{argv: object}} yargs
@@ -123,7 +124,9 @@ gulp.task('build:prod', done => {
                         '});' +
                         '}(typeof module !== "undefined" ? ' +
                             'module.exports : window));'))
-                    .pipe(uglify())
+                    .pipe(uglify({
+                        preserveComments: (node, comment) => comment.line === 1
+                    }))
                     .pipe(gulp.dest('dist/' + type))
                     .on('end', () => {
                         let pkg = JSON.parse(fs.readFileSync('./package.json'));
@@ -276,7 +279,9 @@ gulp.task('build:es5', ['clean'], () => {
             '});' +
             '}(typeof module !== "undefined" ?  module.exports : window));'))
         .pipe(sourcemaps.init({ loadMaps: true }))
-        .pipe(uglify())
+        .pipe(uglify({
+            preserveComments: (node, comment) => comment.line === 1
+        }))
         .pipe(sourcemaps.write('.'))
         .pipe(gulp.dest('.'))
         .on('end', () => {

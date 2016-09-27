@@ -93,6 +93,7 @@
     "gulp-eslint": "^3.0.1",
     "gulp-gzip": "^1.4.0",
     "gulp-help-doc": "^1.0.7",
+    "gulp-inject-string": "^1.1.0",
     "gulp-mocha": "^3.0.1",
     "gulp-rename": "^1.2.2",
     "gulp-replace": "^0.5.4",
