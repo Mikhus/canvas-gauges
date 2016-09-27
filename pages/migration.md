@@ -38,8 +38,8 @@ The table below contains a list of configuration options which was changed in a 
 
 | Old property | New property | New HTML attribute | Comments |
 |---|---|---|---|
-| valueFormat.int | valueFormatInt | data-value-format-int |  |
-| valueFormat.dec | valueFormatDec | data-value-format-dec |  |
+| valueFormat.int | valueInt | data-value-int |  |
+| valueFormat.dec | valueDec | data-value-dec |  |
 | updateValueOnAnimation | animatedValue | data-animated-value |  |
 | glow | - | - | Removed from spec |
 | animation.duration | animationDuration | data-animation-duration |  |
