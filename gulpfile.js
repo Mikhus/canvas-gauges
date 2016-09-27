@@ -72,6 +72,16 @@ function es6concat(type = 'all') {
         .pipe(replace(/export\s+(default\s+)?(GenericOptions;)?/g, ''));
 }
 
+function license() {
+    let src = fs.readFileSync('./LICENSE')
+        .toString()
+        .split(/\r?\n/);
+
+    src.pop();
+
+    return '/*!\n * ' + src.join('\n * ') + '\n */\n';
+}
+
 /**
  * Displays this usage information.
  *
@@ -100,7 +110,7 @@ gulp.task('build:prod', done => {
                         resolve();
                     })
                     .pipe(rename('gauge.min.js'))
-                    .pipe(replace(/^/, '(function(ns) {'))
+                    .pipe(replace(/^/, license() + '(function(ns) {'))
                     .pipe(replace(/$/,
                         ';typeof module !== "undefined" && Object.assign(ns, {' +
                         'Collection: Collection,' +
@@ -253,7 +263,7 @@ gulp.task('build:es5', ['clean'], () => {
         })
         //.pipe(gulp.dest('.'))
         .pipe(rename('gauge.min.js'))
-        .pipe(replace(/^/, '(function(ns) {'))
+        .pipe(replace(/^/, license() + '(function(ns) {'))
         .pipe(replace(/$/,
             ';typeof module !== "undefined" && Object.assign(ns, {' +
                 'Collection: Collection,' +
