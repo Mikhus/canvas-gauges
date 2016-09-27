@@ -697,7 +697,10 @@ function drawLinearMajorTicksNumbers(context, options) {
     let colors = options.colorNumbers instanceof Array ?
         options.colorNumbers : Array(ticks).fill(options.colorNumbers);
 
-    context.font = textHeight + &apos;px &apos; + options.fontNumbers;
+    context.font = options.fontNumbersStyle + &apos; &apos; +
+        options.fontNumbersWeight + &apos; &apos; +
+        textHeight + &apos;px &apos; +
+        options.fontNumbers;
     context.lineWidth = 0;
     context.textAlign = &apos;center&apos;;
 
@@ -757,7 +760,10 @@ function drawLinearTitle(context, options) {
     context.save();
     context.textAlign = &apos;center&apos;;
     context.fillStyle = options.colorTitle;
-    context.font = textHeight + &apos;px &apos; + options.fontTitle;
+    context.font = options.fontTitleStyle + &apos; &apos; +
+        options.fontTitleWeight + &apos; &apos; +
+        textHeight + &apos;px &apos; +
+        options.fontTitle;
     context.lineWidth = 0;
     context.fillText(options.title, textX, textY, isVertical ? width : length);
 }
@@ -782,7 +788,10 @@ function drawLinearUnits(context, options) {
     context.save();
     context.textAlign = &apos;center&apos;;
     context.fillStyle = options.colorTitle;
-    context.font = textHeight + &apos;px &apos; + options.fontUnits;
+    context.font = options.fontUnitsStyle + &apos; &apos; +
+        options.fontUnitsWeight + &apos; &apos; +
+        textHeight + &apos;px &apos; +
+        options.fontUnits;
     context.lineWidth = 0;
     context.fillText(options.units, textX, textY, isVertical ? width : length);
 }

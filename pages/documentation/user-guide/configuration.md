@@ -211,10 +211,23 @@ Canvas gauges enables use of custom fonts when drawing text elements. As far as 
  - **fontTitle**: specifies font family for title text.
  - **fontUnits**: specifies font family for units text.
  - **fontValue**: specifies font-family for value box text.
+
  - **fontNumbersSize**: Size of the font for tick numbers in relative units.
  - **fontTitleSize**: Size of the font for title element text in relative units.
  - **fontUnitsSize**: Size of the font for units element text in relative units.
- - **fontValueSize**: Size of the font using for drawing value in value box.
+ - **fontValueSize**: Size of the font using for drawing value in a value box.
+
+Since version 2.0.6 there is added more advanced font styling features. Now it is possible to set font style and font weight on each text element of the gauge. Where font style can be one of 'normal' (default) 'italic' or 'oblique' values. Font weight can be one of 'normal' (default), 'bold', 'bolder', 'lighter', '100', '200', '300', '400', '500', '600', '700', '800' or '900' values.
+
+ - **fontNumbersStyle**: Font style of tick numbers.
+ - **fontTitleStyle**: Font style of a gauge title.
+ - **fontUnitsStyle**: Font style of the gauge units text.
+ - **fontValueStyle**: Font style for the value text in a value box. 
+
+ - **fontNumbersWeight**: Font weight of tick numbers.
+ - **fontTitleWeight**: Font weight of a gauge title.
+ - **fontUnitsWeight**: Font weight of the gauge units text.
+ - **fontValueWeight**: Font weight for the value text in a value box. 
 
 ## Gauge-Specific Configuration Options
 
