@@ -577,13 +577,13 @@ window.esdocSearchIndex = [
   ],
   [
     "lib/basegauge.js~basegauge#value",
-    "class/lib/BaseGauge.js~BaseGauge.html#instance-set-value",
+    "class/lib/BaseGauge.js~BaseGauge.html#instance-get-value",
     "lib/BaseGauge.js~BaseGauge#value",
     "member"
   ],
   [
     "lib/basegauge.js~basegauge#value",
-    "class/lib/BaseGauge.js~BaseGauge.html#instance-get-value",
+    "class/lib/BaseGauge.js~BaseGauge.html#instance-set-value",
     "lib/BaseGauge.js~BaseGauge#value",
     "member"
   ],
@@ -910,6 +910,12 @@ window.esdocSearchIndex = [
     "file/lib/polyfill.js.html",
     "lib/polyfill.js",
     "file"
+  ],
+  [
+    "lib/polyfill.js~array.fill",
+    "external/index.html",
+    "lib/polyfill.js~Array.fill",
+    "external"
   ],
   [
     "lib/polyfill.js~array.indexof",

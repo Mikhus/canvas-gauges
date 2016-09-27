@@ -5515,7 +5515,7 @@
     "access": null,
     "description": null,
     "lineNumber": 5,
-    "content": "/**\n * @external {Object.assign} https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object/assign\n */\n/* istanbul ignore next */\nif (!Object.assign) {\n    Object.defineProperty(Object, 'assign', {\n        enumerable: false,\n        configurable: true,\n        writable: true,\n        value: function(target, firstSource) {\n            'use strict';\n\n            if (target === undefined || target === null) {\n                throw new TypeError('Cannot convert first argument to object');\n            }\n\n            var to = Object(target);\n            var i = 1;\n\n            for (; i < arguments.length; i++) {\n                var nextSource = arguments[i];\n\n                if (nextSource === undefined || nextSource === null) {\n                    continue;\n                }\n\n                var keysArray = Object.keys(Object(nextSource));\n                var nextIndex = 0, len = keysArray.length;\n\n                for (; nextIndex < len; nextIndex++) {\n                    var nextKey = keysArray[nextIndex];\n                    var desc = Object.getOwnPropertyDescriptor(\n                        nextSource, nextKey);\n\n                    if (desc !== undefined && desc.enumerable) {\n                        to[nextKey] = nextSource[nextKey];\n                    }\n                }\n            }\n\n            return to;\n        }\n    });\n}\n\n/**\n * @external {Array.indexOf} https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array/indexOf\n */\n/* istanbul ignore next */\nif (!Array.prototype.indexOf) {\n    Array.prototype.indexOf = function(searchElement, fromIndex) {\n        var k;\n\n        if (this == null) {\n            throw new TypeError('\"this\" is null or not defined');\n        }\n\n        var O = Object(this);\n        var len = O.length >>> 0;\n\n        if (len === 0) {\n            return -1;\n        }\n\n        var n = +fromIndex || 0;\n\n        if (Math.abs(n) === Infinity) {\n            n = 0;\n        }\n\n        if (n >= len) {\n            return -1;\n        }\n\n        k = Math.max(n >= 0 ? n : len - Math.abs(n), 0);\n\n        while (k < len) {\n            if (k in O && O[k] === searchElement) {\n                return k;\n            }\n\n            k++;\n        }\n\n        return -1;\n    };\n}\n"
+    "content": "/**\n * @external {Object.assign} https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object/assign\n */\n/* istanbul ignore next */\nif (!Object.assign) {\n    Object.defineProperty(Object, 'assign', {\n        enumerable: false,\n        configurable: true,\n        writable: true,\n        value: function(target, firstSource) {\n            'use strict';\n\n            if (target === undefined || target === null) {\n                throw new TypeError('Cannot convert first argument to object');\n            }\n\n            var to = Object(target);\n            var i = 1;\n\n            for (; i < arguments.length; i++) {\n                var nextSource = arguments[i];\n\n                if (nextSource === undefined || nextSource === null) {\n                    continue;\n                }\n\n                var keysArray = Object.keys(Object(nextSource));\n                var nextIndex = 0, len = keysArray.length;\n\n                for (; nextIndex < len; nextIndex++) {\n                    var nextKey = keysArray[nextIndex];\n                    var desc = Object.getOwnPropertyDescriptor(\n                        nextSource, nextKey);\n\n                    if (desc !== undefined && desc.enumerable) {\n                        to[nextKey] = nextSource[nextKey];\n                    }\n                }\n            }\n\n            return to;\n        }\n    });\n}\n\n/**\n * @external {Array.indexOf} https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array/indexOf\n */\n/* istanbul ignore next */\nif (!Array.prototype.indexOf) {\n    Array.prototype.indexOf = function(searchElement, fromIndex) {\n        var k;\n\n        if (this == null) {\n            throw new TypeError('\"this\" is null or not defined');\n        }\n\n        var O = Object(this);\n        var len = O.length >>> 0;\n\n        if (len === 0) {\n            return -1;\n        }\n\n        var n = +fromIndex || 0;\n\n        if (Math.abs(n) === Infinity) {\n            n = 0;\n        }\n\n        if (n >= len) {\n            return -1;\n        }\n\n        k = Math.max(n >= 0 ? n : len - Math.abs(n), 0);\n\n        while (k < len) {\n            if (k in O && O[k] === searchElement) {\n                return k;\n            }\n\n            k++;\n        }\n\n        return -1;\n    };\n}\n\n/**\n * @external {Array.fill} https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array/fill\n */\n/* istanbul ignore next */\nif (!Array.prototype.fill) {\n    Array.prototype.fill = function(value) {\n        if (this == null) {\n            throw new TypeError('this is null or not defined');\n        }\n\n        var O = Object(this);\n        var len = O.length >>> 0;\n        var start = arguments[1];\n        var relativeStart = start >> 0;\n        var k = relativeStart < 0 ?\n            Math.max(len + relativeStart, 0) :\n            Math.min(relativeStart, len);\n        var end = arguments[2];\n        var relativeEnd = end === undefined ?\n            len : end >> 0;\n        var final = relativeEnd < 0 ?\n            Math.max(len + relativeEnd, 0) :\n            Math.min(relativeEnd, len);\n        while (k < final) {\n            O[k] = value;\n            k++;\n        }\n\n        return O;\n    };\n}\n"
   },
   {
     "__docId__": 178,
@@ -5545,6 +5545,19 @@
   },
   {
     "__docId__": 180,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Array.fill",
+    "externalLink": "https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array/fill",
+    "memberof": "lib/polyfill.js",
+    "longname": "lib/polyfill.js~Array.fill",
+    "access": null,
+    "description": "",
+    "lineNumber": 93
+  },
+  {
+    "__docId__": 181,
     "kind": "file",
     "static": true,
     "variation": null,
@@ -5557,7 +5570,7 @@
     "content": "/*!\n * The MIT License (MIT)\n *\n * Copyright (c) 2016 Mykhailo Stadnyk <mikhus@gmail.com>\n *\n * Permission is hereby granted, free of charge, to any person obtaining a copy\n * of this software and associated documentation files (the \"Software\"), to deal\n * in the Software without restriction, including without limitation the rights\n * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell\n * copies of the Software, and to permit persons to whom the Software is\n * furnished to do so, subject to the following conditions:\n *\n * The above copyright notice and this permission notice shall be included in\n * all copies or substantial portions of the Software.\n *\n * THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\n * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\n * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\n * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\n * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\n * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\n * SOFTWARE.\n */\n/**\n * Look-ups for a proper vendor-specific property and returns its value\n *\n * @example\n * var requestAnimationFrame = vendorize('requestAnimationFrame');\n * // it will refer properly to:\n * //  - window.requestAnimationFrame by default or to\n * //  - window.webkitRequestAnimationFrame or to\n * //  - window.mozRequestAnimationFrame or to\n * //  - window.msRequestAnimationFrame or to\n * //  - window.oRequestAnimationFrame\n * // depending on the current browser vendor\n *\n * @author Mykhailo Stadnyk <mikhus@gmail.com>\n * @param {string} prop\n * @param {HTMLElement|Window|object} [from] - default is window\n * @returns {*}\n */\nexport default function vendorize(prop, from) {\n    /* istanbul ignore else: no reason to cover */\n    if (!from) {\n        from = typeof window === 'undefined' ? global : window;\n    }\n\n    if (typeof from[prop] !== 'undefined') {\n        return from[prop];\n    }\n\n    let vendors = ['webkit', 'moz', 'ms', 'o'];\n    let i = 0;\n    let s = vendors.length;\n    let capitalized = prop.charAt(0).toUpperCase() + prop.substr(1);\n\n    for (; i < s; i++) {\n        let vendorProp = from[vendors[i] + capitalized];\n\n        /* istanbul ignore if: requires very complex environment to test (specific browser version) */\n        if (typeof vendorProp !== 'undefined') {\n            return vendorProp;\n        }\n    }\n\n    return null;\n}\n\nmodule.exports = vendorize;\n"
   },
   {
-    "__docId__": 181,
+    "__docId__": 182,
     "kind": "function",
     "static": true,
     "variation": null,
@@ -5618,7 +5631,7 @@
     "generator": false
   },
   {
-    "__docId__": 183,
+    "__docId__": 184,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -5631,7 +5644,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 184,
+    "__docId__": 185,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -5644,7 +5657,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 185,
+    "__docId__": 186,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -5657,7 +5670,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 186,
+    "__docId__": 187,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -5670,7 +5683,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 187,
+    "__docId__": 188,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -5683,7 +5696,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 188,
+    "__docId__": 189,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -5696,7 +5709,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 189,
+    "__docId__": 190,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -5709,7 +5722,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 190,
+    "__docId__": 191,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -5722,7 +5735,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 191,
+    "__docId__": 192,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -5735,7 +5748,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 192,
+    "__docId__": 193,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -5748,7 +5761,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 193,
+    "__docId__": 194,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -5761,7 +5774,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 194,
+    "__docId__": 195,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -5774,7 +5787,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 195,
+    "__docId__": 196,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -5787,7 +5800,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 196,
+    "__docId__": 197,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -5800,7 +5813,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 197,
+    "__docId__": 198,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -5813,7 +5826,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 198,
+    "__docId__": 199,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -5826,7 +5839,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 199,
+    "__docId__": 200,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -5839,7 +5852,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 200,
+    "__docId__": 201,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -5852,7 +5865,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 201,
+    "__docId__": 202,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -5865,7 +5878,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 202,
+    "__docId__": 203,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -5878,7 +5891,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 203,
+    "__docId__": 204,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -5891,7 +5904,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 204,
+    "__docId__": 205,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -5904,7 +5917,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 205,
+    "__docId__": 206,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -5917,7 +5930,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 206,
+    "__docId__": 207,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -5930,7 +5943,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 207,
+    "__docId__": 208,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -5943,7 +5956,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 208,
+    "__docId__": 209,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -5956,7 +5969,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 209,
+    "__docId__": 210,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -5969,7 +5982,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 210,
+    "__docId__": 211,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -5982,7 +5995,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 211,
+    "__docId__": 212,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -5995,7 +6008,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 212,
+    "__docId__": 213,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -6008,7 +6021,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 213,
+    "__docId__": 214,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -6021,7 +6034,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 214,
+    "__docId__": 215,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -6034,7 +6047,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 215,
+    "__docId__": 216,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -6047,7 +6060,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 216,
+    "__docId__": 217,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -6060,7 +6073,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 217,
+    "__docId__": 218,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -6073,7 +6086,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 218,
+    "__docId__": 219,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -6086,7 +6099,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 219,
+    "__docId__": 220,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -6099,7 +6112,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 220,
+    "__docId__": 221,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -6112,7 +6125,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 221,
+    "__docId__": 222,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -6125,7 +6138,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 222,
+    "__docId__": 223,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -6138,7 +6151,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 223,
+    "__docId__": 224,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -6151,7 +6164,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 224,
+    "__docId__": 225,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -6164,7 +6177,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 225,
+    "__docId__": 226,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -6177,7 +6190,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 226,
+    "__docId__": 227,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -6190,7 +6203,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 227,
+    "__docId__": 228,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -6203,7 +6216,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 228,
+    "__docId__": 229,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -6216,7 +6229,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 229,
+    "__docId__": 230,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -6229,7 +6242,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 231,
+    "__docId__": 232,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -6242,7 +6255,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 232,
+    "__docId__": 233,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -6255,7 +6268,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 233,
+    "__docId__": 234,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -6268,7 +6281,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 234,
+    "__docId__": 235,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -6281,7 +6294,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 235,
+    "__docId__": 236,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -6294,7 +6307,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 236,
+    "__docId__": 237,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -6307,7 +6320,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 237,
+    "__docId__": 238,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -6320,7 +6333,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 238,
+    "__docId__": 239,
     "kind": "external",
     "static": true,
     "variation": null,

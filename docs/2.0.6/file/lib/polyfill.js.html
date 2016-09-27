@@ -61,6 +61,7 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-LinearGaugeOptions">LinearGaugeOptions</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-RadialGaugeOptions">RadialGaugeOptions</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/JSON">JSON</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array/fill">Array.fill</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array/indexOf">Array.indexOf</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object/assign">Object.assign</a></span></span></li>
 </ul>
@@ -153,6 +154,38 @@ if (!Array.prototype.indexOf) {
         }
 
         return -1;
+    };
+}
+
+/**
+ * @external {Array.fill} https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array/fill
+ */
+/* istanbul ignore next */
+if (!Array.prototype.fill) {
+    Array.prototype.fill = function(value) {
+        if (this == null) {
+            throw new TypeError(&apos;this is null or not defined&apos;);
+        }
+
+        var O = Object(this);
+        var len = O.length &gt;&gt;&gt; 0;
+        var start = arguments[1];
+        var relativeStart = start &gt;&gt; 0;
+        var k = relativeStart &lt; 0 ?
+            Math.max(len + relativeStart, 0) :
+            Math.min(relativeStart, len);
+        var end = arguments[2];
+        var relativeEnd = end === undefined ?
+            len : end &gt;&gt; 0;
+        var final = relativeEnd &lt; 0 ?
+            Math.max(len + relativeEnd, 0) :
+            Math.min(relativeEnd, len);
+        while (k &lt; final) {
+            O[k] = value;
+            k++;
+        }
+
+        return O;
     };
 }
 </code></pre>
