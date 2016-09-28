@@ -130,6 +130,7 @@ Tick bars on a gauge representing the measuring system which visualize the gauge
  - **majorTicksInt**: integer which defines how many numeric positions should be used to display integer part of the tick number.
  - **majorTicksDec**: integer which defines how many positions should be used to display decimal part of the tick number.
  - **highlights**: an array of highlights objects, which configures color-highlighted areas on a ticks bar. Each highlight object defines an area to colorize starting **from** value **to** value and using a given **color**, like this: ```{ from: number, to: number, color: string }```
+  - **highlightsWidth**: sets the width of highlights area in relative units. 
 
 ### Animation Options
 
@@ -197,6 +198,7 @@ Value box element on the gauge is intended to display the digital representation
 
  - **valueBox**: boolean, defines if the value box should be drawn or not on the gauge.
  - **valueBoxStroke**: number in relative units which defines the width of stroke of the value box element.
+ - **valueBoxWidth**: if set and is greater than value text real width - will be set as configured. This value is expected to be a percent in relation to gauge width.
  - **valueText**: text to display instead of showing the current value. It may be useful when it is required to display something different in value box.
  - **valueTextShadow**: specifies if value text shadow should be drawn or not.
  - **valueBoxBorderRadius**: number of radius to draw rounded corners of the value box.
