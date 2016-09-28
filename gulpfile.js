@@ -75,6 +75,48 @@ function es6concat(type = 'all') {
         .pipe(replace(/%VERSION%/g, version));
 }
 
+function es5transpile(type = 'all', withSourceMaps = true, resolve = () => {}) {
+    let stream = es6concat(type)
+        .pipe(rename('gauge.es5.js'))
+        .pipe(babel({
+            presets: ['es2015'],
+            compact: false
+        }))
+        .on('error', function(err) {
+            gutil.log(err);
+            this.emit('end');
+            resolve();
+        })
+        .pipe(rename('gauge.min.js'))
+        .pipe(replace(/^/, license() + '(function(ns) {'))
+        .pipe(replace(/$/,
+            ';typeof module !== "undefined" && Object.assign(ns, {' +
+                'Collection: Collection,' +
+                'GenericOptions: GenericOptions,' +
+                'Animation: Animation,' +
+                'BaseGauge: BaseGauge,' +
+                'drawings: drawings,' +
+                'SmartCanvas: SmartCanvas,' +
+                'vendorize: vendorize' +
+            '});' +
+            '}(typeof module !== "undefined" ? ' +
+            'module.exports : window));'));
+
+    if (withSourceMaps) {
+        stream = stream.pipe(sourcemaps.init({ loadMaps: true }));
+    }
+
+    stream = stream.pipe(uglify({
+        preserveComments: (node, comment) => comment.line === 1
+    }));
+
+    if (withSourceMaps) {
+        stream = stream.pipe(sourcemaps.write('.'));
+    }
+
+    return stream;
+}
+
 function license() {
     let src = fs.readFileSync('./LICENSE')
         .toString()
@@ -102,34 +144,7 @@ gulp.task('build:prod', done => {
     rimraf('dist', () => {
         Promise.all(types.map(type => {
             return new Promise(resolve => {
-                es6concat(type)
-                    .pipe(rename('gauge.es5.js'))
-                    .pipe(babel({
-                        presets: ['es2015'],
-                        compact: false
-                    }))
-                    .on('error', function(err) {
-                        gutil.log(err);
-                        this.emit('end');
-                        resolve();
-                    })
-                    .pipe(rename('gauge.min.js'))
-                    .pipe(replace(/^/, license() + '(function(ns) {'))
-                    .pipe(replace(/$/,
-                        ';typeof module !== "undefined" && Object.assign(ns, {' +
-                        'Collection: Collection,' +
-                        'GenericOptions: GenericOptions,' +
-                        'Animation: Animation,' +
-                        'BaseGauge: BaseGauge,' +
-                        'drawings: drawings,' +
-                        'SmartCanvas: SmartCanvas,' +
-                        'vendorize: vendorize' +
-                        '});' +
-                        '}(typeof module !== "undefined" ? ' +
-                            'module.exports : window));'))
-                    .pipe(uglify({
-                        preserveComments: (node, comment) => comment.line === 1
-                    }))
+                es5transpile(type, false, resolve)
                     .pipe(gulp.dest('dist/' + type))
                     .on('end', () => {
                         let pkg = JSON.parse(fs.readFileSync('./package.json'));
@@ -255,36 +270,8 @@ gulp.task('build:es6', ['clean'], () => {
  * @task {build:es5}
  * @arg {type} build type: 'radial' - Gauge object only, 'linear' - LinearGauge object only, 'all' - everything (default)
  */
-gulp.task('build:es5', ['clean'], () => {
-    es6concat(yargs.argv.type || 'all')
-        .pipe(rename('gauge.es5.js'))
-        .pipe(babel({
-            presets: ['es2015'],
-            compact: false
-        }))
-        .on('error', function(err) {
-            gutil.log(err);
-            this.emit('end');
-        })
-        //.pipe(gulp.dest('.'))
-        .pipe(rename('gauge.min.js'))
-        .pipe(replace(/^/, license() + '(function(ns) {'))
-        .pipe(replace(/$/,
-            ';typeof module !== "undefined" && Object.assign(ns, {' +
-                'Collection: Collection,' +
-                'GenericOptions: GenericOptions,' +
-                'Animation: Animation,' +
-                'BaseGauge: BaseGauge,' +
-                'drawings: drawings,' +
-                'SmartCanvas: SmartCanvas,' +
-                'vendorize: vendorize' +
-            '});' +
-            '}(typeof module !== "undefined" ?  module.exports : window));'))
-        .pipe(sourcemaps.init({ loadMaps: true }))
-        .pipe(uglify({
-            preserveComments: (node, comment) => comment.line === 1
-        }))
-        .pipe(sourcemaps.write('.'))
+gulp.task('build:es5', ['clean'], done => {
+    es5transpile(yargs.argv.type || 'all')
         .pipe(gulp.dest('.'))
         .on('end', () => {
             if (!process.env.TRVIS) {
@@ -299,6 +286,8 @@ gulp.task('build:es5', ['clean'], () => {
                     fs.readFileSync('gauge.min.js.map')
                 );
             }
+
+            done();
         });
 });
 
