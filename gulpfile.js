@@ -30,6 +30,7 @@ const babel = require('gulp-babel');
 const fsc = require('fs-cli');
 const semver = require('semver');
 const inject = require('gulp-inject-string');
+const version = require('./package.json').version;
 
 /**
  * @typedef {{argv: object}} yargs
@@ -70,7 +71,8 @@ function es6concat(type = 'all') {
         .pipe(concat('gauge.es6.js'))
         .pipe(replace(/((var|const|let)\s+.*?=\s*)?require\(.*?\);?/g, ''))
         .pipe(replace(/(module\.)?exports(.default)?\s+=\s*.*?\r?\n/g, ''))
-        .pipe(replace(/export\s+(default\s+)?(GenericOptions;)?/g, ''));
+        .pipe(replace(/export\s+(default\s+)?(GenericOptions;)?/g, ''))
+        .pipe(replace(/%VERSION%/g, version));
 }
 
 function license() {
@@ -80,7 +82,8 @@ function license() {
 
     src.pop();
 
-    return '/*!\n * ' + src.join('\n * ') + '\n */\n';
+    return '/*!\n * ' + src.join('\n * ') + '\n *\n * @version ' +
+        version + '\n */\n';
 }
 
 /**
@@ -159,7 +162,6 @@ gulp.task('build:prod', done => {
                     });
             });
         })).then(() => {
-            let version = require('./package.json').version;
             let cmd = '';
 
             console.log(chalk.bold.green('Production packages are now ready!'));
@@ -366,7 +368,6 @@ gulp.task('doc', ['clean:docs'], done => {
 
             //move to pages
 
-            let version = require('./package.json').version;
             let target = '../canvas-gauges-pages/docs/' + version;
 
             rimraf(target, () => fs.rename('docs', target, done));
