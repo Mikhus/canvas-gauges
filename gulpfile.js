@@ -30,6 +30,7 @@ const babel = require('gulp-babel');
 const fsc = require('fs-cli');
 const semver = require('semver');
 const inject = require('gulp-inject-string');
+const version = require('./package.json').version;
 
 /**
  * @typedef {{argv: object}} yargs
@@ -70,7 +71,50 @@ function es6concat(type = 'all') {
         .pipe(concat('gauge.es6.js'))
         .pipe(replace(/((var|const|let)\s+.*?=\s*)?require\(.*?\);?/g, ''))
         .pipe(replace(/(module\.)?exports(.default)?\s+=\s*.*?\r?\n/g, ''))
-        .pipe(replace(/export\s+(default\s+)?(GenericOptions;)?/g, ''));
+        .pipe(replace(/export\s+(default\s+)?(GenericOptions;)?/g, ''))
+        .pipe(replace(/%VERSION%/g, version));
+}
+
+function es5transpile(type = 'all', withSourceMaps = true, resolve = () => {}) {
+    let stream = es6concat(type)
+        .pipe(rename('gauge.es5.js'))
+        .pipe(babel({
+            presets: ['es2015'],
+            compact: false
+        }))
+        .on('error', function(err) {
+            gutil.log(err);
+            this.emit('end');
+            resolve();
+        })
+        .pipe(rename('gauge.min.js'))
+        .pipe(replace(/^/, license() + '(function(ns) {'))
+        .pipe(replace(/$/,
+            ';typeof module !== "undefined" && Object.assign(ns, {' +
+                'Collection: Collection,' +
+                'GenericOptions: GenericOptions,' +
+                'Animation: Animation,' +
+                'BaseGauge: BaseGauge,' +
+                'drawings: drawings,' +
+                'SmartCanvas: SmartCanvas,' +
+                'vendorize: vendorize' +
+            '});' +
+            '}(typeof module !== "undefined" ? ' +
+            'module.exports : window));'));
+
+    if (withSourceMaps) {
+        stream = stream.pipe(sourcemaps.init({ loadMaps: true }));
+    }
+
+    stream = stream.pipe(uglify({
+        preserveComments: (node, comment) => comment.line === 1
+    }));
+
+    if (withSourceMaps) {
+        stream = stream.pipe(sourcemaps.write('.'));
+    }
+
+    return stream;
 }
 
 function license() {
@@ -80,7 +124,8 @@ function license() {
 
     src.pop();
 
-    return '/*!\n * ' + src.join('\n * ') + '\n */\n';
+    return '/*!\n * ' + src.join('\n * ') + '\n *\n * @version ' +
+        version + '\n */\n';
 }
 
 /**
@@ -99,34 +144,7 @@ gulp.task('build:prod', done => {
     rimraf('dist', () => {
         Promise.all(types.map(type => {
             return new Promise(resolve => {
-                es6concat(type)
-                    .pipe(rename('gauge.es5.js'))
-                    .pipe(babel({
-                        presets: ['es2015'],
-                        compact: false
-                    }))
-                    .on('error', function(err) {
-                        gutil.log(err);
-                        this.emit('end');
-                        resolve();
-                    })
-                    .pipe(rename('gauge.min.js'))
-                    .pipe(replace(/^/, license() + '(function(ns) {'))
-                    .pipe(replace(/$/,
-                        ';typeof module !== "undefined" && Object.assign(ns, {' +
-                        'Collection: Collection,' +
-                        'GenericOptions: GenericOptions,' +
-                        'Animation: Animation,' +
-                        'BaseGauge: BaseGauge,' +
-                        'drawings: drawings,' +
-                        'SmartCanvas: SmartCanvas,' +
-                        'vendorize: vendorize' +
-                        '});' +
-                        '}(typeof module !== "undefined" ? ' +
-                            'module.exports : window));'))
-                    .pipe(uglify({
-                        preserveComments: (node, comment) => comment.line === 1
-                    }))
+                es5transpile(type, false, resolve)
                     .pipe(gulp.dest('dist/' + type))
                     .on('end', () => {
                         let pkg = JSON.parse(fs.readFileSync('./package.json'));
@@ -159,7 +177,6 @@ gulp.task('build:prod', done => {
                     });
             });
         })).then(() => {
-            let version = require('./package.json').version;
             let cmd = '';
 
             console.log(chalk.bold.green('Production packages are now ready!'));
@@ -253,36 +270,8 @@ gulp.task('build:es6', ['clean'], () => {
  * @task {build:es5}
  * @arg {type} build type: 'radial' - Gauge object only, 'linear' - LinearGauge object only, 'all' - everything (default)
  */
-gulp.task('build:es5', ['clean'], () => {
-    es6concat(yargs.argv.type || 'all')
-        .pipe(rename('gauge.es5.js'))
-        .pipe(babel({
-            presets: ['es2015'],
-            compact: false
-        }))
-        .on('error', function(err) {
-            gutil.log(err);
-            this.emit('end');
-        })
-        //.pipe(gulp.dest('.'))
-        .pipe(rename('gauge.min.js'))
-        .pipe(replace(/^/, license() + '(function(ns) {'))
-        .pipe(replace(/$/,
-            ';typeof module !== "undefined" && Object.assign(ns, {' +
-                'Collection: Collection,' +
-                'GenericOptions: GenericOptions,' +
-                'Animation: Animation,' +
-                'BaseGauge: BaseGauge,' +
-                'drawings: drawings,' +
-                'SmartCanvas: SmartCanvas,' +
-                'vendorize: vendorize' +
-            '});' +
-            '}(typeof module !== "undefined" ?  module.exports : window));'))
-        .pipe(sourcemaps.init({ loadMaps: true }))
-        .pipe(uglify({
-            preserveComments: (node, comment) => comment.line === 1
-        }))
-        .pipe(sourcemaps.write('.'))
+gulp.task('build:es5', ['clean'], done => {
+    es5transpile(yargs.argv.type || 'all')
         .pipe(gulp.dest('.'))
         .on('end', () => {
             if (!process.env.TRVIS) {
@@ -297,6 +286,8 @@ gulp.task('build:es5', ['clean'], () => {
                     fs.readFileSync('gauge.min.js.map')
                 );
             }
+
+            done();
         });
 });
 
@@ -366,7 +357,6 @@ gulp.task('doc', ['clean:docs'], done => {
 
             //move to pages
 
-            let version = require('./package.json').version;
             let target = '../canvas-gauges-pages/docs/' + version;
 
             rimraf(target, () => fs.rename('docs', target, done));
