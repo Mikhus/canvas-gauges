@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <base data-ice="baseUrl" href="../../">
+  <title data-ice="title">lib/SmartCanvas.js | HTML5 Canvas Gauges API Documentation API Document</title>
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
+  <script src="script/prettify/prettify.js"></script>
+  
+  
+  <script src="script/manual.js"></script>
+<link data-ice="userStyle" rel="stylesheet" href="user/css/0-docs.css">
+</head>
+<body class="layout-container" data-ice="rootContainer">
+
+<header>
+  <a href="./">Home</a>
+  
+  <a href="identifiers.html">Reference</a>
+  <a href="source.html">Source</a>
+  
+  
+  <div class="search-box">
+  <span>
+    <img src="./image/search.png">
+    <span class="search-input-edge"></span><input class="search-input"><span class="search-input-edge"></span>
+  </span>
+    <ul class="search-result"></ul>
+  </div>
+</header>
+
+<nav class="navigation" data-ice="nav"><div>
+  <ul>
+    
+  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/Animation.js~Animation.html">Animation</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/BaseGauge.js~BaseGauge.html">BaseGauge</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/DomObserver.js~DomObserver.html">DomObserver</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/LinearGauge.js~LinearGauge.html">LinearGauge</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/RadialGauge.js~RadialGauge.html">RadialGauge</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/SmartCanvas.js~SmartCanvas.html">SmartCanvas</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-Collection">Collection</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-drawShadow">drawShadow</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-drawValueBox">drawValueBox</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-formatMajorTickNumber">formatMajorTickNumber</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-linearGradient">linearGradient</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-padValue">padValue</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-radialPoint">radialPoint</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-radians">radians</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-roundRect">roundRect</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-verifyError">verifyError</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-vendorize">vendorize</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-GenericOptions">GenericOptions</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-drawings">drawings</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-AnimationRule">AnimationRule</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-AnimationRules">AnimationRules</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-DrawEventCallback">DrawEventCallback</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-EndEventCallback">EndEventCallback</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-GaugeInterface">GaugeInterface</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-Highlight">Highlight</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-RenderTarget">RenderTarget</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-LinearGaugeOptions">LinearGaugeOptions</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-RadialGaugeOptions">RadialGaugeOptions</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/JSON">JSON</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array/fill">Array.fill</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array/indexOf">Array.indexOf</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object/assign">Object.assign</a></span></span></li>
+</ul>
+</div>
+</nav>
+
+<div class="content" data-ice="content"><h1 data-ice="title">lib/SmartCanvas.js</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">/*!
+ * The MIT License (MIT)
+ *
+ * Copyright (c) 2016 Mykhailo Stadnyk &lt;mikhus@gmail.com&gt;
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the &quot;Software&quot;), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
+
+/**
+ * @ignore
+ * @typedef {object} ns
+ */
+
+/**
+ * Drawings on canvas using hidden canvas as a cache for better
+ * performance drawings during canvas animations. SmartCanvas also
+ * adopts a canvas to
+ */
+export default class SmartCanvas {
+
+    /**
+     * @constructor
+     * @param {HTMLCanvasElement} canvas
+     * @param {number} [width]
+     * @param {number} [height]
+     */
+    constructor(canvas, width, height) {
+        SmartCanvas.collection.push(this);
+
+        /**
+         * Canvas base width
+         *
+         * @type {number}
+         */
+        this.width = width || 0;
+
+        /**
+         * Canvas base height
+         *
+         * @type {number}
+         */
+        this.height = height || 0;
+
+        /**
+         * Target drawings canvas element
+         *
+         * @type {HTMLCanvasElement}
+         */
+        this.element = canvas;
+
+        this.init();
+    }
+
+    /**
+     * Initializes canvases and contexts
+     */
+    init() {
+        let pixelRatio = SmartCanvas.pixelRatio;
+
+        this.element.width = this.width * pixelRatio;
+        this.element.height = this.height * pixelRatio;
+
+        this.element.style.width = this.width + &apos;px&apos;;
+        this.element.style.height = this.height + &apos;px&apos;;
+
+        /**
+         * Canvas caching element
+         *
+         * @type {HTMLCanvasElement|Node}
+         */
+        this.elementClone = this.element.cloneNode(true);
+
+        //noinspection JSUnresolvedVariable
+        /**
+         * Target drawings canvas element 2D context
+         *
+         * @type {CanvasRenderingContext2D}
+         */
+        this.context = this.element.getContext(&apos;2d&apos;);
+
+        /**
+         * Canvas caching element 2D context
+         *
+         * @type {CanvasRenderingContext2D}
+         */
+        this.contextClone = this.elementClone.getContext(&apos;2d&apos;);
+
+        /**
+         * Actual drawings width
+         *
+         * @type {number}
+         */
+        this.drawWidth = this.element.width;
+
+        /**
+         * Actual drawings height
+         *
+         * @type {number}
+         */
+        this.drawHeight = this.element.height;
+
+        /**
+         * X-coordinate of drawings zero point
+         *
+         * @type {number}
+         */
+        this.drawX = this.drawWidth / 2;
+
+        /**
+         * Y-coordinate of drawings zero point
+         *
+         * @type {number}
+         */
+        this.drawY = this.drawHeight / 2;
+
+        /**
+         * Minimal side length in pixels of the drawing
+         *
+         * @type {number}
+         */
+        this.minSide = this.drawX &lt; this.drawY ? this.drawX : this.drawY;
+
+        this.elementClone.initialized = false;
+
+        this.contextClone.translate(this.drawX, this.drawY);
+        this.contextClone.save();
+
+        this.context.translate(this.drawX, this.drawY);
+        this.context.save();
+
+        this.context.max = this.contextClone.max = this.minSide;
+        this.context.maxRadius = this.contextClone.maxRadius = null;
+    }
+
+    /**
+     * Destroys this object, removing the references from memory
+     */
+    destroy() {
+        let index = SmartCanvas.collection.indexOf(this);
+
+        /* istanbul ignore else */
+        if (~index) {
+            SmartCanvas.collection.splice(index, 1);
+        }
+
+        this.context.clearRect(
+            -this.drawX,
+            -this.drawY,
+            this.drawWidth,
+            this.drawHeight
+        );
+
+        // dereference all created elements
+        this.context.max = null;
+        delete this.context.max;
+
+        this.context.maxRadius = null;
+        delete this.context.maxRadius;
+
+        this.context = null;
+        this.contextClone = null;
+        this.elementClone = null;
+        this.element = null;
+
+        /**
+         * On canvas redraw event callback
+         *
+         * @type {function|null|undefined}
+         */
+        this.onRedraw = null;
+    }
+
+    /**
+     * Commits the drawings
+     */
+    commit() {
+        let scale = SmartCanvas.pixelRatio;
+
+        if (scale !== 1) {
+            this.contextClone.scale(scale, scale);
+            this.contextClone.save();
+        }
+
+        return this;
+    }
+
+    /**
+     * Redraw this object
+     */
+    redraw() {
+        this.init();
+
+        /**
+         * On canvas redraw event callback
+         *
+         * @type {function(): *}
+         */
+        this.onRedraw &amp;&amp; this.onRedraw();
+
+        return this;
+    }
+
+    /**
+     * Returns current device pixel ratio
+     *
+     * @returns {number}
+     */
+    static get pixelRatio() {
+        /* istanbul ignore next */
+        //noinspection JSUnresolvedVariable
+        return ns.devicePixelRatio || 1;
+    }
+
+    /**
+     * Forces redraw all canvas in the current collection
+     */
+    static redraw() {
+        let i = 0;
+        let s = SmartCanvas.collection.length;
+
+        for (; i &lt; s; i++) {
+            SmartCanvas.collection[i].redraw();
+        }
+    }
+}
+
+SmartCanvas.collection = [];
+
+/* istanbul ignore next: very browser-specific testing required to cover */
+//noinspection JSUnresolvedVariable
+if (ns.matchMedia) {
+    //noinspection JSUnresolvedFunction
+    ns.matchMedia(&apos;screen and (min-resolution: 2dppx)&apos;)
+        .addListener(SmartCanvas.redraw);
+}
+
+module.exports = SmartCanvas;
+</code></pre>
+
+</div>
+
+<footer class="footer">
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(0.4.8)</span></a>
+</footer>
+
+<script src="script/search_index.js"></script>
+<script src="script/search.js"></script>
+<script src="script/pretty-print.js"></script>
+<script src="script/inherited-summary.js"></script>
+<script src="script/test-summary.js"></script>
+<script src="script/inner-link.js"></script>
+<script src="script/patch-for-local.js"></script>
+</body>
+</html>
