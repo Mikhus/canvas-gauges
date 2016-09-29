@@ -31,6 +31,7 @@ const fsc = require('fs-cli');
 const semver = require('semver');
 const inject = require('gulp-inject-string');
 const version = require('./package.json').version;
+const plato = require('gulp-plato');
 
 /**
  * @typedef {{argv: object}} yargs
@@ -127,6 +128,33 @@ function license() {
     return '/*!\n * ' + src.join('\n * ') + '\n *\n * @version ' +
         version + '\n */\n';
 }
+
+/**
+ * Builds code complexity report
+ *
+ * @task {complexity}
+ */
+gulp.task('complexity', done => {
+    rimraf('complexity', () => gulp.src('lib/**/*.js')
+        .pipe(plato('complexity', {
+            complexity: { trycatch: true },
+            jshint: {
+                options: {
+                    strict: false,
+                    browser: true,
+                    browserify: true,
+                    devel: true,
+                    expr: true,
+                    esversion: 6,
+                    laxbreak: true,
+                    laxcomma: true,
+                    sub: true
+                }
+            }
+        }))
+        .on('finish', () => done())
+    );
+});
 
 /**
  * Displays this usage information.
@@ -255,13 +283,10 @@ gulp.task('build:prod', done => {
  * @task {build:es6}
  * @arg {type} build type: 'radial' - Gauge object only, 'linear' - LinearGauge object only, 'all' - everything (default)
  */
-gulp.task('build:es6', ['clean'], () => {
-    return gutil.log(chalk.red(
-        'Sorry, this feature is currently not supported.'));
-    // es6concat(yargs.argv.type || 'all')
-    //     .pipe(rename('gauge.es6.min.js'))
-    //     .pipe(uglify())
-    //     .pipe(gulp.dest('.'));
+gulp.task('build:es6', done => {
+    es6concat(yargs.argv.type || 'all')
+        .pipe(gulp.dest('.'))
+        .on('end', () => done());
 });
 
 /**
@@ -413,6 +438,7 @@ gulp.task('lint', () => {
             '!docs/**',
             '!**.min.js',
             '!coverage/**',
+            '!complexity/**',
             '!dist/**'
         ])
         .pipe(eslint())
