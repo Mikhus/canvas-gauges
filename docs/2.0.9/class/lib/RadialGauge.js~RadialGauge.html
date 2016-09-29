@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <base data-ice="baseUrl" href="../../">
+  <title data-ice="title">RadialGauge | HTML5 Canvas Gauges API Documentation API Document</title>
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
+  <script src="script/prettify/prettify.js"></script>
+  
+  
+  <script src="script/manual.js"></script>
+<link data-ice="userStyle" rel="stylesheet" href="user/css/0-docs.css">
+</head>
+<body class="layout-container" data-ice="rootContainer">
+
+<header>
+  <a href="./">Home</a>
+  
+  <a href="identifiers.html">Reference</a>
+  <a href="source.html">Source</a>
+  
+  
+  <div class="search-box">
+  <span>
+    <img src="./image/search.png">
+    <span class="search-input-edge"></span><input class="search-input"><span class="search-input-edge"></span>
+  </span>
+    <ul class="search-result"></ul>
+  </div>
+</header>
+
+<nav class="navigation" data-ice="nav"><div>
+  <ul>
+    
+  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/Animation.js~Animation.html">Animation</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/BaseGauge.js~BaseGauge.html">BaseGauge</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/DomObserver.js~DomObserver.html">DomObserver</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/LinearGauge.js~LinearGauge.html">LinearGauge</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/RadialGauge.js~RadialGauge.html">RadialGauge</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/SmartCanvas.js~SmartCanvas.html">SmartCanvas</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-Collection">Collection</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-drawShadow">drawShadow</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-drawValueBox">drawValueBox</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-font">font</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-formatMajorTickNumber">formatMajorTickNumber</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-linearGradient">linearGradient</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-padValue">padValue</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-radialPoint">radialPoint</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-radians">radians</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-roundRect">roundRect</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-verifyError">verifyError</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-vendorize">vendorize</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-GenericOptions">GenericOptions</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-drawings">drawings</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-AnimationRule">AnimationRule</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-AnimationRules">AnimationRules</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-DrawEventCallback">DrawEventCallback</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-EndEventCallback">EndEventCallback</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-GaugeInterface">GaugeInterface</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-Highlight">Highlight</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-RenderTarget">RenderTarget</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-LinearGaugeOptions">LinearGaugeOptions</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-RadialGaugeOptions">RadialGaugeOptions</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/JSON">JSON</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array/fill">Array.fill</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array/indexOf">Array.indexOf</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object/assign">Object.assign</a></span></span></li>
+</ul>
+</div>
+</nav>
+
+<div class="content" data-ice="content"><div class="header-notice">
+  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import RadialGauge from &apos;<span><a href="file/lib/RadialGauge.js.html#lineNumber587">canvas-gauges/lib/RadialGauge.js</a></span>&apos;</code></pre></div>
+  <span data-ice="access">public</span>
+  <span data-ice="kind">class</span>
+  
+  
+  
+  <span data-ice="source">| <span><a href="file/lib/RadialGauge.js.html#lineNumber587">source</a></span></span>
+</div>
+
+<div class="self-detail detail">
+  <h1 data-ice="name">RadialGauge</h1>
+
+  
+
+  
+  
+  <div class="flat-list" data-ice="extendsChain"><h4>Extends:</h4><div><span><a href="class/lib/BaseGauge.js~BaseGauge.html">BaseGauge</a></span> &#x2192; RadialGauge</div></div>
+  
+  
+  
+  
+  
+  
+
+  
+  
+  <div class="description" data-ice="description"><p>Minimalistic HTML5 Canvas Gauge</p>
+</div>
+
+  
+
+  <div data-ice="exampleDocs">
+    <h4>Example:</h4>
+    
+  <div class="example-doc" data-ice="exampleDoc">
+      
+      <pre class="prettyprint source-code"><code data-ice="exampleCode"> var gauge = new RadialGauge({
+    renderTo: &apos;gauge-id&apos;, // identifier of HTML canvas element or element itself
+    width: 400,
+    height: 400,
+    units: &apos;Km/h&apos;,
+    title: false,
+    value: 0,
+    minValue: 0,
+    maxValue: 220,
+    majorTicks: [
+        &apos;0&apos;,&apos;20&apos;,&apos;40&apos;,&apos;60&apos;,&apos;80&apos;,&apos;100&apos;,&apos;120&apos;,&apos;140&apos;,&apos;160&apos;,&apos;180&apos;,&apos;200&apos;,&apos;220&apos;
+    ],
+    minorTicks: 2,
+    strokeTicks: false,
+    highlights: [
+        { from: 0, to: 50, color: &apos;rgba(0,255,0,.15)&apos; },
+        { from: 50, to: 100, color: &apos;rgba(255,255,0,.15)&apos; },
+        { from: 100, to: 150, color: &apos;rgba(255,30,0,.25)&apos; },
+        { from: 150, to: 200, color: &apos;rgba(255,0,225,.25)&apos; },
+        { from: 200, to: 220, color: &apos;rgba(0,0,255,.25)&apos; }
+    ],
+    colorPlate: &apos;#222&apos;,
+    colorMajorTicks: &apos;#f5f5f5&apos;,
+    colorMinorTicks: &apos;#ddd&apos;,
+    colorTitle: &apos;#fff&apos;,
+    colorUnits: &apos;#ccc&apos;,
+    colorNumbers: &apos;#eee&apos;,
+    colorNeedleStart: &apos;rgba(240, 128, 128, 1)&apos;,
+    colorNeedleEnd: &apos;rgba(255, 160, 122, .9)&apos;,
+    valueBox: true,
+    animationRule: &apos;bounce&apos;
+});
+// draw initially
+gauge.draw();
+// animate
+setInterval(() =&gt; {
+   gauge.value = Math.random() * -220 + 220;
+}, 1000);</code></pre>
+    </div>
+</div>
+
+  
+
+  
+</div>
+
+
+
+<div data-ice="constructorSummary"><h2>Constructor Summary</h2><table class="summary" data-ice="summary">
+  <thead><tr><td data-ice="title" colspan="3">Public Constructor</td></tr></thead>
+  <tbody>
+  
+  <tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+           <span data-ice="name"><span><a href="class/lib/RadialGauge.js~RadialGauge.html#instance-constructor-constructor">constructor</a></span></span><span data-ice="signature">(options: <span><a href="typedef/index.html#static-typedef-RadialGaugeOptions">RadialGaugeOptions</a></span>)</span>
+        </p>
+      </div>
+      <div>
+        
+        
+        
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+</tbody>
+</table>
+</div>
+
+<div data-ice="methodSummary"><h2>Method Summary</h2><table class="summary" data-ice="summary">
+  <thead><tr><td data-ice="title" colspan="3">Public Methods</td></tr></thead>
+  <tbody>
+  
+  <tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+           <span data-ice="name"><span><a href="class/lib/RadialGauge.js~RadialGauge.html#instance-method-draw">draw</a></span></span><span data-ice="signature">(): <span><a href="class/lib/RadialGauge.js~RadialGauge.html">RadialGauge</a></span></span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>Triggering gauge render on a canvas.</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+</tbody>
+</table>
+</div>
+
+<div class="inherited-summary" data-ice="inheritedSummary"><h2>Inherited Summary</h2><table class="summary" data-ice="summary">
+  <thead><tr><td data-ice="title" colspan="3"><span class="toggle closed"></span> From class <span><a href="class/lib/BaseGauge.js~BaseGauge.html">BaseGauge</a></span></td></tr></thead>
+  <tbody>
+  
+  <tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      <span data-ice="static">static</span>
+      <span class="kind" data-ice="kind">get</span>
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+           <span data-ice="name"><span><a href="class/lib/BaseGauge.js~BaseGauge.html#static-get-version">version</a></span></span><span data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>: <span>*</span></span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>Returns gauges version string</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      <span data-ice="static">static</span>
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+           <span data-ice="name"><span><a href="class/lib/BaseGauge.js~BaseGauge.html#static-method-initialize">initialize</a></span></span><span data-ice="signature">(type: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>, options: <span><a href="variable/index.html#static-variable-GenericOptions">GenericOptions</a></span>)</span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>Inject given gauge object into DOM</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      <span class="kind" data-ice="kind">get</span>
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+           <span data-ice="name"><span><a href="class/lib/BaseGauge.js~BaseGauge.html#instance-get-value">value</a></span></span><span data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span>: <span>*</span></span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>Returns current value of the gauge</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      <span class="kind" data-ice="kind">set</span>
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+           <span data-ice="name"><span><a href="class/lib/BaseGauge.js~BaseGauge.html#instance-set-value">value</a></span></span><span data-ice="signature">(value: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span>): <span>*</span></span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>Sets new value for this gauge.</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+           <span data-ice="name"><span><a href="class/lib/BaseGauge.js~BaseGauge.html#instance-member-animation">animation</a></span></span><span data-ice="signature">: <span><a href="class/lib/Animation.js~Animation.html">Animation</a></span></span>
+        </p>
+      </div>
+      <div>
+        
+        
+        
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+           <span data-ice="name"><span><a href="class/lib/BaseGauge.js~BaseGauge.html#instance-member-canvas">canvas</a></span></span><span data-ice="signature">: <span><a href="class/lib/SmartCanvas.js~SmartCanvas.html">SmartCanvas</a></span></span>
+        </p>
+      </div>
+      <div>
+        
+        
+        
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+           <span data-ice="name"><span><a href="class/lib/BaseGauge.js~BaseGauge.html#instance-member-initialized">initialized</a></span></span><span data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span></span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>True if gauge has been drawn for the first time, false otherwise.</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+           <span data-ice="name"><span><a href="class/lib/BaseGauge.js~BaseGauge.html#instance-member-options">options</a></span></span><span data-ice="signature">: <span><a href="variable/index.html#static-variable-GenericOptions">GenericOptions</a></span></span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>Gauge options</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+           <span data-ice="name"><span><a href="class/lib/BaseGauge.js~BaseGauge.html#instance-member-type">type</a></span></span><span data-ice="signature">: <span><a href="class/lib/BaseGauge.js~BaseGauge.html">BaseGauge</a></span></span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>Gauge type class</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+           <span data-ice="name"><span><a href="class/lib/BaseGauge.js~BaseGauge.html#instance-member-version">version</a></span></span><span data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>Gauges version string</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+           <span data-ice="name"><span><a href="class/lib/BaseGauge.js~BaseGauge.html#instance-method-destroy">destroy</a></span></span><span data-ice="signature">()</span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>Performs destruction of this object properly</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      <span class="abstract" data-ice="abstract">abstract</span>
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+           <span data-ice="name"><span><a href="class/lib/BaseGauge.js~BaseGauge.html#instance-method-draw">draw</a></span></span><span data-ice="signature">(): <span><a href="class/lib/BaseGauge.js~BaseGauge.html">BaseGauge</a></span></span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>Triggering gauge render on a canvas.</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+           <span data-ice="name"><span><a href="class/lib/BaseGauge.js~BaseGauge.html#instance-method-update">update</a></span></span><span data-ice="signature">(options: <span><a href="typedef/index.html#static-typedef-RadialGaugeOptions">RadialGaugeOptions</a></span>): <span><a href="class/lib/BaseGauge.js~BaseGauge.html">BaseGauge</a></span></span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>Updates gauge configuration options at runtime and redraws the gauge</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+</tbody>
+</table>
+</div>
+
+
+
+<div data-ice="constructorDetails"><h2 data-ice="title">Public Constructors</h2>
+
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="instance-constructor-constructor">
+    <span class="access" data-ice="access">public</span>
+    
+    
+    
+    
+    <span data-ice="name">constructor</span><span data-ice="signature">(options: <span><a href="typedef/index.html#static-typedef-RadialGaugeOptions">RadialGaugeOptions</a></span>)</span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/lib/RadialGauge.js.html#lineNumber593">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  
+
+  <div data-ice="override"><h4>Override:</h4><span><a href="class/lib/BaseGauge.js~BaseGauge.html#instance-constructor-constructor">BaseGauge#constructor</a></span></div>
+
+  <div data-ice="properties"><div data-ice="properties">
+  <h4 data-ice="title">Params:</h4>
+  <table class="params">
+    <thead>
+    <tr><td>Name</td><td>Type</td><td>Attribute</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+    
+    <tr data-ice="property" data-depth="0">
+      <td data-ice="name" data-depth="0">options</td>
+      <td data-ice="type"><span><a href="typedef/index.html#static-typedef-RadialGaugeOptions">RadialGaugeOptions</a></span></td>
+      <td data-ice="appendix"></td>
+      <td data-ice="description"></td>
+    </tr>
+</tbody>
+  </table>
+</div>
+</div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+</div>
+</div>
+
+<div data-ice="methodDetails"><h2 data-ice="title">Public Methods</h2>
+
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="instance-method-draw">
+    <span class="access" data-ice="access">public</span>
+    
+    
+    
+    
+    <span data-ice="name">draw</span><span data-ice="signature">(): <span><a href="class/lib/RadialGauge.js~RadialGauge.html">RadialGauge</a></span></span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/lib/RadialGauge.js.html#lineNumber620">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  <div data-ice="description"><p>Triggering gauge render on a canvas.</p>
+</div>
+
+  <div data-ice="override"><h4>Override:</h4><span><a href="class/lib/BaseGauge.js~BaseGauge.html#instance-method-draw">BaseGauge#draw</a></span></div>
+
+  <div data-ice="properties">
+</div>
+
+  <div class="return-params" data-ice="returnParams">
+    <h4>Return:</h4>
+    <table>
+      <tr>
+        <td class="return-type" data-ice="returnType"><span><a href="class/lib/RadialGauge.js~RadialGauge.html">RadialGauge</a></span></td>
+        
+      </tr>
+    </table>
+    <div data-ice="returnProperties">
+</div>
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+</div>
+</div>
+</div>
+
+<footer class="footer">
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(0.4.8)</span></a>
+</footer>
+
+<script src="script/search_index.js"></script>
+<script src="script/search.js"></script>
+<script src="script/pretty-print.js"></script>
+<script src="script/inherited-summary.js"></script>
+<script src="script/test-summary.js"></script>
+<script src="script/inner-link.js"></script>
+<script src="script/patch-for-local.js"></script>
+</body>
+</html>
