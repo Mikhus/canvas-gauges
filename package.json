@@ -1,6 +1,6 @@
 {
   "name": "canvas-gauges",
-  "version": "2.0.8",
+  "version": "2.0.9",
   "description": "Minimalistic HTML5 Canvas Gauges",
   "main": "gauge.min.js",
   "directories": {
@@ -95,6 +95,7 @@
     "gulp-help-doc": "^1.0.7",
     "gulp-inject-string": "^1.1.0",
     "gulp-mocha": "^3.0.1",
+    "gulp-plato": "^1.0.2",
     "gulp-rename": "^1.2.2",
     "gulp-replace": "^0.5.4",
     "gulp-sourcemaps": "^1.6.0",
@@ -112,7 +113,6 @@
     "karma-sinon": "^1.0.5",
     "karma-threshold-reporter": "^0.1.15",
     "markdown-toc": "^0.12.16",
-    "mocha": "^3.0.2",
     "rimraf": "^2.5.4",
     "selenium-standalone": "^5.5.0",
     "semver": "^5.3.0",

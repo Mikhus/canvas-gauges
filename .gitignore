@@ -8,3 +8,5 @@ errorShots/
 debug.js
 dist/
 .vscode
+complexity/
+*es6.js
