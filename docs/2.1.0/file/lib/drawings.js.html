@@ -45,6 +45,7 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-font">font</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-formatMajorTickNumber">formatMajorTickNumber</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-linearGradient">linearGradient</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-normalizedValue">normalizedValue</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-padValue">padValue</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-radialPoint">radialPoint</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-radians">radians</a></span></span></li>
@@ -489,6 +490,25 @@ export function drawValueBox(context, options, value, x, y, max) {
     context.restore();
 }
 
+/* istanbul ignore next: private, not testable */
+/**
+ * Returns normalized value
+ *
+ * @param {GenericOptions} options
+ * @return {{normal: number, indented: number}}
+ */
+export function normalizedValue(options) {
+    let value = options.value;
+    let min = options.minValue;
+    let max = options.maxValue;
+    let dt = (max - min) * 0.01;
+
+    if (value &lt; min) value = min;
+    if (value &gt; max) value = max;
+
+    return { normal: value, indented: value + (value === min ? -1 : 1) * dt };
+}
+
 const drawings = {
     roundRect: roundRect,
     padValue: padValue,
@@ -501,7 +521,8 @@ const drawings = {
     verifyError: verifyError,
     prepareTicks: prepareTicks,
     drawShadow: drawShadow,
-    font: font
+    font: font,
+    normalizedValue: normalizedValue
 };
 
 export default drawings;

@@ -45,6 +45,7 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-font">font</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-formatMajorTickNumber">formatMajorTickNumber</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-linearGradient">linearGradient</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-normalizedValue">normalizedValue</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-padValue">padValue</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-radialPoint">radialPoint</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-radians">radians</a></span></span></li>
@@ -503,7 +504,8 @@ function drawRadialUnits(context, options) {
 function drawRadialNeedle(context, options) {
     if (!options.needle) return;
 
-    let value = options.value;
+    let value = options.ticksAngle &lt; 360 ?
+        drawings.normalizedValue(options).indented : options.value;
     let max = maxRadialRadius(context, options);
     //noinspection JSUnresolvedFunction
     let r1 = abs(max / 100 * options.needleCircleSize);
@@ -526,8 +528,9 @@ function drawRadialNeedle(context, options) {
     drawings.drawNeedleShadow(context, options);
 
     context.rotate(drawings.radians(isFixed ? options.startAngle :
-        (options.startAngle + (value - options.minValue) /
-        (options.maxValue - options.minValue) * options.ticksAngle)));
+        (options.startAngle + (value -
+            options.minValue) / (options.maxValue - options.minValue) *
+            options.ticksAngle)));
 
     context.fillStyle = drawings.linearGradient(
         context,

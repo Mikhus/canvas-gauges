@@ -45,6 +45,7 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-font">font</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-formatMajorTickNumber">formatMajorTickNumber</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-linearGradient">linearGradient</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-normalizedValue">normalizedValue</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-padValue">padValue</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-radialPoint">radialPoint</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-radians">radians</a></span></span></li>
@@ -447,7 +448,7 @@ function drawLinearBarShape(context, options, type, x, y, w, h) {
         if (type === &apos;progress&apos;) {
             barLength = context.barDimensions.barOffset +
                 (barLength - context.barDimensions.barOffset) *
-                (options.value - options.minValue) /
+                (drawings.normalizedValue(options).normal - options.minValue) /
                 (options.maxValue - options.minValue);
         }
 
@@ -960,7 +961,7 @@ function drawLinearBarNeedle(context, options) {
     let hasLeft = options.needleSide !== &apos;right&apos;;
     let hasRight = options.needleSide !== &apos;left&apos;;
     let position = ticksLength *
-        (options.value - options.minValue) /
+        (drawings.normalizedValue(options).indented - options.minValue) /
         (options.maxValue - options.minValue);
     let tickWidth = (options.ticksWidth / 100 + ticksPadding) * width;
     let baseLength = (barWidth / 2 + tickWidth);

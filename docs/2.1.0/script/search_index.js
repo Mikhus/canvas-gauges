@@ -84,6 +84,12 @@ window.esdocSearchIndex = [
     "function"
   ],
   [
+    "canvas-gauges/lib/drawings.js~normalizedvalue",
+    "function/index.html#static-function-normalizedValue",
+    "<span>normalizedValue</span> <span class=\"search-result-import-path\">canvas-gauges/lib/drawings.js</span>",
+    "function"
+  ],
+  [
     "canvas-gauges/lib/drawings.js~padvalue",
     "function/index.html#static-function-padValue",
     "<span>padValue</span> <span class=\"search-result-import-path\">canvas-gauges/lib/drawings.js</span>",
