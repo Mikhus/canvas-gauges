@@ -638,6 +638,9 @@ function drawRadialProgressBar(context, options) {
     let rMax = maxRadialRadius(context, options) - 5 * unit;
     let sw = (parseFloat(options.barStrokeWidth) || 0);
     let w = (parseFloat(options.barWidth) || 0) * unit;
+
+    if (w &gt; context.max) w = 50 * unit;
+
     let rMin = rMax - sw * 2 - w;
     let half = (rMax- rMin) / 2;
     let r = rMin + half;
@@ -694,17 +697,20 @@ function drawRadialProgressBar(context, options) {
         }
 
         // draw bar progress
-        context.beginPath();
-        context.arc(0, 0, r,
-            drawings.radians(sa),
-            drawings.radians(sa + (drawings.normalizedValue(options).normal -
-                options.minValue) / (options.maxValue - options.minValue) *
-                options.ticksAngle),
-            false);
-        context.strokeStyle = options.colorBarProgress;
-        context.lineWidth = w;
-        context.stroke();
-        context.closePath();
+        if (options.barProgress) {
+            context.beginPath();
+            context.arc(0, 0, r,
+                drawings.radians(sa),
+                drawings.radians(sa +
+                    (drawings.normalizedValue(options).normal -
+                    options.minValue) / (options.maxValue - options.minValue) *
+                    options.ticksAngle),
+                false);
+            context.strokeStyle = options.colorBarProgress;
+            context.lineWidth = w;
+            context.stroke();
+            context.closePath();
+        }
     }
 
     context.restore();
