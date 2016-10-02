@@ -638,9 +638,6 @@ function drawRadialProgressBar(context, options) {
     let rMax = maxRadialRadius(context, options) - 5 * unit;
     let sw = (parseFloat(options.barStrokeWidth) || 0);
     let w = (parseFloat(options.barWidth) || 0) * unit;
-
-    if (w &gt; context.max) w = 50 * unit;
-
     let rMin = rMax - sw * 2 - w;
     let half = (rMax- rMin) / 2;
     let r = rMin + half;
@@ -766,7 +763,16 @@ export default class RadialGauge extends BaseGauge {
      */
     constructor(options) {
         options = Object.assign({}, defaultRadialGaugeOptions, options || {});
+        super(options);
+    }
 
+    /**
+     * Checks and sets gauge options
+     *
+     * @param {RadialGaugeOptions} options
+     * @return {RadialGauge}
+     */
+    configure(options = {}) {
         /* istanbul ignore if */
         if (isNaN(options.startAngle)) options.startAngle = 45;
         /* istanbul ignore if */
@@ -782,10 +788,17 @@ export default class RadialGauge extends BaseGauge {
         /* istanbul ignore if */
         if (options.startAngle &gt; 360) options.startAngle = 360;
 
-        super(options);
+        /* istanbul ignore else */
+        if (options.barStrokeWidth &gt;= options.barWidth) {
+            //noinspection JSUnresolvedFunction
+            options.barStrokeWidth = round(options.barWidth / 2);
+        }
+
+        if (options.barWidth &gt; 50) options.barWidth = 50;
+
+        return super.configure(options);
     }
 
-    /*  */
     /**
      * Triggering gauge render on a canvas.
      *

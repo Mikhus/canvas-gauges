@@ -1,7 +1,7 @@
 {
-  "coverage": "97.56%",
-  "expectCount": 82,
-  "actualCount": 80,
+  "coverage": "97.64%",
+  "expectCount": 85,
+  "actualCount": 83,
   "files": {
     "lib/Animation.js": {
       "expectCount": 9,
@@ -9,8 +9,8 @@
       "undocumentLines": []
     },
     "lib/BaseGauge.js": {
-      "expectCount": 15,
-      "actualCount": 15,
+      "expectCount": 16,
+      "actualCount": 16,
       "undocumentLines": []
     },
     "lib/Collection.js": {
@@ -29,15 +29,15 @@
       "undocumentLines": []
     },
     "lib/LinearGauge.js": {
-      "expectCount": 4,
-      "actualCount": 3,
+      "expectCount": 5,
+      "actualCount": 4,
       "undocumentLines": [
-        1118
+        1129
       ]
     },
     "lib/RadialGauge.js": {
-      "expectCount": 3,
-      "actualCount": 3,
+      "expectCount": 4,
+      "actualCount": 4,
       "undocumentLines": []
     },
     "lib/SmartCanvas.js": {

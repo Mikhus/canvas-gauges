@@ -552,6 +552,12 @@ window.esdocSearchIndex = [
     "member"
   ],
   [
+    "lib/basegauge.js~basegauge#configure",
+    "class/lib/BaseGauge.js~BaseGauge.html#instance-method-configure",
+    "lib/BaseGauge.js~BaseGauge#configure",
+    "method"
+  ],
+  [
     "lib/basegauge.js~basegauge#constructor",
     "class/lib/BaseGauge.js~BaseGauge.html#instance-constructor-constructor",
     "lib/BaseGauge.js~BaseGauge#constructor",
@@ -595,13 +601,13 @@ window.esdocSearchIndex = [
   ],
   [
     "lib/basegauge.js~basegauge#value",
-    "class/lib/BaseGauge.js~BaseGauge.html#instance-set-value",
+    "class/lib/BaseGauge.js~BaseGauge.html#instance-get-value",
     "lib/BaseGauge.js~BaseGauge#value",
     "member"
   ],
   [
     "lib/basegauge.js~basegauge#value",
-    "class/lib/BaseGauge.js~BaseGauge.html#instance-get-value",
+    "class/lib/BaseGauge.js~BaseGauge.html#instance-set-value",
     "lib/BaseGauge.js~BaseGauge#value",
     "member"
   ],
@@ -762,6 +768,12 @@ window.esdocSearchIndex = [
     "file"
   ],
   [
+    "lib/lineargauge.js~lineargauge#configure",
+    "class/lib/LinearGauge.js~LinearGauge.html#instance-method-configure",
+    "lib/LinearGauge.js~LinearGauge#configure",
+    "method"
+  ],
+  [
     "lib/lineargauge.js~lineargauge#constructor",
     "class/lib/LinearGauge.js~LinearGauge.html#instance-constructor-constructor",
     "lib/LinearGauge.js~LinearGauge#constructor",
@@ -790,6 +802,12 @@ window.esdocSearchIndex = [
     "file/lib/RadialGauge.js.html",
     "lib/RadialGauge.js",
     "file"
+  ],
+  [
+    "lib/radialgauge.js~radialgauge#configure",
+    "class/lib/RadialGauge.js~RadialGauge.html#instance-method-configure",
+    "lib/RadialGauge.js~RadialGauge#configure",
+    "method"
   ],
   [
     "lib/radialgauge.js~radialgauge#constructor",
