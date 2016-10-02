@@ -16,7 +16,7 @@ class TestGauge extends BaseGauge {
 
 sinon.spy(TestGauge.prototype, 'draw');
 
-describe('BaseGauge', () => {
+describe('BadseGauge', () => {
     beforeEach(() => {
         TestGauge.prototype.draw.reset();
     });
