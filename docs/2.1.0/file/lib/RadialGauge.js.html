@@ -763,16 +763,19 @@ export default class RadialGauge extends BaseGauge {
      */
     constructor(options) {
         options = Object.assign({}, defaultRadialGaugeOptions, options || {});
-        super(options);
+        super(RadialGauge.configure(options));
     }
 
     /**
-     * Checks and sets gauge options
+     * Checks and updates gauge options properly
      *
-     * @param {RadialGaugeOptions} options
-     * @return {RadialGauge}
+     * @param {*} options
+     * @return {*}
+     * @access protected
      */
-    configure(options = {}) {
+    static configure(options) {
+        if (options.barWidth &gt; 50) options.barWidth = 50;
+
         /* istanbul ignore if */
         if (isNaN(options.startAngle)) options.startAngle = 45;
         /* istanbul ignore if */
@@ -788,17 +791,10 @@ export default class RadialGauge extends BaseGauge {
         /* istanbul ignore if */
         if (options.startAngle &gt; 360) options.startAngle = 360;
 
-        /* istanbul ignore else */
-        if (options.barStrokeWidth &gt;= options.barWidth) {
-            //noinspection JSUnresolvedFunction
-            options.barStrokeWidth = round(options.barWidth / 2);
-        }
-
-        if (options.barWidth &gt; 50) options.barWidth = 50;
-
-        return super.configure(options);
+        return options;
     }
 
+    /*  */
     /**
      * Triggering gauge render on a canvas.
      *

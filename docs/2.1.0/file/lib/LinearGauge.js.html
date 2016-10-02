@@ -1150,16 +1150,17 @@ export default class LinearGauge extends BaseGauge {
      */
     constructor(options) {
         options = Object.assign({}, defaultLinearGaugeOptions, options || {});
-        super(options);
+        super(LinearGauge.configure(options));
     }
 
     /**
-     * Checks and sets gauge options
+     * Checks and updates gauge options properly
      *
-     * @param {LinearGaugeOptions} options
-     * @return {LinearGauge}
+     * @param {*} options
+     * @return {*}
+     * @access protected
      */
-    configure(options = {}) {
+    static configure(options) {
         /* istanbul ignore else */
         if (options.barStrokeWidth &gt;= options.barWidth) {
             //noinspection JSUnresolvedFunction
@@ -1171,9 +1172,7 @@ export default class LinearGauge extends BaseGauge {
         //noinspection JSUndefinedPropertyAssignment
         options.hasRight = hasTicksBar(&apos;left&apos;, options);
 
-        if (options.barWidth &gt; 50) options.barWidth = 50;
-
-        return super.configure(options);
+        return options;
     }
 
     /* istanbul ignore next */
