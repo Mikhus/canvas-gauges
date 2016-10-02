@@ -1,7 +1,7 @@
 {
   "name": "canvas-gauges",
   "version": "2.1.0",
-  "description": "Minimalistic HTML5 Canvas Gauges",
+  "description": "Minimalist HTML5 Canvas Gauges",
   "main": "gauge.min.js",
   "repository": {
     "type": "git",

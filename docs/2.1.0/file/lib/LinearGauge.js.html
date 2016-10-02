@@ -105,7 +105,7 @@ const SmartCanvas = require(&apos;./SmartCanvas&apos;);
 /**
  * Linear gauge configuration options
  *
- * @typedef {GenericOptions|{borderRadius: number, barBeginCircle: number, barWidth: number, barStrokeWidth: number, barProgress: boolean, colorBar: string, colorBarEnd: string, colorBarStroke: string, colorBarProgress: string, colorBarProgressEnd: string, tickSide: string, needleSide: string, numberSide: string, ticksWidth: number, ticksWidthMinor: number, ticksPadding: number, barLength: number}} LinearGaugeOptions
+ * @typedef {GenericOptions|{borderRadius: number, barBeginCircle: number, tickSide: string, needleSide: string, numberSide: string, ticksWidth: number, ticksWidthMinor: number, ticksPadding: number, barLength: number, colorBarEnd: string, colorBarProgressEnd: string}} LinearGaugeOptions
  */
 
 /**
@@ -121,14 +121,7 @@ let defaultLinearGaugeOptions = Object.assign({}, GenericOptions, {
 
     // bar
     barBeginCircle: 30, // percents
-    barWidth: 20, // percents
-    barStrokeWidth: 0, // pixels
-    barProgress: true,
-
-    colorBarStroke: &apos;#222&apos;,
-    colorBar: &apos;#ccc&apos;,
     colorBarEnd: &apos;&apos;,
-    colorBarProgress: &apos;#888&apos;,
     colorBarProgressEnd: &apos;&apos;,
 
     needleWidth: 6,

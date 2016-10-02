@@ -503,10 +503,10 @@ export function normalizedValue(options) {
     let max = options.maxValue;
     let dt = (max - min) * 0.01;
 
-    if (value &lt; min) value = min;
-    if (value &gt; max) value = max;
-
-    return { normal: value, indented: value + (value === min ? -1 : 1) * dt };
+    return {
+        normal: value &lt; min ? min : value &gt; max ? max : value,
+        indented: value &lt; min ? min - dt : value &gt; max ? max + dt : value
+    };
 }
 
 const drawings = {
