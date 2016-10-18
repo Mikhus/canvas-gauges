@@ -191,6 +191,13 @@ if (!Array.prototype.fill) {
         return O;
     };
 }
+
+/**
+ * mocking window
+ */
+if (typeof window === &apos;undefined&apos;) {
+    var window = typeof global === &apos;undefined&apos; ? {} : global;
+}
 </code></pre>
 
 </div>

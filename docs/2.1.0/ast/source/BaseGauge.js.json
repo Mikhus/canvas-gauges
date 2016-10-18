@@ -13422,92 +13422,20 @@
                 "type": "MemberExpression",
                 "computed": true,
                 "object": {
-                  "type": "LogicalExpression",
-                  "operator": "||",
-                  "left": {
-                    "type": "MemberExpression",
-                    "computed": false,
-                    "object": {
-                      "type": "Identifier",
-                      "name": "ns",
-                      "range": [
-                        8114,
-                        8116
-                      ],
-                      "loc": {
-                        "start": {
-                          "line": 306,
-                          "column": 5
-                        },
-                        "end": {
-                          "line": 306,
-                          "column": 7
-                        }
-                      }
-                    },
-                    "property": {
-                      "type": "Identifier",
-                      "name": "document",
-                      "range": [
-                        8117,
-                        8125
-                      ],
-                      "loc": {
-                        "start": {
-                          "line": 306,
-                          "column": 8
-                        },
-                        "end": {
-                          "line": 306,
-                          "column": 16
-                        }
-                      }
-                    },
-                    "range": [
-                      8114,
-                      8125
-                    ],
-                    "loc": {
-                      "start": {
-                        "line": 306,
-                        "column": 5
-                      },
-                      "end": {
-                        "line": 306,
-                        "column": 16
-                      }
-                    }
-                  },
-                  "right": {
-                    "type": "Identifier",
-                    "name": "ns",
-                    "range": [
-                      8129,
-                      8131
-                    ],
-                    "loc": {
-                      "start": {
-                        "line": 306,
-                        "column": 20
-                      },
-                      "end": {
-                        "line": 306,
-                        "column": 22
-                      }
-                    }
-                  },
+                  "type": "Identifier",
+                  "name": "ns",
                   "range": [
-                    8114,
-                    8131
+                    8113,
+                    8115
                   ],
                   "loc": {
                     "start": {
                       "line": 306,
-                      "column": 5
+                      "column": 4
                     },
                     "end": {
                       "line": 306,
-                      "column": 22
+                      "column": 6
                     }
                   }
                 },
@@ -13516,23 +13444,23 @@
                   "value": "gauges",
                   "raw": "'gauges'",
                   "range": [
-                    8133,
-                    8141
+                    8116,
+                    8124
                   ],
                   "loc": {
                     "start": {
                       "line": 306,
-                      "column": 24
+                      "column": 7
                     },
                     "end": {
                       "line": 306,
-                      "column": 32
+                      "column": 15
                     }
                   }
                 },
                 "range": [
                   8113,
-                  8142
+                  8125
                 ],
                 "loc": {
                   "start": {
@@ -13541,31 +13469,176 @@
                   },
                   "end": {
                     "line": 306,
-                    "column": 33
+                    "column": 16
                   }
                 }
               },
               "right": {
-                "type": "Identifier",
-                "name": "gauges",
+                "type": "AssignmentExpression",
+                "operator": "=",
+                "left": {
+                  "type": "MemberExpression",
+                  "computed": true,
+                  "object": {
+                    "type": "LogicalExpression",
+                    "operator": "||",
+                    "left": {
+                      "type": "MemberExpression",
+                      "computed": false,
+                      "object": {
+                        "type": "Identifier",
+                        "name": "window",
+                        "range": [
+                          8129,
+                          8135
+                        ],
+                        "loc": {
+                          "start": {
+                            "line": 306,
+                            "column": 20
+                          },
+                          "end": {
+                            "line": 306,
+                            "column": 26
+                          }
+                        }
+                      },
+                      "property": {
+                        "type": "Identifier",
+                        "name": "document",
+                        "range": [
+                          8136,
+                          8144
+                        ],
+                        "loc": {
+                          "start": {
+                            "line": 306,
+                            "column": 27
+                          },
+                          "end": {
+                            "line": 306,
+                            "column": 35
+                          }
+                        }
+                      },
+                      "range": [
+                        8129,
+                        8144
+                      ],
+                      "loc": {
+                        "start": {
+                          "line": 306,
+                          "column": 20
+                        },
+                        "end": {
+                          "line": 306,
+                          "column": 35
+                        }
+                      }
+                    },
+                    "right": {
+                      "type": "ObjectExpression",
+                      "properties": [],
+                      "range": [
+                        8148,
+                        8150
+                      ],
+                      "loc": {
+                        "start": {
+                          "line": 306,
+                          "column": 39
+                        },
+                        "end": {
+                          "line": 306,
+                          "column": 41
+                        }
+                      }
+                    },
+                    "range": [
+                      8129,
+                      8150
+                    ],
+                    "loc": {
+                      "start": {
+                        "line": 306,
+                        "column": 20
+                      },
+                      "end": {
+                        "line": 306,
+                        "column": 41
+                      }
+                    }
+                  },
+                  "property": {
+                    "type": "Literal",
+                    "value": "gauges",
+                    "raw": "'gauges'",
+                    "range": [
+                      8152,
+                      8160
+                    ],
+                    "loc": {
+                      "start": {
+                        "line": 306,
+                        "column": 43
+                      },
+                      "end": {
+                        "line": 306,
+                        "column": 51
+                      }
+                    }
+                  },
+                  "range": [
+                    8128,
+                    8161
+                  ],
+                  "loc": {
+                    "start": {
+                      "line": 306,
+                      "column": 19
+                    },
+                    "end": {
+                      "line": 306,
+                      "column": 52
+                    }
+                  }
+                },
+                "right": {
+                  "type": "Identifier",
+                  "name": "gauges",
+                  "range": [
+                    8164,
+                    8170
+                  ],
+                  "loc": {
+                    "start": {
+                      "line": 306,
+                      "column": 55
+                    },
+                    "end": {
+                      "line": 306,
+                      "column": 61
+                    }
+                  }
+                },
                 "range": [
-                  8145,
-                  8151
+                  8128,
+                  8170
                 ],
                 "loc": {
                   "start": {
                     "line": 306,
-                    "column": 36
+                    "column": 19
                   },
                   "end": {
                     "line": 306,
-                    "column": 42
+                    "column": 61
                   }
                 }
               },
               "range": [
                 8113,
-                8151
+                8170
               ],
               "loc": {
                 "start": {
@@ -13574,13 +13647,13 @@
                 },
                 "end": {
                   "line": 306,
-                  "column": 42
+                  "column": 61
                 }
               }
             },
             "range": [
               8113,
-              8152
+              8171
             ],
             "loc": {
               "start": {
@@ -13589,14 +13662,14 @@
               },
               "end": {
                 "line": 306,
-                "column": 43
+                "column": 62
               }
             }
           }
         ],
         "range": [
           8074,
-          8154
+          8173
         ],
         "loc": {
           "start": {
@@ -13612,7 +13685,7 @@
       "alternate": null,
       "range": [
         8043,
-        8154
+        8173
       ],
       "loc": {
         "start": {
@@ -13675,8 +13748,8 @@
             "type": "Identifier",
             "name": "module",
             "range": [
-              8156,
-              8162
+              8175,
+              8181
             ],
             "loc": {
               "start": {
@@ -13693,8 +13766,8 @@
             "type": "Identifier",
             "name": "exports",
             "range": [
-              8163,
-              8170
+              8182,
+              8189
             ],
             "loc": {
               "start": {
@@ -13708,8 +13781,8 @@
             }
           },
           "range": [
-            8156,
-            8170
+            8175,
+            8189
           ],
           "loc": {
             "start": {
@@ -13726,8 +13799,8 @@
           "type": "Identifier",
           "name": "BaseGauge",
           "range": [
-            8173,
-            8182
+            8192,
+            8201
           ],
           "loc": {
             "start": {
@@ -13741,8 +13814,8 @@
           }
         },
         "range": [
-          8156,
-          8182
+          8175,
+          8201
         ],
         "loc": {
           "start": {
@@ -13756,8 +13829,8 @@
         }
       },
       "range": [
-        8156,
-        8183
+        8175,
+        8202
       ],
       "loc": {
         "start": {
@@ -13774,7 +13847,7 @@
   "sourceType": "module",
   "range": [
     1169,
-    8183
+    8202
   ],
   "loc": {
     "start": {

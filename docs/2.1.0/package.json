@@ -123,6 +123,7 @@
     "vinyl-source-stream": "^1.1.0",
     "watchify": "^3.7.0",
     "webdriverio": "^4.2.7",
+    "webpack": "^1.13.2",
     "yargs": "^5.0.0"
   }
 }

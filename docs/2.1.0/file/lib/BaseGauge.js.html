@@ -377,7 +377,7 @@ export default class BaseGauge {
 /* istanbul ignore if */
 if (typeof ns !== &apos;undefined&apos;) {
     ns[&apos;BaseGauge&apos;] = BaseGauge;
-    (ns.document || ns)[&apos;gauges&apos;] = gauges;
+    ns[&apos;gauges&apos;] = (window.document || {})[&apos;gauges&apos;] = gauges;
 }
 
 module.exports = BaseGauge;

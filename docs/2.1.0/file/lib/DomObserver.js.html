@@ -180,7 +180,7 @@ export default class DomObserver {
          *
          * @type {boolean}
          */
-        this.isObservable = !!ns.MutationObserver;
+        this.isObservable = !!window.MutationObserver;
 
         /* istanbul ignore next: this should be tested with end-to-end tests */
         DomObserver.domReady(this.traverse.bind(this));
@@ -215,7 +215,7 @@ export default class DomObserver {
         }
 
         if (this.isObservable &amp;&amp; !this.mutationsObserved) {
-            new ns.MutationObserver(this.observe.bind(this))
+            new MutationObserver(this.observe.bind(this))
                 .observe(document.body, {
                     childList: true,
                     subtree: true,
@@ -329,7 +329,7 @@ export default class DomObserver {
 
         if (!this.isObservable) return instance;
 
-        instance.observer = new ns.MutationObserver(records =&gt; {
+        instance.observer = new MutationObserver(records =&gt; {
             records.forEach(record =&gt; {
                 if (record.type === &apos;attributes&apos;) {
                     let attr = record.attributeName.toLowerCase();
@@ -401,14 +401,14 @@ export default class DomObserver {
      * @param {Function} handler
      */
     static domReady(handler) {
-        if (/comp|inter|loaded/.test((ns.document || {}).readyState + &apos;&apos;))
+        if (/comp|inter|loaded/.test((window.document || {}).readyState + &apos;&apos;))
             return handler();
 
-        if (ns.addEventListener)
-            ns.addEventListener(&apos;DOMContentLoaded&apos;, handler, false);
+        if (window.addEventListener)
+            window.addEventListener(&apos;DOMContentLoaded&apos;, handler, false);
 
-        else if (ns.attachEvent)
-            ns.attachEvent(&apos;onload&apos;, handler);
+        else if (window.attachEvent)
+            window.attachEvent(&apos;onload&apos;, handler);
     }
 }
 
