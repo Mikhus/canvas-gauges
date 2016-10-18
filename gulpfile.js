@@ -456,7 +456,8 @@ gulp.task('lint', () => {
             '!**.min.js',
             '!coverage/**',
             '!complexity/**',
-            '!dist/**'
+            '!dist/**',
+            '!test/cjs/**'
         ])
         .pipe(eslint())
         .pipe(eslint.format())
