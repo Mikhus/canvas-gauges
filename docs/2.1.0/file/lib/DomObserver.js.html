@@ -183,7 +183,9 @@ export default class DomObserver {
         this.isObservable = !!window.MutationObserver;
 
         /* istanbul ignore next: this should be tested with end-to-end tests */
-        DomObserver.domReady(this.traverse.bind(this));
+        if (!window[&apos;GAUGES_NO_AUTO_INIT&apos;]) {
+            DomObserver.domReady(this.traverse.bind(this));
+        }
     }
 
     /**
@@ -378,6 +380,25 @@ export default class DomObserver {
 
         for (; i &lt; s; i++) {
             str += &apos;-&apos; + arr[i].toLowerCase();
+        }
+
+        return str;
+    }
+
+    /**
+     * Transforms dashed string to CamelCase representation
+     *
+     * @param {string} dashed
+     * @return {string}
+     */
+    static toCamelCase(dashed) {
+        let arr = dashed.split(/-/);
+        let i = 0;
+        let s = arr.length;
+        let str = &apos;&apos;;
+
+        for (; i&lt; s; i++) {
+            str += arr[i][0].toUpperCase() + arr[i].substr(1).toLowerCase();
         }
 
         return str;

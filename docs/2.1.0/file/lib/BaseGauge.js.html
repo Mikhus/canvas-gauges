@@ -365,7 +365,27 @@ export default class BaseGauge {
      * @param {GenericOptions} options
      */
     static initialize(type, options) {
-        new DomObserver(options, &apos;canvas&apos;, type);
+        return new DomObserver(options, &apos;canvas&apos;, type);
+    }
+
+    /**
+     * Initializes gauge from a given HTML element
+     * (given element should be valid HTML canvas gauge definition)
+     *
+     * @param {HTMLElement} element
+     */
+    static fromElement(element) {
+        let type = DomObserver.toCamelCase(element.getAttribute(&apos;data-type&apos;));
+
+        if (!type) {
+            return ;
+        }
+
+        if (!/Gauge$/.test(type)) {
+            type += &apos;Gauge&apos;;
+        }
+
+        new DomObserver({}, element.tagName, type).process(element);
     }
 }
 

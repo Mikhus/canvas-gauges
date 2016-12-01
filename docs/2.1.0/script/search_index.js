@@ -595,13 +595,13 @@ window.esdocSearchIndex = [
   ],
   [
     "lib/basegauge.js~basegauge#value",
-    "class/lib/BaseGauge.js~BaseGauge.html#instance-get-value",
+    "class/lib/BaseGauge.js~BaseGauge.html#instance-set-value",
     "lib/BaseGauge.js~BaseGauge#value",
     "member"
   ],
   [
     "lib/basegauge.js~basegauge#value",
-    "class/lib/BaseGauge.js~BaseGauge.html#instance-set-value",
+    "class/lib/BaseGauge.js~BaseGauge.html#instance-get-value",
     "lib/BaseGauge.js~BaseGauge#value",
     "member"
   ],
@@ -615,6 +615,12 @@ window.esdocSearchIndex = [
     "lib/basegauge.js~basegauge.configure",
     "class/lib/BaseGauge.js~BaseGauge.html#static-method-configure",
     "lib/BaseGauge.js~BaseGauge.configure",
+    "method"
+  ],
+  [
+    "lib/basegauge.js~basegauge.fromelement",
+    "class/lib/BaseGauge.js~BaseGauge.html#static-method-fromElement",
+    "lib/BaseGauge.js~BaseGauge.fromElement",
     "method"
   ],
   [
@@ -723,6 +729,12 @@ window.esdocSearchIndex = [
     "lib/domobserver.js~domobserver.toattributename",
     "class/lib/DomObserver.js~DomObserver.html#static-method-toAttributeName",
     "lib/DomObserver.js~DomObserver.toAttributeName",
+    "method"
+  ],
+  [
+    "lib/domobserver.js~domobserver.tocamelcase",
+    "class/lib/DomObserver.js~DomObserver.html#static-method-toCamelCase",
+    "lib/DomObserver.js~DomObserver.toCamelCase",
     "method"
   ],
   [

@@ -602,7 +602,7 @@ function drawLinearBarHighlights(context, options) {
     for (; i &lt; s; i++) {
         let entry = options.highlights[i];
         //noinspection JSUnresolvedFunction
-        let eStart = ticksLength * abs(entry.from) / interval;
+        let eStart = ticksLength * abs(options.minValue - entry.from) / interval;
         //noinspection JSUnresolvedFunction
         let eW = ticksLength * abs((entry.to - entry.from) / interval);
 
@@ -1172,7 +1172,15 @@ export default class LinearGauge extends BaseGauge {
         //noinspection JSUndefinedPropertyAssignment
         options.hasRight = hasTicksBar(&apos;left&apos;, options);
 
-        return options;
+        if (options.value &gt; options.maxValue) {
+            options.value = options.maxValue;
+        }
+
+        if (options.value &lt; options.minValue) {
+            options.value = options.minValue;
+        }
+
+        return BaseGauge.configure(options);
     }
 
     /* istanbul ignore next */
