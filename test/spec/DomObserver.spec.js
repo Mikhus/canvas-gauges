@@ -79,6 +79,15 @@ describe('DomObserver', () => {
         });
     });
 
+    describe('toCamelCase()', () => {
+        it('should transform dashed string to camelCase representation', () => {
+            let dashed = 'on-two-three';
+
+            expect(DomObserver.toCamelCase('one-two-three'))
+                .to.equal('oneTwoThree');
+        });
+    });
+
     describe('process()', () => {
         it('should properly process given node and create associated type ' +
             'instance', () =>
