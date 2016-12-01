@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <base data-ice="baseUrl" href="../../">
-  <title data-ice="title">Animation | HTML5 Canvas Gauges API Documentation API Document</title>
+  <title data-ice="title">EventEmitter | HTML5 Canvas Gauges API Documentation API Document</title>
   <link type="text/css" rel="stylesheet" href="css/style.css">
   <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
   <script src="script/prettify/prettify.js"></script>
@@ -74,17 +74,17 @@
 </nav>
 
 <div class="content" data-ice="content"><div class="header-notice">
-  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import Animation from &apos;<span><a href="file/lib/Animation.js.html#lineNumber167">canvas-gauges/lib/Animation.js</a></span>&apos;</code></pre></div>
+  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import EventEmitter from &apos;<span><a href="file/lib/EventEmitter.js.html#lineNumber28">canvas-gauges/lib/EventEmitter.js</a></span>&apos;</code></pre></div>
   <span data-ice="access">public</span>
   <span data-ice="kind">class</span>
   
   
   
-  <span data-ice="source">| <span><a href="file/lib/Animation.js.html#lineNumber167">source</a></span></span>
+  <span data-ice="source">| <span><a href="file/lib/EventEmitter.js.html#lineNumber28">source</a></span></span>
 </div>
 
 <div class="self-detail detail">
-  <h1 data-ice="name">Animation</h1>
+  <h1 data-ice="name">EventEmitter</h1>
 
   
 
@@ -100,43 +100,12 @@
 
   
   
-  <div class="description" data-ice="description"><p>Animation engine API for JavaScript-based animations.
-This is simply an animation core framework which simplifies creation
-of various animations for generic purposes.</p>
+  <div class="description" data-ice="description"><p>Class EventEmitter - base event manager</p>
 </div>
 
   
 
-  <div data-ice="exampleDocs">
-    <h4>Example:</h4>
-    
-  <div class="example-doc" data-ice="exampleDoc">
-      
-      <pre class="prettyprint source-code"><code data-ice="exampleCode">// create &apos;linear&apos; animation engine, 500ms duration
-let linear = new Animation(&apos;linear&apos;, 500);
-
-// create &apos;elastic&apos; animation engine
-let elastic = new Animation(&apos;elastic&apos;);
-
-// define animation behavior
-let bounced = new Animation(&apos;bounce&apos;, 500, percent =&gt; {
-    let value = parseInt(percent * 100, 10);
-
-    $(&apos;div.bounced&apos;).css({
-        width: value + &apos;%&apos;,
-        height: value + &apos;%&apos;
-    });
-});
-
-// execute animation
-bounced.animate();
-
-// execute animation and handle when its finished
-bounced.animate(null, () =&gt; {
-   console.log(&apos;Animation finished!&apos;);
-});</code></pre>
-    </div>
-</div>
+  
 
   
 
@@ -160,7 +129,7 @@ bounced.animate(null, () =&gt; {
     <td>
       <div>
         <p>
-           <span data-ice="name"><span><a href="class/lib/Animation.js~Animation.html#instance-constructor-constructor">constructor</a></span></span><span data-ice="signature">(rule: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span> | <span><a href="typedef/index.html#static-typedef-AnimationRule">AnimationRule</a></span>, duration: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span>, draw: <span><a href="typedef/index.html#static-typedef-DrawEventCallback">DrawEventCallback</a></span>, end: <span><a href="typedef/index.html#static-typedef-EndEventCallback">EndEventCallback</a></span>)</span>
+           <span data-ice="name"><span><a href="class/lib/EventEmitter.js~EventEmitter.html#instance-constructor-constructor">constructor</a></span></span>
         </p>
       </div>
       <div>
@@ -192,13 +161,38 @@ bounced.animate(null, () =&gt; {
     <td>
       <div>
         <p>
-           <span data-ice="name"><span><a href="class/lib/Animation.js~Animation.html#instance-member-draw">draw</a></span></span><span data-ice="signature">: <span><a href="typedef/index.html#static-typedef-DrawEventCallback">DrawEventCallback</a></span></span>
+           <span data-ice="name"><span><a href="class/lib/EventEmitter.js~EventEmitter.html#instance-member-addListener">addListener</a></span></span><span data-ice="signature">: <span>*</span></span>
         </p>
       </div>
       <div>
         
         
-        <div data-ice="description"><p>Callback function for the animation step draw event.</p>
+        
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      <span class="kind" data-ice="kind">get</span>
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+           <span data-ice="name"><span><a href="class/lib/EventEmitter.js~EventEmitter.html#instance-get-listeners">listeners</a></span></span><span data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></span>: <span>*</span></span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>Returns all event listeners</p>
 </div>
       </div>
     </td>
@@ -218,92 +212,13 @@ bounced.animate(null, () =&gt; {
     <td>
       <div>
         <p>
-           <span data-ice="name"><span><a href="class/lib/Animation.js~Animation.html#instance-member-duration">duration</a></span></span><span data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span></span>
+           <span data-ice="name"><span><a href="class/lib/EventEmitter.js~EventEmitter.html#instance-member-removeListener">removeListener</a></span></span><span data-ice="signature">: <span>*</span></span>
         </p>
       </div>
       <div>
         
         
-        <div data-ice="description"><p>Overall animation duration in milliseconds.</p>
-</div>
-      </div>
-    </td>
-    <td>
-      
-      
-    </td>
-  </tr>
-<tr data-ice="target">
-    <td>
-      <span class="access" data-ice="access">public</span>
-      
-      
-      
-      <span class="override" data-ice="override"></span>
-    </td>
-    <td>
-      <div>
-        <p>
-           <span data-ice="name"><span><a href="class/lib/Animation.js~Animation.html#instance-member-end">end</a></span></span><span data-ice="signature">: <span><a href="typedef/index.html#static-typedef-EndEventCallback">EndEventCallback</a></span></span>
-        </p>
-      </div>
-      <div>
         
-        
-        <div data-ice="description"><p>Callback for the animation complete event.</p>
-</div>
-      </div>
-    </td>
-    <td>
-      
-      
-    </td>
-  </tr>
-<tr data-ice="target">
-    <td>
-      <span class="access" data-ice="access">public</span>
-      
-      
-      
-      <span class="override" data-ice="override"></span>
-    </td>
-    <td>
-      <div>
-        <p>
-           <span data-ice="name"><span><a href="class/lib/Animation.js~Animation.html#instance-member-frame">frame</a></span></span><span data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span></span>
-        </p>
-      </div>
-      <div>
-        
-        
-        <div data-ice="description"><p>Current requested animation frame identifier</p>
-</div>
-      </div>
-    </td>
-    <td>
-      
-      
-    </td>
-  </tr>
-<tr data-ice="target">
-    <td>
-      <span class="access" data-ice="access">public</span>
-      
-      
-      
-      <span class="override" data-ice="override"></span>
-    </td>
-    <td>
-      <div>
-        <p>
-           <span data-ice="name"><span><a href="class/lib/Animation.js~Animation.html#instance-member-rule">rule</a></span></span><span data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span> | <span><a href="typedef/index.html#static-typedef-AnimationRule">AnimationRule</a></span></span>
-        </p>
-      </div>
-      <div>
-        
-        
-        <div data-ice="description"><p>Animation rule.</p>
-</div>
       </div>
     </td>
     <td>
@@ -329,14 +244,13 @@ bounced.animate(null, () =&gt; {
     <td>
       <div>
         <p>
-           <span data-ice="name"><span><a href="class/lib/Animation.js~Animation.html#instance-method-animate">animate</a></span></span><span data-ice="signature">(draw: <span><a href="typedef/index.html#static-typedef-DrawEventCallback">DrawEventCallback</a></span>, end: <span><a href="typedef/index.html#static-typedef-EndEventCallback">EndEventCallback</a></span>)</span>
+           <span data-ice="name"><span><a href="class/lib/EventEmitter.js~EventEmitter.html#instance-method-emit">emit</a></span></span><span data-ice="signature">(event: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>, args: ...<span>*</span>)</span>
         </p>
       </div>
       <div>
         
         
-        <div data-ice="description"><p>Performs animation calling each animation step draw callback and
-end callback at the end of animation.</p>
+        <div data-ice="description"><p>Emits given event bypassing to each registered handler given args</p>
 </div>
       </div>
     </td>
@@ -356,13 +270,93 @@ end callback at the end of animation.</p>
     <td>
       <div>
         <p>
-           <span data-ice="name"><span><a href="class/lib/Animation.js~Animation.html#instance-method-destroy">destroy</a></span></span><span data-ice="signature">()</span>
+           <span data-ice="name"><span><a href="class/lib/EventEmitter.js~EventEmitter.html#instance-method-off">off</a></span></span><span data-ice="signature">(event: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>, handlers: ...<span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span>)</span>
         </p>
       </div>
       <div>
         
         
-        <div data-ice="description"><p>Destroys this object properly</p>
+        <div data-ice="description"><p>Un-registers previously registered event handlers</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+           <span data-ice="name"><span><a href="class/lib/EventEmitter.js~EventEmitter.html#instance-method-on">on</a></span></span><span data-ice="signature">(event: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>, handlers: ...<span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span>)</span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>Registers given handlers for a given events to be called each time event
+is emitted</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+           <span data-ice="name"><span><a href="class/lib/EventEmitter.js~EventEmitter.html#instance-method-once">once</a></span></span><span data-ice="signature">(event: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>, handlers: ...<span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span>)</span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>Registers given handler for given event to be called only once when
+event is emitted</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+           <span data-ice="name"><span><a href="class/lib/EventEmitter.js~EventEmitter.html#instance-method-removeAllListeners">removeAllListeners</a></span></span><span data-ice="signature">(event: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>)</span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>Removes all listeners for a given event</p>
 </div>
       </div>
     </td>
@@ -388,11 +382,11 @@ end callback at the end of animation.</p>
     
     
     
-    <span data-ice="name">constructor</span><span data-ice="signature">(rule: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span> | <span><a href="typedef/index.html#static-typedef-AnimationRule">AnimationRule</a></span>, duration: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span>, draw: <span><a href="typedef/index.html#static-typedef-DrawEventCallback">DrawEventCallback</a></span>, end: <span><a href="typedef/index.html#static-typedef-EndEventCallback">EndEventCallback</a></span>)</span>
+    <span data-ice="name">constructor</span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/lib/Animation.js.html#lineNumber176">source</a></span></span>
+      <span data-ice="source"><span><a href="file/lib/EventEmitter.js.html#lineNumber32">source</a></span></span>
     </span>
   </h3>
 
@@ -403,41 +397,7 @@ end callback at the end of animation.</p>
 
   
 
-  <div data-ice="properties"><div data-ice="properties">
-  <h4 data-ice="title">Params:</h4>
-  <table class="params">
-    <thead>
-    <tr><td>Name</td><td>Type</td><td>Attribute</td><td>Description</td></tr>
-    </thead>
-    <tbody>
-    
-    <tr data-ice="property" data-depth="0">
-      <td data-ice="name" data-depth="0">rule</td>
-      <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span> | <span><a href="typedef/index.html#static-typedef-AnimationRule">AnimationRule</a></span></td>
-      <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
-    </tr>
-<tr data-ice="property" data-depth="0">
-      <td data-ice="name" data-depth="0">duration</td>
-      <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span></td>
-      <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
-    </tr>
-<tr data-ice="property" data-depth="0">
-      <td data-ice="name" data-depth="0">draw</td>
-      <td data-ice="type"><span><a href="typedef/index.html#static-typedef-DrawEventCallback">DrawEventCallback</a></span></td>
-      <td data-ice="appendix"><ul><li>optional</li></ul></td>
-      <td data-ice="description"></td>
-    </tr>
-<tr data-ice="property" data-depth="0">
-      <td data-ice="name" data-depth="0">end</td>
-      <td data-ice="type"><span><a href="typedef/index.html#static-typedef-EndEventCallback">EndEventCallback</a></span></td>
-      <td data-ice="appendix"><ul><li>optional</li></ul></td>
-      <td data-ice="description"></td>
-    </tr>
-</tbody>
-  </table>
-</div>
+  <div data-ice="properties">
 </div>
 
   
@@ -459,25 +419,24 @@ end callback at the end of animation.</p>
 <div data-ice="memberDetails"><h2 data-ice="title">Public Members</h2>
 
 <div class="detail" data-ice="detail">
-  <h3 data-ice="anchor" id="instance-member-draw">
+  <h3 data-ice="anchor" id="instance-member-addListener">
     <span class="access" data-ice="access">public</span>
     
     
     
     
-    <span data-ice="name">draw</span><span data-ice="signature">: <span><a href="typedef/index.html#static-typedef-DrawEventCallback">DrawEventCallback</a></span></span>
+    <span data-ice="name">addListener</span><span data-ice="signature">: <span>*</span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/lib/Animation.js.html#lineNumber202">source</a></span></span>
+      <span data-ice="source"><span><a href="file/lib/EventEmitter.js.html#lineNumber35">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  <div data-ice="description"><p>Callback function for the animation step draw event.</p>
-</div>
+  
 
   
 
@@ -500,25 +459,24 @@ end callback at the end of animation.</p>
   
 </div>
 <div class="detail" data-ice="detail">
-  <h3 data-ice="anchor" id="instance-member-duration">
+  <h3 data-ice="anchor" id="instance-get-listeners">
     <span class="access" data-ice="access">public</span>
     
+    <span class="kind" data-ice="kind">get</span>
     
     
-    
-    <span data-ice="name">duration</span><span data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span></span>
+    <span data-ice="name">listeners</span><span data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></span>: <span>*</span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/lib/Animation.js.html#lineNumber185">source</a></span></span>
+      <span data-ice="source"><span><a href="file/lib/EventEmitter.js.html#lineNumber44">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  <div data-ice="description"><p>Overall animation duration in milliseconds.
-By default is equal to 250 ms.</p>
+  <div data-ice="description"><p>Returns all event listeners</p>
 </div>
 
   
@@ -526,7 +484,17 @@ By default is equal to 250 ms.</p>
   <div data-ice="properties">
 </div>
 
-  
+  <div class="return-params" data-ice="returnParams">
+    <h4>Return:</h4>
+    <table>
+      <tr>
+        <td class="return-type" data-ice="returnType"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></span></td>
+        
+      </tr>
+    </table>
+    <div data-ice="returnProperties">
+</div>
+  </div>
 
   
 
@@ -542,110 +510,24 @@ By default is equal to 250 ms.</p>
   
 </div>
 <div class="detail" data-ice="detail">
-  <h3 data-ice="anchor" id="instance-member-end">
+  <h3 data-ice="anchor" id="instance-member-removeListener">
     <span class="access" data-ice="access">public</span>
     
     
     
     
-    <span data-ice="name">end</span><span data-ice="signature">: <span><a href="typedef/index.html#static-typedef-EndEventCallback">EndEventCallback</a></span></span>
+    <span data-ice="name">removeListener</span><span data-ice="signature">: <span>*</span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/lib/Animation.js.html#lineNumber209">source</a></span></span>
+      <span data-ice="source"><span><a href="file/lib/EventEmitter.js.html#lineNumber36">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  <div data-ice="description"><p>Callback for the animation complete event.</p>
-</div>
-
   
-
-  <div data-ice="properties">
-</div>
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-  
-</div>
-<div class="detail" data-ice="detail">
-  <h3 data-ice="anchor" id="instance-member-frame">
-    <span class="access" data-ice="access">public</span>
-    
-    
-    
-    
-    <span data-ice="name">frame</span><span data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span></span>
-    <span class="right-info">
-      
-      
-      <span data-ice="source"><span><a href="file/lib/Animation.js.html#lineNumber269">source</a></span></span>
-    </span>
-  </h3>
-
-  
-  
-  
-  <div data-ice="description"><p>Current requested animation frame identifier</p>
-</div>
-
-  
-
-  <div data-ice="properties">
-</div>
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-  
-</div>
-<div class="detail" data-ice="detail">
-  <h3 data-ice="anchor" id="instance-member-rule">
-    <span class="access" data-ice="access">public</span>
-    
-    
-    
-    
-    <span data-ice="name">rule</span><span data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span> | <span><a href="typedef/index.html#static-typedef-AnimationRule">AnimationRule</a></span></span>
-    <span class="right-info">
-      
-      
-      <span data-ice="source"><span><a href="file/lib/Animation.js.html#lineNumber195">source</a></span></span>
-    </span>
-  </h3>
-
-  
-  
-  
-  <div data-ice="description"><p>Animation rule. By default is linear animation.
-Animation rule is a subject to animation rules, which are
-a simple object containing math-based methods for calculating
-animation steps.</p>
-</div>
 
   
 
@@ -671,28 +553,24 @@ animation steps.</p>
 <div data-ice="methodDetails"><h2 data-ice="title">Public Methods</h2>
 
 <div class="detail" data-ice="detail">
-  <h3 data-ice="anchor" id="instance-method-animate">
+  <h3 data-ice="anchor" id="instance-method-emit">
     <span class="access" data-ice="access">public</span>
     
     
     
     
-    <span data-ice="name">animate</span><span data-ice="signature">(draw: <span><a href="typedef/index.html#static-typedef-DrawEventCallback">DrawEventCallback</a></span>, end: <span><a href="typedef/index.html#static-typedef-EndEventCallback">EndEventCallback</a></span>)</span>
+    <span data-ice="name">emit</span><span data-ice="signature">(event: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>, args: ...<span>*</span>)</span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/lib/Animation.js.html#lineNumber255">source</a></span></span>
+      <span data-ice="source"><span><a href="file/lib/EventEmitter.js.html#lineNumber54">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  <div data-ice="description"><p>Performs animation calling each animation step draw callback and
-end callback at the end of animation. Callbacks are optional to this
-method call. If them are not bypassed will be used that ones which
-was pre-set on constructing an Animation object or pre-set after
-construction.</p>
+  <div data-ice="description"><p>Emits given event bypassing to each registered handler given args</p>
 </div>
 
   
@@ -706,15 +584,15 @@ construction.</p>
     <tbody>
     
     <tr data-ice="property" data-depth="0">
-      <td data-ice="name" data-depth="0">draw</td>
-      <td data-ice="type"><span><a href="typedef/index.html#static-typedef-DrawEventCallback">DrawEventCallback</a></span></td>
-      <td data-ice="appendix"><ul><li>optional</li></ul></td>
+      <td data-ice="name" data-depth="0">event</td>
+      <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></td>
+      <td data-ice="appendix"></td>
       <td data-ice="description"></td>
     </tr>
 <tr data-ice="property" data-depth="0">
-      <td data-ice="name" data-depth="0">end</td>
-      <td data-ice="type"><span><a href="typedef/index.html#static-typedef-EndEventCallback">EndEventCallback</a></span></td>
-      <td data-ice="appendix"><ul><li>optional</li></ul></td>
+      <td data-ice="name" data-depth="0">args</td>
+      <td data-ice="type">...<span>*</span></td>
+      <td data-ice="appendix"></td>
       <td data-ice="description"></td>
     </tr>
 </tbody>
@@ -730,35 +608,7 @@ construction.</p>
 
   
 
-  <div data-ice="example">
-    <h4>Example:</h4>
-    
-  <div class="example-doc" data-ice="exampleDoc">
-      
-      <pre class="prettyprint source-code"><code data-ice="exampleCode">function draw(percent) {
-    $(&apos;.my-animated-divs&apos;).css({
-        width: parseInt(percent * 100, 10) + &apos;%&apos;
-    });
-}
-function done() {
-    console.log(&apos;Animation complete!&apos;);
-}
-
-// Define &apos;draw&apos; and &apos;end&apos; callbacks on construction
-var animation = new Animation(&apos;cycle&apos;, 500, draw, done);
-animation.animate();
-
-// Define &apos;draw&apos; and &apos;end&apos; callbacks after construction
-var animation = new Animation(&apos;cycle&apos;, 500);
-animation.draw = draw;
-animation.end = done;
-animation.animate();
-
-// Define &apos;draw&apos; and &apos;end&apos; callbacks at animation
-var animation = new Animation(&apos;cycle&apos;, 500);
-animation.animate(draw, done);</code></pre>
-    </div>
-</div>
+  
 
   
 
@@ -766,29 +616,236 @@ animation.animate(draw, done);</code></pre>
   
 </div>
 <div class="detail" data-ice="detail">
-  <h3 data-ice="anchor" id="instance-method-destroy">
+  <h3 data-ice="anchor" id="instance-method-off">
     <span class="access" data-ice="access">public</span>
     
     
     
     
-    <span data-ice="name">destroy</span><span data-ice="signature">()</span>
+    <span data-ice="name">off</span><span data-ice="signature">(event: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>, handlers: ...<span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span>)</span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/lib/Animation.js.html#lineNumber277">source</a></span></span>
+      <span data-ice="source"><span><a href="file/lib/EventEmitter.js.html#lineNumber117">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  <div data-ice="description"><p>Destroys this object properly</p>
+  <div data-ice="description"><p>Un-registers previously registered event handlers</p>
 </div>
 
   
 
-  <div data-ice="properties">
+  <div data-ice="properties"><div data-ice="properties">
+  <h4 data-ice="title">Params:</h4>
+  <table class="params">
+    <thead>
+    <tr><td>Name</td><td>Type</td><td>Attribute</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+    
+    <tr data-ice="property" data-depth="0">
+      <td data-ice="name" data-depth="0">event</td>
+      <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></td>
+      <td data-ice="appendix"></td>
+      <td data-ice="description"></td>
+    </tr>
+<tr data-ice="property" data-depth="0">
+      <td data-ice="name" data-depth="0">handlers</td>
+      <td data-ice="type">...<span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span></td>
+      <td data-ice="appendix"></td>
+      <td data-ice="description"></td>
+    </tr>
+</tbody>
+  </table>
+</div>
+</div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+</div>
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="instance-method-on">
+    <span class="access" data-ice="access">public</span>
+    
+    
+    
+    
+    <span data-ice="name">on</span><span data-ice="signature">(event: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>, handlers: ...<span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span>)</span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/lib/EventEmitter.js.html#lineNumber98">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  <div data-ice="description"><p>Registers given handlers for a given events to be called each time event
+is emitted</p>
+</div>
+
+  
+
+  <div data-ice="properties"><div data-ice="properties">
+  <h4 data-ice="title">Params:</h4>
+  <table class="params">
+    <thead>
+    <tr><td>Name</td><td>Type</td><td>Attribute</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+    
+    <tr data-ice="property" data-depth="0">
+      <td data-ice="name" data-depth="0">event</td>
+      <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></td>
+      <td data-ice="appendix"></td>
+      <td data-ice="description"></td>
+    </tr>
+<tr data-ice="property" data-depth="0">
+      <td data-ice="name" data-depth="0">handlers</td>
+      <td data-ice="type">...<span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span></td>
+      <td data-ice="appendix"></td>
+      <td data-ice="description"></td>
+    </tr>
+</tbody>
+  </table>
+</div>
+</div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+</div>
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="instance-method-once">
+    <span class="access" data-ice="access">public</span>
+    
+    
+    
+    
+    <span data-ice="name">once</span><span data-ice="signature">(event: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>, handlers: ...<span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span>)</span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/lib/EventEmitter.js.html#lineNumber73">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  <div data-ice="description"><p>Registers given handler for given event to be called only once when
+event is emitted</p>
+</div>
+
+  
+
+  <div data-ice="properties"><div data-ice="properties">
+  <h4 data-ice="title">Params:</h4>
+  <table class="params">
+    <thead>
+    <tr><td>Name</td><td>Type</td><td>Attribute</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+    
+    <tr data-ice="property" data-depth="0">
+      <td data-ice="name" data-depth="0">event</td>
+      <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></td>
+      <td data-ice="appendix"></td>
+      <td data-ice="description"></td>
+    </tr>
+<tr data-ice="property" data-depth="0">
+      <td data-ice="name" data-depth="0">handlers</td>
+      <td data-ice="type">...<span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span></td>
+      <td data-ice="appendix"></td>
+      <td data-ice="description"></td>
+    </tr>
+</tbody>
+  </table>
+</div>
+</div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+</div>
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="instance-method-removeAllListeners">
+    <span class="access" data-ice="access">public</span>
+    
+    
+    
+    
+    <span data-ice="name">removeAllListeners</span><span data-ice="signature">(event: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>)</span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/lib/EventEmitter.js.html#lineNumber140">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  <div data-ice="description"><p>Removes all listeners for a given event</p>
+</div>
+
+  
+
+  <div data-ice="properties"><div data-ice="properties">
+  <h4 data-ice="title">Params:</h4>
+  <table class="params">
+    <thead>
+    <tr><td>Name</td><td>Type</td><td>Attribute</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+    
+    <tr data-ice="property" data-depth="0">
+      <td data-ice="name" data-depth="0">event</td>
+      <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></td>
+      <td data-ice="appendix"></td>
+      <td data-ice="description"></td>
+    </tr>
+</tbody>
+  </table>
+</div>
 </div>
 
   

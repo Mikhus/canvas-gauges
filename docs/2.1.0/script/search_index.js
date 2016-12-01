@@ -24,6 +24,18 @@ window.esdocSearchIndex = [
     "class"
   ],
   [
+    "canvas-gauges/lib/basegauge.js~eventemitter",
+    "variable/index.html#static-variable-EventEmitter",
+    "<span>EventEmitter</span> <span class=\"search-result-import-path\">canvas-gauges/lib/BaseGauge.js</span>",
+    "variable"
+  ],
+  [
+    "canvas-gauges/lib/eventemitter.js~eventemitter",
+    "class/lib/EventEmitter.js~EventEmitter.html",
+    "<span>EventEmitter</span> <span class=\"search-result-import-path\">canvas-gauges/lib/EventEmitter.js</span>",
+    "class"
+  ],
+  [
     "canvas-gauges/lib/genericoptions.js~genericoptions",
     "variable/index.html#static-variable-GenericOptions",
     "<span>GenericOptions</span> <span class=\"search-result-import-path\">canvas-gauges/lib/GenericOptions.js</span>",
@@ -595,13 +607,13 @@ window.esdocSearchIndex = [
   ],
   [
     "lib/basegauge.js~basegauge#value",
-    "class/lib/BaseGauge.js~BaseGauge.html#instance-set-value",
+    "class/lib/BaseGauge.js~BaseGauge.html#instance-get-value",
     "lib/BaseGauge.js~BaseGauge#value",
     "member"
   ],
   [
     "lib/basegauge.js~basegauge#value",
-    "class/lib/BaseGauge.js~BaseGauge.html#instance-get-value",
+    "class/lib/BaseGauge.js~BaseGauge.html#instance-set-value",
     "lib/BaseGauge.js~BaseGauge#value",
     "member"
   ],
@@ -754,6 +766,66 @@ window.esdocSearchIndex = [
     "external/index.html",
     "lib/DomObserver.js~JSON",
     "external"
+  ],
+  [
+    "lib/eventemitter.js",
+    "file/lib/EventEmitter.js.html",
+    "lib/EventEmitter.js",
+    "file"
+  ],
+  [
+    "lib/eventemitter.js~eventemitter#addlistener",
+    "class/lib/EventEmitter.js~EventEmitter.html#instance-member-addListener",
+    "lib/EventEmitter.js~EventEmitter#addListener",
+    "member"
+  ],
+  [
+    "lib/eventemitter.js~eventemitter#constructor",
+    "class/lib/EventEmitter.js~EventEmitter.html#instance-constructor-constructor",
+    "lib/EventEmitter.js~EventEmitter#constructor",
+    "method"
+  ],
+  [
+    "lib/eventemitter.js~eventemitter#emit",
+    "class/lib/EventEmitter.js~EventEmitter.html#instance-method-emit",
+    "lib/EventEmitter.js~EventEmitter#emit",
+    "method"
+  ],
+  [
+    "lib/eventemitter.js~eventemitter#listeners",
+    "class/lib/EventEmitter.js~EventEmitter.html#instance-get-listeners",
+    "lib/EventEmitter.js~EventEmitter#listeners",
+    "member"
+  ],
+  [
+    "lib/eventemitter.js~eventemitter#off",
+    "class/lib/EventEmitter.js~EventEmitter.html#instance-method-off",
+    "lib/EventEmitter.js~EventEmitter#off",
+    "method"
+  ],
+  [
+    "lib/eventemitter.js~eventemitter#on",
+    "class/lib/EventEmitter.js~EventEmitter.html#instance-method-on",
+    "lib/EventEmitter.js~EventEmitter#on",
+    "method"
+  ],
+  [
+    "lib/eventemitter.js~eventemitter#once",
+    "class/lib/EventEmitter.js~EventEmitter.html#instance-method-once",
+    "lib/EventEmitter.js~EventEmitter#once",
+    "method"
+  ],
+  [
+    "lib/eventemitter.js~eventemitter#removealllisteners",
+    "class/lib/EventEmitter.js~EventEmitter.html#instance-method-removeAllListeners",
+    "lib/EventEmitter.js~EventEmitter#removeAllListeners",
+    "method"
+  ],
+  [
+    "lib/eventemitter.js~eventemitter#removelistener",
+    "class/lib/EventEmitter.js~EventEmitter.html#instance-member-removeListener",
+    "lib/EventEmitter.js~EventEmitter#removeListener",
+    "member"
   ],
   [
     "lib/genericoptions.js",

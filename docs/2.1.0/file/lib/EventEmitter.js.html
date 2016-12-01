@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <base data-ice="baseUrl" href="../../">
-  <title data-ice="title">lib/vendorize.js | HTML5 Canvas Gauges API Documentation API Document</title>
+  <title data-ice="title">lib/EventEmitter.js | HTML5 Canvas Gauges API Documentation API Document</title>
   <link type="text/css" rel="stylesheet" href="css/style.css">
   <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
   <script src="script/prettify/prettify.js"></script>
@@ -73,7 +73,7 @@
 </div>
 </nav>
 
-<div class="content" data-ice="content"><h1 data-ice="title">lib/vendorize.js</h1>
+<div class="content" data-ice="content"><h1 data-ice="title">lib/EventEmitter.js</h1>
 <pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">/*!
  * The MIT License (MIT)
  *
@@ -97,52 +97,128 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+
 /**
- * Look-ups for a proper vendor-specific property and returns its value
- *
- * @example
- * var requestAnimationFrame = vendorize(&apos;requestAnimationFrame&apos;);
- * // it will refer properly to:
- * //  - window.requestAnimationFrame by default or to
- * //  - window.webkitRequestAnimationFrame or to
- * //  - window.mozRequestAnimationFrame or to
- * //  - window.msRequestAnimationFrame or to
- * //  - window.oRequestAnimationFrame
- * // depending on the current browser vendor
- *
- * @author Mykhailo Stadnyk &lt;mikhus@gmail.com&gt;
- * @param {string} prop
- * @param {HTMLElement|Window|object} [from] - default is window
- * @returns {*}
+ * Class EventEmitter - base event manager
  */
-export default function vendorize(prop, from) {
-    /* istanbul ignore else: no reason to cover */
-    if (!from) {
-        from = typeof window === &apos;undefined&apos; ? global : window;
+export default class EventEmitter {
+    /**
+     * @constructor
+     */
+    constructor() {
+        this._events = {};
+
+        this.addListener = this.on;
+        this.removeListener = this.off;
     }
 
-    if (typeof from[prop] !== &apos;undefined&apos;) {
-        return from[prop];
+    /**
+     * Returns all event listeners
+     *
+     * @return {object}
+     */
+    get listeners() {
+        return this._events;
     }
 
-    let vendors = [&apos;webkit&apos;, &apos;moz&apos;, &apos;ms&apos;, &apos;o&apos;];
-    let i = 0;
-    let s = vendors.length;
-    let capitalized = prop.charAt(0).toUpperCase() + prop.substr(1);
+    /**
+     * Emits given event bypassing to each registered handler given args
+     *
+     * @param {string} event
+     * @param {...*} args
+     */
+    emit(event, ...args) {
+        if (this._events[event]) {
+            let i = 0;
+            let s = this._events[event].length;
 
-    for (; i &lt; s; i++) {
-        let vendorProp = from[vendors[i] + capitalized];
-
-        /* istanbul ignore if: requires very complex environment to test (specific browser version) */
-        if (typeof vendorProp !== &apos;undefined&apos;) {
-            return vendorProp;
+            for (; i &lt; s; i++) {
+                this._events[event][i] &amp;&amp;
+                this._events[event][i].apply(this, args);
+            }
         }
     }
 
-    return null;
+    /**
+     * Registers given handler for given event to be called only once when
+     * event is emitted
+     *
+     * @param {string} event
+     * @param {...function} handlers
+     */
+    once(event, ...handlers) {
+        let i = 0;
+        let s = handlers.length;
+        let self = this;
+
+        for (; i &lt; s; i++) {
+            let handler = handlers[i];
+            let wrapper = function() {
+                self.off(event, wrapper);
+                handler.apply(self, arguments);
+            };
+
+            handlers[i] = wrapper;
+        }
+
+        this.on.apply(this, [event].concat(handlers));
+    }
+
+    /**
+     * Registers given handlers for a given events to be called each time event
+     * is emitted
+     *
+     * @param {string} event
+     * @param {...function} handlers
+     */
+    on(event, ...handlers) {
+        if (!this._events[event]) {
+            this._events[event] = [];
+        }
+
+        let i = 0;
+        let s = handlers.length;
+
+        for (; i &lt; s; i++) {
+            this._events[event].push(handlers[i]);
+        }
+    }
+
+    /**
+     * Un-registers previously registered event handlers
+     *
+     * @param {string} event
+     * @param {...function} handlers
+     */
+    off(event, ...handlers) {
+        if (!this._events[event]) {
+            return ;
+        }
+
+        let i = 0;
+        let s = handlers.length;
+
+        for (; i &lt; s; i++) {
+            let handler = handlers[i];
+            let index;
+
+            while (~(index = this._events[event].indexOf(handler))) {
+                this._events[event].splice(index, 1);
+            }
+        }
+    }
+
+    /**
+     * Removes all listeners for a given event
+     *
+     * @param {string} event
+     */
+    removeAllListeners(event) {
+        delete this._events[event];
+    }
 }
 
-module.exports = vendorize;
+module.exports = EventEmitter;
 </code></pre>
 
 </div>

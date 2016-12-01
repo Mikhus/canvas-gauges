@@ -36,6 +36,7 @@
   <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/Animation.js~Animation.html">Animation</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/BaseGauge.js~BaseGauge.html">BaseGauge</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/DomObserver.js~DomObserver.html">DomObserver</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/EventEmitter.js~EventEmitter.html">EventEmitter</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/LinearGauge.js~LinearGauge.html">LinearGauge</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/RadialGauge.js~RadialGauge.html">RadialGauge</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/SmartCanvas.js~SmartCanvas.html">SmartCanvas</a></span></span></li>
@@ -52,6 +53,7 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-roundRect">roundRect</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-verifyError">verifyError</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-vendorize">vendorize</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-EventEmitter">EventEmitter</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-GenericOptions">GenericOptions</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-drawings">drawings</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-AnimationRule">AnimationRule</a></span></span></li>
@@ -101,6 +103,7 @@ const SmartCanvas = require(&apos;./SmartCanvas&apos;);
 const Animation = require(&apos;./Animation&apos;);
 const Collection = require(&apos;./Collection&apos;);
 const DomObserver = require(&apos;./DomObserver&apos;);
+const EventEmitter = require(&apos;./EventEmitter&apos;);
 
 const version = &apos;%VERSION%&apos;;
 
@@ -137,7 +140,45 @@ gauges.version = version;
  *     }
  * }
  */
-export default class BaseGauge {
+export default class BaseGauge extends EventEmitter {
+
+    /**
+     * Fired each time gauge is initialized on a page
+     *
+     * @event BaseGauge#init
+     */
+
+    /**
+     * Fired each time gauge scene is rendered
+     *
+     * @event BaseGauge#render
+     */
+
+    /**
+     * Fired each time gauge object is destroyed
+     *
+     * @event BaseGauge#destroy
+     */
+
+    /**
+     * Fired each time before animation is started on the gauge
+     *
+     * @event BaseGauge#animationStart
+     */
+
+    /**
+     * Fired each time animation scene is complete
+     *
+     * @event BaseGauge#animate
+     * @type {number} percent
+     * @type {number} value
+     */
+
+    /**
+     * Fired each time animation is complete on the gauge
+     *
+     * @event BaseGauge#animationEnd
+     */
 
     /**
      * @constructor
@@ -145,6 +186,8 @@ export default class BaseGauge {
      * @param {GenericOptions} options
      */
     constructor(options) {
+        super();
+
         let className = this.constructor.name;
 
         if (className === &apos;BaseGauge&apos;) {
@@ -261,14 +304,19 @@ export default class BaseGauge {
                 this._value = value;
             }
 
+            this.emit(&apos;animationStart&apos;);
+
             this.animation.animate(percent =&gt; {
                 this.options.value = fromValue + (value - fromValue) * percent;
 
                 this.draw();
+
+                this.emit(&apos;animate&apos;, percent, this.options.value);
             }, () =&gt; {
                 this.options.value = this._value;
                 delete this._value;
                 this.draw();
+                this.emit(&apos;animationEnd&apos;);
             });
         }
 
@@ -336,6 +384,8 @@ export default class BaseGauge {
 
         this.animation.destroy();
         this.animation = null;
+
+        this.emit(&apos;destroy&apos;);
     }
 
     /**
@@ -357,7 +407,12 @@ export default class BaseGauge {
         if (this.options.animateOnInit &amp;&amp; !this.initialized) {
             this.value = this._value;
             this.initialized = true;
+            this.emit(&apos;init&apos;);
         }
+
+        this.emit(&apos;render&apos;);
+
+        return this;
     }
 
     /**

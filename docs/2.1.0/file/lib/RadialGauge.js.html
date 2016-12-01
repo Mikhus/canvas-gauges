@@ -36,6 +36,7 @@
   <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/Animation.js~Animation.html">Animation</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/BaseGauge.js~BaseGauge.html">BaseGauge</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/DomObserver.js~DomObserver.html">DomObserver</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/EventEmitter.js~EventEmitter.html">EventEmitter</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/LinearGauge.js~LinearGauge.html">LinearGauge</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/RadialGauge.js~RadialGauge.html">RadialGauge</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/SmartCanvas.js~SmartCanvas.html">SmartCanvas</a></span></span></li>
@@ -52,6 +53,7 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-roundRect">roundRect</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-verifyError">verifyError</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-vendorize">vendorize</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-EventEmitter">EventEmitter</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-GenericOptions">GenericOptions</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-drawings">drawings</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-AnimationRule">AnimationRule</a></span></span></li>
@@ -772,6 +774,66 @@ function displayValue(gauge) {
 export default class RadialGauge extends BaseGauge {
 
     /**
+     * Fired each time before gauge plate is drawn
+     *
+     * @event BaseGauge#beforePlate
+     */
+
+    /**
+     * Fired each time before gauge highlight areas are drawn
+     *
+     * @event BaseGauge#beforeHighlights
+     */
+
+    /**
+     * Fired each time before gauge minor ticks are drawn
+     *
+     * @event BaseGauge#beforeMinorTicks
+     */
+
+    /**
+     * Fired each time before gauge major ticks are drawn
+     *
+     * @event BaseGauge#beforeMajorTicks
+     */
+
+    /**
+     * Fired each time before gauge tick numbers are drawn
+     *
+     * @event BaseGauge#beforeNumbers
+     */
+
+    /**
+     * Fired each time before gauge title is drawn
+     *
+     * @event BaseGauge#beforeTitle
+     */
+
+    /**
+     * Fired each time before gauge units text is drawn
+     *
+     * @event BaseGauge#beforeUnits
+     */
+
+    /**
+     * Fired each time before gauge progress bar is drawn
+     *
+     * @event BaseGauge#beforeProgressBar
+     */
+
+    /**
+     * Fired each time before gauge value box is drawn
+     *
+     * @event BaseGauge#beforeValueBox
+     */
+
+    /**
+     * Fired each time before gauge needle is drawn
+     *
+     * @event BaseGauge#beforeNeedle
+     */
+
+    /**
      * @constructor
      * @param {RadialGaugeOptions} options
      */
@@ -860,12 +922,19 @@ export default class RadialGauge extends BaseGauge {
                     context.clearRect(x, y, w, h);
                     context.save();
 
+                    this.emit(&apos;beforePlate&apos;);
                     drawRadialPlate(context, options);
+                    this.emit(&apos;beforeHighlights&apos;);
                     drawRadialHighlights(context, options);
+                    this.emit(&apos;beforeMinorTicks&apos;);
                     drawRadialMinorTicks(context, options);
+                    this.emit(&apos;beforeMajorTicks&apos;);
                     drawRadialMajorTicks(context, options);
+                    this.emit(&apos;beforeNumbers&apos;);
                     drawRadialNumbers(context, options);
+                    this.emit(&apos;beforeTitle&apos;);
                     drawRadialTitle(context, options);
+                    this.emit(&apos;beforeUnits&apos;);
                     drawRadialUnits(context, options);
 
                     canvas.elementClone.initialized = true;
@@ -880,8 +949,11 @@ export default class RadialGauge extends BaseGauge {
                 canvas.context.drawImage(canvas.elementClone, x, y, w, h);
                 canvas.context.save();
 
+                this.emit(&apos;beforeProgressBar&apos;);
                 drawRadialProgressBar(canvas.context, options);
+                this.emit(&apos;beforeValueBox&apos;);
                 drawRadialValueBox(canvas.context, options, displayValue(this));
+                this.emit(&apos;beforeNeedle&apos;);
                 drawRadialNeedle(canvas.context, options);
             }
 
@@ -895,15 +967,21 @@ export default class RadialGauge extends BaseGauge {
                 canvas.context.clearRect(x, y, w, h);
                 canvas.context.save();
 
+                this.emit(&apos;beforePlate&apos;);
                 drawRadialPlate(canvas.context, options);
 
                 canvas.context.rotate(plateValueAngle);
 
                 // animated
+                this.emit(&apos;beforeHighlights&apos;);
                 drawRadialHighlights(canvas.context, options);
+                this.emit(&apos;beforeMinorTicks&apos;);
                 drawRadialMinorTicks(canvas.context, options);
+                this.emit(&apos;beforeMajorTicks&apos;);
                 drawRadialMajorTicks(canvas.context, options);
+                this.emit(&apos;beforeNumbers&apos;);
                 drawRadialNumbers(canvas.context, options);
+                this.emit(&apos;beforeProgressBar&apos;);
                 drawRadialProgressBar(canvas.context, options);
 
                 // non-animated
@@ -917,8 +995,11 @@ export default class RadialGauge extends BaseGauge {
                     context.clearRect(x, y, w, h);
                     context.save();
 
+                    this.emit(&apos;beforeTitle&apos;);
                     drawRadialTitle(context, options);
+                    this.emit(&apos;beforeUnits&apos;);
                     drawRadialUnits(context, options);
+                    this.emit(&apos;beforeNeedle&apos;);
                     drawRadialNeedle(context, options);
 
                     canvas.elementClone.initialized = true;
@@ -928,6 +1009,7 @@ export default class RadialGauge extends BaseGauge {
             }
 
             // value box animations
+            this.emit(&apos;beforeValueBox&apos;);
             drawRadialValueBox(canvas.context, options, displayValue(this));
 
             super.draw();
