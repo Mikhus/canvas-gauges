@@ -80,11 +80,11 @@ describe('DomObserver', () => {
     });
 
     describe('toCamelCase()', () => {
-        it('should transform dashed string to camelCase representation', () => {
+        it('should transform dashed string to CamelCase representation', () => {
             let dashed = 'on-two-three';
 
             expect(DomObserver.toCamelCase('one-two-three'))
-                .to.equal('oneTwoThree');
+                .to.equal('OneTwoThree');
         });
     });
 
