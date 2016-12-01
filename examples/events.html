@@ -1,0 +1,147 @@
+<!doctype html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Gauge Test</title>
+    <script src="../gauge.min.js"></script>
+    <style>body {
+        padding: 0;
+        margin: 0;
+        background: #fff
+    }</style>
+</head>
+<body>
+
+<button onclick="animateGauges()">Animate</button>
+<button onclick="stopGaugesAnimation()">Stop animation</button>
+
+<hr>
+
+<canvas data-type="radial-gauge"
+        data-min-value="0"
+        data-max-value="360"
+        data-major-ticks="N,NE,E,SE,S,SW,W,NW,N"
+        data-minor-ticks="22"
+        data-ticks-angle="360"
+        data-start-angle="180"
+        data-stroke-ticks="false"
+        data-highlights="false"
+        data-color-plate="#222"
+        data-color-major-ticks="#f5f5f5"
+        data-color-minor-ticks="#ddd"
+        data-color-numbers="#ccc"
+        data-color-needle="rgba(240, 128, 128, 1)"
+        data-color-needle-end="rgba(255, 160, 122, .9)"
+        data-value-box="false"
+        data-value-text-shadow="false"
+        data-color-circle-inner="#fff"
+        data-color-needle-circle-outer="#ccc"
+        data-needle-circle-size="15"
+        data-needle-circle-outer="false"
+        data-needle-type="line"
+        data-needle-start="75"
+        data-needle-end="99"
+        data-needle-width="3"
+        data-borders="true"
+        data-border-inner-width="0"
+        data-border-middle-width="0"
+        data-border-outer-width="10"
+        data-color-border-outer="#ccc"
+        data-color-border-outer-end="#ccc"
+        data-color-needle-shadow-down="#222"
+        data-animation-target="plate"
+        data-animation-duration="1500"
+        data-animation-rule="linear"
+        data-width="500"
+        data-height="500"
+        data-units="ᵍ"
+        data-value="0"
+></canvas>
+
+<canvas data-type="linear-gauge"
+        data-width="160"
+        data-height="600"
+        data-border-radius="0"
+        data-borders="0"
+        data-bar-begin-circle="false"
+        data-title="Temperature"
+        data-units="°C"
+        data-minor-ticks="10"
+        data-value="99"
+        data-major-ticks="0,10,20,30,40,50,60,70,80,90,100"
+        data-tick-side="right"
+        data-number-side="right"
+        data-needle-side="right"
+        data-animation-rule="bounce"
+        data-animation-duration="750"
+        data-bar-stroke-width="5"
+        data-value-box-border-radius="0"
+        data-value-text-shadow="false"
+        data-color-plate="#eee"
+></canvas>
+
+<script>
+function domReady(handler) {
+    if (/comp|inter|loaded/.test((window.document || {}).readyState + ''))
+        return handler();
+
+    if (window.addEventListener)
+        window.addEventListener('DOMContentLoaded', handler, false);
+
+    else if (window.attachEvent)
+        window.attachEvent('onload', handler);
+}
+
+if (!Array.prototype.forEach) {
+    Array.prototype.forEach = function(cb) {
+        var i = 0, s = this.length;
+        for (; i < s; i++) {
+            cb && cb(this[i], i, this);
+        }
+    }
+}
+
+document.fonts && document.fonts.forEach(function(font) {
+    font.loaded.then(function() {
+        if (font.family.match(/Led/)) {
+            document.gauges.forEach(function(gauge) {
+                gauge.update();
+            });
+        }
+    });
+});
+
+var timers = [];
+
+function animateGauges() {
+    document.gauges.forEach(function(gauge) {
+        timers.push(setInterval(function() {
+            gauge.value = Math.random() *
+                (gauge.options.maxValue - gauge.options.minValue) / 4 +
+                gauge.options.minValue / 4;
+        }, gauge.animation.duration + 50));
+    });
+}
+
+function stopGaugesAnimation() {
+    timers.forEach(function(timer) {
+        clearInterval(timer);
+    });
+}
+
+domReady(function() {
+    document.gauges.forEach(function(gauge) {
+        var type = gauge.canvas.element.getAttribute('data-type');
+
+        gauge.on('beforeNeedle', function() {
+            console.log(type + ': drawing needle!');
+        });
+
+        gauge.on('beforePlate', function() {
+            console.log(type + ': drawing plate!');
+        });
+    });
+});
+</script>
+
+</html>
