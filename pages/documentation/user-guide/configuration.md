@@ -304,6 +304,7 @@ Radial gauge controls has their specific customization options, which are enable
 #### Animation Options
 
  - **animationTarget**: defines which part of the gauge should be animated when changing the value. Could be one of 'needle' (default) or 'plate' values. When 'plate' is selected then gauge will animate ticks bar instead of animating the needle.
+ - **useMinPath** - boolean. Applicable only to radial gauges which have full 360-degree ticks plate. If set to true for these kind of gauges will rotate needle/plate by a minimal rotation path.
 
 </div><!-- /.medium-8.columns -->
 </div><!-- /.row -->

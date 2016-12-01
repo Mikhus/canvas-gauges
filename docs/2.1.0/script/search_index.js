@@ -828,6 +828,18 @@ window.esdocSearchIndex = [
     "method"
   ],
   [
+    "lib/radialgauge.js~radialgauge#value",
+    "class/lib/RadialGauge.js~RadialGauge.html#instance-set-value",
+    "lib/RadialGauge.js~RadialGauge#value",
+    "member"
+  ],
+  [
+    "lib/radialgauge.js~radialgauge#value",
+    "class/lib/RadialGauge.js~RadialGauge.html#instance-get-value",
+    "lib/RadialGauge.js~RadialGauge#value",
+    "member"
+  ],
+  [
     "lib/radialgauge.js~radialgauge.configure",
     "class/lib/RadialGauge.js~RadialGauge.html#static-method-configure",
     "lib/RadialGauge.js~RadialGauge.configure",

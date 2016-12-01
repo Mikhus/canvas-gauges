@@ -1,7 +1,7 @@
 {
-  "coverage": "97.7%",
-  "expectCount": 87,
-  "actualCount": 85,
+  "coverage": "97.75%",
+  "expectCount": 89,
+  "actualCount": 87,
   "files": {
     "lib/Animation.js": {
       "expectCount": 9,
@@ -36,8 +36,8 @@
       ]
     },
     "lib/RadialGauge.js": {
-      "expectCount": 4,
-      "actualCount": 4,
+      "expectCount": 6,
+      "actualCount": 6,
       "undocumentLines": []
     },
     "lib/SmartCanvas.js": {

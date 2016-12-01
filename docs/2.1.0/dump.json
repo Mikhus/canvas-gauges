@@ -535,7 +535,7 @@
     "access": null,
     "description": null,
     "lineNumber": 24,
-    "content": "/*!\n * The MIT License (MIT)\n *\n * Copyright (c) 2016 Mykhailo Stadnyk <mikhus@gmail.com>\n *\n * Permission is hereby granted, free of charge, to any person obtaining a copy\n * of this software and associated documentation files (the \"Software\"), to deal\n * in the Software without restriction, including without limitation the rights\n * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell\n * copies of the Software, and to permit persons to whom the Software is\n * furnished to do so, subject to the following conditions:\n *\n * The above copyright notice and this permission notice shall be included in\n * all copies or substantial portions of the Software.\n *\n * THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\n * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\n * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\n * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\n * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\n * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\n * SOFTWARE.\n */\nrequire('./polyfill');\n\nconst SmartCanvas = require('./SmartCanvas');\nconst Animation = require('./Animation');\nconst Collection = require('./Collection');\nconst DomObserver = require('./DomObserver');\n\nconst version = '%VERSION%';\n\nconst round = Math.round;\nconst abs = Math.abs;\n\nlet gauges = new Collection();\n\ngauges.version = version;\n\n/**\n * Basic abstract BaseGauge class implementing common functionality\n * for different type of gauges.\n *\n * It should not be instantiated directly but must be extended by a final\n * gauge implementation.\n *\n * @abstract\n * @example\n *\n * class MyCoolGauge extends BaseGauge {\n *\n *     // theses methods below MUST be implemented:\n *\n *     constructor(options) {\n *        // ... do something with options\n *        super(options);\n *        // ... implement anything else\n *     }\n *\n *     draw() {\n *         // ... some implementation here\n *         return this;\n *     }\n * }\n */\nexport default class BaseGauge {\n\n    /**\n     * @constructor\n     * @abstract\n     * @param {GenericOptions} options\n     */\n    constructor(options) {\n        let className = this.constructor.name;\n\n        if (className === 'BaseGauge') {\n            throw new TypeError('Attempt to instantiate abstract class!');\n        }\n\n        gauges.push(this);\n\n        //noinspection JSUnresolvedVariable\n        /**\n         * Gauges version string\n         *\n         * @type {string}\n         */\n        this.version = version;\n\n        /**\n         * Gauge type class\n         *\n         * @type {BaseGauge} type\n         */\n        this.type = ns[className] || BaseGauge;\n\n        /**\n         * True if gauge has been drawn for the first time, false otherwise.\n         *\n         * @type {boolean}\n         */\n        this.initialized = false;\n\n        options.minValue = parseFloat(options.minValue);\n        options.maxValue = parseFloat(options.maxValue);\n        options.value = parseFloat(options.value) || 0;\n\n        if (!options.borders) {\n            options.borderInnerWidth = options.borderMiddleWidth =\n                options.borderOuterWidth = 0;\n        }\n\n        if (!options.renderTo) {\n            throw TypeError('Canvas element was not specified when creating ' +\n                'the Gauge object!');\n        }\n\n        let canvas = options.renderTo.tagName ?\n            options.renderTo :\n            /* istanbul ignore next: to be tested with e2e tests */\n            document.getElementById(options.renderTo);\n\n        if (!(canvas instanceof HTMLCanvasElement)) {\n            throw TypeError('Given gauge canvas element is invalid!');\n        }\n\n        options.width = parseFloat(options.width) || 0;\n        options.height = parseFloat(options.height) || 0;\n\n        if (!options.width || !options.height) {\n            if (!options.width) options.width = canvas.parentNode ?\n                canvas.parentNode.offsetWidth : canvas.offsetWidth;\n            if (!options.height) options.height = canvas.parentNode ?\n                canvas.parentNode.offsetHeight : canvas.offsetHeight;\n        }\n\n        /**\n         * Gauge options\n         *\n         * @type {GenericOptions} options\n         */\n        this.options = options || {};\n\n        if (this.options.animateOnInit) {\n            this._value = this.options.value;\n            this.options.value = this.options.minValue;\n        }\n\n        /**\n         * @type {SmartCanvas} canvas\n         */\n        this.canvas = new SmartCanvas(canvas, options.width, options.height);\n        this.canvas.onRedraw = this.draw.bind(this);\n\n        /**\n         * @type {Animation} animation\n         */\n        this.animation = new Animation(\n            options.animationRule,\n            options.animationDuration);\n    }\n\n    /**\n     * Sets new value for this gauge.\n     * If gauge is animated by configuration it will trigger a proper animation.\n     * Upsetting a value triggers gauge redraw.\n     *\n     * @param {number} value\n     */\n    set value(value) {\n        value = parseFloat(value);\n\n        if (isNaN(value) || !isFinite(value)) {\n            value = this.options.minValue;\n        }\n\n        let fromValue = this.options.value;\n\n        if (value === this.options.value) return;\n\n        if (this.options.animation) {\n            /**\n             * @type {number}\n             * @access private\n             */\n            this._value = value;\n\n            this.animation.animate(percent => {\n                this.options.value = fromValue + (value - fromValue) * percent;\n\n                this.draw();\n            }, () => {\n                this.options.value = value;\n                delete this._value;\n                this.draw();\n            });\n        }\n\n        else {\n            this.options.value = value;\n            this.draw();\n        }\n    }\n\n    /**\n     * Returns current value of the gauge\n     *\n     * @return {number}\n     */\n    get value() {\n        return typeof this._value === 'undefined' ?\n            this.options.value : this._value;\n    }\n\n    /**\n     * Updates gauge options\n     *\n     * @param {*} options\n     * @return {BaseGauge}\n     * @access protected\n     */\n    static configure(options) {\n        return options;\n    }\n\n    /**\n     * Updates gauge configuration options at runtime and redraws the gauge\n     *\n     * @param {RadialGaugeOptions} options\n     * @returns {BaseGauge}\n     */\n    update(options) {\n        Object.assign(this.options, this.type.configure(options || {}));\n\n        this.canvas.width = this.options.width;\n        this.canvas.height = this.options.height;\n\n        this.animation.rule = this.options.animationRule;\n        this.animation.duration = this.options.animationDuration;\n\n        this.canvas.redraw();\n\n        return this;\n    }\n\n    /**\n     * Performs destruction of this object properly\n     */\n    destroy() {\n        let index = gauges.indexOf(this);\n\n        /* istanbul ignore else */\n        if (~index) {\n            //noinspection JSUnresolvedFunction\n            gauges.splice(index, 1);\n        }\n\n        this.canvas.destroy();\n        this.canvas = null;\n\n        this.animation.destroy();\n        this.animation = null;\n    }\n\n    /**\n     * Returns gauges version string\n     *\n     * @return {string}\n     */\n    static get version() {\n        return version;\n    }\n\n    /**\n     * Triggering gauge render on a canvas.\n     *\n     * @abstract\n     * @returns {BaseGauge}\n     */\n    draw() {\n        if (this.options.animateOnInit && !this.initialized) {\n            this.value = this._value;\n            this.initialized = true;\n        }\n    }\n\n    /**\n     * Inject given gauge object into DOM\n     *\n     * @param {string} type\n     * @param {GenericOptions} options\n     */\n    static initialize(type, options) {\n        return new DomObserver(options, 'canvas', type);\n    }\n\n    /**\n     * Initializes gauge from a given HTML element\n     * (given element should be valid HTML canvas gauge definition)\n     *\n     * @param {HTMLElement} element\n     */\n    static fromElement(element) {\n        let type = DomObserver.toCamelCase(element.getAttribute('data-type'));\n\n        if (!type) {\n            return ;\n        }\n\n        if (!/Gauge$/.test(type)) {\n            type += 'Gauge';\n        }\n\n        new DomObserver({}, element.tagName, type).process(element);\n    }\n}\n\n\n/**\n * @ignore\n * @typedef {object} ns\n */\n/* istanbul ignore if */\nif (typeof ns !== 'undefined') {\n    ns['BaseGauge'] = BaseGauge;\n    ns['gauges'] = (window.document || {})['gauges'] = gauges;\n}\n\nmodule.exports = BaseGauge;\n"
+    "content": "/*!\n * The MIT License (MIT)\n *\n * Copyright (c) 2016 Mykhailo Stadnyk <mikhus@gmail.com>\n *\n * Permission is hereby granted, free of charge, to any person obtaining a copy\n * of this software and associated documentation files (the \"Software\"), to deal\n * in the Software without restriction, including without limitation the rights\n * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell\n * copies of the Software, and to permit persons to whom the Software is\n * furnished to do so, subject to the following conditions:\n *\n * The above copyright notice and this permission notice shall be included in\n * all copies or substantial portions of the Software.\n *\n * THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\n * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\n * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\n * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\n * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\n * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\n * SOFTWARE.\n */\nrequire('./polyfill');\n\nconst SmartCanvas = require('./SmartCanvas');\nconst Animation = require('./Animation');\nconst Collection = require('./Collection');\nconst DomObserver = require('./DomObserver');\n\nconst version = '%VERSION%';\n\nconst round = Math.round;\nconst abs = Math.abs;\n\nlet gauges = new Collection();\n\ngauges.version = version;\n\n/**\n * Basic abstract BaseGauge class implementing common functionality\n * for different type of gauges.\n *\n * It should not be instantiated directly but must be extended by a final\n * gauge implementation.\n *\n * @abstract\n * @example\n *\n * class MyCoolGauge extends BaseGauge {\n *\n *     // theses methods below MUST be implemented:\n *\n *     constructor(options) {\n *        // ... do something with options\n *        super(options);\n *        // ... implement anything else\n *     }\n *\n *     draw() {\n *         // ... some implementation here\n *         return this;\n *     }\n * }\n */\nexport default class BaseGauge {\n\n    /**\n     * @constructor\n     * @abstract\n     * @param {GenericOptions} options\n     */\n    constructor(options) {\n        let className = this.constructor.name;\n\n        if (className === 'BaseGauge') {\n            throw new TypeError('Attempt to instantiate abstract class!');\n        }\n\n        gauges.push(this);\n\n        //noinspection JSUnresolvedVariable\n        /**\n         * Gauges version string\n         *\n         * @type {string}\n         */\n        this.version = version;\n\n        /**\n         * Gauge type class\n         *\n         * @type {BaseGauge} type\n         */\n        this.type = ns[className] || BaseGauge;\n\n        /**\n         * True if gauge has been drawn for the first time, false otherwise.\n         *\n         * @type {boolean}\n         */\n        this.initialized = false;\n\n        options.minValue = parseFloat(options.minValue);\n        options.maxValue = parseFloat(options.maxValue);\n        options.value = parseFloat(options.value) || 0;\n\n        if (!options.borders) {\n            options.borderInnerWidth = options.borderMiddleWidth =\n                options.borderOuterWidth = 0;\n        }\n\n        if (!options.renderTo) {\n            throw TypeError('Canvas element was not specified when creating ' +\n                'the Gauge object!');\n        }\n\n        let canvas = options.renderTo.tagName ?\n            options.renderTo :\n            /* istanbul ignore next: to be tested with e2e tests */\n            document.getElementById(options.renderTo);\n\n        if (!(canvas instanceof HTMLCanvasElement)) {\n            throw TypeError('Given gauge canvas element is invalid!');\n        }\n\n        options.width = parseFloat(options.width) || 0;\n        options.height = parseFloat(options.height) || 0;\n\n        if (!options.width || !options.height) {\n            if (!options.width) options.width = canvas.parentNode ?\n                canvas.parentNode.offsetWidth : canvas.offsetWidth;\n            if (!options.height) options.height = canvas.parentNode ?\n                canvas.parentNode.offsetHeight : canvas.offsetHeight;\n        }\n\n        /**\n         * Gauge options\n         *\n         * @type {GenericOptions} options\n         */\n        this.options = options || {};\n\n        if (this.options.animateOnInit) {\n            this._value = this.options.value;\n            this.options.value = this.options.minValue;\n        }\n\n        /**\n         * @type {SmartCanvas} canvas\n         */\n        this.canvas = new SmartCanvas(canvas, options.width, options.height);\n        this.canvas.onRedraw = this.draw.bind(this);\n\n        /**\n         * @type {Animation} animation\n         */\n        this.animation = new Animation(\n            options.animationRule,\n            options.animationDuration);\n    }\n\n    /**\n     * Sets new value for this gauge.\n     * If gauge is animated by configuration it will trigger a proper animation.\n     * Upsetting a value triggers gauge redraw.\n     *\n     * @param {number} value\n     */\n    set value(value) {\n        value = parseFloat(value);\n\n        if (isNaN(value) || !isFinite(value)) {\n            value = this.options.minValue;\n        }\n\n        let fromValue = this.options.value;\n\n        if (value === this.options.value) return;\n\n        if (this.options.animation) {\n            /**\n             * @type {number}\n             * @access private\n             */\n            if (this._value === undefined) {\n                this._value = value;\n            }\n\n            this.animation.animate(percent => {\n                this.options.value = fromValue + (value - fromValue) * percent;\n\n                this.draw();\n            }, () => {\n                this.options.value = this._value;\n                delete this._value;\n                this.draw();\n            });\n        }\n\n        else {\n            this.options.value = value;\n            this.draw();\n        }\n    }\n\n    /**\n     * Returns current value of the gauge\n     *\n     * @return {number}\n     */\n    get value() {\n        return typeof this._value === 'undefined' ?\n            this.options.value : this._value;\n    }\n\n    /**\n     * Updates gauge options\n     *\n     * @param {*} options\n     * @return {BaseGauge}\n     * @access protected\n     */\n    static configure(options) {\n        return options;\n    }\n\n    /**\n     * Updates gauge configuration options at runtime and redraws the gauge\n     *\n     * @param {RadialGaugeOptions} options\n     * @returns {BaseGauge}\n     */\n    update(options) {\n        Object.assign(this.options, this.type.configure(options || {}));\n\n        this.canvas.width = this.options.width;\n        this.canvas.height = this.options.height;\n\n        this.animation.rule = this.options.animationRule;\n        this.animation.duration = this.options.animationDuration;\n\n        this.canvas.redraw();\n\n        return this;\n    }\n\n    /**\n     * Performs destruction of this object properly\n     */\n    destroy() {\n        let index = gauges.indexOf(this);\n\n        /* istanbul ignore else */\n        if (~index) {\n            //noinspection JSUnresolvedFunction\n            gauges.splice(index, 1);\n        }\n\n        this.canvas.destroy();\n        this.canvas = null;\n\n        this.animation.destroy();\n        this.animation = null;\n    }\n\n    /**\n     * Returns gauges version string\n     *\n     * @return {string}\n     */\n    static get version() {\n        return version;\n    }\n\n    /**\n     * Triggering gauge render on a canvas.\n     *\n     * @abstract\n     * @returns {BaseGauge}\n     */\n    draw() {\n        if (this.options.animateOnInit && !this.initialized) {\n            this.value = this._value;\n            this.initialized = true;\n        }\n    }\n\n    /**\n     * Inject given gauge object into DOM\n     *\n     * @param {string} type\n     * @param {GenericOptions} options\n     */\n    static initialize(type, options) {\n        return new DomObserver(options, 'canvas', type);\n    }\n\n    /**\n     * Initializes gauge from a given HTML element\n     * (given element should be valid HTML canvas gauge definition)\n     *\n     * @param {HTMLElement} element\n     */\n    static fromElement(element) {\n        let type = DomObserver.toCamelCase(element.getAttribute('data-type'));\n\n        if (!type) {\n            return ;\n        }\n\n        if (!/Gauge$/.test(type)) {\n            type += 'Gauge';\n        }\n\n        new DomObserver({}, element.tagName, type).process(element);\n    }\n}\n\n\n/**\n * @ignore\n * @typedef {object} ns\n */\n/* istanbul ignore if */\nif (typeof ns !== 'undefined') {\n    ns['BaseGauge'] = BaseGauge;\n    ns['gauges'] = (window.document || {})['gauges'] = gauges;\n}\n\nmodule.exports = BaseGauge;\n"
   },
   {
     "__docId__": 22,
@@ -933,16 +933,14 @@
     "name": "_value",
     "memberof": "lib/BaseGauge.js~BaseGauge",
     "longname": "lib/BaseGauge.js~BaseGauge#_value",
-    "access": "private",
-    "description": "",
-    "lineNumber": 186,
+    "access": null,
+    "description": null,
+    "lineNumber": 187,
+    "undocument": true,
     "type": {
-      "nullable": null,
       "types": [
-        "number"
-      ],
-      "spread": false,
-      "description": null
+        "*"
+      ]
     }
   },
   {
@@ -955,7 +953,7 @@
     "longname": "lib/BaseGauge.js~BaseGauge#value",
     "access": null,
     "description": "Returns current value of the gauge",
-    "lineNumber": 210,
+    "lineNumber": 212,
     "return": {
       "nullable": null,
       "types": [
@@ -981,7 +979,7 @@
     "longname": "lib/BaseGauge.js~BaseGauge.configure",
     "access": "protected",
     "description": "Updates gauge options",
-    "lineNumber": 222,
+    "lineNumber": 224,
     "params": [
       {
         "nullable": null,
@@ -1014,7 +1012,7 @@
     "longname": "lib/BaseGauge.js~BaseGauge#update",
     "access": null,
     "description": "Updates gauge configuration options at runtime and redraws the gauge",
-    "lineNumber": 232,
+    "lineNumber": 234,
     "unknown": [
       {
         "tagName": "@returns",
@@ -1053,7 +1051,7 @@
     "longname": "lib/BaseGauge.js~BaseGauge#destroy",
     "access": null,
     "description": "Performs destruction of this object properly",
-    "lineNumber": 249,
+    "lineNumber": 251,
     "params": [],
     "generator": false
   },
@@ -1067,7 +1065,7 @@
     "longname": "lib/BaseGauge.js~BaseGauge#canvas",
     "access": null,
     "description": null,
-    "lineNumber": 259,
+    "lineNumber": 261,
     "undocument": true,
     "type": {
       "types": [
@@ -1085,7 +1083,7 @@
     "longname": "lib/BaseGauge.js~BaseGauge#animation",
     "access": null,
     "description": null,
-    "lineNumber": 262,
+    "lineNumber": 264,
     "undocument": true,
     "type": {
       "types": [
@@ -1103,7 +1101,7 @@
     "longname": "lib/BaseGauge.js~BaseGauge.version",
     "access": null,
     "description": "Returns gauges version string",
-    "lineNumber": 270,
+    "lineNumber": 272,
     "return": {
       "nullable": null,
       "types": [
@@ -1129,7 +1127,7 @@
     "longname": "lib/BaseGauge.js~BaseGauge#draw",
     "access": null,
     "description": "Triggering gauge render on a canvas.",
-    "lineNumber": 280,
+    "lineNumber": 282,
     "unknown": [
       {
         "tagName": "@returns",
@@ -1158,7 +1156,7 @@
     "longname": "lib/BaseGauge.js~BaseGauge#value",
     "access": null,
     "description": null,
-    "lineNumber": 282,
+    "lineNumber": 284,
     "undocument": true,
     "type": {
       "types": [
@@ -1176,7 +1174,7 @@
     "longname": "lib/BaseGauge.js~BaseGauge#initialized",
     "access": null,
     "description": null,
-    "lineNumber": 283,
+    "lineNumber": 285,
     "undocument": true,
     "type": {
       "types": [
@@ -1194,7 +1192,7 @@
     "longname": "lib/BaseGauge.js~BaseGauge.initialize",
     "access": null,
     "description": "Inject given gauge object into DOM",
-    "lineNumber": 293,
+    "lineNumber": 295,
     "params": [
       {
         "nullable": null,
@@ -1234,7 +1232,7 @@
     "longname": "lib/BaseGauge.js~BaseGauge.fromElement",
     "access": null,
     "description": "Initializes gauge from a given HTML element\n(given element should be valid HTML canvas gauge definition)",
-    "lineNumber": 303,
+    "lineNumber": 305,
     "params": [
       {
         "nullable": null,
@@ -1259,7 +1257,7 @@
     "longname": "lib/BaseGauge.js~ns",
     "access": null,
     "description": "",
-    "lineNumber": 324,
+    "lineNumber": 326,
     "ignore": true,
     "type": {
       "types": [
@@ -3815,7 +3813,7 @@
     "access": null,
     "description": null,
     "lineNumber": 24,
-    "content": "/*!\n * The MIT License (MIT)\n *\n * Copyright (c) 2016 Mykhailo Stadnyk <mikhus@gmail.com>\n *\n * Permission is hereby granted, free of charge, to any person obtaining a copy\n * of this software and associated documentation files (the \"Software\"), to deal\n * in the Software without restriction, including without limitation the rights\n * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell\n * copies of the Software, and to permit persons to whom the Software is\n * furnished to do so, subject to the following conditions:\n *\n * The above copyright notice and this permission notice shall be included in\n * all copies or substantial portions of the Software.\n *\n * THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\n * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\n * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\n * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\n * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\n * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\n * SOFTWARE.\n */\nrequire('./polyfill');\n\nconst GenericOptions = require('./GenericOptions');\nconst BaseGauge = require('./BaseGauge');\nconst SmartCanvas = require('./SmartCanvas');\nconst drawings = require('./drawings');\n\nconst PI = Math.PI;\nconst HPI = PI / 2;\n\n/**\n * Gauge configuration options\n *\n * @typedef {GenericOptions|{ticksAngle: number, startAngle: number, colorNeedleCircleOuter: string, colorNeedleCircleOuterEnd: string, colorNeedleCircleInner: string, colorNeedleCircleInnerEnd: string, needleCircleSize: number, needleCircleInner: boolean, needleCircleOuter: boolean, animationTarget: string}} RadialGaugeOptions\n */\n\n/**\n * Default gauge configuration options\n *\n * @access private\n * @type {RadialGaugeOptions}\n */\nconst defaultRadialGaugeOptions = Object.assign({}, GenericOptions, {\n    // basic options\n    ticksAngle: 270,\n    startAngle: 45,\n\n    // colors\n    colorNeedleCircleOuter: '#f0f0f0',\n    colorNeedleCircleOuterEnd: '#ccc',\n    colorNeedleCircleInner: '#e8e8e8',\n    colorNeedleCircleInnerEnd: '#f5f5f5',\n\n    // needle\n    needleCircleSize: 10,\n    needleCircleInner: true,\n    needleCircleOuter: true,\n\n    // custom animations\n    animationTarget: 'needle', // 'needle' or 'plate'\n\n    barWidth: 0\n});\n\n/* istanbul ignore next: private, not testable */\n/**\n * Draws gradient-filled circle on a canvas\n *\n * @access private\n * @param {number} radius\n * @param {number} width\n * @param {Canvas2DContext} context\n * @param {string} start gradient start color\n * @param {string} end gradient end color\n */\nfunction drawRadialBorder(radius, width, context, start, end) {\n    context.beginPath();\n    //noinspection JSUnresolvedFunction\n    context.arc(0, 0, abs(radius), 0, PI * 2, true);\n    context.lineWidth = width;\n    context.strokeStyle = end ?\n        drawings.linearGradient(context, start, end, radius) :\n        start;\n    context.stroke();\n    context.closePath();\n}\n\n/* istanbul ignore next: private, not testable */\n/**\n * Returns max radius without borders for the gauge\n *\n * @param {Canvas2DContext} context\n * @param {RadialGaugeOptions} options\n * @return {number}\n */\nfunction maxRadialRadius(context, options) {\n    if (!context.maxRadius) {\n        context.maxRadius = context.max\n            - options.borderShadowWidth\n            - options.borderOuterWidth\n            - options.borderMiddleWidth\n            - options.borderInnerWidth\n            + (options.borderOuterWidth ? 0.5 : 0)\n            + (options.borderMiddleWidth ? 0.5 : 0)\n            + (options.borderInnerWidth ? 0.5 : 0);\n    }\n\n    return context.maxRadius;\n}\n\n/* istanbul ignore next: private, not testable */\n/**\n * Draws gauge plate on the canvas\n *\n * @access private\n * @param {Canvas2DContext} context\n * @param {RadialGaugeOptions} options\n */\nfunction drawRadialPlate(context, options) {\n    let d0 = options.borderShadowWidth;\n    let r0 = context.max - d0 - options.borderOuterWidth / 2;\n    let r1 = r0 - options.borderOuterWidth / 2 -\n        options.borderMiddleWidth / 2 + 0.5;\n    let r2 = r1 - options.borderMiddleWidth / 2 -\n        options.borderInnerWidth / 2 + 0.5;\n    let r3 = maxRadialRadius(context, options);\n    let grad;\n    let shadowDrawn = false;\n\n    context.save();\n\n    if (options.borderOuterWidth) {\n        shadowDrawn = drawings.drawShadow(context, options, shadowDrawn);\n        drawRadialBorder(r0,\n            options.borderOuterWidth,\n            context,\n            options.colorBorderOuter,\n            options.colorBorderOuterEnd);\n    }\n\n    if (options.borderMiddleWidth) {\n        shadowDrawn = drawings.drawShadow(context, options, shadowDrawn);\n        drawRadialBorder(r1,\n            options.borderMiddleWidth,\n            context,\n            options.colorBorderMiddle,\n            options.colorBorderMiddleEnd);\n    }\n\n    if (options.borderInnerWidth) {\n        shadowDrawn = drawings.drawShadow(context, options, shadowDrawn);\n        drawRadialBorder(r2,\n            options.borderInnerWidth,\n            context,\n            options.colorBorderInner,\n            options.colorBorderInnerEnd);\n    }\n\n    drawings.drawShadow(context, options, shadowDrawn);\n\n    context.beginPath();\n    //noinspection JSUnresolvedFunction\n    context.arc(0, 0, abs(r3), 0, PI * 2, true);\n\n    if (options.colorPlateEnd) {\n        grad = context.createRadialGradient(0, 0, r3 / 2, 0, 0, r3);\n        grad.addColorStop(0, options.colorPlate);\n        grad.addColorStop(1, options.colorPlateEnd);\n    }\n\n    else  {\n        grad = options.colorPlate;\n    }\n\n    context.fillStyle = grad;\n\n    context.fill();\n    context.closePath();\n\n    context.restore();\n}\n\n/* istanbul ignore next: private, not testable */\n/**\n * Draws gauge highlight areas on a canvas\n *\n * @access private\n * @param {Canvas2DContext} context\n * @param {RadialGaugeOptions} options\n */\nfunction drawRadialHighlights(context, options) {\n    let hlWidth = context.max *\n        (parseFloat(options.highlightsWidth) || 0) / 100;\n\n    if (!hlWidth) return;\n\n    //noinspection JSUnresolvedFunction\n    let r = abs(radialTicksRadius(context, options) - hlWidth / 2);\n    let i = 0, s = options.highlights.length;\n    let vd = (options.maxValue - options.minValue) / options.ticksAngle;\n\n    context.save();\n\n    for (; i < s; i++) {\n        let hlt = options.highlights[i];\n\n        context.beginPath();\n\n        context.rotate(HPI);\n        context.arc(0, 0, r,\n            drawings.radians(options.startAngle +\n                (hlt.from - options.minValue) / vd),\n            drawings.radians(options.startAngle +\n                (hlt.to - options.minValue) / vd),\n            false\n        );\n        context.strokeStyle = hlt.color;\n        context.lineWidth = hlWidth;\n        context.stroke();\n        context.closePath();\n\n        context.restore();\n        context.save();\n    }\n}\n\n/* istanbul ignore next: private, not testable */\n/**\n * Draws minor ticks bar on a canvas\n *\n * @access private\n * @param {Canvas2DContext} context\n * @param {RadialGaugeOptions} options\n */\nfunction drawRadialMinorTicks(context, options) {\n    let radius = radialTicksRadius(context, options);\n\n    context.lineWidth = SmartCanvas.pixelRatio;\n    context.strokeStyle = options.colorMinorTicks;\n\n    context.save();\n\n    let s = options.minorTicks * (options.majorTicks.length - 1);\n    let i = 0;\n\n    for (; i < s; ++i) {\n        let angle = options.startAngle + i * (options.ticksAngle / s);\n\n        context.rotate(drawings.radians(angle));\n\n        context.beginPath();\n        context.moveTo(0, radius);\n        context.lineTo(0, radius - context.max * 0.075);\n        closeStrokedPath(context);\n    }\n}\n\n/* istanbul ignore next: private, not testable */\n/**\n * Returns ticks radius\n *\n * @access private\n * @param context\n * @param options\n * @return {number}\n */\nfunction radialTicksRadius(context, options) {\n    let unit = context.max / 100;\n\n    return maxRadialRadius(context, options) - 5 * unit -\n        (options.barWidth ?\n            ((parseFloat(options.barStrokeWidth) || 0) * 2 +\n            ((parseFloat(options.barWidth) || 0) + 5) * unit) :\n        0);\n}\n\n/* istanbul ignore next: private, not testable */\n/**\n * Draws gauge major ticks bar on a canvas\n *\n * @param {Canvas2DContext} context\n * @param {RadialGaugeOptions} options\n */\nfunction drawRadialMajorTicks(context, options) {\n    drawings.prepareTicks(options);\n\n    //noinspection JSUnresolvedFunction\n    let r = abs(radialTicksRadius(context, options));\n    let i, colors;\n    let s = options.majorTicks.length;\n    let pixelRatio = SmartCanvas.pixelRatio;\n\n    context.lineWidth = 2 * pixelRatio;\n    context.save();\n\n    colors = options.colorMajorTicks instanceof Array ?\n        options.colorMajorTicks : new Array(s).fill(options.colorMajorTicks);\n\n    i = 0;\n    for (; i < s; ++i) {\n        context.strokeStyle = colors[i];\n        context.rotate(drawings.radians(radialNextAngle(options, i, s)));\n\n        context.beginPath();\n        context.moveTo(0, r);\n        context.lineTo(0, r - context.max * 0.15);\n        closeStrokedPath(context);\n    }\n\n    if (options.strokeTicks) {\n        context.strokeStyle = colors[0];\n        context.rotate(HPI);\n\n        context.beginPath();\n        context.arc(0, 0, r,\n            drawings.radians(options.startAngle),\n            drawings.radians(options.startAngle + options.ticksAngle),\n            false\n        );\n        closeStrokedPath(context);\n    }\n}\n\n/* istanbul ignore next: private, not testable */\nfunction radialNextAngle(options, i, s) {\n    return options.startAngle + i * (options.ticksAngle / (s - 1));\n}\n\n/* istanbul ignore next: private, not testable */\n/**\n * Strokes, closes path and restores previous context state\n *\n * @param {Canvas2DContext} context\n */\nfunction closeStrokedPath(context) {\n    context.stroke();\n    context.restore();\n    context.closePath();\n    context.save();\n}\n\n/* istanbul ignore next: private, not testable */\n/**\n * Draws gauge bar numbers\n *\n * @access private\n * @param {Canvas2DContext} context\n * @param {RadialGaugeOptions} options\n */\nfunction drawRadialNumbers(context, options) {\n    let radius = radialTicksRadius(context, options) - context.max * 0.25;\n    let points = {};\n    let i = 0;\n    let s = options.majorTicks.length;\n    let isAnimated = options.animationTarget !== 'needle';\n    let colors = options.colorNumbers instanceof Array ?\n        options.colorNumbers : new Array(s).fill(options.colorNumbers);\n\n    let plateValueAngle = isAnimated ? -(options.value - options.minValue) /\n        (options.maxValue - options.minValue) * options.ticksAngle : 0;\n\n    if (isAnimated) {\n        context.save();\n        context.rotate(-drawings.radians(plateValueAngle));\n    }\n\n    for (; i < s; ++i) {\n        let angle = plateValueAngle + radialNextAngle(options, i, s);\n        let point = drawings.radialPoint(radius, drawings.radians(angle));\n\n        if (angle === 360) angle = 0;\n\n        if (points[angle]) {\n            continue; //already drawn at this place, skipping\n        }\n\n        points[angle] = true;\n\n        context.font = drawings.font(options, 'Numbers', context.max / 200);\n        context.fillStyle = colors[i];\n        context.lineWidth = 0;\n        context.textAlign = 'center';\n        context.fillText(options.majorTicks[i], point.x, point.y + 3);\n    }\n\n    isAnimated && context.restore();\n}\n\n/* istanbul ignore next: private, not testable */\n/**\n * Draws gauge title\n *\n * @access private\n * @param {Canvas2DContext} context\n * @param {RadialGaugeOptions} options\n */\nfunction drawRadialTitle(context, options) {\n    if (!options.title) return;\n\n    context.save();\n    context.font = drawings.font(options, 'Title', context.max / 200);\n    context.fillStyle = options.colorTitle;\n    context.textAlign = 'center';\n    context.fillText(options.title, 0, -context.max / 4.25, context.max * 0.8);\n    context.restore();\n}\n\n/* istanbul ignore next: private, not testable */\n/**\n * Draws units name on the gauge\n *\n * @access private\n * @param {Canvas2DContext} context\n * @param {RadialGaugeOptions} options\n */\nfunction drawRadialUnits(context, options) {\n    if (!options.units) return;\n\n    context.save();\n    context.font = drawings.font(options, 'Units', context.max / 200);\n    context.fillStyle = options.colorUnits;\n    context.textAlign = 'center';\n    context.fillText(options.units, 0, context.max / 3.25, context.max * 0.8);\n    context.restore();\n}\n\n/* istanbul ignore next: private, not testable */\n/**\n * Draws gauge needle\n *\n * @access private\n * @param {Canvas2DContext} context\n * @param {RadialGaugeOptions} options\n */\nfunction drawRadialNeedle(context, options) {\n    if (!options.needle) return;\n\n    let value = options.ticksAngle < 360 ?\n        drawings.normalizedValue(options).indented : options.value;\n    let max = maxRadialRadius(context, options);\n    //noinspection JSUnresolvedFunction\n    let r1 = abs(max / 100 * options.needleCircleSize);\n    //noinspection JSUnresolvedFunction\n    let r2 = abs(max / 100 * options.needleCircleSize * 0.75);\n    //noinspection JSUnresolvedFunction\n    let rIn = abs(max / 100 * options.needleEnd);\n    //noinspection JSUnresolvedFunction\n    let rStart = abs(options.needleStart ?\n            max / 100 * options.needleStart : 0);\n    //noinspection JSUnresolvedFunction\n    let rOut = abs(max * 0.2);\n    let pad1 = max / 100 * options.needleWidth;\n    let pad2 = max / 100 * options.needleWidth / 2;\n    let pixelRatio = SmartCanvas.pixelRatio;\n    let isFixed = options.animationTarget !== 'needle';\n\n    context.save();\n\n    drawings.drawNeedleShadow(context, options);\n\n    context.rotate(drawings.radians(isFixed ? options.startAngle :\n        (options.startAngle + (value -\n            options.minValue) / (options.maxValue - options.minValue) *\n            options.ticksAngle)));\n\n    context.fillStyle = drawings.linearGradient(\n        context,\n        options.colorNeedle,\n        options.colorNeedleEnd,\n        rIn - rOut);\n\n    if (options.needleType === 'arrow') {\n        context.beginPath();\n        context.moveTo(-pad2, -rOut);\n        context.lineTo(-pad1, 0);\n        context.lineTo(-1 * pixelRatio, rIn);\n        context.lineTo(pixelRatio, rIn);\n        context.lineTo(pad1, 0);\n        context.lineTo(pad2, -rOut);\n        context.closePath();\n        context.fill();\n\n        context.beginPath();\n        context.lineTo(-0.5 * pixelRatio, rIn);\n        context.lineTo(-1 * pixelRatio, rIn);\n        context.lineTo(-pad1, 0);\n        context.lineTo(-pad2, -rOut);\n        context.lineTo(pad2 / 2 * pixelRatio - 2 * pixelRatio, -rOut);\n        context.closePath();\n        context.fillStyle = options.colorNeedleShadowUp;\n        context.fill();\n    }\n\n    else { // simple line needle\n        context.beginPath();\n        context.moveTo(-pad2, rIn);\n        context.lineTo(-pad2, rStart);\n        context.lineTo(pad2, rStart);\n        context.lineTo(pad2, rIn);\n        context.closePath();\n        context.fill();\n    }\n\n    if (options.needleCircleSize) {\n        context.restore();\n\n        drawings.drawNeedleShadow(context, options);\n\n        if (options.needleCircleOuter) {\n            context.beginPath();\n            context.arc(0, 0, r1, 0, PI * 2, true);\n            context.fillStyle = drawings.linearGradient(\n                context,\n                options.colorNeedleCircleOuter,\n                options.colorNeedleCircleOuterEnd,\n                r1\n            );\n            context.fill();\n            context.closePath();\n        }\n\n        if (options.needleCircleInner) {\n            context.beginPath();\n            context.arc(0, 0, r2, 0, PI * 2, true);\n            context.fillStyle = drawings.linearGradient(\n                context,\n                options.colorNeedleCircleInner,\n                options.colorNeedleCircleInnerEnd,\n                r2\n            );\n            context.fill();\n            context.closePath();\n        }\n\n        context.restore();\n    }\n}\n\n/* istanbul ignore next: private, not testable */\n/**\n * Draws gauge value box\n *\n * @param {Canvas2DContext} context\n * @param {RadialGaugeOptions} options\n * @param {number} value\n */\nfunction drawRadialValueBox(context, options, value) {\n    drawings.drawValueBox(context, options, value, 0,\n        context.max - context.max * 0.33, context.max);\n}\n\n/* istanbul ignore next: private, not testable */\n/**\n * Draws gauge progress bar\n *\n * @param {Canvas2DContext} context\n * @param {RadialGaugeOptions} options\n */\nfunction drawRadialProgressBar(context, options) {\n    let unit = context.max / 100;\n    let rMax = maxRadialRadius(context, options) - 5 * unit;\n    let sw = (parseFloat(options.barStrokeWidth) || 0);\n    let w = (parseFloat(options.barWidth) || 0) * unit;\n    let rMin = rMax - sw * 2 - w;\n    let half = (rMax- rMin) / 2;\n    let r = rMin + half;\n    let delta = sw / r;\n    let sa = options.startAngle;\n    let ea = options.startAngle + options.ticksAngle;\n\n    context.save();\n    context.rotate(HPI);\n\n    if (sw) {\n        // draw stroke\n        context.beginPath();\n        context.arc(0, 0, r, drawings.radians(sa) - delta,\n            drawings.radians(ea) + delta, false);\n        context.strokeStyle = options.colorBarStroke;\n        context.lineWidth = half * 2;\n        context.stroke();\n        context.closePath();\n    }\n\n    if (w) {\n        // draw bar\n        context.beginPath();\n        context.arc(0, 0, r, drawings.radians(sa), drawings.radians(ea), false);\n        context.strokeStyle = options.colorBar;\n        context.lineWidth = w;\n        context.stroke();\n        context.closePath();\n\n        if  (options.barShadow) {\n            // draw shadow\n            context.beginPath();\n            context.arc(0, 0, rMax, drawings.radians(sa), drawings.radians(ea),\n                false);\n            context.clip();\n\n            context.beginPath();\n            context.strokeStyle = options.colorBar;\n            context.lineWidth = 1;\n            context.shadowBlur = options.barShadow;\n            context.shadowColor = options.colorBarShadow;\n            context.shadowOffsetX = 0;\n            context.shadowOffsetY = 0;\n            context.arc(0, 0, rMax,\n                drawings.radians(options.startAngle),\n                drawings.radians(options.startAngle + options.ticksAngle),\n                false);\n            context.stroke();\n            context.closePath();\n\n            context.restore();\n            context.rotate(HPI);\n        }\n\n        // draw bar progress\n        if (options.barProgress) {\n            context.beginPath();\n            context.arc(0, 0, r,\n                drawings.radians(sa),\n                drawings.radians(sa +\n                    (drawings.normalizedValue(options).normal -\n                    options.minValue) / (options.maxValue - options.minValue) *\n                    options.ticksAngle),\n                false);\n            context.strokeStyle = options.colorBarProgress;\n            context.lineWidth = w;\n            context.stroke();\n            context.closePath();\n        }\n    }\n\n    context.restore();\n}\n\n/**\n * Minimalistic HTML5 Canvas Gauge\n * @example\n *  var gauge = new RadialGauge({\n *     renderTo: 'gauge-id', // identifier of HTML canvas element or element itself\n *     width: 400,\n *     height: 400,\n *     units: 'Km/h',\n *     title: false,\n *     value: 0,\n *     minValue: 0,\n *     maxValue: 220,\n *     majorTicks: [\n *         '0','20','40','60','80','100','120','140','160','180','200','220'\n *     ],\n *     minorTicks: 2,\n *     strokeTicks: false,\n *     highlights: [\n *         { from: 0, to: 50, color: 'rgba(0,255,0,.15)' },\n *         { from: 50, to: 100, color: 'rgba(255,255,0,.15)' },\n *         { from: 100, to: 150, color: 'rgba(255,30,0,.25)' },\n *         { from: 150, to: 200, color: 'rgba(255,0,225,.25)' },\n *         { from: 200, to: 220, color: 'rgba(0,0,255,.25)' }\n *     ],\n *     colorPlate: '#222',\n *     colorMajorTicks: '#f5f5f5',\n *     colorMinorTicks: '#ddd',\n *     colorTitle: '#fff',\n *     colorUnits: '#ccc',\n *     colorNumbers: '#eee',\n *     colorNeedleStart: 'rgba(240, 128, 128, 1)',\n *     colorNeedleEnd: 'rgba(255, 160, 122, .9)',\n *     valueBox: true,\n *     animationRule: 'bounce'\n * });\n * // draw initially\n * gauge.draw();\n * // animate\n * setInterval(() => {\n *    gauge.value = Math.random() * -220 + 220;\n * }, 1000);\n */\nexport default class RadialGauge extends BaseGauge {\n\n    /**\n     * @constructor\n     * @param {RadialGaugeOptions} options\n     */\n    constructor(options) {\n        options = Object.assign({}, defaultRadialGaugeOptions, options || {});\n        super(RadialGauge.configure(options));\n    }\n\n    /**\n     * Checks and updates gauge options properly\n     *\n     * @param {*} options\n     * @return {*}\n     * @access protected\n     */\n    static configure(options) {\n        if (options.barWidth > 50) options.barWidth = 50;\n\n        /* istanbul ignore if */\n        if (isNaN(options.startAngle)) options.startAngle = 45;\n        /* istanbul ignore if */\n        if (isNaN(options.ticksAngle)) options.ticksAngle = 270;\n\n        /* istanbul ignore if */\n        if (options.ticksAngle > 360) options.ticksAngle = 360;\n        /* istanbul ignore if */\n        if (options.ticksAngle < 0) options.ticksAngle = 0;\n\n        /* istanbul ignore if */\n        if (options.startAngle < 0) options.startAngle = 0;\n        /* istanbul ignore if */\n        if (options.startAngle > 360) options.startAngle = 360;\n\n        return BaseGauge.configure(options);\n    }\n\n    /*  */\n    /**\n     * Triggering gauge render on a canvas.\n     *\n     * @returns {RadialGauge}\n     */\n    draw() {\n        try {\n            let canvas = this.canvas;\n            let [x, y, w, h] = [\n                -canvas.drawX,\n                -canvas.drawY,\n                canvas.drawWidth,\n                canvas.drawHeight\n            ];\n            let options = this.options;\n\n            if (options.animationTarget === 'needle') {\n                if (!canvas.elementClone.initialized) {\n                    let context = canvas.contextClone;\n\n                    // clear the cache\n                    context.clearRect(x, y, w, h);\n                    context.save();\n\n                    drawRadialPlate(context, options);\n                    drawRadialHighlights(context, options);\n                    drawRadialMinorTicks(context, options);\n                    drawRadialMajorTicks(context, options);\n                    drawRadialNumbers(context, options);\n                    drawRadialTitle(context, options);\n                    drawRadialUnits(context, options);\n\n                    canvas.elementClone.initialized = true;\n                }\n\n                this.canvas.commit();\n\n                // clear the canvas\n                canvas.context.clearRect(x, y, w, h);\n                canvas.context.save();\n\n                canvas.context.drawImage(canvas.elementClone, x, y, w, h);\n                canvas.context.save();\n\n                drawRadialProgressBar(canvas.context, options);\n                drawRadialValueBox(canvas.context, options,\n                    options.animatedValue ? this.options.value : this.value);\n                drawRadialNeedle(canvas.context, options);\n            }\n\n            else {\n                let plateValueAngle = -drawings.radians((\n                (options.value - options.minValue) /\n                (options.maxValue - options.minValue) * options.ticksAngle));\n\n                // clear the canvas\n                canvas.context.clearRect(x, y, w, h);\n                canvas.context.save();\n\n                drawRadialPlate(canvas.context, options);\n\n                canvas.context.rotate(plateValueAngle);\n\n                // animated\n                drawRadialHighlights(canvas.context, options);\n                drawRadialMinorTicks(canvas.context, options);\n                drawRadialMajorTicks(canvas.context, options);\n                drawRadialNumbers(canvas.context, options);\n                drawRadialProgressBar(canvas.context, options);\n\n                // non-animated\n                canvas.context.rotate(-plateValueAngle);\n                canvas.context.save();\n\n                if (!canvas.elementClone.initialized) {\n                    let context = canvas.contextClone;\n\n                    // clear the cache\n                    context.clearRect(x, y, w, h);\n                    context.save();\n\n                    drawRadialTitle(context, options);\n                    drawRadialUnits(context, options);\n                    drawRadialNeedle(context, options);\n\n                    canvas.elementClone.initialized = true;\n                }\n\n                canvas.context.drawImage(canvas.elementClone, x, y, w, h);\n            }\n\n            // value box animations\n            drawRadialValueBox(canvas.context, options, options.animatedValue ?\n                this.options.value : this.value);\n\n            super.draw();\n        }\n\n        catch (err) {\n           drawings.verifyError(err);\n        }\n\n        return this;\n    }\n}\n\n\n/**\n * @ignore\n * @typedef {object} ns\n */\n/* istanbul ignore if */\nif (typeof ns !== 'undefined') {\n    ns['RadialGauge'] = RadialGauge;\n}\n\nBaseGauge.initialize('RadialGauge', defaultRadialGaugeOptions);\n\nmodule.exports = RadialGauge;\n"
+    "content": "/*!\n * The MIT License (MIT)\n *\n * Copyright (c) 2016 Mykhailo Stadnyk <mikhus@gmail.com>\n *\n * Permission is hereby granted, free of charge, to any person obtaining a copy\n * of this software and associated documentation files (the \"Software\"), to deal\n * in the Software without restriction, including without limitation the rights\n * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell\n * copies of the Software, and to permit persons to whom the Software is\n * furnished to do so, subject to the following conditions:\n *\n * The above copyright notice and this permission notice shall be included in\n * all copies or substantial portions of the Software.\n *\n * THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\n * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\n * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\n * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\n * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\n * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\n * SOFTWARE.\n */\nrequire('./polyfill');\n\nconst GenericOptions = require('./GenericOptions');\nconst BaseGauge = require('./BaseGauge');\nconst SmartCanvas = require('./SmartCanvas');\nconst drawings = require('./drawings');\n\nconst PI = Math.PI;\nconst HPI = PI / 2;\n\n/**\n * Gauge configuration options\n *\n * @typedef {GenericOptions|{ticksAngle: number, startAngle: number, colorNeedleCircleOuter: string, colorNeedleCircleOuterEnd: string, colorNeedleCircleInner: string, colorNeedleCircleInnerEnd: string, needleCircleSize: number, needleCircleInner: boolean, needleCircleOuter: boolean, animationTarget: string, useMinPath: boolean}} RadialGaugeOptions\n */\n\n/**\n * Default gauge configuration options\n *\n * @access private\n * @type {RadialGaugeOptions}\n */\nconst defaultRadialGaugeOptions = Object.assign({}, GenericOptions, {\n    // basic options\n    ticksAngle: 270,\n    startAngle: 45,\n\n    // colors\n    colorNeedleCircleOuter: '#f0f0f0',\n    colorNeedleCircleOuterEnd: '#ccc',\n    colorNeedleCircleInner: '#e8e8e8',\n    colorNeedleCircleInnerEnd: '#f5f5f5',\n\n    // needle\n    needleCircleSize: 10,\n    needleCircleInner: true,\n    needleCircleOuter: true,\n\n    // custom animations\n    animationTarget: 'needle', // 'needle' or 'plate'\n    useMinPath: false,\n\n    barWidth: 0\n});\n\n/* istanbul ignore next: private, not testable */\n/**\n * Draws gradient-filled circle on a canvas\n *\n * @access private\n * @param {number} radius\n * @param {number} width\n * @param {Canvas2DContext} context\n * @param {string} start gradient start color\n * @param {string} end gradient end color\n */\nfunction drawRadialBorder(radius, width, context, start, end) {\n    context.beginPath();\n    //noinspection JSUnresolvedFunction\n    context.arc(0, 0, abs(radius), 0, PI * 2, true);\n    context.lineWidth = width;\n    context.strokeStyle = end ?\n        drawings.linearGradient(context, start, end, radius) :\n        start;\n    context.stroke();\n    context.closePath();\n}\n\n/* istanbul ignore next: private, not testable */\n/**\n * Returns max radius without borders for the gauge\n *\n * @param {Canvas2DContext} context\n * @param {RadialGaugeOptions} options\n * @return {number}\n */\nfunction maxRadialRadius(context, options) {\n    if (!context.maxRadius) {\n        context.maxRadius = context.max\n            - options.borderShadowWidth\n            - options.borderOuterWidth\n            - options.borderMiddleWidth\n            - options.borderInnerWidth\n            + (options.borderOuterWidth ? 0.5 : 0)\n            + (options.borderMiddleWidth ? 0.5 : 0)\n            + (options.borderInnerWidth ? 0.5 : 0);\n    }\n\n    return context.maxRadius;\n}\n\n/* istanbul ignore next: private, not testable */\n/**\n * Draws gauge plate on the canvas\n *\n * @access private\n * @param {Canvas2DContext} context\n * @param {RadialGaugeOptions} options\n */\nfunction drawRadialPlate(context, options) {\n    let d0 = options.borderShadowWidth;\n    let r0 = context.max - d0 - options.borderOuterWidth / 2;\n    let r1 = r0 - options.borderOuterWidth / 2 -\n        options.borderMiddleWidth / 2 + 0.5;\n    let r2 = r1 - options.borderMiddleWidth / 2 -\n        options.borderInnerWidth / 2 + 0.5;\n    let r3 = maxRadialRadius(context, options);\n    let grad;\n    let shadowDrawn = false;\n\n    context.save();\n\n    if (options.borderOuterWidth) {\n        shadowDrawn = drawings.drawShadow(context, options, shadowDrawn);\n        drawRadialBorder(r0,\n            options.borderOuterWidth,\n            context,\n            options.colorBorderOuter,\n            options.colorBorderOuterEnd);\n    }\n\n    if (options.borderMiddleWidth) {\n        shadowDrawn = drawings.drawShadow(context, options, shadowDrawn);\n        drawRadialBorder(r1,\n            options.borderMiddleWidth,\n            context,\n            options.colorBorderMiddle,\n            options.colorBorderMiddleEnd);\n    }\n\n    if (options.borderInnerWidth) {\n        shadowDrawn = drawings.drawShadow(context, options, shadowDrawn);\n        drawRadialBorder(r2,\n            options.borderInnerWidth,\n            context,\n            options.colorBorderInner,\n            options.colorBorderInnerEnd);\n    }\n\n    drawings.drawShadow(context, options, shadowDrawn);\n\n    context.beginPath();\n    //noinspection JSUnresolvedFunction\n    context.arc(0, 0, abs(r3), 0, PI * 2, true);\n\n    if (options.colorPlateEnd) {\n        grad = context.createRadialGradient(0, 0, r3 / 2, 0, 0, r3);\n        grad.addColorStop(0, options.colorPlate);\n        grad.addColorStop(1, options.colorPlateEnd);\n    }\n\n    else  {\n        grad = options.colorPlate;\n    }\n\n    context.fillStyle = grad;\n\n    context.fill();\n    context.closePath();\n\n    context.restore();\n}\n\n/* istanbul ignore next: private, not testable */\n/**\n * Draws gauge highlight areas on a canvas\n *\n * @access private\n * @param {Canvas2DContext} context\n * @param {RadialGaugeOptions} options\n */\nfunction drawRadialHighlights(context, options) {\n    let hlWidth = context.max *\n        (parseFloat(options.highlightsWidth) || 0) / 100;\n\n    if (!hlWidth) return;\n\n    //noinspection JSUnresolvedFunction\n    let r = abs(radialTicksRadius(context, options) - hlWidth / 2);\n    let i = 0, s = options.highlights.length;\n    let vd = (options.maxValue - options.minValue) / options.ticksAngle;\n\n    context.save();\n\n    for (; i < s; i++) {\n        let hlt = options.highlights[i];\n\n        context.beginPath();\n\n        context.rotate(HPI);\n        context.arc(0, 0, r,\n            drawings.radians(options.startAngle +\n                (hlt.from - options.minValue) / vd),\n            drawings.radians(options.startAngle +\n                (hlt.to - options.minValue) / vd),\n            false\n        );\n        context.strokeStyle = hlt.color;\n        context.lineWidth = hlWidth;\n        context.stroke();\n        context.closePath();\n\n        context.restore();\n        context.save();\n    }\n}\n\n/* istanbul ignore next: private, not testable */\n/**\n * Draws minor ticks bar on a canvas\n *\n * @access private\n * @param {Canvas2DContext} context\n * @param {RadialGaugeOptions} options\n */\nfunction drawRadialMinorTicks(context, options) {\n    let radius = radialTicksRadius(context, options);\n\n    context.lineWidth = SmartCanvas.pixelRatio;\n    context.strokeStyle = options.colorMinorTicks;\n\n    context.save();\n\n    let s = options.minorTicks * (options.majorTicks.length - 1);\n    let i = 0;\n\n    for (; i < s; ++i) {\n        let angle = options.startAngle + i * (options.ticksAngle / s);\n\n        context.rotate(drawings.radians(angle));\n\n        context.beginPath();\n        context.moveTo(0, radius);\n        context.lineTo(0, radius - context.max * 0.075);\n        closeStrokedPath(context);\n    }\n}\n\n/* istanbul ignore next: private, not testable */\n/**\n * Returns ticks radius\n *\n * @access private\n * @param context\n * @param options\n * @return {number}\n */\nfunction radialTicksRadius(context, options) {\n    let unit = context.max / 100;\n\n    return maxRadialRadius(context, options) - 5 * unit -\n        (options.barWidth ?\n            ((parseFloat(options.barStrokeWidth) || 0) * 2 +\n            ((parseFloat(options.barWidth) || 0) + 5) * unit) :\n        0);\n}\n\n/* istanbul ignore next: private, not testable */\n/**\n * Draws gauge major ticks bar on a canvas\n *\n * @param {Canvas2DContext} context\n * @param {RadialGaugeOptions} options\n */\nfunction drawRadialMajorTicks(context, options) {\n    drawings.prepareTicks(options);\n\n    //noinspection JSUnresolvedFunction\n    let r = abs(radialTicksRadius(context, options));\n    let i, colors;\n    let s = options.majorTicks.length;\n    let pixelRatio = SmartCanvas.pixelRatio;\n\n    context.lineWidth = 2 * pixelRatio;\n    context.save();\n\n    colors = options.colorMajorTicks instanceof Array ?\n        options.colorMajorTicks : new Array(s).fill(options.colorMajorTicks);\n\n    i = 0;\n    for (; i < s; ++i) {\n        context.strokeStyle = colors[i];\n        context.rotate(drawings.radians(radialNextAngle(options, i, s)));\n\n        context.beginPath();\n        context.moveTo(0, r);\n        context.lineTo(0, r - context.max * 0.15);\n        closeStrokedPath(context);\n    }\n\n    if (options.strokeTicks) {\n        context.strokeStyle = colors[0];\n        context.rotate(HPI);\n\n        context.beginPath();\n        context.arc(0, 0, r,\n            drawings.radians(options.startAngle),\n            drawings.radians(options.startAngle + options.ticksAngle),\n            false\n        );\n        closeStrokedPath(context);\n    }\n}\n\n/* istanbul ignore next: private, not testable */\nfunction radialNextAngle(options, i, s) {\n    return options.startAngle + i * (options.ticksAngle / (s - 1));\n}\n\n/* istanbul ignore next: private, not testable */\n/**\n * Strokes, closes path and restores previous context state\n *\n * @param {Canvas2DContext} context\n */\nfunction closeStrokedPath(context) {\n    context.stroke();\n    context.restore();\n    context.closePath();\n    context.save();\n}\n\n/* istanbul ignore next: private, not testable */\n/**\n * Draws gauge bar numbers\n *\n * @access private\n * @param {Canvas2DContext} context\n * @param {RadialGaugeOptions} options\n */\nfunction drawRadialNumbers(context, options) {\n    let radius = radialTicksRadius(context, options) - context.max * 0.25;\n    let points = {};\n    let i = 0;\n    let s = options.majorTicks.length;\n    let isAnimated = options.animationTarget !== 'needle';\n    let colors = options.colorNumbers instanceof Array ?\n        options.colorNumbers : new Array(s).fill(options.colorNumbers);\n\n    let plateValueAngle = isAnimated ? -(options.value - options.minValue) /\n        (options.maxValue - options.minValue) * options.ticksAngle : 0;\n\n    if (isAnimated) {\n        context.save();\n        context.rotate(-drawings.radians(plateValueAngle));\n    }\n\n    for (; i < s; ++i) {\n        let angle = plateValueAngle + radialNextAngle(options, i, s);\n        let point = drawings.radialPoint(radius, drawings.radians(angle));\n\n        if (angle === 360) angle = 0;\n\n        if (points[angle]) {\n            continue; //already drawn at this place, skipping\n        }\n\n        points[angle] = true;\n\n        context.font = drawings.font(options, 'Numbers', context.max / 200);\n        context.fillStyle = colors[i];\n        context.lineWidth = 0;\n        context.textAlign = 'center';\n        context.fillText(options.majorTicks[i], point.x, point.y + 3);\n    }\n\n    isAnimated && context.restore();\n}\n\n/* istanbul ignore next: private, not testable */\n/**\n * Draws gauge title\n *\n * @access private\n * @param {Canvas2DContext} context\n * @param {RadialGaugeOptions} options\n */\nfunction drawRadialTitle(context, options) {\n    if (!options.title) return;\n\n    context.save();\n    context.font = drawings.font(options, 'Title', context.max / 200);\n    context.fillStyle = options.colorTitle;\n    context.textAlign = 'center';\n    context.fillText(options.title, 0, -context.max / 4.25, context.max * 0.8);\n    context.restore();\n}\n\n/* istanbul ignore next: private, not testable */\n/**\n * Draws units name on the gauge\n *\n * @access private\n * @param {Canvas2DContext} context\n * @param {RadialGaugeOptions} options\n */\nfunction drawRadialUnits(context, options) {\n    if (!options.units) return;\n\n    context.save();\n    context.font = drawings.font(options, 'Units', context.max / 200);\n    context.fillStyle = options.colorUnits;\n    context.textAlign = 'center';\n    context.fillText(options.units, 0, context.max / 3.25, context.max * 0.8);\n    context.restore();\n}\n\n/* istanbul ignore next: private, not testable */\n/**\n * Draws gauge needle\n *\n * @access private\n * @param {Canvas2DContext} context\n * @param {RadialGaugeOptions} options\n */\nfunction drawRadialNeedle(context, options) {\n    if (!options.needle) return;\n\n    let value = options.ticksAngle < 360 ?\n        drawings.normalizedValue(options).indented : options.value;\n    let max = maxRadialRadius(context, options);\n    //noinspection JSUnresolvedFunction\n    let r1 = abs(max / 100 * options.needleCircleSize);\n    //noinspection JSUnresolvedFunction\n    let r2 = abs(max / 100 * options.needleCircleSize * 0.75);\n    //noinspection JSUnresolvedFunction\n    let rIn = abs(max / 100 * options.needleEnd);\n    //noinspection JSUnresolvedFunction\n    let rStart = abs(options.needleStart ?\n            max / 100 * options.needleStart : 0);\n    //noinspection JSUnresolvedFunction\n    let rOut = abs(max * 0.2);\n    let pad1 = max / 100 * options.needleWidth;\n    let pad2 = max / 100 * options.needleWidth / 2;\n    let pixelRatio = SmartCanvas.pixelRatio;\n    let isFixed = options.animationTarget !== 'needle';\n\n    context.save();\n\n    drawings.drawNeedleShadow(context, options);\n\n    context.rotate(drawings.radians(isFixed ? options.startAngle :\n        (options.startAngle + (value -\n            options.minValue) / (options.maxValue - options.minValue) *\n            options.ticksAngle)));\n\n    context.fillStyle = drawings.linearGradient(\n        context,\n        options.colorNeedle,\n        options.colorNeedleEnd,\n        rIn - rOut);\n\n    if (options.needleType === 'arrow') {\n        context.beginPath();\n        context.moveTo(-pad2, -rOut);\n        context.lineTo(-pad1, 0);\n        context.lineTo(-1 * pixelRatio, rIn);\n        context.lineTo(pixelRatio, rIn);\n        context.lineTo(pad1, 0);\n        context.lineTo(pad2, -rOut);\n        context.closePath();\n        context.fill();\n\n        context.beginPath();\n        context.lineTo(-0.5 * pixelRatio, rIn);\n        context.lineTo(-1 * pixelRatio, rIn);\n        context.lineTo(-pad1, 0);\n        context.lineTo(-pad2, -rOut);\n        context.lineTo(pad2 / 2 * pixelRatio - 2 * pixelRatio, -rOut);\n        context.closePath();\n        context.fillStyle = options.colorNeedleShadowUp;\n        context.fill();\n    }\n\n    else { // simple line needle\n        context.beginPath();\n        context.moveTo(-pad2, rIn);\n        context.lineTo(-pad2, rStart);\n        context.lineTo(pad2, rStart);\n        context.lineTo(pad2, rIn);\n        context.closePath();\n        context.fill();\n    }\n\n    if (options.needleCircleSize) {\n        context.restore();\n\n        drawings.drawNeedleShadow(context, options);\n\n        if (options.needleCircleOuter) {\n            context.beginPath();\n            context.arc(0, 0, r1, 0, PI * 2, true);\n            context.fillStyle = drawings.linearGradient(\n                context,\n                options.colorNeedleCircleOuter,\n                options.colorNeedleCircleOuterEnd,\n                r1\n            );\n            context.fill();\n            context.closePath();\n        }\n\n        if (options.needleCircleInner) {\n            context.beginPath();\n            context.arc(0, 0, r2, 0, PI * 2, true);\n            context.fillStyle = drawings.linearGradient(\n                context,\n                options.colorNeedleCircleInner,\n                options.colorNeedleCircleInnerEnd,\n                r2\n            );\n            context.fill();\n            context.closePath();\n        }\n\n        context.restore();\n    }\n}\n\n/* istanbul ignore next: private, not testable */\n/**\n * Draws gauge value box\n *\n * @param {Canvas2DContext} context\n * @param {RadialGaugeOptions} options\n * @param {number} value\n */\nfunction drawRadialValueBox(context, options, value) {\n    drawings.drawValueBox(context, options, value, 0,\n        context.max - context.max * 0.33, context.max);\n}\n\n/* istanbul ignore next: private, not testable */\n/**\n * Draws gauge progress bar\n *\n * @param {Canvas2DContext} context\n * @param {RadialGaugeOptions} options\n */\nfunction drawRadialProgressBar(context, options) {\n    let unit = context.max / 100;\n    let rMax = maxRadialRadius(context, options) - 5 * unit;\n    let sw = (parseFloat(options.barStrokeWidth) || 0);\n    let w = (parseFloat(options.barWidth) || 0) * unit;\n    let rMin = rMax - sw * 2 - w;\n    let half = (rMax- rMin) / 2;\n    let r = rMin + half;\n    let delta = sw / r;\n    let sa = options.startAngle;\n    let ea = options.startAngle + options.ticksAngle;\n\n    context.save();\n    context.rotate(HPI);\n\n    if (sw) {\n        // draw stroke\n        context.beginPath();\n        context.arc(0, 0, r, drawings.radians(sa) - delta,\n            drawings.radians(ea) + delta, false);\n        context.strokeStyle = options.colorBarStroke;\n        context.lineWidth = half * 2;\n        context.stroke();\n        context.closePath();\n    }\n\n    if (w) {\n        // draw bar\n        context.beginPath();\n        context.arc(0, 0, r, drawings.radians(sa), drawings.radians(ea), false);\n        context.strokeStyle = options.colorBar;\n        context.lineWidth = w;\n        context.stroke();\n        context.closePath();\n\n        if  (options.barShadow) {\n            // draw shadow\n            context.beginPath();\n            context.arc(0, 0, rMax, drawings.radians(sa), drawings.radians(ea),\n                false);\n            context.clip();\n\n            context.beginPath();\n            context.strokeStyle = options.colorBar;\n            context.lineWidth = 1;\n            context.shadowBlur = options.barShadow;\n            context.shadowColor = options.colorBarShadow;\n            context.shadowOffsetX = 0;\n            context.shadowOffsetY = 0;\n            context.arc(0, 0, rMax,\n                drawings.radians(options.startAngle),\n                drawings.radians(options.startAngle + options.ticksAngle),\n                false);\n            context.stroke();\n            context.closePath();\n\n            context.restore();\n            context.rotate(HPI);\n        }\n\n        // draw bar progress\n        if (options.barProgress) {\n            context.beginPath();\n            context.arc(0, 0, r,\n                drawings.radians(sa),\n                drawings.radians(sa +\n                    (drawings.normalizedValue(options).normal -\n                    options.minValue) / (options.maxValue - options.minValue) *\n                    options.ticksAngle),\n                false);\n            context.strokeStyle = options.colorBarProgress;\n            context.lineWidth = w;\n            context.stroke();\n            context.closePath();\n        }\n    }\n\n    context.restore();\n}\n\n/**\n * Find and return gauge value to display\n *\n * @param {RadialGauge} gauge\n */\nfunction displayValue(gauge) {\n    if (gauge.options.animatedValue) {\n        return gauge.options.value;\n    }\n\n    return gauge.value;\n}\n\n/**\n * Minimalistic HTML5 Canvas Gauge\n * @example\n *  var gauge = new RadialGauge({\n *     renderTo: 'gauge-id', // identifier of HTML canvas element or element itself\n *     width: 400,\n *     height: 400,\n *     units: 'Km/h',\n *     title: false,\n *     value: 0,\n *     minValue: 0,\n *     maxValue: 220,\n *     majorTicks: [\n *         '0','20','40','60','80','100','120','140','160','180','200','220'\n *     ],\n *     minorTicks: 2,\n *     strokeTicks: false,\n *     highlights: [\n *         { from: 0, to: 50, color: 'rgba(0,255,0,.15)' },\n *         { from: 50, to: 100, color: 'rgba(255,255,0,.15)' },\n *         { from: 100, to: 150, color: 'rgba(255,30,0,.25)' },\n *         { from: 150, to: 200, color: 'rgba(255,0,225,.25)' },\n *         { from: 200, to: 220, color: 'rgba(0,0,255,.25)' }\n *     ],\n *     colorPlate: '#222',\n *     colorMajorTicks: '#f5f5f5',\n *     colorMinorTicks: '#ddd',\n *     colorTitle: '#fff',\n *     colorUnits: '#ccc',\n *     colorNumbers: '#eee',\n *     colorNeedleStart: 'rgba(240, 128, 128, 1)',\n *     colorNeedleEnd: 'rgba(255, 160, 122, .9)',\n *     valueBox: true,\n *     animationRule: 'bounce'\n * });\n * // draw initially\n * gauge.draw();\n * // animate\n * setInterval(() => {\n *    gauge.value = Math.random() * -220 + 220;\n * }, 1000);\n */\nexport default class RadialGauge extends BaseGauge {\n\n    /**\n     * @constructor\n     * @param {RadialGaugeOptions} options\n     */\n    constructor(options) {\n        options = Object.assign({}, defaultRadialGaugeOptions, options || {});\n        super(RadialGauge.configure(options));\n    }\n\n    /**\n     * Checks and updates gauge options properly\n     *\n     * @param {*} options\n     * @return {*}\n     * @access protected\n     */\n    static configure(options) {\n        if (options.barWidth > 50) options.barWidth = 50;\n\n        /* istanbul ignore if */\n        if (isNaN(options.startAngle)) options.startAngle = 45;\n        /* istanbul ignore if */\n        if (isNaN(options.ticksAngle)) options.ticksAngle = 270;\n\n        /* istanbul ignore if */\n        if (options.ticksAngle > 360) options.ticksAngle = 360;\n        /* istanbul ignore if */\n        if (options.ticksAngle < 0) options.ticksAngle = 0;\n\n        /* istanbul ignore if */\n        if (options.startAngle < 0) options.startAngle = 0;\n        /* istanbul ignore if */\n        if (options.startAngle > 360) options.startAngle = 360;\n\n        return options;\n    }\n\n    /**\n     * Sets the value for radial gauge\n     *\n     * @param {number} value\n     */\n    set value(value) {\n        if (this.options.animation &&\n            this.options.ticksAngle === 360 &&\n            this.options.useMinPath\n        ) {\n            this._value = value;\n            value = this.options.value +\n                ((((value - this.options.value) % 360) + 540) % 360) - 180;\n        }\n\n        super.value = value;\n    }\n\n    /**\n     * Returns current gauge value\n     *\n     * @return {number}\n     */\n    get value() {\n        return super.value;\n    }\n\n    /*  */\n    /**\n     * Triggering gauge render on a canvas.\n     *\n     * @returns {RadialGauge}\n     */\n    draw() {\n        try {\n            let canvas = this.canvas;\n            let [x, y, w, h] = [\n                -canvas.drawX,\n                -canvas.drawY,\n                canvas.drawWidth,\n                canvas.drawHeight\n            ];\n            let options = this.options;\n\n            if (options.animationTarget === 'needle') {\n                if (!canvas.elementClone.initialized) {\n                    let context = canvas.contextClone;\n\n                    // clear the cache\n                    context.clearRect(x, y, w, h);\n                    context.save();\n\n                    drawRadialPlate(context, options);\n                    drawRadialHighlights(context, options);\n                    drawRadialMinorTicks(context, options);\n                    drawRadialMajorTicks(context, options);\n                    drawRadialNumbers(context, options);\n                    drawRadialTitle(context, options);\n                    drawRadialUnits(context, options);\n\n                    canvas.elementClone.initialized = true;\n                }\n\n                this.canvas.commit();\n\n                // clear the canvas\n                canvas.context.clearRect(x, y, w, h);\n                canvas.context.save();\n\n                canvas.context.drawImage(canvas.elementClone, x, y, w, h);\n                canvas.context.save();\n\n                drawRadialProgressBar(canvas.context, options);\n                drawRadialValueBox(canvas.context, options, displayValue(this));\n                drawRadialNeedle(canvas.context, options);\n            }\n\n            else {\n                let plateValueAngle = -drawings.radians(\n                    (options.value - options.minValue) /\n                    (options.maxValue - options.minValue) *\n                    options.ticksAngle);\n\n                // clear the canvas\n                canvas.context.clearRect(x, y, w, h);\n                canvas.context.save();\n\n                drawRadialPlate(canvas.context, options);\n\n                canvas.context.rotate(plateValueAngle);\n\n                // animated\n                drawRadialHighlights(canvas.context, options);\n                drawRadialMinorTicks(canvas.context, options);\n                drawRadialMajorTicks(canvas.context, options);\n                drawRadialNumbers(canvas.context, options);\n                drawRadialProgressBar(canvas.context, options);\n\n                // non-animated\n                canvas.context.rotate(-plateValueAngle);\n                canvas.context.save();\n\n                if (!canvas.elementClone.initialized) {\n                    let context = canvas.contextClone;\n\n                    // clear the cache\n                    context.clearRect(x, y, w, h);\n                    context.save();\n\n                    drawRadialTitle(context, options);\n                    drawRadialUnits(context, options);\n                    drawRadialNeedle(context, options);\n\n                    canvas.elementClone.initialized = true;\n                }\n\n                canvas.context.drawImage(canvas.elementClone, x, y, w, h);\n            }\n\n            // value box animations\n            drawRadialValueBox(canvas.context, options, displayValue(this));\n\n            super.draw();\n        }\n\n        catch (err) {\n           drawings.verifyError(err);\n        }\n\n        return this;\n    }\n}\n\n\n/**\n * @ignore\n * @typedef {object} ns\n */\n/* istanbul ignore if */\nif (typeof ns !== 'undefined') {\n    ns['RadialGauge'] = RadialGauge;\n}\n\nBaseGauge.initialize('RadialGauge', defaultRadialGaugeOptions);\n\nmodule.exports = RadialGauge;\n"
   },
   {
     "__docId__": 119,
@@ -3956,7 +3954,7 @@
     "type": {
       "types": [
         "GenericOptions",
-        "{ticksAngle: number, startAngle: number, colorNeedleCircleOuter: string, colorNeedleCircleOuterEnd: string, colorNeedleCircleInner: string, colorNeedleCircleInnerEnd: string, needleCircleSize: number, needleCircleInner: boolean, needleCircleOuter: boolean, animationTarget: string}"
+        "{ticksAngle: number, startAngle: number, colorNeedleCircleOuter: string, colorNeedleCircleOuterEnd: string, colorNeedleCircleInner: string, colorNeedleCircleInnerEnd: string, needleCircleSize: number, needleCircleInner: boolean, needleCircleOuter: boolean, animationTarget: string, useMinPath: boolean}"
       ],
       "optional": false,
       "name": "RadialGaugeOptions"
@@ -3998,7 +3996,7 @@
     "importPath": "canvas-gauges/lib/RadialGauge.js",
     "importStyle": null,
     "description": "Draws gradient-filled circle on a canvas",
-    "lineNumber": 79,
+    "lineNumber": 80,
     "params": [
       {
         "nullable": null,
@@ -4066,7 +4064,7 @@
     "importPath": "canvas-gauges/lib/RadialGauge.js",
     "importStyle": null,
     "description": "Returns max radius without borders for the gauge",
-    "lineNumber": 99,
+    "lineNumber": 100,
     "params": [
       {
         "nullable": null,
@@ -4112,7 +4110,7 @@
     "importPath": "canvas-gauges/lib/RadialGauge.js",
     "importStyle": null,
     "description": "Draws gauge plate on the canvas",
-    "lineNumber": 122,
+    "lineNumber": 123,
     "params": [
       {
         "nullable": null,
@@ -4150,7 +4148,7 @@
     "importPath": "canvas-gauges/lib/RadialGauge.js",
     "importStyle": null,
     "description": "Draws gauge highlight areas on a canvas",
-    "lineNumber": 194,
+    "lineNumber": 195,
     "params": [
       {
         "nullable": null,
@@ -4188,7 +4186,7 @@
     "importPath": "canvas-gauges/lib/RadialGauge.js",
     "importStyle": null,
     "description": "Draws minor ticks bar on a canvas",
-    "lineNumber": 238,
+    "lineNumber": 239,
     "params": [
       {
         "nullable": null,
@@ -4226,7 +4224,7 @@
     "importPath": "canvas-gauges/lib/RadialGauge.js",
     "importStyle": null,
     "description": "Returns ticks radius",
-    "lineNumber": 270,
+    "lineNumber": 271,
     "params": [
       {
         "nullable": null,
@@ -4272,7 +4270,7 @@
     "importPath": "canvas-gauges/lib/RadialGauge.js",
     "importStyle": null,
     "description": "Draws gauge major ticks bar on a canvas",
-    "lineNumber": 287,
+    "lineNumber": 288,
     "params": [
       {
         "nullable": null,
@@ -4310,7 +4308,7 @@
     "importPath": "canvas-gauges/lib/RadialGauge.js",
     "importStyle": null,
     "description": null,
-    "lineNumber": 328,
+    "lineNumber": 329,
     "undocument": true,
     "params": [
       {
@@ -4352,7 +4350,7 @@
     "importPath": "canvas-gauges/lib/RadialGauge.js",
     "importStyle": null,
     "description": "Strokes, closes path and restores previous context state",
-    "lineNumber": 338,
+    "lineNumber": 339,
     "params": [
       {
         "nullable": null,
@@ -4380,7 +4378,7 @@
     "importPath": "canvas-gauges/lib/RadialGauge.js",
     "importStyle": null,
     "description": "Draws gauge bar numbers",
-    "lineNumber": 353,
+    "lineNumber": 354,
     "params": [
       {
         "nullable": null,
@@ -4418,7 +4416,7 @@
     "importPath": "canvas-gauges/lib/RadialGauge.js",
     "importStyle": null,
     "description": "Draws gauge title",
-    "lineNumber": 400,
+    "lineNumber": 401,
     "params": [
       {
         "nullable": null,
@@ -4456,7 +4454,7 @@
     "importPath": "canvas-gauges/lib/RadialGauge.js",
     "importStyle": null,
     "description": "Draws units name on the gauge",
-    "lineNumber": 419,
+    "lineNumber": 420,
     "params": [
       {
         "nullable": null,
@@ -4494,7 +4492,7 @@
     "importPath": "canvas-gauges/lib/RadialGauge.js",
     "importStyle": null,
     "description": "Draws gauge needle",
-    "lineNumber": 438,
+    "lineNumber": 439,
     "params": [
       {
         "nullable": null,
@@ -4532,7 +4530,7 @@
     "importPath": "canvas-gauges/lib/RadialGauge.js",
     "importStyle": null,
     "description": "Draws gauge value box",
-    "lineNumber": 550,
+    "lineNumber": 551,
     "params": [
       {
         "nullable": null,
@@ -4580,7 +4578,7 @@
     "importPath": "canvas-gauges/lib/RadialGauge.js",
     "importStyle": null,
     "description": "Draws gauge progress bar",
-    "lineNumber": 562,
+    "lineNumber": 563,
     "params": [
       {
         "nullable": null,
@@ -4607,6 +4605,39 @@
   },
   {
     "__docId__": 142,
+    "kind": "function",
+    "static": true,
+    "variation": null,
+    "name": "displayValue",
+    "memberof": "lib/RadialGauge.js",
+    "longname": "lib/RadialGauge.js~displayValue",
+    "access": null,
+    "export": false,
+    "importPath": "canvas-gauges/lib/RadialGauge.js",
+    "importStyle": null,
+    "description": "Find and return gauge value to display",
+    "lineNumber": 648,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "RadialGauge"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "gauge",
+        "description": ""
+      }
+    ],
+    "return": {
+      "types": [
+        "*"
+      ]
+    },
+    "generator": false
+  },
+  {
+    "__docId__": 143,
     "kind": "class",
     "static": true,
     "variation": null,
@@ -4621,14 +4652,14 @@
     "examples": [
       " var gauge = new RadialGauge({\n    renderTo: 'gauge-id', // identifier of HTML canvas element or element itself\n    width: 400,\n    height: 400,\n    units: 'Km/h',\n    title: false,\n    value: 0,\n    minValue: 0,\n    maxValue: 220,\n    majorTicks: [\n        '0','20','40','60','80','100','120','140','160','180','200','220'\n    ],\n    minorTicks: 2,\n    strokeTicks: false,\n    highlights: [\n        { from: 0, to: 50, color: 'rgba(0,255,0,.15)' },\n        { from: 50, to: 100, color: 'rgba(255,255,0,.15)' },\n        { from: 100, to: 150, color: 'rgba(255,30,0,.25)' },\n        { from: 150, to: 200, color: 'rgba(255,0,225,.25)' },\n        { from: 200, to: 220, color: 'rgba(0,0,255,.25)' }\n    ],\n    colorPlate: '#222',\n    colorMajorTicks: '#f5f5f5',\n    colorMinorTicks: '#ddd',\n    colorTitle: '#fff',\n    colorUnits: '#ccc',\n    colorNumbers: '#eee',\n    colorNeedleStart: 'rgba(240, 128, 128, 1)',\n    colorNeedleEnd: 'rgba(255, 160, 122, .9)',\n    valueBox: true,\n    animationRule: 'bounce'\n});\n// draw initially\ngauge.draw();\n// animate\nsetInterval(() => {\n   gauge.value = Math.random() * -220 + 220;\n}, 1000);"
     ],
-    "lineNumber": 684,
+    "lineNumber": 698,
     "interface": false,
     "extends": [
       "BaseGauge"
     ]
   },
   {
-    "__docId__": 143,
+    "__docId__": 144,
     "kind": "constructor",
     "static": false,
     "variation": null,
@@ -4637,7 +4668,7 @@
     "longname": "lib/RadialGauge.js~RadialGauge#constructor",
     "access": null,
     "description": "",
-    "lineNumber": 690,
+    "lineNumber": 704,
     "unknown": [
       {
         "tagName": "@constructor",
@@ -4659,7 +4690,7 @@
     "generator": false
   },
   {
-    "__docId__": 144,
+    "__docId__": 145,
     "kind": "method",
     "static": true,
     "variation": null,
@@ -4668,7 +4699,7 @@
     "longname": "lib/RadialGauge.js~RadialGauge.configure",
     "access": "protected",
     "description": "Checks and updates gauge options properly",
-    "lineNumber": 702,
+    "lineNumber": 716,
     "params": [
       {
         "nullable": null,
@@ -4692,7 +4723,81 @@
     "generator": false
   },
   {
-    "__docId__": 145,
+    "__docId__": 146,
+    "kind": "set",
+    "static": false,
+    "variation": null,
+    "name": "value",
+    "memberof": "lib/RadialGauge.js~RadialGauge",
+    "longname": "lib/RadialGauge.js~RadialGauge#value",
+    "access": null,
+    "description": "Sets the value for radial gauge",
+    "lineNumber": 742,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "number"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "value",
+        "description": ""
+      }
+    ],
+    "type": {
+      "types": [
+        "*"
+      ]
+    },
+    "generator": false
+  },
+  {
+    "__docId__": 147,
+    "kind": "member",
+    "static": false,
+    "variation": null,
+    "name": "_value",
+    "memberof": "lib/RadialGauge.js~RadialGauge",
+    "longname": "lib/RadialGauge.js~RadialGauge#_value",
+    "access": null,
+    "description": null,
+    "lineNumber": 747,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 148,
+    "kind": "get",
+    "static": false,
+    "variation": null,
+    "name": "value",
+    "memberof": "lib/RadialGauge.js~RadialGauge",
+    "longname": "lib/RadialGauge.js~RadialGauge#value",
+    "access": null,
+    "description": "Returns current gauge value",
+    "lineNumber": 760,
+    "return": {
+      "nullable": null,
+      "types": [
+        "number"
+      ],
+      "spread": false,
+      "description": ""
+    },
+    "type": {
+      "types": [
+        "*"
+      ]
+    },
+    "generator": false
+  },
+  {
+    "__docId__": 149,
     "kind": "method",
     "static": false,
     "variation": null,
@@ -4701,7 +4806,7 @@
     "longname": "lib/RadialGauge.js~RadialGauge#draw",
     "access": null,
     "description": "Triggering gauge render on a canvas.",
-    "lineNumber": 729,
+    "lineNumber": 770,
     "unknown": [
       {
         "tagName": "@returns",
@@ -4720,7 +4825,7 @@
     "generator": false
   },
   {
-    "__docId__": 146,
+    "__docId__": 150,
     "kind": "typedef",
     "static": true,
     "variation": null,
@@ -4729,7 +4834,7 @@
     "longname": "lib/RadialGauge.js~ns",
     "access": null,
     "description": "",
-    "lineNumber": 836,
+    "lineNumber": 876,
     "ignore": true,
     "type": {
       "types": [
@@ -4740,7 +4845,7 @@
     }
   },
   {
-    "__docId__": 147,
+    "__docId__": 151,
     "kind": "file",
     "static": true,
     "variation": null,
@@ -4753,7 +4858,7 @@
     "content": "/*!\n * The MIT License (MIT)\n *\n * Copyright (c) 2016 Mykhailo Stadnyk <mikhus@gmail.com>\n *\n * Permission is hereby granted, free of charge, to any person obtaining a copy\n * of this software and associated documentation files (the \"Software\"), to deal\n * in the Software without restriction, including without limitation the rights\n * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell\n * copies of the Software, and to permit persons to whom the Software is\n * furnished to do so, subject to the following conditions:\n *\n * The above copyright notice and this permission notice shall be included in\n * all copies or substantial portions of the Software.\n *\n * THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\n * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\n * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\n * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\n * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\n * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\n * SOFTWARE.\n */\n\n/**\n * @ignore\n * @typedef {object} ns\n */\n\n/**\n * Drawings on canvas using hidden canvas as a cache for better\n * performance drawings during canvas animations. SmartCanvas also\n * adopts a canvas to\n */\nexport default class SmartCanvas {\n\n    /**\n     * @constructor\n     * @param {HTMLCanvasElement} canvas\n     * @param {number} [width]\n     * @param {number} [height]\n     */\n    constructor(canvas, width, height) {\n        SmartCanvas.collection.push(this);\n\n        /**\n         * Canvas base width\n         *\n         * @type {number}\n         */\n        this.width = width || 0;\n\n        /**\n         * Canvas base height\n         *\n         * @type {number}\n         */\n        this.height = height || 0;\n\n        /**\n         * Target drawings canvas element\n         *\n         * @type {HTMLCanvasElement}\n         */\n        this.element = canvas;\n\n        this.init();\n    }\n\n    /**\n     * Initializes canvases and contexts\n     */\n    init() {\n        let pixelRatio = SmartCanvas.pixelRatio;\n\n        this.element.width = this.width * pixelRatio;\n        this.element.height = this.height * pixelRatio;\n\n        this.element.style.width = this.width + 'px';\n        this.element.style.height = this.height + 'px';\n\n        /**\n         * Canvas caching element\n         *\n         * @type {HTMLCanvasElement|Node}\n         */\n        this.elementClone = this.element.cloneNode(true);\n\n        //noinspection JSUnresolvedVariable\n        /**\n         * Target drawings canvas element 2D context\n         *\n         * @type {CanvasRenderingContext2D}\n         */\n        this.context = this.element.getContext('2d');\n\n        /**\n         * Canvas caching element 2D context\n         *\n         * @type {CanvasRenderingContext2D}\n         */\n        this.contextClone = this.elementClone.getContext('2d');\n\n        /**\n         * Actual drawings width\n         *\n         * @type {number}\n         */\n        this.drawWidth = this.element.width;\n\n        /**\n         * Actual drawings height\n         *\n         * @type {number}\n         */\n        this.drawHeight = this.element.height;\n\n        /**\n         * X-coordinate of drawings zero point\n         *\n         * @type {number}\n         */\n        this.drawX = this.drawWidth / 2;\n\n        /**\n         * Y-coordinate of drawings zero point\n         *\n         * @type {number}\n         */\n        this.drawY = this.drawHeight / 2;\n\n        /**\n         * Minimal side length in pixels of the drawing\n         *\n         * @type {number}\n         */\n        this.minSide = this.drawX < this.drawY ? this.drawX : this.drawY;\n\n        this.elementClone.initialized = false;\n\n        this.contextClone.translate(this.drawX, this.drawY);\n        this.contextClone.save();\n\n        this.context.translate(this.drawX, this.drawY);\n        this.context.save();\n\n        this.context.max = this.contextClone.max = this.minSide;\n        this.context.maxRadius = this.contextClone.maxRadius = null;\n    }\n\n    /**\n     * Destroys this object, removing the references from memory\n     */\n    destroy() {\n        let index = SmartCanvas.collection.indexOf(this);\n\n        /* istanbul ignore else */\n        if (~index) {\n            SmartCanvas.collection.splice(index, 1);\n        }\n\n        this.context.clearRect(\n            -this.drawX,\n            -this.drawY,\n            this.drawWidth,\n            this.drawHeight\n        );\n\n        // dereference all created elements\n        this.context.max = null;\n        delete this.context.max;\n\n        this.context.maxRadius = null;\n        delete this.context.maxRadius;\n\n        this.context = null;\n        this.contextClone = null;\n        this.elementClone = null;\n        this.element = null;\n\n        /**\n         * On canvas redraw event callback\n         *\n         * @type {function|null|undefined}\n         */\n        this.onRedraw = null;\n    }\n\n    /**\n     * Commits the drawings\n     */\n    commit() {\n        let scale = SmartCanvas.pixelRatio;\n\n        if (scale !== 1) {\n            this.contextClone.scale(scale, scale);\n            this.contextClone.save();\n        }\n\n        return this;\n    }\n\n    /**\n     * Redraw this object\n     */\n    redraw() {\n        this.init();\n\n        /**\n         * On canvas redraw event callback\n         *\n         * @type {function(): *}\n         */\n        this.onRedraw && this.onRedraw();\n\n        return this;\n    }\n\n    /**\n     * Returns current device pixel ratio\n     *\n     * @returns {number}\n     */\n    static get pixelRatio() {\n        /* istanbul ignore next */\n        //noinspection JSUnresolvedVariable\n        return window.devicePixelRatio || 1;\n    }\n\n    /**\n     * Forces redraw all canvas in the current collection\n     */\n    static redraw() {\n        let i = 0;\n        let s = SmartCanvas.collection.length;\n\n        for (; i < s; i++) {\n            SmartCanvas.collection[i].redraw();\n        }\n    }\n}\n\nSmartCanvas.collection = [];\n\n/* istanbul ignore next: very browser-specific testing required to cover */\n//noinspection JSUnresolvedVariable\nif (window.matchMedia) {\n    //noinspection JSUnresolvedFunction\n    window.matchMedia('screen and (min-resolution: 2dppx)')\n        .addListener(SmartCanvas.redraw);\n}\n\nmodule.exports = SmartCanvas;\n"
   },
   {
-    "__docId__": 148,
+    "__docId__": 152,
     "kind": "typedef",
     "static": true,
     "variation": null,
@@ -4772,7 +4877,7 @@
     }
   },
   {
-    "__docId__": 149,
+    "__docId__": 153,
     "kind": "class",
     "static": true,
     "variation": null,
@@ -4788,7 +4893,7 @@
     "interface": false
   },
   {
-    "__docId__": 150,
+    "__docId__": 154,
     "kind": "constructor",
     "static": false,
     "variation": null,
@@ -4839,7 +4944,7 @@
     "generator": false
   },
   {
-    "__docId__": 151,
+    "__docId__": 155,
     "kind": "member",
     "static": false,
     "variation": null,
@@ -4859,7 +4964,7 @@
     }
   },
   {
-    "__docId__": 152,
+    "__docId__": 156,
     "kind": "member",
     "static": false,
     "variation": null,
@@ -4879,7 +4984,7 @@
     }
   },
   {
-    "__docId__": 153,
+    "__docId__": 157,
     "kind": "member",
     "static": false,
     "variation": null,
@@ -4899,7 +5004,7 @@
     }
   },
   {
-    "__docId__": 154,
+    "__docId__": 158,
     "kind": "method",
     "static": false,
     "variation": null,
@@ -4913,7 +5018,7 @@
     "generator": false
   },
   {
-    "__docId__": 155,
+    "__docId__": 159,
     "kind": "member",
     "static": false,
     "variation": null,
@@ -4934,7 +5039,7 @@
     }
   },
   {
-    "__docId__": 156,
+    "__docId__": 160,
     "kind": "member",
     "static": false,
     "variation": null,
@@ -4954,7 +5059,7 @@
     }
   },
   {
-    "__docId__": 157,
+    "__docId__": 161,
     "kind": "member",
     "static": false,
     "variation": null,
@@ -4974,7 +5079,7 @@
     }
   },
   {
-    "__docId__": 158,
+    "__docId__": 162,
     "kind": "member",
     "static": false,
     "variation": null,
@@ -4994,7 +5099,7 @@
     }
   },
   {
-    "__docId__": 159,
+    "__docId__": 163,
     "kind": "member",
     "static": false,
     "variation": null,
@@ -5014,7 +5119,7 @@
     }
   },
   {
-    "__docId__": 160,
+    "__docId__": 164,
     "kind": "member",
     "static": false,
     "variation": null,
@@ -5034,7 +5139,7 @@
     }
   },
   {
-    "__docId__": 161,
+    "__docId__": 165,
     "kind": "member",
     "static": false,
     "variation": null,
@@ -5054,7 +5159,7 @@
     }
   },
   {
-    "__docId__": 162,
+    "__docId__": 166,
     "kind": "member",
     "static": false,
     "variation": null,
@@ -5074,7 +5179,7 @@
     }
   },
   {
-    "__docId__": 163,
+    "__docId__": 167,
     "kind": "method",
     "static": false,
     "variation": null,
@@ -5088,7 +5193,7 @@
     "generator": false
   },
   {
-    "__docId__": 164,
+    "__docId__": 168,
     "kind": "member",
     "static": false,
     "variation": null,
@@ -5106,7 +5211,7 @@
     }
   },
   {
-    "__docId__": 165,
+    "__docId__": 169,
     "kind": "member",
     "static": false,
     "variation": null,
@@ -5124,7 +5229,7 @@
     }
   },
   {
-    "__docId__": 166,
+    "__docId__": 170,
     "kind": "member",
     "static": false,
     "variation": null,
@@ -5142,7 +5247,7 @@
     }
   },
   {
-    "__docId__": 167,
+    "__docId__": 171,
     "kind": "member",
     "static": false,
     "variation": null,
@@ -5160,7 +5265,7 @@
     }
   },
   {
-    "__docId__": 168,
+    "__docId__": 172,
     "kind": "member",
     "static": false,
     "variation": null,
@@ -5182,7 +5287,7 @@
     }
   },
   {
-    "__docId__": 169,
+    "__docId__": 173,
     "kind": "method",
     "static": false,
     "variation": null,
@@ -5201,7 +5306,7 @@
     "generator": false
   },
   {
-    "__docId__": 170,
+    "__docId__": 174,
     "kind": "method",
     "static": false,
     "variation": null,
@@ -5220,7 +5325,7 @@
     "generator": false
   },
   {
-    "__docId__": 171,
+    "__docId__": 175,
     "kind": "member",
     "static": false,
     "variation": null,
@@ -5240,7 +5345,7 @@
     }
   },
   {
-    "__docId__": 172,
+    "__docId__": 176,
     "kind": "get",
     "static": true,
     "variation": null,
@@ -5272,7 +5377,7 @@
     "generator": false
   },
   {
-    "__docId__": 173,
+    "__docId__": 177,
     "kind": "method",
     "static": true,
     "variation": null,
@@ -5286,7 +5391,7 @@
     "generator": false
   },
   {
-    "__docId__": 174,
+    "__docId__": 178,
     "kind": "file",
     "static": true,
     "variation": null,
@@ -5299,7 +5404,7 @@
     "content": "/*!\n * The MIT License (MIT)\n *\n * Copyright (c) 2016 Mykhailo Stadnyk <mikhus@gmail.com>\n *\n * Permission is hereby granted, free of charge, to any person obtaining a copy\n * of this software and associated documentation files (the \"Software\"), to deal\n * in the Software without restriction, including without limitation the rights\n * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell\n * copies of the Software, and to permit persons to whom the Software is\n * furnished to do so, subject to the following conditions:\n *\n * The above copyright notice and this permission notice shall be included in\n * all copies or substantial portions of the Software.\n *\n * THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\n * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\n * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\n * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\n * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\n * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\n * SOFTWARE.\n */\n\n/**\n * @access private\n * @typedef {CanvasRenderingContext2D|{max: number, maxRadius: number, barDimensions: object}} Canvas2DContext\n */\n\n/* istanbul ignore next: private, not testable */\n/**\n * Examines if a given error is something to throw or to ignore\n *\n * @param {Error} err\n */\nexport function verifyError(err) {\n    // there is some unpredictable error in FF in some circumstances\n    // which we found simply safe to ignore than to fight with it\n    // noinspection JSUnresolvedVariable\n    if (err instanceof DOMException && err.result === 0x8053000b) {\n        return ; // ignore it\n    }\n\n    throw err;\n}\n\n/* istanbul ignore next: private, not testable */\n/**\n * Prepares major ticks data\n *\n * @access private\n * @param {GenericOptions|{ tickSide: string }} options\n * @return {[boolean, boolean]}\n */\nexport function prepareTicks(options) {\n    if (!(options.majorTicks instanceof Array)) {\n        options.majorTicks = options.majorTicks ? [options.majorTicks] : [];\n    }\n\n    if (!options.majorTicks.length) {\n        options.majorTicks.push(drawings.formatMajorTickNumber(\n            options.minValue, options));\n        options.majorTicks.push(drawings.formatMajorTickNumber(\n            options.maxValue, options));\n    }\n\n    return [options.tickSide !== 'right', options.tickSide !== 'left'];\n}\n\n/* istanbul ignore next: private, not testable */\n/**\n * Draws rounded corners rectangle\n *\n * @param {Canvas2DContext} context\n * @param {number} x\n * @param {number} y\n * @param {number} w\n * @param {number} h\n * @param {number} r\n */\nexport function roundRect(context, x, y, w, h, r) {\n    context.beginPath();\n\n    context.moveTo(x + r, y);\n    context.lineTo(x + w - r, y);\n\n    context.quadraticCurveTo(x + w, y, x + w, y + r);\n    context.lineTo(x + w, y + h - r);\n\n    context.quadraticCurveTo(x + w, y + h, x + w - r, y + h);\n    context.lineTo(x + r, y + h);\n\n    context.quadraticCurveTo(x, y + h, x, y + h - r);\n    context.lineTo(x, y + r);\n\n    context.quadraticCurveTo(x, y, x + r, y);\n\n    context.closePath();\n}\n\n/* istanbul ignore next: private, not testable */\n/**\n * Pads a given value with leading zeros using the given options\n *\n * @param {number} val\n * @param {RadialGaugeOptions|{valueInt: number, valueDec: number}} options\n * @returns {string}\n */\nexport function padValue(val, options) {\n    let dec = options.valueDec;\n    let int = options.valueInt;\n    let i = 0;\n    let s, strVal, n;\n\n    val = parseFloat(val);\n    n = (val < 0);\n    val = Math.abs(val);\n\n    if (dec > 0) {\n        strVal = val.toFixed(dec).toString().split('.');\n        s = int - strVal[0].length;\n\n        for (; i < s; ++i) {\n            strVal[0] = '0' + strVal[0];\n        }\n\n        strVal = (n ? '-' : '') + strVal[0] + '.' + strVal[1];\n    }\n\n    else {\n        strVal = Math.round(val).toString();\n        s = int - strVal.length;\n\n        for (; i < s; ++i) {\n            strVal = '0' + strVal;\n        }\n\n        strVal = (n ? '-' : '') + strVal;\n    }\n\n    return strVal;\n}\n\n/* istanbul ignore next: private, not testable */\n/**\n * Formats a number for display on the dial's plate using the majorTicksFormat\n * config option.\n *\n * @param {number} num number to format\n * @param {object} options\n * @returns {string} formatted number\n */\nexport function formatMajorTickNumber(num, options) {\n    let right, hasDec = false;\n\n    // First, force the correct number of digits right of the decimal.\n    if (options.majorTicksDec === 0) {\n        right = Math.round(num).toString();\n    }\n\n    else {\n        right = num.toFixed(options.majorTicksDec);\n    }\n\n    // Second, force the correct number of digits left of the decimal.\n    if (options.majorTicksInt > 1) {\n        // Does this number have a decimal?\n        hasDec = ~right.indexOf('.');\n\n        // Is this number a negative number?\n        if (~right.indexOf('-')) {\n            return '-' + [\n                    options.majorTicksInt +\n                    options.majorTicksDec +\n                    2 + (hasDec ? 1 : 0) - right.length\n                ].join('0') + right.replace('-', '');\n        }\n\n        else {\n            return [\n                    options.majorTicksInt +\n                    options.majorTicksDec +\n                    1 + (hasDec ? 1 : 0) - right.length\n                ].join('0') + right;\n        }\n    }\n\n    return right;\n}\n\n/* istanbul ignore next: private, not testable */\n/**\n * Transforms degrees to radians\n *\n * @param {number} degrees\n * @returns {number}\n */\nexport function radians(degrees) {\n    return degrees * Math.PI / 180;\n}\n\n/* istanbul ignore next: private, not testable */\n/**\n * Calculates and returns radial point coordinates\n *\n * @param {number} radius\n * @param {number} angle\n * @returns {{x: number, y: number}}\n */\nexport function radialPoint(radius, angle) {\n    return { x: -radius * Math.sin(angle), y: radius * Math.cos(angle) };\n}\n\n/* istanbul ignore next: private, not testable */\n/**\n * Creates and returns linear gradient canvas object\n *\n * @param {Canvas2DContext} context\n * @param {string} colorFrom\n * @param {string} colorTo\n * @param {number} length\n * @param {boolean} [isVertical]\n * @param {number} [from]\n * @returns {CanvasGradient}\n */\nexport function linearGradient(context, colorFrom, colorTo, length,\n                               isVertical = true, from = 0)\n{\n    let grad = context.createLinearGradient(\n        isVertical ? 0 : from,\n        isVertical ? from : 0,\n        isVertical ? 0 : length,\n        isVertical ? length : 0);\n\n    grad.addColorStop(0, colorFrom);\n    grad.addColorStop(1, colorTo);\n\n    return grad;\n}\n\n/* istanbul ignore next: private, not testable */\n/**\n * Draws the shadow if it was not drawn\n *\n * @param {Canvas2DContext} context\n * @param {GenericOptions} options\n * @param {boolean} shadowDrawn\n * @return {boolean}\n */\nexport function drawShadow(context, options, shadowDrawn = false) {\n    if (shadowDrawn) {\n        context.restore();\n        return true;\n    }\n\n    context.save();\n\n    let w =  options.borderShadowWidth;\n\n    if (w) {\n        context.shadowBlur = w;\n        context.shadowColor = options.colorBorderShadow;\n    }\n\n    return true;\n}\n\n/* istanbul ignore next: private, not testable */\n/**\n * Draws gauge needle shadow\n *\n * @access private\n * @param {Canvas2DContext} context\n * @param {RadialGaugeOptions} options\n */\nexport function drawNeedleShadow(context, options) {\n    if (!options.needleShadow) return;\n\n    context.shadowOffsetX = 2;\n    context.shadowOffsetY = 2;\n    context.shadowBlur = 10;\n    context.shadowColor = options.colorNeedleShadowDown;\n}\n\n/* istanbul ignore next: private, not testable */\n/**\n * Constructs font styles for canvas fonts\n *\n * @param {GenericOptions} options\n * @param {string} target\n * @param {number} baseSize\n */\nexport function font(options, target, baseSize) {\n    return options['font' + target + 'Style'] + ' ' +\n        options['font' + target + 'Weight'] + ' ' +\n        options['font' + target + 'Size'] * baseSize + 'px ' +\n        options['font' + target];\n}\n\n/* istanbul ignore next: private, not testable */\n/**\n * Resets some context settings\n *\n * @param {Canvas2DContext} context\n */\nfunction reset(context) {\n    context.shadowOffsetX = null;\n    context.shadowOffsetY = null;\n    context.shadowBlur = null;\n    context.shadowColor = '';\n    context.strokeStyle = null;\n    context.lineWidth = 0;\n    context.save();\n}\n\n/* istanbul ignore next: private, not testable */\n/**\n * Declares to drow value text shadow if configured\n *\n * @param context\n * @param options\n * @param offset\n * @param blur\n */\nfunction drawValueTextShadow(context, options, offset, blur) {\n    if (options.valueTextShadow) {\n        context.shadowOffsetX = offset;\n        context.shadowOffsetY = offset;\n        context.shadowBlur = blur;\n        context.shadowColor = options.colorValueTextShadow;\n    }\n}\n\n/* istanbul ignore next: private, not testable */\n/**\n * Draws value box at given position\n *\n * @param {Canvas2DContext} context\n * @param {GenericOptions} options\n * @param {number|string} value\n * @param {number} x\n * @param {number} y\n * @param {number} max\n */\nexport function drawValueBox(context, options, value, x, y, max) {\n    if (!options.valueBox) return;\n\n    reset(context);\n\n    let text = options.valueText || padValue(value, options);\n    let tunit = max / 200;\n    let runit = max / 100;\n    let offset = 0.4 * runit;\n    let blur = 1.2 * runit;\n\n    context.font = font(options, 'Value', tunit);\n    drawValueTextShadow(context, options, offset, blur);\n\n    let tw = context.measureText(options.valueText ?\n        text : ('-' + padValue(0, options))).width;\n\n    reset(context);\n\n    let th = parseFloat(options.fontValueSize) * tunit + offset + blur;\n    let sw = runit * parseFloat(options.valueBoxStroke);\n    let bmax = max * 2 - sw * 2;\n\n    let bw = tw + 10 * runit;\n    let bh = 1.1 * th + offset + blur;\n    let br = runit * options.valueBoxBorderRadius;\n    let obw = (parseFloat(options.valueBoxWidth) || 0) / 100 * bmax;\n\n    (obw > bw) && (bw = obw);\n    (bw > bmax) && (bw = bmax);\n\n    let bx = x - bw / 2;\n    let by = y - bh / 2;\n    let gy = y - 5.75 * runit;\n\n    context.beginPath();\n\n    if (br) roundRect(context, bx, by, bw, bh, br);\n    else  context.rect(bx, by, bw, bh);\n\n    if (sw) {\n        let grd = context.createRadialGradient(\n            x, gy, runit * 10, x, gy, runit * 20);\n\n        grd.addColorStop(0, options.colorValueBoxRect);\n        grd.addColorStop(1, options.colorValueBoxRectEnd);\n\n        context.strokeStyle = grd;\n        context.lineWidth = sw;\n        context.stroke();\n    }\n\n    if (options.colorValueBoxShadow) {\n        context.shadowBlur = 1.2 * runit;\n        context.shadowColor = options.colorValueBoxShadow;\n    }\n\n    if (options.colorValueBoxBackground) {\n        context.fillStyle = options.colorValueBoxBackground;\n        context.fill();\n    }\n\n    context.closePath();\n    context.restore();\n\n    drawValueTextShadow(context, options, offset, blur);\n\n    context.fillStyle = options.colorValueText;\n    context.textAlign = 'center';\n    context.textBaseline = 'middle';\n    context.fillText(text, bx + bw / 2, y);\n    context.restore();\n}\n\n/* istanbul ignore next: private, not testable */\n/**\n * Returns normalized value\n *\n * @param {GenericOptions} options\n * @return {{normal: number, indented: number}}\n */\nexport function normalizedValue(options) {\n    let value = options.value;\n    let min = options.minValue;\n    let max = options.maxValue;\n    let dt = (max - min) * 0.01;\n\n    return {\n        normal: value < min ? min : value > max ? max : value,\n        indented: value < min ? min - dt : value > max ? max + dt : value\n    };\n}\n\nconst drawings = {\n    roundRect: roundRect,\n    padValue: padValue,\n    formatMajorTickNumber: formatMajorTickNumber,\n    radians: radians,\n    radialPoint: radialPoint,\n    linearGradient: linearGradient,\n    drawNeedleShadow: drawNeedleShadow,\n    drawValueBox: drawValueBox,\n    verifyError: verifyError,\n    prepareTicks: prepareTicks,\n    drawShadow: drawShadow,\n    font: font,\n    normalizedValue: normalizedValue\n};\n\nexport default drawings;\n\nmodule.exports = drawings;\n"
   },
   {
-    "__docId__": 175,
+    "__docId__": 179,
     "kind": "typedef",
     "static": true,
     "variation": null,
@@ -5318,7 +5423,7 @@
     }
   },
   {
-    "__docId__": 176,
+    "__docId__": 180,
     "kind": "function",
     "static": true,
     "variation": null,
@@ -5346,7 +5451,7 @@
     "generator": false
   },
   {
-    "__docId__": 177,
+    "__docId__": 181,
     "kind": "function",
     "static": true,
     "variation": null,
@@ -5383,7 +5488,7 @@
     "generator": false
   },
   {
-    "__docId__": 178,
+    "__docId__": 182,
     "kind": "function",
     "static": true,
     "variation": null,
@@ -5461,7 +5566,7 @@
     "generator": false
   },
   {
-    "__docId__": 179,
+    "__docId__": 183,
     "kind": "function",
     "static": true,
     "variation": null,
@@ -5514,7 +5619,7 @@
     "generator": false
   },
   {
-    "__docId__": 180,
+    "__docId__": 184,
     "kind": "function",
     "static": true,
     "variation": null,
@@ -5566,7 +5671,7 @@
     "generator": false
   },
   {
-    "__docId__": 181,
+    "__docId__": 185,
     "kind": "function",
     "static": true,
     "variation": null,
@@ -5608,7 +5713,7 @@
     "generator": false
   },
   {
-    "__docId__": 182,
+    "__docId__": 186,
     "kind": "function",
     "static": true,
     "variation": null,
@@ -5660,7 +5765,7 @@
     "generator": false
   },
   {
-    "__docId__": 183,
+    "__docId__": 187,
     "kind": "function",
     "static": true,
     "variation": null,
@@ -5752,7 +5857,7 @@
     "generator": false
   },
   {
-    "__docId__": 184,
+    "__docId__": 188,
     "kind": "function",
     "static": true,
     "variation": null,
@@ -5808,7 +5913,7 @@
     "generator": false
   },
   {
-    "__docId__": 185,
+    "__docId__": 189,
     "kind": "function",
     "static": true,
     "variation": null,
@@ -5846,7 +5951,7 @@
     "generator": false
   },
   {
-    "__docId__": 186,
+    "__docId__": 190,
     "kind": "function",
     "static": true,
     "variation": null,
@@ -5899,7 +6004,7 @@
     "generator": false
   },
   {
-    "__docId__": 187,
+    "__docId__": 191,
     "kind": "function",
     "static": true,
     "variation": null,
@@ -5927,7 +6032,7 @@
     "generator": false
   },
   {
-    "__docId__": 188,
+    "__docId__": 192,
     "kind": "function",
     "static": true,
     "variation": null,
@@ -5985,7 +6090,7 @@
     "generator": false
   },
   {
-    "__docId__": 189,
+    "__docId__": 193,
     "kind": "function",
     "static": true,
     "variation": null,
@@ -6064,7 +6169,7 @@
     "generator": false
   },
   {
-    "__docId__": 190,
+    "__docId__": 194,
     "kind": "function",
     "static": true,
     "variation": null,
@@ -6100,7 +6205,7 @@
     "generator": false
   },
   {
-    "__docId__": 191,
+    "__docId__": 195,
     "kind": "variable",
     "static": true,
     "variation": null,
@@ -6121,7 +6226,7 @@
     }
   },
   {
-    "__docId__": 192,
+    "__docId__": 196,
     "kind": "file",
     "static": true,
     "variation": null,
@@ -6134,7 +6239,7 @@
     "content": "/**\n * @external {Object.assign} https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object/assign\n */\n/* istanbul ignore next */\nif (!Object.assign) {\n    Object.defineProperty(Object, 'assign', {\n        enumerable: false,\n        configurable: true,\n        writable: true,\n        value: function(target, firstSource) {\n            'use strict';\n\n            if (target === undefined || target === null) {\n                throw new TypeError('Cannot convert first argument to object');\n            }\n\n            var to = Object(target);\n            var i = 1;\n\n            for (; i < arguments.length; i++) {\n                var nextSource = arguments[i];\n\n                if (nextSource === undefined || nextSource === null) {\n                    continue;\n                }\n\n                var keysArray = Object.keys(Object(nextSource));\n                var nextIndex = 0, len = keysArray.length;\n\n                for (; nextIndex < len; nextIndex++) {\n                    var nextKey = keysArray[nextIndex];\n                    var desc = Object.getOwnPropertyDescriptor(\n                        nextSource, nextKey);\n\n                    if (desc !== undefined && desc.enumerable) {\n                        to[nextKey] = nextSource[nextKey];\n                    }\n                }\n            }\n\n            return to;\n        }\n    });\n}\n\n/**\n * @external {Array.indexOf} https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array/indexOf\n */\n/* istanbul ignore next */\nif (!Array.prototype.indexOf) {\n    Array.prototype.indexOf = function(searchElement, fromIndex) {\n        var k;\n\n        if (this === null) {\n            throw new TypeError('\"this\" is null or not defined');\n        }\n\n        var O = Object(this);\n        var len = O.length >>> 0;\n\n        if (len === 0) {\n            return -1;\n        }\n\n        var n = +fromIndex || 0;\n\n        if (Math.abs(n) === Infinity) {\n            n = 0;\n        }\n\n        if (n >= len) {\n            return -1;\n        }\n\n        k = Math.max(n >= 0 ? n : len - Math.abs(n), 0);\n\n        while (k < len) {\n            if (k in O && O[k] === searchElement) {\n                return k;\n            }\n\n            k++;\n        }\n\n        return -1;\n    };\n}\n\n/**\n * @external {Array.fill} https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array/fill\n */\n/* istanbul ignore next */\nif (!Array.prototype.fill) {\n    Array.prototype.fill = function(value) {\n        if (this === null) {\n            throw new TypeError('this is null or not defined');\n        }\n\n        var O = Object(this);\n        var len = O.length >>> 0;\n        var start = arguments[1];\n        var relativeStart = start >> 0;\n        var k = relativeStart < 0 ?\n            Math.max(len + relativeStart, 0) :\n            Math.min(relativeStart, len);\n        var end = arguments[2];\n        var relativeEnd = end === undefined ?\n            len : end >> 0;\n        var final = relativeEnd < 0 ?\n            Math.max(len + relativeEnd, 0) :\n            Math.min(relativeEnd, len);\n        while (k < final) {\n            O[k] = value;\n            k++;\n        }\n\n        return O;\n    };\n}\n\n/**\n * mocking window\n */\nif (typeof window === 'undefined') {\n    window = typeof global === 'undefined' ? {} : global;\n}\n"
   },
   {
-    "__docId__": 193,
+    "__docId__": 197,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -6147,7 +6252,7 @@
     "lineNumber": 5
   },
   {
-    "__docId__": 194,
+    "__docId__": 198,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -6160,7 +6265,7 @@
     "lineNumber": 50
   },
   {
-    "__docId__": 195,
+    "__docId__": 199,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -6173,7 +6278,7 @@
     "lineNumber": 93
   },
   {
-    "__docId__": 196,
+    "__docId__": 200,
     "kind": "file",
     "static": true,
     "variation": null,
@@ -6186,7 +6291,7 @@
     "content": "/*!\n * The MIT License (MIT)\n *\n * Copyright (c) 2016 Mykhailo Stadnyk <mikhus@gmail.com>\n *\n * Permission is hereby granted, free of charge, to any person obtaining a copy\n * of this software and associated documentation files (the \"Software\"), to deal\n * in the Software without restriction, including without limitation the rights\n * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell\n * copies of the Software, and to permit persons to whom the Software is\n * furnished to do so, subject to the following conditions:\n *\n * The above copyright notice and this permission notice shall be included in\n * all copies or substantial portions of the Software.\n *\n * THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\n * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\n * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\n * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\n * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\n * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\n * SOFTWARE.\n */\n/**\n * Look-ups for a proper vendor-specific property and returns its value\n *\n * @example\n * var requestAnimationFrame = vendorize('requestAnimationFrame');\n * // it will refer properly to:\n * //  - window.requestAnimationFrame by default or to\n * //  - window.webkitRequestAnimationFrame or to\n * //  - window.mozRequestAnimationFrame or to\n * //  - window.msRequestAnimationFrame or to\n * //  - window.oRequestAnimationFrame\n * // depending on the current browser vendor\n *\n * @author Mykhailo Stadnyk <mikhus@gmail.com>\n * @param {string} prop\n * @param {HTMLElement|Window|object} [from] - default is window\n * @returns {*}\n */\nexport default function vendorize(prop, from) {\n    /* istanbul ignore else: no reason to cover */\n    if (!from) {\n        from = typeof window === 'undefined' ? global : window;\n    }\n\n    if (typeof from[prop] !== 'undefined') {\n        return from[prop];\n    }\n\n    let vendors = ['webkit', 'moz', 'ms', 'o'];\n    let i = 0;\n    let s = vendors.length;\n    let capitalized = prop.charAt(0).toUpperCase() + prop.substr(1);\n\n    for (; i < s; i++) {\n        let vendorProp = from[vendors[i] + capitalized];\n\n        /* istanbul ignore if: requires very complex environment to test (specific browser version) */\n        if (typeof vendorProp !== 'undefined') {\n            return vendorProp;\n        }\n    }\n\n    return null;\n}\n\nmodule.exports = vendorize;\n"
   },
   {
-    "__docId__": 197,
+    "__docId__": 201,
     "kind": "function",
     "static": true,
     "variation": null,
@@ -6247,7 +6352,7 @@
     "generator": false
   },
   {
-    "__docId__": 199,
+    "__docId__": 203,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -6260,7 +6365,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 200,
+    "__docId__": 204,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -6273,7 +6378,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 201,
+    "__docId__": 205,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -6286,7 +6391,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 202,
+    "__docId__": 206,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -6299,7 +6404,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 203,
+    "__docId__": 207,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -6312,7 +6417,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 204,
+    "__docId__": 208,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -6325,7 +6430,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 205,
+    "__docId__": 209,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -6338,7 +6443,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 206,
+    "__docId__": 210,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -6351,7 +6456,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 207,
+    "__docId__": 211,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -6364,7 +6469,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 208,
+    "__docId__": 212,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -6377,7 +6482,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 209,
+    "__docId__": 213,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -6390,7 +6495,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 210,
+    "__docId__": 214,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -6403,7 +6508,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 211,
+    "__docId__": 215,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -6416,7 +6521,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 212,
+    "__docId__": 216,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -6429,7 +6534,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 213,
+    "__docId__": 217,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -6442,7 +6547,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 214,
+    "__docId__": 218,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -6455,7 +6560,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 215,
+    "__docId__": 219,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -6468,7 +6573,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 216,
+    "__docId__": 220,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -6481,7 +6586,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 217,
+    "__docId__": 221,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -6494,7 +6599,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 218,
+    "__docId__": 222,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -6507,7 +6612,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 219,
+    "__docId__": 223,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -6520,7 +6625,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 220,
+    "__docId__": 224,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -6533,7 +6638,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 221,
+    "__docId__": 225,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -6546,7 +6651,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 222,
+    "__docId__": 226,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -6559,7 +6664,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 223,
+    "__docId__": 227,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -6572,7 +6677,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 224,
+    "__docId__": 228,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -6585,7 +6690,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 225,
+    "__docId__": 229,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -6598,7 +6703,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 226,
+    "__docId__": 230,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -6611,7 +6716,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 227,
+    "__docId__": 231,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -6624,7 +6729,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 228,
+    "__docId__": 232,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -6637,7 +6742,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 229,
+    "__docId__": 233,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -6650,7 +6755,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 230,
+    "__docId__": 234,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -6663,7 +6768,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 231,
+    "__docId__": 235,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -6676,7 +6781,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 232,
+    "__docId__": 236,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -6689,7 +6794,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 233,
+    "__docId__": 237,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -6702,7 +6807,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 234,
+    "__docId__": 238,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -6715,7 +6820,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 235,
+    "__docId__": 239,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -6728,7 +6833,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 236,
+    "__docId__": 240,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -6741,7 +6846,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 237,
+    "__docId__": 241,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -6754,7 +6859,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 238,
+    "__docId__": 242,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -6767,7 +6872,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 239,
+    "__docId__": 243,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -6780,7 +6885,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 240,
+    "__docId__": 244,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -6793,7 +6898,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 241,
+    "__docId__": 245,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -6806,7 +6911,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 242,
+    "__docId__": 246,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -6819,7 +6924,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 243,
+    "__docId__": 247,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -6832,7 +6937,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 244,
+    "__docId__": 248,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -6845,7 +6950,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 245,
+    "__docId__": 249,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -6858,7 +6963,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 247,
+    "__docId__": 251,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -6871,7 +6976,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 248,
+    "__docId__": 252,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -6884,7 +6989,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 249,
+    "__docId__": 253,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -6897,7 +7002,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 250,
+    "__docId__": 254,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -6910,7 +7015,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 251,
+    "__docId__": 255,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -6923,7 +7028,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 252,
+    "__docId__": 256,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -6936,7 +7041,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 253,
+    "__docId__": 257,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -6949,7 +7054,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 254,
+    "__docId__": 258,
     "kind": "external",
     "static": true,
     "variation": null,

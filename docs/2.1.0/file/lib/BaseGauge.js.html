@@ -257,14 +257,16 @@ export default class BaseGauge {
              * @type {number}
              * @access private
              */
-            this._value = value;
+            if (this._value === undefined) {
+                this._value = value;
+            }
 
             this.animation.animate(percent =&gt; {
                 this.options.value = fromValue + (value - fromValue) * percent;
 
                 this.draw();
             }, () =&gt; {
-                this.options.value = value;
+                this.options.value = this._value;
                 delete this._value;
                 this.draw();
             });
