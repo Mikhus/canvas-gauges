@@ -487,8 +487,8 @@ export function drawValueBox(context, options, value, x, y, max) {
 
     context.fillStyle = options.colorValueText;
     context.textAlign = &apos;center&apos;;
-    context.textBaseline = &apos;middle&apos;;
-    context.fillText(text, bx + bw / 2, y);
+    context.textBaseline = &apos;alphabetic&apos;;
+    context.fillText(text, bx + bw / 2, y + bh / 2 - th / 3);
     context.restore();
 }
 
