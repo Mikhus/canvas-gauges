@@ -198,10 +198,10 @@ For example you can use [this one](https://github.com/webcomponents/webcomponent
 
 ## Manual DOM Mutations Control
 
-Sometimes it may be required to disable automatic DOM document parse for some reason (for example, in case of performance optimizations, etc.). This could be easily achieved by defining a global constant `GAUGE_NO_AUTO_INIT` and set it to some truthy value before loading main gauges JavaScript code. For example, such gauge code base loading:
+Sometimes it may be required to disable automatic DOM document parse for some reason (for example, in case of performance optimizations, etc.). This could be easily achieved by defining a global constant `GAUGES_NO_AUTO_INIT` and set it to some truthy value before loading main gauges JavaScript code. For example, such gauge code base loading:
 
 ~~~html
-<script>var GAUGE_NO_AUTO_INIT = true;</script>
+<script>window.GAUGES_NO_AUTO_INIT = true;</script>
 <script src="../gauge.min.js"></script>
 ~~~
 

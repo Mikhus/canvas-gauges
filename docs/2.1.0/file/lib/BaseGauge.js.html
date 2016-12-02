@@ -432,6 +432,10 @@ export default class BaseGauge extends EventEmitter {
      */
     static fromElement(element) {
         let type = DomObserver.toCamelCase(element.getAttribute(&apos;data-type&apos;));
+        let attributes = element.attributes;
+        let i = 0;
+        let s = attributes.length;
+        let options = {};
 
         if (!type) {
             return ;
@@ -441,7 +445,15 @@ export default class BaseGauge extends EventEmitter {
             type += &apos;Gauge&apos;;
         }
 
-        new DomObserver({}, element.tagName, type).process(element);
+        for (; i &lt; s; i++) {
+            options[
+                DomObserver.toCamelCase(
+                    attributes[i].name.replace(/^data-/, &apos;&apos;),
+                    false)
+            ] = DomObserver.parse(attributes[i].value);
+        }
+
+        new DomObserver(options, element.tagName, type).process(element);
     }
 
     /**
