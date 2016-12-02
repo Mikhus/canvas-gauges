@@ -285,15 +285,11 @@ export default class BaseGauge extends EventEmitter {
      * @param {number} value
      */
     set value(value) {
-        value = parseFloat(value);
-
-        if (isNaN(value) || !isFinite(value)) {
-            value = this.options.minValue;
-        }
+        value = BaseGauge.ensureValue(value, this.options.minValue);
 
         let fromValue = this.options.value;
 
-        if (value === this.options.value) return;
+        if (value === fromValue) return;
 
         if (this.options.animation) {
             /**
@@ -313,8 +309,11 @@ export default class BaseGauge extends EventEmitter {
 
                 this.emit(&apos;animate&apos;, percent, this.options.value);
             }, () =&gt; {
-                this.options.value = this._value;
-                delete this._value;
+                if (this._value !== undefined) {
+                    this.options.value = this._value;
+                    delete this._value;
+                }
+
                 this.draw();
                 this.emit(&apos;animationEnd&apos;);
             });
@@ -443,6 +442,23 @@ export default class BaseGauge extends EventEmitter {
         }
 
         new DomObserver({}, element.tagName, type).process(element);
+    }
+
+    /**
+     * Ensures value is proper number
+     *
+     * @param {*} value
+     * @param {number} min
+     * @return {number}
+     */
+    static ensureValue(value, min = 0) {
+        value = parseFloat(value);
+
+        if (isNaN(value) || !isFinite(value)) {
+            value = parseFloat(min) || 0;
+        }
+
+        return value;
     }
 }
 

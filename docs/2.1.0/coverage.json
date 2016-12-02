@@ -1,7 +1,7 @@
 {
-  "coverage": "95%",
-  "expectCount": 100,
-  "actualCount": 95,
+  "coverage": "95.04%",
+  "expectCount": 101,
+  "actualCount": 96,
   "files": {
     "lib/Animation.js": {
       "expectCount": 9,
@@ -9,8 +9,8 @@
       "undocumentLines": []
     },
     "lib/BaseGauge.js": {
-      "expectCount": 18,
-      "actualCount": 17,
+      "expectCount": 19,
+      "actualCount": 18,
       "undocumentLines": [
         30
       ]

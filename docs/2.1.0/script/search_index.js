@@ -630,6 +630,12 @@ window.esdocSearchIndex = [
     "method"
   ],
   [
+    "lib/basegauge.js~basegauge.ensurevalue",
+    "class/lib/BaseGauge.js~BaseGauge.html#static-method-ensureValue",
+    "lib/BaseGauge.js~BaseGauge.ensureValue",
+    "method"
+  ],
+  [
     "lib/basegauge.js~basegauge.fromelement",
     "class/lib/BaseGauge.js~BaseGauge.html#static-method-fromElement",
     "lib/BaseGauge.js~BaseGauge.fromElement",

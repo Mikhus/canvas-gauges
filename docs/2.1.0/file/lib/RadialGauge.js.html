@@ -876,6 +876,8 @@ export default class RadialGauge extends BaseGauge {
      * @param {number} value
      */
     set value(value) {
+        value = BaseGauge.ensureValue(value, this.options.minValue);
+
         if (this.options.animation &amp;&amp;
             this.options.ticksAngle === 360 &amp;&amp;
             this.options.useMinPath
@@ -897,7 +899,6 @@ export default class RadialGauge extends BaseGauge {
         return super.value;
     }
 
-    /*  */
     /**
      * Triggering gauge render on a canvas.
      *
