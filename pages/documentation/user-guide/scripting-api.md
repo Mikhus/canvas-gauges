@@ -196,5 +196,118 @@ console.log(gauge.value);
 </script>
 ~~~
 
+## Injecting Into Gauge Drawing Workflow
+
+Since version 2.1.0 Canvas Gauges support injections into gauge drawing workflow using events.
+The following events are defined for gauges:
+
+~~~
+/**
+ * Fired each time gauge is initialized on a page
+ *
+ * @event init
+ */
+
+/**
+ * Fired each time gauge scene is rendered
+ *
+ * @event render
+ */
+
+/**
+ * Fired each time gauge object is destroyed
+ *
+ * @event destroy
+ */
+
+/**
+ * Fired each time before animation is started on the gauge
+ *
+ * @event animationStart
+ */
+
+/**
+ * Fired each time animation scene is complete
+ *
+ * @event animate
+ * @type {number} percent
+ * @type {number} value
+ */
+
+/**
+ * Fired each time animation is complete on the gauge
+ *
+ * @event animationEnd
+ */
+ 
+ /**
+  * Fired each time before gauge plate is drawn
+  *
+  * @event beforePlate
+  */
+
+ /**
+  * Fired each time before gauge highlight areas are drawn
+  *
+  * @event beforeHighlights
+  */
+
+ /**
+  * Fired each time before gauge minor ticks are drawn
+  *
+  * @event beforeMinorTicks
+  */
+
+ /**
+  * Fired each time before gauge major ticks are drawn
+  *
+  * @event beforeMajorTicks
+  */
+
+ /**
+  * Fired each time before gauge tick numbers are drawn
+  *
+  * @event beforeNumbers
+  */
+
+ /**
+  * Fired each time before gauge title is drawn
+  *
+  * @event beforeTitle
+  */
+
+ /**
+  * Fired each time before gauge units text is drawn
+  *
+  * @event beforeUnits
+  */
+
+ /**
+  * Fired each time before gauge progress bar is drawn
+  *
+  * @event beforeProgressBar
+  */
+
+ /**
+  * Fired each time before gauge value box is drawn
+  *
+  * @event beforeValueBox
+  */
+
+ /**
+  * Fired each time before gauge needle is drawn
+  *
+  * @event beforeNeedle
+  */
+~~~
+
+Here is how something can be done before gauge draws needle on its animation scene:
+
+~~~javascript
+gauge.on('beforeNeedle', function() {
+    console.log('Needle is going to be drawn!');
+});
+~~~
+
 </div><!-- /.medium-8.columns -->
 </div><!-- /.row -->
