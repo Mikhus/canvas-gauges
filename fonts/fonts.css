@@ -2,5 +2,15 @@
     font-family: 'Led';
     src: url('digital-7-mono.eot');
     src: url('digital-7-mono.eot?#iefix') format('embedded-opentype'),
-         url('digital-7-mono.ttf')  format('truetype');
+         url('digital-7-mono.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'TimeBomb';
+    src: url('TickingTimebombBB.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Repetition';
+    src: url('repetition.ttf') format('truetype');
 }

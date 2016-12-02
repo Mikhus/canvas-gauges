@@ -10,3 +10,4 @@ dist/
 .vscode
 complexity/
 *es6.js
+test/cjs/bundle.js

@@ -11,6 +11,8 @@ const buffer = require('vinyl-buffer');
 const rename = require('gulp-rename');
 const sourcemaps = require('gulp-sourcemaps');
 const uglify = require('gulp-uglify');
+const minify = require('gulp-uglify/minifier');
+const uglify6 = require('uglify-js-harmony');
 const rimraf = require('rimraf');
 const esdoc = require('gulp-esdoc');
 const eslint = require('gulp-eslint');
@@ -40,10 +42,11 @@ const plato = require('gulp-plato');
 
 let types = ['all', 'radial', 'linear'];
 
-function es6concat(type = 'all') {
+function es6concat(type = 'all', clean = false) {
     let bundle = [
         'lib/polyfill.js',
         'lib/vendorize.js',
+        'lib/EventEmitter.js',
         'lib/Animation.js',
         'lib/DomObserver.js',
         'lib/SmartCanvas.js',
@@ -52,6 +55,8 @@ function es6concat(type = 'all') {
         'lib/BaseGauge.js',
         'lib/drawings.js'
     ];
+
+    if (clean) bundle.shift();
 
     switch (type.toLowerCase()) {
         case 'radial':
@@ -76,8 +81,24 @@ function es6concat(type = 'all') {
         .pipe(replace(/%VERSION%/g, version));
 }
 
+function wrap(stream) {
+    return stream.pipe(replace(/^/, license() + '(function(ns) {'))
+        .pipe(replace(/$/,
+            ';typeof module !== "undefined" && Object.assign(ns, {' +
+            'Collection: Collection,' +
+            'GenericOptions: GenericOptions,' +
+            'Animation: Animation,' +
+            'BaseGauge: BaseGauge,' +
+            'drawings: drawings,' +
+            'SmartCanvas: SmartCanvas,' +
+            'vendorize: vendorize' +
+            '});' +
+            '}(typeof module !== "undefined" ? ' +
+            'module.exports : window));'));
+}
+
 function es5transpile(type = 'all', withSourceMaps = true, resolve = () => {}) {
-    let stream = es6concat(type)
+    let stream = wrap(es6concat(type)
         .pipe(rename('gauge.es5.js'))
         .pipe(babel({
             presets: ['es2015'],
@@ -88,20 +109,7 @@ function es5transpile(type = 'all', withSourceMaps = true, resolve = () => {}) {
             this.emit('end');
             resolve();
         })
-        .pipe(rename('gauge.min.js'))
-        .pipe(replace(/^/, license() + '(function(ns) {'))
-        .pipe(replace(/$/,
-            ';typeof module !== "undefined" && Object.assign(ns, {' +
-                'Collection: Collection,' +
-                'GenericOptions: GenericOptions,' +
-                'Animation: Animation,' +
-                'BaseGauge: BaseGauge,' +
-                'drawings: drawings,' +
-                'SmartCanvas: SmartCanvas,' +
-                'vendorize: vendorize' +
-            '});' +
-            '}(typeof module !== "undefined" ? ' +
-            'module.exports : window));'));
+        .pipe(rename('gauge.min.js')));
 
     if (withSourceMaps) {
         stream = stream.pipe(sourcemaps.init({ loadMaps: true }));
@@ -167,6 +175,7 @@ gulp.task('help', () => usage(gulp, { emptyLineBetweenTasks: false }));
  * Builds production packages
  *
  * @task {build:prod}
+ * @order {5}
  */
 gulp.task('build:prod', done => {
     rimraf('dist', () => {
@@ -282,9 +291,13 @@ gulp.task('build:prod', done => {
  *
  * @task {build:es6}
  * @arg {type} build type: 'radial' - Gauge object only, 'linear' - LinearGauge object only, 'all' - everything (default)
+ * @order {4}
  */
 gulp.task('build:es6', done => {
-    es6concat(yargs.argv.type || 'all')
+    es6concat(yargs.argv.type || 'all', true)
+        // .pipe(minify({
+        //     preserveComments: (node, comment) => comment.line === 1
+        // }, uglify6))
         .pipe(gulp.dest('.'))
         .on('end', () => done());
 });
@@ -294,6 +307,7 @@ gulp.task('build:es6', done => {
  *
  * @task {build:es5}
  * @arg {type} build type: 'radial' - Gauge object only, 'linear' - LinearGauge object only, 'all' - everything (default)
+ * @order {3}
  */
 gulp.task('build:es5', ['clean'], done => {
     es5transpile(yargs.argv.type || 'all')
@@ -320,6 +334,7 @@ gulp.task('build:es5', ['clean'], done => {
  * Clean-ups files from previous build.
  *
  * @task {clean}
+ * @order {1}
  */
 gulp.task('clean', done => {
     rimraf('gauge.js', () =>
@@ -332,6 +347,7 @@ gulp.task('clean', done => {
  * Cleans docs directory
  *
  * @task {clean:docs}
+ * @order {6}
  */
 gulp.task('clean:docs', done => {
     rimraf('docs', done);
@@ -342,6 +358,7 @@ gulp.task('clean:docs', done => {
  * from a source code.
  *
  * @task {doc}
+ * @order {7}
  */
 gulp.task('doc', ['clean:docs'], done => {
     gulp.src('./lib')
@@ -394,6 +411,7 @@ gulp.task('doc', ['clean:docs'], done => {
  * @task {build}
  * @arg {target} compile target, could be 'es5' (default) or 'es6'
  * @arg {type} build type: 'radial' - Gauge object only, 'linear' - LinearGauge object only, 'all' - everything (default)
+ * @order {2}
  */
 gulp.task('build', () => {
     //noinspection JSUnresolvedVariable
@@ -439,7 +457,8 @@ gulp.task('lint', () => {
             '!**.min.js',
             '!coverage/**',
             '!complexity/**',
-            '!dist/**'
+            '!dist/**',
+            '!test/cjs/**'
         ])
         .pipe(eslint())
         .pipe(eslint.format())

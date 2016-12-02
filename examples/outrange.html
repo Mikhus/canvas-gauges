@@ -17,6 +17,33 @@
 <hr>
 
 <canvas data-type="radial-gauge"
+        data-value="-20"
+        data-width="400"
+        data-height="400"
+        data-bar-width="10"
+        data-bar-shadow="5"
+        data-color-bar-progress="rgba(50,200,50,.75)"
+></canvas>
+
+<canvas data-type="radial-gauge"
+        data-value="120"
+        data-width="400"
+        data-height="400"
+></canvas>
+
+<canvas data-type="linear-gauge"
+        data-value="-20"
+        data-width="100"
+        data-height="400"
+></canvas>
+
+<canvas data-type="linear-gauge"
+        data-value="120"
+        data-width="100"
+        data-height="400"
+></canvas>
+
+<canvas data-type="radial-gauge"
         data-width="500"
         data-height="500"
         data-min-value="0"
@@ -58,49 +85,13 @@
         data-font-title-size="19"
         data-color-title="#f5f5f5"
         data-animation-duration="1500"
-        data-value="45"
+        data-value="365"
         data-animate-on-init="true"
 ></canvas>
 
-<canvas id="another-gauge"></canvas>
+<script async src="../gauge.min.js"></script>
 
 <script>
-function initScriptedGauges() {
-    new RadialGauge({
-        renderTo: 'another-gauge',
-        width: 800,
-        height: 800,
-        units: 'Km/h',
-        title: false,
-        value: 0,
-        minValue: 0,
-        maxValue: 220,
-        majorTicks: [
-            '0','20','40','60','80','100','120','140','160','180','200','220'
-        ],
-        minorTicks: 2,
-        strokeTicks: false,
-        highlights: [
-            { from: 0, to: 50, color: 'rgba(0,255,0,.15)' },
-            { from: 50, to: 100, color: 'rgba(255,255,0,.15)' },
-            { from: 100, to: 150, color: 'rgba(255,30,0,.25)' },
-            { from: 150, to: 200, color: 'rgba(255,0,225,.25)' },
-            { from: 200, to: 220, color: 'rgba(0,0,255,.25)' }
-        ],
-        colorPlate: '#222',
-        colorMajorTicks: '#f5f5f5',
-        colorMinorTicks: '#ddd',
-        colorTitle: '#fff',
-        colorUnits: '#ccc',
-        colorNumbers: '#eee',
-        colorNeedle: 'rgba(240, 128, 128, 1)',
-        colorNeedleEnd: 'rgba(255, 160, 122, .9)',
-        valueBox: true,
-        animationRule: 'bounce',
-        animationDuration: 500
-    }).draw();
-}
-
 if (!Array.prototype.forEach) {
     Array.prototype.forEach = function(cb) {
         var i = 0, s = this.length;
@@ -125,9 +116,10 @@ var timers = [];
 function animateGauges() {
     document.gauges.forEach(function(gauge) {
         timers.push(setInterval(function() {
-            gauge.value = Math.random() *
-                (gauge.options.maxValue - gauge.options.minValue) / 4 +
-                gauge.options.minValue / 4;
+            var min = gauge.options.minValue - 20;
+            var max = gauge.options.maxValue + 20;
+
+            gauge.value = min + Math.random() * (max - min);
         }, gauge.animation.duration + 50));
     });
 }
@@ -139,6 +131,5 @@ function stopGaugesAnimation() {
 }
 </script>
 
-<script async src="../gauge.min.js" onload="initScriptedGauges()"></script>
-
+</body>
 </html>

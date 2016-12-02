@@ -3,6 +3,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>Gauge Test</title>
+    <script src="../gauge.min.js"></script>
     <style>body {
         padding: 0;
         margin: 0;
@@ -17,8 +18,6 @@
 <hr>
 
 <canvas data-type="radial-gauge"
-        data-width="500"
-        data-height="500"
         data-min-value="0"
         data-max-value="360"
         data-major-ticks="N,NE,E,SE,S,SW,W,NW,N"
@@ -27,7 +26,7 @@
         data-start-angle="180"
         data-stroke-ticks="false"
         data-highlights="false"
-        data-color-plate="#33a"
+        data-color-plate="#222"
         data-color-major-ticks="#f5f5f5"
         data-color-minor-ticks="#ddd"
         data-color-numbers="#ccc"
@@ -39,7 +38,6 @@
         data-color-needle-circle-outer="#ccc"
         data-needle-circle-size="15"
         data-needle-circle-outer="false"
-        data-animation-rule="linear"
         data-needle-type="line"
         data-needle-start="75"
         data-needle-end="99"
@@ -51,54 +49,47 @@
         data-color-border-outer="#ccc"
         data-color-border-outer-end="#ccc"
         data-color-needle-shadow-down="#222"
-        data-border-shadow-width="0"
         data-animation-target="plate"
-        data-units="ᵍ"
-        data-title="DIRECTION"
-        data-font-title-size="19"
-        data-color-title="#f5f5f5"
         data-animation-duration="1500"
-        data-value="45"
-        data-animate-on-init="true"
+        data-animation-rule="linear"
+        data-width="500"
+        data-height="500"
+        data-units="ᵍ"
+        data-value="0"
 ></canvas>
 
-<canvas id="another-gauge"></canvas>
+<canvas data-type="linear-gauge"
+        data-width="160"
+        data-height="600"
+        data-border-radius="0"
+        data-borders="0"
+        data-bar-begin-circle="false"
+        data-title="Temperature"
+        data-units="°C"
+        data-minor-ticks="10"
+        data-value="99"
+        data-major-ticks="0,10,20,30,40,50,60,70,80,90,100"
+        data-tick-side="right"
+        data-number-side="right"
+        data-needle-side="right"
+        data-animation-rule="bounce"
+        data-animation-duration="750"
+        data-bar-stroke-width="5"
+        data-value-box-border-radius="0"
+        data-value-text-shadow="false"
+        data-color-plate="#eee"
+></canvas>
 
 <script>
-function initScriptedGauges() {
-    new RadialGauge({
-        renderTo: 'another-gauge',
-        width: 800,
-        height: 800,
-        units: 'Km/h',
-        title: false,
-        value: 0,
-        minValue: 0,
-        maxValue: 220,
-        majorTicks: [
-            '0','20','40','60','80','100','120','140','160','180','200','220'
-        ],
-        minorTicks: 2,
-        strokeTicks: false,
-        highlights: [
-            { from: 0, to: 50, color: 'rgba(0,255,0,.15)' },
-            { from: 50, to: 100, color: 'rgba(255,255,0,.15)' },
-            { from: 100, to: 150, color: 'rgba(255,30,0,.25)' },
-            { from: 150, to: 200, color: 'rgba(255,0,225,.25)' },
-            { from: 200, to: 220, color: 'rgba(0,0,255,.25)' }
-        ],
-        colorPlate: '#222',
-        colorMajorTicks: '#f5f5f5',
-        colorMinorTicks: '#ddd',
-        colorTitle: '#fff',
-        colorUnits: '#ccc',
-        colorNumbers: '#eee',
-        colorNeedle: 'rgba(240, 128, 128, 1)',
-        colorNeedleEnd: 'rgba(255, 160, 122, .9)',
-        valueBox: true,
-        animationRule: 'bounce',
-        animationDuration: 500
-    }).draw();
+function domReady(handler) {
+    if (/comp|inter|loaded/.test((window.document || {}).readyState + ''))
+        return handler();
+
+    if (window.addEventListener)
+        window.addEventListener('DOMContentLoaded', handler, false);
+
+    else if (window.attachEvent)
+        window.attachEvent('onload', handler);
 }
 
 if (!Array.prototype.forEach) {
@@ -137,8 +128,20 @@ function stopGaugesAnimation() {
         clearInterval(timer);
     });
 }
-</script>
 
-<script async src="../gauge.min.js" onload="initScriptedGauges()"></script>
+domReady(function() {
+    document.gauges.forEach(function(gauge) {
+        var type = gauge.canvas.element.getAttribute('data-type');
+
+        gauge.on('beforeNeedle', function() {
+            console.log(type + ': drawing needle!');
+        });
+
+        gauge.on('beforePlate', function() {
+            console.log(type + ': drawing plate!');
+        });
+    });
+});
+</script>
 
 </html>
