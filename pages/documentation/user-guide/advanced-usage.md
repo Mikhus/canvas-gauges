@@ -196,5 +196,21 @@ In old browsers canvas gauge may not work properly as a web-component. Due to a 
 
 For example you can use [this one](https://github.com/webcomponents/webcomponentsjs) or it's [ancestor](https://github.com/Polymer/MutationObservers) (because of minimalism, despite the fact it's deprecated).
 
+## Manual DOM Mutations Control
+
+Sometimes it may be required to disable automatic DOM document parse for some reason (for example, in case of performance optimizations, etc.). This could be easily achieved by defining a global constant `GAUGES_NO_AUTO_INIT` and set it to some truthy value before loading main gauges JavaScript code. For example, such gauge code base loading:
+
+~~~html
+<script>window.GAUGES_NO_AUTO_INIT = true;</script>
+<script src="../gauge.min.js"></script>
+~~~
+
+will prevent automatic DOM parsing of the page to initialize gauges. This may improve
+page load time. Then, when it is required each gauge could be re-initialized by using the following BaseGauge interface.
+
+~~~
+BaseGauge.fromElement(canvasGaugeElement);
+~~~
+
 </div><!-- /.medium-8.columns -->
 </div><!-- /.row -->

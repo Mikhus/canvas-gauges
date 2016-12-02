@@ -132,6 +132,13 @@ Tick bars on a gauge representing the measuring system which visualize the gauge
  - **highlights**: an array of highlights objects, which configures color-highlighted areas on a ticks bar. Each highlight object defines an area to colorize starting **from** value **to** value and using a given **color**, like this: ```{ from: number, to: number, color: string }```
   - **highlightsWidth**: sets the width of highlights area in relative units. 
 
+#### Progress Bar Options
+
+ - **barWidth**: bar width in percents in relation to overall width of the gauge. It is limited to 50% anyway.
+ - **barStrokeWidth**: defines a width of a bar stroke. If set to zero - stroke won't be drawn.
+ - **barProgress**: flag, defines if a progress bar should be drawn within this gauge.
+ - **barShadow**: number, length of the inner bar shadow if required. By default is 0.
+
 ### Animation Options
 
 Animations on the gauge can be turned on or off. Whenever the animation is turned on it will automatically run each time gauge changing it's value. During the animation gauge will animate its needle or progress bar from the old value to a new value it has been upset. If *animatedValue* option is turned on it will also constantly update the value displayed in a value box on each animation step.
@@ -170,6 +177,9 @@ Canvas gauge provides highly customizable coloring options for the majority of g
  - **colorValueBoxShadow**: defines a color of value box shadow. If falsy shadow won't be drawn.
  - **colorNeedleShadowUp**: defines upper half of the needle shadow color.
  - **colorNeedleShadowDown**: defines drop shadow needle color.
+ - **colorBarStroke**: color of a bar stroke.
+ - **colorBar**: defines a bar background color.
+ - **colorBarProgress**: defines a progress bar color;
 
 ### Needle Configuration Options
 
@@ -247,20 +257,14 @@ Horizontal gauge drawing has a limitation of drawing value box. In this orientat
 
  - **borderRadius**: radius for rounded corners of the gauge plate and its borders.
 
-#### Bar Options
+#### Progress Bar Options
 
  - **barBeginCircle**: defines if a gauge bar should start with a circle element imitating flask view of the bar. If set to zero it won't be drawn at all. 
- - **barWidth**: bar width in percents in relation to overall width of the gauge. It is limited to 50% anyway.
  - **barLength**: defines bar length in percents in relation to overall gauge length.
- - **barStrokeWidth**: defines a width of a bar stroke. If set to zero - stroke won't be drawn.
- - **barProgress**: flag, defines if a progress bar should be drawn within this gauge.
 
 #### Coloring Options
  
- - **colorBarStroke**: color of a bar stroke.
- - **colorBar**: defines a bar background color.
  - **colorBarEnd**: if given, bar background will be drawn as gradient. If falsy bar color will be solid.
- - **colorBarProgress**: defines a progress bar color;
  - **colorBarProgressEnd**: if given, progress bar color will be drawn as gradient. If falsy bar color will be solid.
 
 #### Element Positioning Options
@@ -269,7 +273,7 @@ Horizontal gauge drawing has a limitation of drawing value box. In this orientat
  - **needleSide**: defines a side on which needle at the bar should be drawn. Available values are: *"left", "right", "both"*. Default value is "both" - on the both sides of a gauge bar. For horizontally aligned gauges "left" value means top position, "right" value means bottom position.
  - **numberSide**: defines a side on which tick numbers should be drawn. Available values are: *"left", "right", "both"*. Default value is "both" - on the both sides of a gauge bar. For horizontally aligned gauges "left" value means top position, "right" value means bottom position.
 
-#### Ticks Options
+#### Ticks Bar Options
 
  - **ticksWidth**: defines a length of major ticks width (and width of ticks bar overall) in relative units.
  - **ticksWidthMinor**: defines a length of minor tick lines in relative units.
@@ -279,7 +283,7 @@ Horizontal gauge drawing has a limitation of drawing value box. In this orientat
 
 Radial gauge controls has their specific customization options, which are enables to drastically customize its view to make it look, for example, like manometer or compass or any other radial-kind of the tool possible too imagine.
 
-#### Bar Options 
+#### Ticks Bar Options 
  
  - **ticksAngle**: defines a max angle for ticks bar. By default is 270 degrees. If 360 degrees specified ticks bar fills the whole circle.
  - **startAngle**: defines a start angle using which ticks bar starts. By default is 45 degrees.
@@ -300,6 +304,7 @@ Radial gauge controls has their specific customization options, which are enable
 #### Animation Options
 
  - **animationTarget**: defines which part of the gauge should be animated when changing the value. Could be one of 'needle' (default) or 'plate' values. When 'plate' is selected then gauge will animate ticks bar instead of animating the needle.
+ - **useMinPath** - boolean. Applicable only to radial gauges which have full 360-degree ticks plate. If set to true for these kind of gauges will rotate needle/plate by a minimal rotation path.
 
 </div><!-- /.medium-8.columns -->
 </div><!-- /.row -->

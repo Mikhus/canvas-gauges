@@ -44,6 +44,18 @@
         return value;
     }
 
+    function prettify(attr) {
+        if (~attr.indexOf('&quot;')) {
+            attr = attr.replace(/"/g, '\'').replace(/&quot;/g, '"')
+                .replace(/\s{2,}/g, '')
+                .replace(/\[\{/, '[\n        {')
+                .replace(/}*,\s*\{/, '},\n        {')
+                .replace(/}]/, '}\n    ]');
+        }
+
+        return attr;
+    }
+
     function toJs(src) {
         try {
             var code = 'var gauge = ';
@@ -68,13 +80,17 @@
                     var attr = src.attributes[i];
 
                     if (attr.name && attr.name !== 'data-type') {
+                        var attrValue = JSON
+                            .stringify(parse(attr.value), null, 4)
+                            .split(/\r?\n/)
+                            .map(function (line, i) {
+                                return (i ? '    ' : '') + line;
+                            })
+                            .join('\n');
+
                         code += '    ' +
                             toOption(attr.name.replace(/^data-/, '')) + ': ' +
-                            JSON.stringify(parse(attr.value), null, 4)
-                                .split(/\r?\n/)
-                                .map(function (line, i) {
-                                    return (i ? '    ' : '') + line;
-                                }).join('\n') + ',\n';
+                            attrValue + ',\n';
                     }
                 }
             }
@@ -148,8 +164,12 @@
             });
 
             if (code.length > 80) {
-                code = code.replace(/(\w+=".*?")\s/g, '$1\n    ')
-                    .replace(/(\w+=".*?")>/g, '$1\n>');
+                code = code.replace(/(\w+="[\s\S]*?")\s/g, function() {
+                        return prettify(arguments[1]) + '\n    ';
+                    })
+                    .replace(/(\w+="[\s\S]*?")>/g, function() {
+                        return prettify(arguments[1]) + '\n>';
+                    });
             }
 
             body.append(tabs);
