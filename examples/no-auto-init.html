@@ -3,7 +3,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>Gauge Test</title>
-    <script>var GAUGE_NO_AUTO_INIT = true;</script>
+    <script>window.GAUGES_NO_AUTO_INIT = true;</script>
     <script src="../gauge.min.js"></script>
     <style>body {
         padding: 0;
@@ -12,6 +12,8 @@
     }</style>
 </head>
 <body>
+<button onclick="initManually()">Init gauges</button>
+<hr>
 
 <canvas  data-type="radial-gauge"
          data-min-value="0"
@@ -101,9 +103,12 @@
 ></canvas>
 
 <script>
-var collection = document.getElementsByTagName('canvas');
-for (var i = 0, s = collection.length; i < s; i++) {
-    BaseGauge.fromElement(collection[i]);
+function initManually() {
+    var collection = document.getElementsByTagName('canvas');
+
+    for (var i = 0, s = collection.length; i < s; i++) {
+        BaseGauge.fromElement(collection[i]);
+    }
 }
 </script>
 </body>
