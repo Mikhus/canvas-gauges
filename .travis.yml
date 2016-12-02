@@ -1,9 +1,12 @@
-sudo: required  
+sudo: required
 dist: trusty
 language: node_js
 node_js:
+  - "7"
   - "6"
 before_install:
+  - source /opt/jdk_switcher/jdk_switcher.sh
+  - jdk_switcher use oraclejdk8
   - export CHROME_BIN=/usr/bin/google-chrome
   - export DISPLAY=:99.0
   - sh -e /etc/init.d/xvfb start
