@@ -35,3 +35,18 @@ A bit more custom views:
 ## Other Custom Linear Gauges
 
 {% include examples/linear-gauges.html %}
+
+## More Examples From Source Code
+
+The examples below mainly used to test/observe some selected gauges features. Feel free to learn how to do different things using the examples and their source code.
+
+ - [Radial gauges as HTML components](https://rawgit.com/Mikhus/canvas-gauges/master/examples/radial-component.html) [[Source](https://github.com/Mikhus/canvas-gauges/blob/master/examples/radial-component.html)]
+  - [Linear gauges as HTML components](https://rawgit.com/Mikhus/canvas-gauges/master/examples/linear-component.html) [[Source](https://github.com/Mikhus/canvas-gauges/blob/master/examples/linear-component.html)]
+ - [Async loading](https://rawgit.com/Mikhus/canvas-gauges/master/examples/async.html) [[Source](https://github.com/Mikhus/canvas-gauges/blob/master/examples/async.html)]
+ - [Using events](https://rawgit.com/Mikhus/canvas-gauges/master/examples/events.html) [[Source](https://github.com/Mikhus/canvas-gauges/blob/master/examples/events.html)]
+ - [Setting values](https://rawgit.com/Mikhus/canvas-gauges/master/examples/issue-63.html) [[Source](https://github.com/Mikhus/canvas-gauges/blob/master/examples/issue-63.html)]
+ - [Linear gauges with non-zero min value](https://rawgit.com/Mikhus/canvas-gauges/master/examples/linear-min-non-zero.html) [[Source](https://github.com/Mikhus/canvas-gauges/blob/master/examples/linear-min-non-zero.html)]
+ - [Deferred initialization of HTML components](https://rawgit.com/Mikhus/canvas-gauges/master/examples/no-auto-init.html) [[Source](https://github.com/Mikhus/canvas-gauges/blob/master/examples/no-auto-init.html)]
+ - [Outranged values](https://rawgit.com/Mikhus/canvas-gauges/master/examples/outrange.html) [[Source](https://github.com/Mikhus/canvas-gauges/blob/master/examples/outrange.html)]
+ - [Using min path of rotation at 360-degree radial gauges](https://rawgit.com/Mikhus/canvas-gauges/master/examples/radial-min-path.html) [[Source](https://github.com/Mikhus/canvas-gauges/blob/master/examples/radial-min-path.html)]
+ - [Scripted gauge initialization](https://rawgit.com/Mikhus/canvas-gauges/master/examples/scripted.html) [[Source](https://github.com/Mikhus/canvas-gauges/blob/master/examples/scripted.html)]
