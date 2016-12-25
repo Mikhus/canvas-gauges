@@ -124,7 +124,7 @@ Common configuration options are spread across all type of the gauges means they
 
 Tick bars on a gauge representing the measuring system which visualize the gauge measuring intervals and the currently upset value. It should be upset in mind that ticks configuration must be relied properly on a given *minValue* and *maxValue* or you could get confusing display result otherwise.
 
- - **majorTicks**: expected to be an array of numeric or string values which will be displayed on a gauge bar as major ticks.
+ - **majorTicks**: expected to be an array of numeric or string values which will be displayed on a gauge bar as major ticks. This array defines a labels for the ticks. Array length defines a number of sections on a ticks bar. 
  - **minorTicks**: is an integer number which defines how many minor ticks have to be drawn between two neighbour major ticks.
  - **strokeTicks**: boolean value defining if ticks bar of the gauge should be stroked or not. This relies only to a visual effect.
  - **majorTicksInt**: integer which defines how many numeric positions should be used to display integer part of the tick number.

@@ -1,11 +1,11 @@
 {
-  "coverage": "95.04%",
-  "expectCount": 101,
-  "actualCount": 96,
+  "coverage": "95.09%",
+  "expectCount": 102,
+  "actualCount": 97,
   "files": {
     "lib/Animation.js": {
-      "expectCount": 9,
-      "actualCount": 9,
+      "expectCount": 10,
+      "actualCount": 10,
       "undocumentLines": []
     },
     "lib/BaseGauge.js": {
@@ -42,7 +42,7 @@
       "expectCount": 5,
       "actualCount": 4,
       "undocumentLines": [
-        1203
+        1208
       ]
     },
     "lib/RadialGauge.js": {

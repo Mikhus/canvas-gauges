@@ -480,6 +480,12 @@ window.esdocSearchIndex = [
     "method"
   ],
   [
+    "lib/animation.js~animation#cancel",
+    "class/lib/Animation.js~Animation.html#instance-method-cancel",
+    "lib/Animation.js~Animation#cancel",
+    "method"
+  ],
+  [
     "lib/animation.js~animation#constructor",
     "class/lib/Animation.js~Animation.html#instance-constructor-constructor",
     "lib/Animation.js~Animation#constructor",
