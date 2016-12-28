@@ -664,37 +664,39 @@ function drawLinearTick(context, x1, y1, x2, y2) {
  *
  * @param {Canvas2DContext} context
  * @param {string} color
- * @param {number} ticksSize
- * @param {number} deltaLen
+ * @param {number[]} ticks
+ * @param {number} minVal
+ * @param {number} maxVal
  * @param {boolean} hasLeft
  * @param {boolean} hasRight
  * @param {number} lineWidth
  * @param {number} lineLength
  */
-function drawLinearTicks(context,  color, ticksSize, deltaLen,
+function drawLinearTicks(context,  color, ticks, minVal, maxVal,
                          hasLeft, hasRight, lineWidth, lineLength)
 {
     let {isVertical, length, barWidth, barOffset, barMargin,
         pixelRatio, width, X, Y, ticksLength, ticksPadding} =
-            context.barDimensions;
+        context.barDimensions;
     let tickOffset = (width - barWidth) / 2;
     let tickX, tickY;
     let i = 0;
     let tickLen = lineLength * width;
     let tickLeft = tickOffset - ticksPadding * width;
     let tickRight = tickOffset + barWidth + tickLen + ticksPadding * width;
-    let tickSpace = ticksLength / (ticksSize - deltaLen);
     let colors = color instanceof Array ?
-        color : new Array(ticksSize).fill(color);
+        color : new Array(ticks.length).fill(color);
 
     context.lineWidth = lineWidth * pixelRatio;
     context.save();
 
-    for (; i &lt; ticksSize; i++) {
-        context.strokeStyle = colors[i];
+    let ratio = ticksLength / (maxVal - minVal);
+    for (let val of ticks) {
+        context.strokeStyle = colors[ticks.indexOf(val)];
 
         if (isVertical) {
-            tickY = Y + length - barMargin - barOffset - i * tickSpace;
+            tickY = Y + length - barMargin - barOffset
+                + (minVal - val) * ratio;
 
             if (hasLeft) {
                 tickX = X + tickLeft;
@@ -712,7 +714,8 @@ function drawLinearTicks(context,  color, ticksSize, deltaLen,
         }
 
         else {
-            tickX = X + barMargin + barOffset + i * tickSpace;
+            tickX = X + barMargin + barOffset
+                - (minVal - val) * ratio;
 
             if (hasLeft) {
                 tickY = Y + tickLeft;
@@ -741,12 +744,18 @@ function drawLinearTicks(context,  color, ticksSize, deltaLen,
 function drawLinearMajorTicks(context, options) {
     let [hasLeft, hasRight] = drawings.prepareTicks(options);
     let lineWidth = 2;
+    let valuePerNonExactTick = (options.maxValue - options.minValue) /
+        (options.majorTicks.length - 1);
     let colors = options.colorMajorTicks instanceof Array ?
         options.colorMajorTicks :
-        new Array(options.colorMajorTicks.length).fill(options.colorMajorTicks);
+        new Array(options.majorTicks.length).fill(options.colorMajorTicks);
+    let ticks = options.exactTicks ? options.majorTicks :
+        options.majorTicks.map((tick, i) =&gt; {
+            return options.minValue + valuePerNonExactTick * i;
+        });
 
-    drawLinearTicks(context, options.colorMajorTicks, options.majorTicks.length,
-        1, hasLeft, hasRight, lineWidth, options.ticksWidth / 100);
+    drawLinearTicks(context, colors, ticks, options.minValue, options.maxValue,
+        hasLeft, hasRight, lineWidth, options.ticksWidth / 100);
 
     if (options.strokeTicks) {
         let {isVertical, length, width, barWidth, barMargin, barOffset, X, Y,
@@ -823,9 +832,27 @@ function drawLinearTickStroke(context, sX, sY, eX, eY) {
  */
 function drawLinearMinorTicks(context, options) {
     let [hasLeft, hasRight] = drawings.prepareTicks(options);
+    let ticks = [];
+    let i = options.minValue;
+    let valuePerNonExactTick = (options.maxValue - options.minValue) /
+        (options.minorTicks * (options.majorTicks.length - 1));
+
+    if (options.exactTicks) {
+        let delta = options.majorTicks[0] % options.minorTicks;
+
+        for (; i &lt; options.maxValue; i += options.minorTicks) {
+            ticks.push(delta + i);
+        }
+    }
+
+    else {
+        for (; i &lt; options.maxValue; i += valuePerNonExactTick) {
+            ticks.push(i);
+        }
+    }
 
     drawLinearTicks(context, options.colorMinorTicks,
-        options.minorTicks * (options.majorTicks.length - 1), 0,
+        ticks, options.minValue, options.maxValue,
         hasLeft, hasRight, 1, options.ticksWidthMinor / 100);
 }
 
@@ -840,7 +867,14 @@ function drawLinearMajorTicksNumbers(context, options) {
     let {isVertical, length, width, barWidth,
         barMargin, barOffset, X, Y, ticksLength, ticksPadding} =
             context.barDimensions;
-    let ticks = options.majorTicks.length;
+    let range = (options.maxValue - options.minValue);
+    let valuePerNonExactTick = range /
+        (options.majorTicks.length - 1);
+    let tickValues = options.exactTicks ? options.majorTicks :
+        options.majorTicks.map((tick, i) =&gt; {
+            return options.minValue + valuePerNonExactTick * i;
+        });
+    let ticks = tickValues.length;
     let hasLeft = options.numberSide !== &apos;right&apos;;
     let hasRight = options.numberSide !== &apos;left&apos;;
     let textHeight = options.fontNumbersSize * width / 200;
@@ -859,7 +893,9 @@ function drawLinearMajorTicksNumbers(context, options) {
     for (; i &lt; ticks; i++) {
         context.fillStyle = colors[i];
         tick = options.majorTicks[i];
-        numberOffset = i * ticksLength / (ticks - 1);
+        numberOffset = options.exactTicks ?
+            ticksLength * ((tickValues[i] - options.minValue) / range) :
+            i * ticksLength / (ticks - 1);
 
         if (isVertical) {
             textY = Y + length - barMargin - barOffset - numberOffset
