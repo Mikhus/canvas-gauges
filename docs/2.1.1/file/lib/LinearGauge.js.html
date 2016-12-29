@@ -885,6 +885,7 @@ function drawLinearMajorTicksNumbers(context, options) {
     let textX, textY, textWidth, numberOffset, tick;
     let colors = options.colorNumbers instanceof Array ?
         options.colorNumbers : new Array(ticks).fill(options.colorNumbers);
+    let textMargin = options.numbersMargin / 100 * width;
 
     context.font = drawings.font(options, &apos;Numbers&apos;, width / 200);
     context.lineWidth = 0;
@@ -903,12 +904,12 @@ function drawLinearMajorTicksNumbers(context, options) {
 
             if (hasLeft) {
                 context.textAlign = &apos;right&apos;;
-                context.fillText(tick, X + numLeft, textY);
+                context.fillText(tick, X + numLeft - textMargin, textY);
             }
 
             if (hasRight) {
                 context.textAlign = &apos;left&apos;;
-                context.fillText(tick, X + numRight, textY);
+                context.fillText(tick, X + numRight + textMargin, textY);
             }
         }
 
@@ -917,11 +918,12 @@ function drawLinearMajorTicksNumbers(context, options) {
             textX = X + barMargin + barOffset + numberOffset;
 
             if (hasLeft) {
-                context.fillText(tick, textX, Y + numLeft);
+                context.fillText(tick, textX, Y + numLeft - textMargin);
             }
 
             if (hasRight) {
-                context.fillText(tick, textX, Y + numRight + textHeight);
+                context.fillText(tick, textX, Y + numRight + textHeight +
+                    textMargin);
             }
         }
     }

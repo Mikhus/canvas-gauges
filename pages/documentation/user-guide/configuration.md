@@ -137,7 +137,8 @@ Tick bars on a gauge representing the measuring system which visualize the gauge
  - **majorTicksInt**: integer which defines how many numeric positions should be used to display integer part of the tick number.
  - **majorTicksDec**: integer which defines how many positions should be used to display decimal part of the tick number.
  - **highlights**: an array of highlights objects, which configures color-highlighted areas on a ticks bar. Each highlight object defines an area to colorize starting **from** value **to** value and using a given **color**, like this: ```{ from: number, to: number, color: string }```
-  - **highlightsWidth**: sets the width of highlights area in relative units. 
+  - **highlightsWidth**: sets the width of highlights area in relative units.
+  - **numbersMargin**: defines a margin for tick labels (numbers) in relative units. By default is 1.
 
 #### Progress Bar Options
 
