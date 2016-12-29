@@ -1,0 +1,130 @@
+<!doctype html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Gauge Test</title>
+    <script src="../gauge.min.js"></script>
+    <style>body {
+        padding: 0;
+        margin: 0;
+        background: #fff
+    }</style>
+</head>
+<body>
+
+<button onclick="animateGauges()">Animate</button>
+<button onclick="stopGaugesAnimation()">Stop animation</button>
+
+<hr>
+
+<canvas  data-type="radial-gauge"
+         data-min-value="13"
+         data-max-value="87"
+         data-exact-ticks="true"
+         data-major-ticks="13,20,25,38,50,62,80,87"
+         data-minor-ticks="2"
+         data-highlights="0"
+         data-width="500"
+         data-height="500"
+></canvas>
+
+<canvas  data-type="radial-gauge"
+         data-min-value="13"
+         data-max-value="87"
+         data-exact-ticks="true"
+         data-major-ticks="13,20,25,38,50,62,80,87"
+         data-minor-ticks="2"
+         data-highlights="0"
+         data-width="500"
+         data-height="500"
+         data-font-numbers-size="10"
+></canvas>
+
+<canvas  data-type="radial-gauge"
+         data-min-value="13"
+         data-max-value="87"
+         data-exact-ticks="true"
+         data-major-ticks="13,20,25,38,50,62,80,87"
+         data-minor-ticks="2"
+         data-highlights="0"
+         data-width="500"
+         data-height="500"
+         data-font-numbers-size="20"
+></canvas>
+
+<canvas  data-type="radial-gauge"
+         data-min-value="13"
+         data-max-value="87"
+         data-exact-ticks="true"
+         data-major-ticks="13,20,25,38,50,62,80,87"
+         data-minor-ticks="2"
+         data-highlights="0"
+         data-width="500"
+         data-height="500"
+         data-font-numbers-size="30"
+></canvas>
+
+<canvas  data-type="radial-gauge"
+         data-min-value="13"
+         data-max-value="87"
+         data-exact-ticks="true"
+         data-major-ticks="13,20,25,38,50,62,80,87"
+         data-minor-ticks="2"
+         data-highlights="0"
+         data-width="500"
+         data-height="500"
+         data-font-numbers-size="40"
+></canvas>
+
+<canvas  data-type="radial-gauge"
+         data-min-value="13"
+         data-max-value="87"
+         data-exact-ticks="true"
+         data-major-ticks="13,20,25,38,50,62,80,87"
+         data-minor-ticks="2"
+         data-highlights="0"
+         data-width="500"
+         data-height="500"
+         data-font-numbers-size="50"
+></canvas>
+
+<script>
+if (!Array.prototype.forEach) {
+    Array.prototype.forEach = function(cb) {
+        var i = 0, s = this.length;
+        for (; i < s; i++) {
+            cb && cb(this[i], i, this);
+        }
+    }
+}
+
+document.fonts && document.fonts.forEach(function(font) {
+    font.loaded.then(function() {
+        if (font.family.match(/Led/)) {
+            document.gauges.forEach(function(gauge) {
+                gauge.update();
+            });
+        }
+    });
+});
+
+var timers = [];
+
+function animateGauges() {
+    document.gauges.forEach(function(gauge) {
+        timers.push(setInterval(function() {
+            gauge.value = Math.random() *
+                (gauge.options.maxValue - gauge.options.minValue) +
+                gauge.options.minValue;
+        }, gauge.animation.duration + 50));
+    });
+}
+
+function stopGaugesAnimation() {
+    timers.forEach(function(timer) {
+        clearInterval(timer);
+    });
+}
+</script>
+</body>
+</html>
