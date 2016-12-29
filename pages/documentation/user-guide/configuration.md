@@ -124,13 +124,21 @@ Common configuration options are spread across all type of the gauges means they
 
 Tick bars on a gauge representing the measuring system which visualize the gauge measuring intervals and the currently upset value. It should be upset in mind that ticks configuration must be relied properly on a given *minValue* and *maxValue* or you could get confusing display result otherwise.
 
- - **majorTicks**: expected to be an array of numeric or string values which will be displayed on a gauge bar as major ticks.
+ - **exactTicks**: boolean flag which switch ticks drawing modes. By default is turned off (false), meaning the tick bar will be drown by the following rules:
+   a) majorTicks array will define a number of **equal by length** sections;
+   b) minorTicks will define a number of ticks to draw between 2 nearest majorTicks.
+ If the value set to true the rules are following:
+   a) majorTicks array will define exact values where major ticks should be drawn (it should be an array of exact values, not arbitrary labels);
+   b) minorTicks defines a value step for drawing minor tick on a bar.
+   See this [example](https://rawgit.com/Mikhus/canvas-gauges/master/examples/exact-ticks-bar.html) [[Source](https://github.com/Mikhus/canvas-gauges/blob/master/examples/exact-ticks-bar.html)] for exact ticks bar configuration and behavior.
+ - **majorTicks**: expected to be an array of numeric or string values which will be displayed on a gauge bar as major ticks. This array defines a labels for the ticks. Array length defines a number of sections on a ticks bar. 
  - **minorTicks**: is an integer number which defines how many minor ticks have to be drawn between two neighbour major ticks.
  - **strokeTicks**: boolean value defining if ticks bar of the gauge should be stroked or not. This relies only to a visual effect.
  - **majorTicksInt**: integer which defines how many numeric positions should be used to display integer part of the tick number.
  - **majorTicksDec**: integer which defines how many positions should be used to display decimal part of the tick number.
  - **highlights**: an array of highlights objects, which configures color-highlighted areas on a ticks bar. Each highlight object defines an area to colorize starting **from** value **to** value and using a given **color**, like this: ```{ from: number, to: number, color: string }```
-  - **highlightsWidth**: sets the width of highlights area in relative units. 
+  - **highlightsWidth**: sets the width of highlights area in relative units.
+  - **numbersMargin**: defines a margin for tick labels (numbers) in relative units. By default is 1.
 
 #### Progress Bar Options
 
