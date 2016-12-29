@@ -50,4 +50,5 @@ The examples below mainly used to test/observe some selected gauges features. Fe
  - [Outranged values](https://rawgit.com/Mikhus/canvas-gauges/master/examples/outrange.html) [[Source](https://github.com/Mikhus/canvas-gauges/blob/master/examples/outrange.html)]
  - [Using min path of rotation at 360-degree radial gauges](https://rawgit.com/Mikhus/canvas-gauges/master/examples/radial-min-path.html) [[Source](https://github.com/Mikhus/canvas-gauges/blob/master/examples/radial-min-path.html)]
  - [Scripted gauge initialization](https://rawgit.com/Mikhus/canvas-gauges/master/examples/scripted.html) [[Source](https://github.com/Mikhus/canvas-gauges/blob/master/examples/scripted.html)]
+ - [Radial gauges with progress bar](https://rawgit.com/Mikhus/canvas-gauges/master/examples/radial-bar.html) [[Source](https://github.com/Mikhus/canvas-gauges/blob/master/examples/radial-bar.html)]
  - [Custom exact-value tick bars](https://rawgit.com/Mikhus/canvas-gauges/master/examples/exact-ticks-bar.html) [[Source](https://github.com/Mikhus/canvas-gauges/blob/master/examples/exact-ticks-bar.html)]
