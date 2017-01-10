@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <base data-ice="baseUrl" href="../../">
+  <title data-ice="title">lib/BaseGauge.js | HTML5 Canvas Gauges API Documentation API Document</title>
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
+  <script src="script/prettify/prettify.js"></script>
+  
+  
+  <script src="script/manual.js"></script>
+<link data-ice="userStyle" rel="stylesheet" href="user/css/0-docs.css">
+</head>
+<body class="layout-container" data-ice="rootContainer">
+
+<header>
+  <a href="./">Home</a>
+  
+  <a href="identifiers.html">Reference</a>
+  <a href="source.html">Source</a>
+  
+  
+  <div class="search-box">
+  <span>
+    <img src="./image/search.png">
+    <span class="search-input-edge"></span><input class="search-input"><span class="search-input-edge"></span>
+  </span>
+    <ul class="search-result"></ul>
+  </div>
+</header>
+
+<nav class="navigation" data-ice="nav"><div>
+  <ul>
+    
+  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/Animation.js~Animation.html">Animation</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/BaseGauge.js~BaseGauge.html">BaseGauge</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/DomObserver.js~DomObserver.html">DomObserver</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/EventEmitter.js~EventEmitter.html">EventEmitter</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/LinearGauge.js~LinearGauge.html">LinearGauge</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/RadialGauge.js~RadialGauge.html">RadialGauge</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/SmartCanvas.js~SmartCanvas.html">SmartCanvas</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-Collection">Collection</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-drawShadow">drawShadow</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-drawValueBox">drawValueBox</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-font">font</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-formatMajorTickNumber">formatMajorTickNumber</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-linearGradient">linearGradient</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-normalizedValue">normalizedValue</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-padValue">padValue</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-radialPoint">radialPoint</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-radians">radians</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-roundRect">roundRect</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-verifyError">verifyError</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-vendorize">vendorize</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-EventEmitter">EventEmitter</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-GenericOptions">GenericOptions</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-drawings">drawings</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-AnimationRule">AnimationRule</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-AnimationRules">AnimationRules</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-DrawEventCallback">DrawEventCallback</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-EndEventCallback">EndEventCallback</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-GaugeInterface">GaugeInterface</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-Highlight">Highlight</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-RenderTarget">RenderTarget</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-LinearGaugeOptions">LinearGaugeOptions</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-RadialGaugeOptions">RadialGaugeOptions</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/JSON">JSON</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array/fill">Array.fill</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array/indexOf">Array.indexOf</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object/assign">Object.assign</a></span></span></li>
+</ul>
+</div>
+</nav>
+
+<div class="content" data-ice="content"><h1 data-ice="title">lib/BaseGauge.js</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">/*!
+ * The MIT License (MIT)
+ *
+ * Copyright (c) 2016 Mykhailo Stadnyk &lt;mikhus@gmail.com&gt;
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the &quot;Software&quot;), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
+require(&apos;./polyfill&apos;);
+
+const SmartCanvas = require(&apos;./SmartCanvas&apos;);
+const Animation = require(&apos;./Animation&apos;);
+const Collection = require(&apos;./Collection&apos;);
+const DomObserver = require(&apos;./DomObserver&apos;);
+const EventEmitter = require(&apos;./EventEmitter&apos;);
+
+const version = &apos;%VERSION%&apos;;
+
+const round = Math.round;
+const abs = Math.abs;
+
+let gauges = new Collection();
+
+gauges.version = version;
+
+/**
+ * Basic abstract BaseGauge class implementing common functionality
+ * for different type of gauges.
+ *
+ * It should not be instantiated directly but must be extended by a final
+ * gauge implementation.
+ *
+ * @abstract
+ * @example
+ *
+ * class MyCoolGauge extends BaseGauge {
+ *
+ *     // theses methods below MUST be implemented:
+ *
+ *     constructor(options) {
+ *        // ... do something with options
+ *        super(options);
+ *        // ... implement anything else
+ *     }
+ *
+ *     draw() {
+ *         // ... some implementation here
+ *         return this;
+ *     }
+ * }
+ */
+export default class BaseGauge extends EventEmitter {
+
+    /**
+     * Fired each time gauge is initialized on a page
+     *
+     * @event BaseGauge#init
+     */
+
+    /**
+     * Fired each time gauge scene is rendered
+     *
+     * @event BaseGauge#render
+     */
+
+    /**
+     * Fired each time gauge object is destroyed
+     *
+     * @event BaseGauge#destroy
+     */
+
+    /**
+     * Fired each time before animation is started on the gauge
+     *
+     * @event BaseGauge#animationStart
+     */
+
+    /**
+     * Fired each time animation scene is complete
+     *
+     * @event BaseGauge#animate
+     * @type {number} percent
+     * @type {number} value
+     */
+
+    /**
+     * Fired each time animation is complete on the gauge
+     *
+     * @event BaseGauge#animationEnd
+     */
+
+    /**
+     * @constructor
+     * @abstract
+     * @param {GenericOptions} options
+     */
+    constructor(options) {
+        super();
+
+        let className = this.constructor.name;
+
+        if (className === &apos;BaseGauge&apos;) {
+            throw new TypeError(&apos;Attempt to instantiate abstract class!&apos;);
+        }
+
+        gauges.push(this);
+
+        //noinspection JSUnresolvedVariable
+        /**
+         * Gauges version string
+         *
+         * @type {string}
+         */
+        this.version = version;
+
+        /**
+         * Gauge type class
+         *
+         * @type {BaseGauge} type
+         */
+        this.type = ns[className] || BaseGauge;
+
+        /**
+         * True if gauge has been drawn for the first time, false otherwise.
+         *
+         * @type {boolean}
+         */
+        this.initialized = false;
+
+        options.minValue = parseFloat(options.minValue);
+        options.maxValue = parseFloat(options.maxValue);
+        options.value = parseFloat(options.value) || 0;
+
+        if (!options.borders) {
+            options.borderInnerWidth = options.borderMiddleWidth =
+                options.borderOuterWidth = 0;
+        }
+
+        if (!options.renderTo) {
+            throw TypeError(&apos;Canvas element was not specified when creating &apos; +
+                &apos;the Gauge object!&apos;);
+        }
+
+        let canvas = options.renderTo.tagName ?
+            options.renderTo :
+            /* istanbul ignore next: to be tested with e2e tests */
+            document.getElementById(options.renderTo);
+
+        if (!(canvas instanceof HTMLCanvasElement)) {
+            throw TypeError(&apos;Given gauge canvas element is invalid!&apos;);
+        }
+
+        options.width = parseFloat(options.width) || 0;
+        options.height = parseFloat(options.height) || 0;
+
+        if (!options.width || !options.height) {
+            if (!options.width) options.width = canvas.parentNode ?
+                canvas.parentNode.offsetWidth : canvas.offsetWidth;
+            if (!options.height) options.height = canvas.parentNode ?
+                canvas.parentNode.offsetHeight : canvas.offsetHeight;
+        }
+
+        /**
+         * Gauge options
+         *
+         * @type {GenericOptions} options
+         */
+        this.options = options || {};
+
+        if (this.options.animateOnInit) {
+            this._value = this.options.value;
+            this.options.value = this.options.minValue;
+        }
+
+        /**
+         * @type {SmartCanvas} canvas
+         */
+        this.canvas = new SmartCanvas(canvas, options.width, options.height);
+        this.canvas.onRedraw = this.draw.bind(this);
+
+        /**
+         * @type {Animation} animation
+         */
+        this.animation = new Animation(
+            options.animationRule,
+            options.animationDuration);
+    }
+
+    /**
+     * Sets new value for this gauge.
+     * If gauge is animated by configuration it will trigger a proper animation.
+     * Upsetting a value triggers gauge redraw.
+     *
+     * @param {number} value
+     */
+    set value(value) {
+        value = BaseGauge.ensureValue(value, this.options.minValue);
+
+        let fromValue = this.options.value;
+
+        if (value === fromValue) return;
+
+        if (this.options.animation) {
+            if (this.animation.frame) {
+                // animation is already in progress -
+                // forget related old animation value
+                // @see https://github.com/Mikhus/canvas-gauges/issues/94
+                delete this._value;
+            }
+
+            /**
+             * @type {number}
+             * @access private
+             */
+            if (this._value === undefined) {
+                this._value = value;
+            }
+
+            this.emit(&apos;animationStart&apos;);
+
+            this.animation.animate(percent =&gt; {
+                this.options.value = fromValue + (value - fromValue) * percent;
+
+                this.draw();
+
+                this.emit(&apos;animate&apos;, percent, this.options.value);
+            }, () =&gt; {
+                if (this._value !== undefined) {
+                    this.options.value = this._value;
+                    delete this._value;
+                }
+
+                this.draw();
+                this.emit(&apos;animationEnd&apos;);
+            });
+        }
+
+        else {
+            this.options.value = value;
+            this.draw();
+        }
+    }
+
+    /**
+     * Returns current value of the gauge
+     *
+     * @return {number}
+     */
+    get value() {
+        return typeof this._value === &apos;undefined&apos; ?
+            this.options.value : this._value;
+    }
+
+    /**
+     * Updates gauge options
+     *
+     * @param {*} options
+     * @return {BaseGauge}
+     * @access protected
+     */
+    static configure(options) {
+        return options;
+    }
+
+    /**
+     * Updates gauge configuration options at runtime and redraws the gauge
+     *
+     * @param {RadialGaugeOptions} options
+     * @returns {BaseGauge}
+     */
+    update(options) {
+        Object.assign(this.options, this.type.configure(options || {}));
+
+        this.canvas.width = this.options.width;
+        this.canvas.height = this.options.height;
+
+        this.animation.rule = this.options.animationRule;
+        this.animation.duration = this.options.animationDuration;
+
+        this.canvas.redraw();
+
+        return this;
+    }
+
+    /**
+     * Performs destruction of this object properly
+     */
+    destroy() {
+        let index = gauges.indexOf(this);
+
+        /* istanbul ignore else */
+        if (~index) {
+            //noinspection JSUnresolvedFunction
+            gauges.splice(index, 1);
+        }
+
+        this.canvas.destroy();
+        this.canvas = null;
+
+        this.animation.destroy();
+        this.animation = null;
+
+        this.emit(&apos;destroy&apos;);
+    }
+
+    /**
+     * Returns gauges version string
+     *
+     * @return {string}
+     */
+    static get version() {
+        return version;
+    }
+
+    /**
+     * Triggering gauge render on a canvas.
+     *
+     * @abstract
+     * @returns {BaseGauge}
+     */
+    draw() {
+        if (this.options.animateOnInit &amp;&amp; !this.initialized) {
+            this.value = this._value;
+            this.initialized = true;
+            this.emit(&apos;init&apos;);
+        }
+
+        this.emit(&apos;render&apos;);
+
+        return this;
+    }
+
+    /**
+     * Inject given gauge object into DOM
+     *
+     * @param {string} type
+     * @param {GenericOptions} options
+     */
+    static initialize(type, options) {
+        return new DomObserver(options, &apos;canvas&apos;, type);
+    }
+
+    /**
+     * Initializes gauge from a given HTML element
+     * (given element should be valid HTML canvas gauge definition)
+     *
+     * @param {HTMLElement} element
+     */
+    static fromElement(element) {
+        let type = DomObserver.toCamelCase(element.getAttribute(&apos;data-type&apos;));
+        let attributes = element.attributes;
+        let i = 0;
+        let s = attributes.length;
+        let options = {};
+
+        if (!type) {
+            return ;
+        }
+
+        if (!/Gauge$/.test(type)) {
+            type += &apos;Gauge&apos;;
+        }
+
+        for (; i &lt; s; i++) {
+            options[
+                DomObserver.toCamelCase(
+                    attributes[i].name.replace(/^data-/, &apos;&apos;),
+                    false)
+            ] = DomObserver.parse(attributes[i].value);
+        }
+
+        new DomObserver(options, element.tagName, type).process(element);
+    }
+
+    /**
+     * Ensures value is proper number
+     *
+     * @param {*} value
+     * @param {number} min
+     * @return {number}
+     */
+    static ensureValue(value, min = 0) {
+        value = parseFloat(value);
+
+        if (isNaN(value) || !isFinite(value)) {
+            value = parseFloat(min) || 0;
+        }
+
+        return value;
+    }
+}
+
+
+/**
+ * @ignore
+ * @typedef {object} ns
+ */
+/* istanbul ignore if */
+if (typeof ns !== &apos;undefined&apos;) {
+    ns[&apos;BaseGauge&apos;] = BaseGauge;
+    ns[&apos;gauges&apos;] = (window.document || {})[&apos;gauges&apos;] = gauges;
+}
+
+module.exports = BaseGauge;
+</code></pre>
+
+</div>
+
+<footer class="footer">
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(0.4.8)</span></a>
+</footer>
+
+<script src="script/search_index.js"></script>
+<script src="script/search.js"></script>
+<script src="script/pretty-print.js"></script>
+<script src="script/inherited-summary.js"></script>
+<script src="script/test-summary.js"></script>
+<script src="script/inner-link.js"></script>
+<script src="script/patch-for-local.js"></script>
+</body>
+</html>
