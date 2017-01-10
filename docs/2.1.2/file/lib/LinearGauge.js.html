@@ -681,6 +681,8 @@ function drawLinearTicks(context,  color, ticks, minVal, maxVal,
     let tickOffset = (width - barWidth) / 2;
     let tickX, tickY;
     let i = 0;
+    let s = ticks.length;
+    let val;
     let tickLen = lineLength * width;
     let tickLeft = tickOffset - ticksPadding * width;
     let tickRight = tickOffset + barWidth + tickLen + ticksPadding * width;
@@ -691,8 +693,9 @@ function drawLinearTicks(context,  color, ticks, minVal, maxVal,
     context.save();
 
     let ratio = ticksLength / (maxVal - minVal);
-    for (let val of ticks) {
-        context.strokeStyle = colors[ticks.indexOf(val)];
+    for (; i &lt; s; i++) {
+        val = ticks[i];
+        context.strokeStyle = colors[i];
 
         if (isVertical) {
             tickY = Y + length - barMargin - barOffset
