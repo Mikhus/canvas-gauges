@@ -837,20 +837,24 @@ function drawLinearMinorTicks(context, options) {
     let [hasLeft, hasRight] = drawings.prepareTicks(options);
     let ticks = [];
     let i = options.minValue;
-    let valuePerNonExactTick = (options.maxValue - options.minValue) /
-        (options.minorTicks * (options.majorTicks.length - 1));
+    let minTicks = Math.abs(options.minorTicks) || 0;
+    let valuePerNonExactTick = minTicks ?
+        (options.maxValue - options.minValue) /
+        (minTicks * (options.majorTicks.length - 1)) : 0;
 
-    if (options.exactTicks) {
-        let delta = options.majorTicks[0] % options.minorTicks;
+    if (minTicks) {
+        if (options.exactTicks) {
+            let delta = (options.majorTicks[0] % minTicks) || 0;
 
-        for (; i &lt; options.maxValue; i += options.minorTicks) {
-            ticks.push(delta + i);
+            for (; i &lt; options.maxValue; i += minTicks) {
+                ticks.push(delta + i);
+            }
         }
-    }
 
-    else {
-        for (; i &lt; options.maxValue; i += valuePerNonExactTick) {
-            ticks.push(i);
+        else {
+            for (; i &lt; options.maxValue; i += valuePerNonExactTick) {
+                ticks.push(i);
+            }
         }
     }
 
