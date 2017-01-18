@@ -289,14 +289,23 @@ export default class BaseGauge extends EventEmitter {
 
         let fromValue = this.options.value;
 
-        if (value === fromValue) return;
+        if (value === fromValue) {
+            return ;
+        }
 
         if (this.options.animation) {
             if (this.animation.frame) {
                 // animation is already in progress -
                 // forget related old animation value
                 // @see https://github.com/Mikhus/canvas-gauges/issues/94
-                delete this._value;
+                this.options.value = this._value;
+
+                // if there is no actual value change requested stop it
+                if (this._value === value) {
+                    this.animation.cancel();
+                    delete this._value;
+                    return ;
+                }
             }
 
             /**

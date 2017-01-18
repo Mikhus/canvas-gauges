@@ -192,12 +192,23 @@ function step(time, draw, start, rule, duration, end, anim) {
 
     let progress = time - start;
     let percent = progress / duration;
+    let animationTransformed = 0;
 
     if (percent &gt; 1) {
         percent = 1;
     }
 
-    draw &amp;&amp; draw(percent === 1 ? percent : rule(percent));
+    if (percent !== 1) {
+        animationTransformed = rule(percent);
+
+        // make sure we have correct number after applying animation
+        // transformation
+        if (isFinite(animationTransformed) &amp;&amp; !isNaN(animationTransformed)) {
+            percent = animationTransformed;
+        }
+    }
+
+    draw &amp;&amp; draw(percent);
 
     if (progress &lt; duration) {
         anim.frame = requestAnimationFrame(time =&gt;
@@ -207,6 +218,7 @@ function step(time, draw, start, rule, duration, end, anim) {
 
     else {
         end &amp;&amp; end();
+        anim.inProgress = false;
     }
 }
 
@@ -329,7 +341,7 @@ export default class Animation {
      * @param {EndEventCallback} [end]
      */
     animate(draw, end) {
-        this.cancel();
+        this.frame &amp;&amp; this.cancel();
 
         // noinspection JSUnresolvedVariable
         const start = window.performance &amp;&amp; window.performance.now ?
@@ -338,6 +350,9 @@ export default class Animation {
 
         draw = draw || this.draw;
         end = end || this.end;
+
+        this.draw = draw;
+        this.end = end;
 
         /**
          * Current requested animation frame identifier
