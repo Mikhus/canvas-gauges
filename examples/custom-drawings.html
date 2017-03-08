@@ -12,6 +12,7 @@
 <button onclick="stopGaugesAnimation()">Stop animation</button>
 <input type="text" id="gauge-size" value="400">
 <button onclick="resize()">Resize</button>
+<button onclick="updateUnits()">Change units</button>
 
 <hr>
 
@@ -113,6 +114,12 @@ function resize() {
     });
 }
 
+function updateUnits() {
+    document.gauges.forEach(function (gauge) {
+        gauge.update({ units: 'Miles' });
+    });
+}
+
 function setText() {
     var text = document.getElementById('gauge-text').value;
 
@@ -152,7 +159,15 @@ window.onload = function() {
         // draw circle using canvas JS API
         context.beginPath();
         context.arc(centerX, centerY, radius, 0, 2 * Math.PI, false);
-        context.fillStyle = this.options.value <= 0 ? '#00f' : '#f00';
+
+        var gradient = context.createRadialGradient(
+            centerX, centerY, 0,
+            centerX, centerY, radius);
+        gradient.addColorStop(0, this.options.value <= 0 ? '#aaf' : '#faa');
+        gradient.addColorStop(0.82, this.options.value <= 0 ? '#00f' : '#f00');
+        gradient.addColorStop(1, this.options.value <= 0 ? '#88a' : '#a88');
+
+        context.fillStyle = gradient;
         context.fill();
         context.closePath();
 
