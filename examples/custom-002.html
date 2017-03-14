@@ -82,6 +82,14 @@
             }, gauge.animation.duration + 50));
         });
     }
+
+    window.addEventListener('load', function() {
+        document.gauges.forEach(function(gauge) {
+            gauge.on('animate', function(percent, value) {
+                gauge.update({ units: parseInt(value, 10) + ' hPa' });
+            });
+        });
+    });
 </script>
 </body>
 </html>
