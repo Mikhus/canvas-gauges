@@ -68,7 +68,12 @@
         borderShadowWidth: 0,
         value: 1010,
         animateOnInit: true,
-        animatedValue: true
+        animatedValue: true,
+        listeners: {
+            value: function(value) {
+                this.update({ units: parseInt(value, 10) + ' hPa' });
+            }
+        }
 
     }).draw();
 
@@ -83,14 +88,6 @@
             }, gauge.animation.duration + 50));
         });
     }
-
-    window.addEventListener('load', function() {
-        document.gauges.forEach(function(gauge) {
-            gauge.on('value', function(value) {
-                gauge.update({ units: parseInt(value, 10) + ' hPa' });
-            });
-        });
-    });
 </script>
 </body>
 </html>
