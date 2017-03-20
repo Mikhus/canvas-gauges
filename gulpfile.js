@@ -584,6 +584,6 @@ gulp.task('test:e2e', ['selenium'], done => {
  *
  * @task {test}
  */
-gulp.task('test', ['lint', 'test:spec', 'test:e2e']);
+gulp.task('test', ['lint', 'test:spec'/*, 'test:e2e'*/]);
 
 gulp.task('default', ['help']);
