@@ -156,7 +156,7 @@ Tick bars on a gauge representing the measuring system which visualize the gauge
   - **highlightsWidth**: sets the width of highlights area in relative units.
   - **numbersMargin**: defines a margin for tick labels (numbers) in relative units. By default is 1.
 
-#### Progress Bar Options
+### Progress Bar Options
 
  - **barWidth**: bar width in percents in relation to overall width of the gauge. It is limited to 50% anyway.
  - **barStrokeWidth**: defines a width of a bar stroke. If set to zero - stroke won't be drawn.
