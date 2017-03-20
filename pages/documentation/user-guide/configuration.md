@@ -165,6 +165,7 @@ Canvas gauge provides highly customizable coloring options for the majority of g
  - **colorPlateEnd**: if specified wil use gradient fill for the plate.
  - **colorMajorTicks**: color of the major ticks lines (also applied to stroke if *strokeTicks* option is true). It can be an array of colors, for each major tick it is possible to specify specific color. In this case if *strokeTicks* enabled, the first color from this array will be used for stroking.
  - **colorMinorTicks**: color of the minor ticks lines.
+ - **colorStrokeTicks**: defines a static color for all ticks lines. By default is not specified. If set to some color value will override major ticks stroke color for lines, but will not influence numbers colors. For minor ticks will be used if colorMinorTicks is not specified. 
  - **colorTitle**: color of the title text.
  - **colorUnits**: color of the units text.
  - **colorNumbers**: color of the text for the tick numbers. It can be an array of colors, containing specific color for each number.
