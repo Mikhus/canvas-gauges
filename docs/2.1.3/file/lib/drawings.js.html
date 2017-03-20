@@ -423,6 +423,12 @@ export function drawValueBox(context, options, value, x, y, max) {
 
     reset(context);
 
+    let addLength = (options.valueDec ? 1 + options.valueDec : 0);
+    let maxValueWidth = &apos;9&apos;.repeat(Math.max.apply(null,
+        [String(parseInt(value)).length + addLength]
+        .concat(options.majorTicks.map(val =&gt;
+            String(parseInt(val, 10)).length + addLength
+        ))));
     let text = options.valueText || padValue(value, options);
     let tunit = max / 200;
     let runit = max / 100;
@@ -433,7 +439,7 @@ export function drawValueBox(context, options, value, x, y, max) {
     drawValueTextShadow(context, options, offset, blur);
 
     let tw = context.measureText(options.valueText ?
-        text : (&apos;-&apos; + padValue(0, options))).width;
+        text : (&apos;-&apos; + padValue(Number(maxValueWidth), options))).width;
 
     reset(context);
 

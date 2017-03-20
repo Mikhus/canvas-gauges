@@ -609,7 +609,8 @@ function drawLinearBarHighlights(context, options) {
     for (; i &lt; s; i++) {
         let entry = options.highlights[i];
         //noinspection JSUnresolvedFunction
-        let eStart = ticksLength * abs(options.minValue - entry.from) / interval;
+        let eStart = ticksLength * abs(options.minValue - entry.from) /
+            interval;
         //noinspection JSUnresolvedFunction
         let eW = ticksLength * abs((entry.to - entry.from) / interval);
 
@@ -751,7 +752,8 @@ function drawLinearMajorTicks(context, options) {
         (options.majorTicks.length - 1);
     let colors = options.colorMajorTicks instanceof Array ?
         options.colorMajorTicks :
-        new Array(options.majorTicks.length).fill(options.colorMajorTicks);
+        new Array(options.majorTicks.length).fill(
+            options.colorStrokeTicks || options.colorMajorTicks);
     let ticks = options.exactTicks ? options.majorTicks :
         options.majorTicks.map((tick, i) =&gt; {
             return options.minValue + valuePerNonExactTick * i;
@@ -768,7 +770,7 @@ function drawLinearMajorTicks(context, options) {
         let leftTicks = (width - barWidth) / 2 - ticksPadding * width;
         let sX, sY, eX, eY;
 
-        context.strokeStyle = colors[0];
+        context.strokeStyle = options.colorStrokeTicks || colors[0];
 
         lineWidth *= pixelRatio;
 
@@ -858,7 +860,8 @@ function drawLinearMinorTicks(context, options) {
         }
     }
 
-    drawLinearTicks(context, options.colorMinorTicks,
+    drawLinearTicks(context,
+        options.colorMinorTicks || options.colorStrokeTicks,
         ticks, options.minValue, options.maxValue,
         hasLeft, hasRight, 1, options.ticksWidthMinor / 100);
 }

@@ -44,7 +44,7 @@
       "expectCount": 5,
       "actualCount": 4,
       "undocumentLines": [
-        1253
+        1256
       ]
     },
     "lib/RadialGauge.js": {
@@ -61,7 +61,7 @@
       "expectCount": 12,
       "actualCount": 11,
       "undocumentLines": [
-        438
+        444
       ]
     },
     "lib/vendorize.js": {

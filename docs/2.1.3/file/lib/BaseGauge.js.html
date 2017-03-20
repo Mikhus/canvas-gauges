@@ -319,13 +319,19 @@ export default class BaseGauge extends EventEmitter {
             this.emit(&apos;animationStart&apos;);
 
             this.animation.animate(percent =&gt; {
-                this.options.value = fromValue + (value - fromValue) * percent;
+                let newValue = fromValue + (value - fromValue) * percent;
+
+                this.options.animatedValue &amp;&amp;
+                    this.emit(&apos;value&apos;, newValue, this.value);
+
+                this.options.value = newValue;
 
                 this.draw();
 
                 this.emit(&apos;animate&apos;, percent, this.options.value);
             }, () =&gt; {
                 if (this._value !== undefined) {
+                    this.emit(&apos;value&apos;, this._value, this.value);
                     this.options.value = this._value;
                     delete this._value;
                 }
@@ -336,6 +342,7 @@ export default class BaseGauge extends EventEmitter {
         }
 
         else {
+            this.emit(&apos;value&apos;, value, this.value);
             this.options.value = value;
             this.draw();
         }
