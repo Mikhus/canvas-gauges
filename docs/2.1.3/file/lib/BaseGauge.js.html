@@ -181,6 +181,12 @@ export default class BaseGauge extends EventEmitter {
      */
 
     /**
+     * @event BaseGauge#value
+     * @type {number} newValue
+     * @type {number} oldValue
+     */
+
+    /**
      * @constructor
      * @abstract
      * @param {GenericOptions} options
@@ -195,6 +201,17 @@ export default class BaseGauge extends EventEmitter {
         }
 
         gauges.push(this);
+
+        if (options.listeners) {
+            Object.keys(options.listeners).forEach(event =&gt; {
+                let handlers = options.listeners[event] instanceof Array ?
+                    options.listeners[event] : [options.listeners[event]];
+
+                handlers.forEach(handler =&gt; {
+                    this.on(event, handler);
+                });
+            });
+        }
 
         //noinspection JSUnresolvedVariable
         /**

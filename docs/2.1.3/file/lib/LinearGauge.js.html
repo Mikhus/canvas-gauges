@@ -988,7 +988,7 @@ function drawLinearUnits(context, options) {
 
     context.save();
     context.textAlign = &apos;center&apos;;
-    context.fillStyle = options.colorTitle;
+    context.fillStyle = options.colorUnits;
     context.font = drawings.font(options, &apos;Units&apos;, width / 200);
     context.lineWidth = 0;
     context.fillText(options.units, textX, textY, isVertical ? width : length);

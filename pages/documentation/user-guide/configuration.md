@@ -119,6 +119,22 @@ Common configuration options are spread across all type of the gauges means they
  - **value**: current gauge value which will be displayed.
  - **units**: should be a string explaining the units for the gauge value, or something falsy to hide this element on a gauge.
  - **title**: should be a string to display gauge title or falsy value to hide this element.
+ - **listeners**: an object defining all handlers which are going to be used on gauge initialization. Each event can have one or more handlers (a function or an array of functions). Example:
+
+~~~javascript
+var gauge = new RadialGauge({
+    renderTo: 'some-id',
+    listeners: {
+        value: function(newValue, oldValue) {
+            // do something
+        },
+        animationEnd: [
+            function() { /*  handler one */ },
+            function() { /* handler two */ }
+        ]
+    }
+});
+~~~
 
 ### Ticks Bar Options
 
