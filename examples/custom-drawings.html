@@ -1,0 +1,184 @@
+<!doctype html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Gauge Test</title>
+    <link rel="stylesheet" href="../fonts/fonts.css">
+    <script src="../gauge.min.js"></script>
+</head>
+<body style="background: #222">
+
+<button onclick="animateGauges()">Animate</button>
+<button onclick="stopGaugesAnimation()">Stop animation</button>
+<input type="text" id="gauge-size" value="400">
+<button onclick="resize()">Resize</button>
+<button onclick="updateUnits()">Change units</button>
+
+<hr>
+
+<canvas data-type="radial-gauge"
+        data-width="400"
+        data-height="400"
+        data-units="°C"
+        data-title="Temperature"
+        data-min-value="-50"
+        data-max-value="50"
+        data-major-ticks="[-50,-40,-30,-20,-10,0,10,20,30,40,50]"
+        data-minor-ticks="2"
+        data-stroke-ticks="true"
+        data-highlights='[
+                    {"from": -50, "to": 0, "color": "rgba(0,0, 255, .3)"},
+                    {"from": 0, "to": 50, "color": "rgba(255, 0, 0, .3)"}
+                ]'
+        data-ticks-angle="225"
+        data-start-angle="67.5"
+        data-color-major-ticks="#ddd"
+        data-color-minor-ticks="#ddd"
+        data-color-title="#eee"
+        data-color-units="#ccc"
+        data-color-numbers="#eee"
+        data-color-plate="#222"
+        data-border-shadow-width="0"
+        data-borders="true"
+        data-needle-type="arrow"
+        data-needle-width="2"
+        data-needle-circle-size="7"
+        data-needle-circle-outer="true"
+        data-needle-circle-inner="false"
+        data-animation-duration="1500"
+        data-animation-rule="linear"
+        data-color-border-outer="#333"
+        data-color-border-outer-end="#111"
+        data-color-border-middle="#222"
+        data-color-border-middle-end="#111"
+        data-color-border-inner="#111"
+        data-color-border-inner-end="#333"
+        data-color-needle-shadow-down="#333"
+        data-color-needle-circle-outer="#333"
+        data-color-needle-circle-outer-end="#111"
+        data-color-needle-circle-inner="#111"
+        data-color-needle-circle-inner-end="#222"
+        data-value-box-border-radius="0"
+        data-color-value-box-rect="#222"
+        data-color-value-box-rect-end="#333"
+        data-font-value="Led"
+        data-font-numbers="Led"
+        data-font-title="Led"
+        data-font-units="Led"
+></canvas>
+
+<script>
+if (!Array.prototype.forEach) {
+    Array.prototype.forEach = function(cb) {
+        var i = 0, s = this.length;
+        for (; i < s; i++) {
+            cb && cb(this[i], i, this);
+        }
+    }
+}
+
+document.fonts && document.fonts.forEach(function(font) {
+    font.loaded.then(function() {
+        if (font.family.match(/Led/)) {
+            document.gauges.forEach(function(gauge) {
+                gauge.update();
+                gauge.options.renderTo.style.visibility = 'visible';
+            });
+        }
+    });
+});
+
+var timers = [];
+
+function animateGauges() {
+    document.gauges.forEach(function(gauge) {
+        timers.push(setInterval(function() {
+            gauge.value = Math.random() *
+                (gauge.options.maxValue - gauge.options.minValue) +
+                gauge.options.minValue;
+        }, gauge.animation.duration + 50));
+    });
+}
+
+function stopGaugesAnimation() {
+    timers.forEach(function(timer) {
+        clearInterval(timer);
+    });
+}
+
+function resize() {
+    var size = parseFloat(document.getElementById('gauge-size').value) || 400;
+
+    document.gauges.forEach(function (gauge) {
+        gauge.update({ width: size, height: size });
+    });
+}
+
+function updateUnits() {
+    document.gauges.forEach(function (gauge) {
+        gauge.update({ units: 'Miles' });
+    });
+}
+
+function setText() {
+    var text = document.getElementById('gauge-text').value;
+
+    document.gauges.forEach(function (gauge) {
+        gauge.update({ valueText: text });
+    });
+}
+
+window.onload = function() {
+    // refer gauge
+    var gauge = document.gauges[0];
+
+    // this will draw red or blue circle on a gauge plate depending on
+    // current value
+    gauge.on('beforeNeedle', function () {
+        // getting canvas 2d drawing context
+        var context = this.canvas.context;
+
+        // we can use gauge context special 'max' property which represents
+        // gauge radius in a real pixels and calculate size of relative pixel
+        // for our drawing needs
+        var pixel = context.max / 100;
+
+        // step out our circle center coordinate by 30% of its radius from
+        // gauge center
+        var centerX = 30 * pixel;
+
+        // stay in center by Y-coordinate
+        var centerY = 0;
+
+        // use circle radius equal to 5%
+        var radius = 5 * pixel;
+
+        // save previous context state
+        context.save();
+
+        // draw circle using canvas JS API
+        context.beginPath();
+        context.arc(centerX, centerY, radius, 0, 2 * Math.PI, false);
+
+        var gradient = context.createRadialGradient(
+            centerX, centerY, 0,
+            centerX, centerY, radius);
+        gradient.addColorStop(0, this.options.value <= 0 ? '#aaf' : '#faa');
+        gradient.addColorStop(0.82, this.options.value <= 0 ? '#00f' : '#f00');
+        gradient.addColorStop(1, this.options.value <= 0 ? '#88a' : '#a88');
+
+        context.fillStyle = gradient;
+        context.fill();
+        context.closePath();
+
+        // restore previous context state to prevent break of
+        // further drawings
+        context.restore();
+    });
+
+    // redraw the gauge if it has been already drawn
+    gauge.draw();
+}
+</script>
+</body>
+</html>

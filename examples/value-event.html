@@ -1,0 +1,93 @@
+<!doctype html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Gauge Test</title>
+    <link rel="stylesheet" href="../fonts/fonts.css">
+    <script src="../gauge.min.js"></script>
+</head>
+<body style="background: #fff">
+
+<button onclick="animateGauges()">Animate</button>
+
+<canvas id="canvasPressure"></canvas>
+
+<script>
+    var gaugePressure = new RadialGauge({
+        renderTo: 'canvasPressure',
+        width: 300,
+        height: 300,
+        units: "1010 hPa",
+        startAngle: 70,
+        ticksAngle: 220,
+        colorPlate: "#ffffff",
+        colorUnits: "#3CA7DB",
+        colorNumbers: "#3CA7DB",
+        needleType: "arrow",
+        needleStart: 0,
+        needleEnd: 75,
+        needleWidth: 4,
+        needleCircleSize: 10,
+        needleCircleInner: false,
+        needleCircleOuter: true,
+        needleShadow: false,
+        colorNeedle: "#3CA7DB",
+        colorNeedleEnd: "#2698CE",
+        colorNeedleCircleOuter: "#3CA7DB",
+        colorNeedleCircleOuterEnd: "#3CA7DB",
+//        barWidth: 5,
+//        colorBarProgress: '#3CA7DB',
+//        colorBar: '#A8D3D5',
+
+        colorMajorTicks: ["#A8D3D5", "#ffffff", "#ffffff", "#ffffff", "#ffffff",
+            "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#A8D3D5"],
+        colorMinorTicks: "#ffffff",
+
+        // Вопрос в мин и макс значениях, при этих значениях анимация не работает
+        minValue: 975,
+        maxValue: 1045,
+
+        majorTicks: ["","980","","990","","1000","","1010","","1020","","1030","","1040",""],
+        minorTicks: "10",
+        strokeTicks: true,
+
+        highlights: [
+            {
+                "from": 974.75,
+                "to": 1045.25,
+                "color": "#A8D3D5"
+            }
+        ],
+        //
+        highlightsWidth: 25,
+        numbersMargin: 12,
+        animation: true,
+        animationRule: "linear",
+        valueBox: false,
+        borders: false,
+        borderShadowWidth: 0,
+        value: 1010,
+        animateOnInit: true,
+        animatedValue: true,
+        listeners: {
+            value: function(value) {
+                this.update({ units: parseInt(value, 10) + ' hPa' });
+            }
+        }
+
+    }).draw();
+
+    var timers = [];
+
+    function animateGauges() {
+        document.gauges.forEach(function(gauge) {
+            timers.push(setInterval(function() {
+                gauge.value = Math.random() *
+                    (gauge.options.maxValue - gauge.options.minValue) +
+                    gauge.options.minValue;
+            }, gauge.animation.duration + 50));
+        });
+    }
+</script>
+</body>
+</html>

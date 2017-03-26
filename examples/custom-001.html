@@ -1,0 +1,95 @@
+<!doctype html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Gauge Test</title>
+    <link rel="stylesheet" href="../fonts/fonts.css">
+    <script src="../gauge.min.js"></script>
+</head>
+<body style="background: #fff">
+
+<canvas id="canvas-id"></canvas>
+
+<script>
+    var gauge = new RadialGauge({
+        renderTo: 'canvas-id',
+        width: 300,
+        height: 300,
+        units: "",
+        //title: "",
+
+        startAngle: 90,
+        ticksAngle: 180,
+        colorPlate: "#ffffff",
+        //colorPlateEnd: "#ffffff",
+        colorUnits: "#3CA7DB",
+        colorNumbers: "#534638",
+        colorNeedle: "#8E7860",
+        colorNeedleEnd: "#8E7860",
+        colorNeedleCircleOuter: "#8E7860",
+        colorNeedleCircleOuterEnd: "#8E7860",
+
+        colorNeedleShadowUp: "#8E7860",
+        colorNeedleShadowDown: "#8E7860",
+
+        colorMajorTicks: ["#EBEBEB", "#EBEBEB", "#EBEBEB", "#EBEBEB", "#EBEBEB", "#EBEBEB"],
+        colorMinorTicks: "#EBEBEB",
+
+        minValue: 0,
+        maxValue: 100,
+        majorTicks: ["","20","40","60","80",""],
+        minorTicks: "2",
+        strokeTicks: true,
+        highlights: [
+            {
+                "from": -0.25,
+                "to": 39.99,
+                "color": "#FF9488"
+            },
+            {
+                "from": 39.99,
+                "to": 59.99,
+                "color": "#8FB9BD"
+            },
+            {
+                "from": 59.99,
+                "to": 100.25,
+                "color": "#B1B9CB"
+            }
+        ],
+        //
+        highlightsWidth: 25,
+        numbersMargin: 12,
+        //
+        //barWidth: 20,
+        //barStrokeWidth: 0,
+        //barProgress: 1,
+        //barShadow: 0,
+        //
+        animation: true,
+        //animationDuration: 500,
+        animationRule: "linear",
+        animatedValue: true,
+        //animateOnInit: true,
+
+        borders: false,
+        valueBox: false,
+
+        needleType: "arrow",
+        needleEnd: 65,
+        needleWidth: 4,
+        needleCircleSize: 10,
+        needleCircleInner: false,
+        needleCircleOuter: true,
+        needleShadow: false,
+
+        borderShadowWidth: 0
+
+    }).draw();
+
+
+    gauge.value = 56;
+    gauge.update();
+</script>
+</body>
+</html>
