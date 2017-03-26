@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <base data-ice="baseUrl" href="../../">
+  <title data-ice="title">lib/GenericOptions.js | HTML5 Canvas Gauges API Documentation API Document</title>
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
+  <script src="script/prettify/prettify.js"></script>
+  
+  
+  <script src="script/manual.js"></script>
+<link data-ice="userStyle" rel="stylesheet" href="user/css/0-docs.css">
+</head>
+<body class="layout-container" data-ice="rootContainer">
+
+<header>
+  <a href="./">Home</a>
+  
+  <a href="identifiers.html">Reference</a>
+  <a href="source.html">Source</a>
+  
+  
+  <div class="search-box">
+  <span>
+    <img src="./image/search.png">
+    <span class="search-input-edge"></span><input class="search-input"><span class="search-input-edge"></span>
+  </span>
+    <ul class="search-result"></ul>
+  </div>
+</header>
+
+<nav class="navigation" data-ice="nav"><div>
+  <ul>
+    
+  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/Animation.js~Animation.html">Animation</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/BaseGauge.js~BaseGauge.html">BaseGauge</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/DomObserver.js~DomObserver.html">DomObserver</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/EventEmitter.js~EventEmitter.html">EventEmitter</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/LinearGauge.js~LinearGauge.html">LinearGauge</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/RadialGauge.js~RadialGauge.html">RadialGauge</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/SmartCanvas.js~SmartCanvas.html">SmartCanvas</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-Collection">Collection</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-drawShadow">drawShadow</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-drawValueBox">drawValueBox</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-font">font</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-formatMajorTickNumber">formatMajorTickNumber</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-linearGradient">linearGradient</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-normalizedValue">normalizedValue</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-padValue">padValue</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-radialPoint">radialPoint</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-radians">radians</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-roundRect">roundRect</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-verifyError">verifyError</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-vendorize">vendorize</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-EventEmitter">EventEmitter</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-GenericOptions">GenericOptions</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-drawings">drawings</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-AnimationRule">AnimationRule</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-AnimationRules">AnimationRules</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-DrawEventCallback">DrawEventCallback</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-EndEventCallback">EndEventCallback</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-GaugeInterface">GaugeInterface</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-Highlight">Highlight</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-RenderTarget">RenderTarget</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-LinearGaugeOptions">LinearGaugeOptions</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-RadialGaugeOptions">RadialGaugeOptions</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/JSON">JSON</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array/fill">Array.fill</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array/indexOf">Array.indexOf</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object/assign">Object.assign</a></span></span></li>
+</ul>
+</div>
+</nav>
+
+<div class="content" data-ice="content"><h1 data-ice="title">lib/GenericOptions.js</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">/*!
+ * The MIT License (MIT)
+ *
+ * Copyright (c) 2016 Mykhailo Stadnyk &lt;mikhus@gmail.com&gt;
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the &quot;Software&quot;), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
+
+/**
+ * Describes rendering target element. Can be either string identifier of
+ * the element or the element itself.
+ *
+ * @typedef {HTMLElement|string} RenderTarget
+ */
+
+/**
+ * Highlight area definition.
+ * It describes highlight area starting from value to value using
+ * color. Color can be describes with hex, rgb or rgba value.
+ *
+ * @typedef {{ from: number, to: number, color: string}} Highlight
+ */
+
+/**
+ * Shared generic gauges options
+ *
+ * @type {{renderTo: RenderTarget, width: number, height: number, minValue: number, maxValue: number, value: number, units: string|boolean, majorTicks: number[]|string[], exactTicks: boolean, minorTicks: number, strokeTicks: boolean, animatedValue: boolean, animateOnInit: boolean, title: string|boolean, borders: boolean, valueInt: number, valueDec: number, majorTicksInt: number, majorTicksDec: number, animation: boolean, animationDuration: number, animationRule: string|AnimationRule, colorPlate: string, colorPlateEnd: string, colorMajorTicks: string, colorMinorTicks: string, colorStrokeTicks: string, colorTitle: string, colorUnits: string, colorNumbers: string, colorNeedle: string, colorNeedleEnd: string, colorValueText: string, colorValueTextShadow: string, colorBorderShadow: string, colorBorderOuter: string, colorBorderOuterEnd: string, colorBorderMiddle: string, colorBorderMiddleEnd: string, colorBorderInner: string, colorBorderInnerEnd: string, colorValueBoxRect: string, colorValueBoxRectEnd: string, colorValueBoxBackground: string, colorValueBoxShadow: string, colorNeedleShadowUp: string, colorNeedleShadowDown: string, needle: boolean, needleShadow: boolean, needleType: string, needleStart: number, needleEnd: number, needleWidth: number, borderOuterWidth: number, borderMiddleWidth: number, borderInnerWidth: number, borderShadowWidth: number, valueBox: boolean, valueBoxWidth: number, valueBoxStroke: number, valueText: string, valueTextShadow: boolean, valueBoxBorderRadius: number, highlights: Highlight[], highlightsWidth: number, fontNumbers: string, fontTitle: string, fontUnits: string, fontValue: string, fontTitleSize: number, fontValueSize: number, fontUnitsSize: number, fontNumbersSize: number, fontNumbersStyle: string, fontTitleStyle: string, fontUnitsStyle: string, fontValueStyle: string, fontNumbersWeight: string, fontTitleWeight: string, fontUnitsWeight: string, fontValueWeight: string, barWidth: number, barStrokeWidth: number, barProgress: boolean, colorBar: string, colorBarStroke: string, colorBarProgress: string, colorBarShadow: string, barShadow: number, listeners: object}} GenericOptions
+ */
+const GenericOptions = {
+    // basic options
+    renderTo: null,
+    width: 0,
+    height: 0,
+    minValue: 0,
+    maxValue: 100,
+    value: 0,
+    units: false,
+    exactTicks: false,
+    majorTicks: [0, 20, 40, 60, 80, 100],
+    minorTicks: 10,
+    strokeTicks: true,
+    animatedValue: false,
+    animateOnInit: false,
+    title: false,
+    borders: true,
+    numbersMargin: 1,
+
+    listeners: null,
+
+    // number formats
+    valueInt: 3,
+    valueDec: 2,
+    majorTicksInt: 1,
+    majorTicksDec: 0,
+
+    // animations
+    animation: true,
+    animationDuration: 500,
+    animationRule: &apos;cycle&apos;,
+
+    // colors
+    colorPlate: &apos;#fff&apos;,
+    colorPlateEnd: &apos;&apos;,
+    colorMajorTicks: &apos;#444&apos;,
+    colorMinorTicks: &apos;#666&apos;,
+    colorStrokeTicks: &apos;&apos;,
+    colorTitle: &apos;#888&apos;,
+    colorUnits: &apos;#888&apos;,
+    colorNumbers: &apos;#444&apos;,
+    colorNeedle: &apos;rgba(240,128,128,1)&apos;,
+    colorNeedleEnd: &apos;rgba(255,160,122,.9)&apos;,
+    colorValueText: &apos;#444&apos;,
+    colorValueTextShadow: &apos;rgba(0,0,0,0.3)&apos;,
+    colorBorderShadow: &apos;rgba(0,0,0,0.5)&apos;,
+    colorBorderOuter: &apos;#ddd&apos;,
+    colorBorderOuterEnd: &apos;#aaa&apos;,
+    colorBorderMiddle: &apos;#eee&apos;,
+    colorBorderMiddleEnd: &apos;#f0f0f0&apos;,
+    colorBorderInner: &apos;#fafafa&apos;,
+    colorBorderInnerEnd: &apos;#ccc&apos;,
+    colorValueBoxRect: &apos;#888&apos;,
+    colorValueBoxRectEnd: &apos;#666&apos;,
+    colorValueBoxBackground: &apos;#babab2&apos;,
+    colorValueBoxShadow: &apos;rgba(0,0,0,1)&apos;,
+    colorNeedleShadowUp: &apos;rgba(2,255,255,0.2)&apos;,
+    colorNeedleShadowDown: &apos;rgba(188,143,143,0.45)&apos;,
+    colorBarStroke: &apos;#222&apos;,
+    colorBar: &apos;#ccc&apos;,
+    colorBarProgress: &apos;#888&apos;,
+    colorBarShadow: &apos;#000&apos;,
+
+    fontNumbers: &apos;Arial&apos;,
+    fontTitle: &apos;Arial&apos;,
+    fontUnits: &apos;Arial&apos;,
+    fontValue: &apos;Arial&apos;,
+
+    fontNumbersSize: 20,
+    fontTitleSize: 24,
+    fontUnitsSize: 22,
+    fontValueSize: 26,
+
+    fontNumbersStyle: &apos;normal&apos;,
+    fontTitleStyle: &apos;normal&apos;,
+    fontUnitsStyle: &apos;normal&apos;,
+    fontValueStyle: &apos;normal&apos;,
+
+    fontNumbersWeight: &apos;normal&apos;,
+    fontTitleWeight: &apos;normal&apos;,
+    fontUnitsWeight: &apos;normal&apos;,
+    fontValueWeight: &apos;normal&apos;,
+
+    // needle
+    needle: true,
+    needleShadow: true,
+    needleType: &apos;arrow&apos;,
+    needleStart: 5,
+    needleEnd: 85,
+    needleWidth: 4,
+
+    // borders
+    borderOuterWidth: 3,
+    borderMiddleWidth: 3,
+    borderInnerWidth: 3,
+    borderShadowWidth: 3,
+
+    // value and highlights
+    valueBox: true,
+    valueBoxStroke: 5,
+    valueBoxWidth: 0,
+    valueText: &apos;&apos;,
+    valueTextShadow: true,
+    valueBoxBorderRadius: 2.5,
+
+    // highlights
+    highlights: [
+        { from: 20, to: 60, color: &apos;#eee&apos; },
+        { from: 60, to: 80, color: &apos;#ccc&apos; },
+        { from: 80, to: 100, color: &apos;#999&apos; }],
+    highlightsWidth: 15,
+
+    // progress bar
+    barWidth: 20, // percents
+    barStrokeWidth: 0, // pixels
+    barProgress: true,
+    barShadow: 0
+};
+
+export default GenericOptions;
+
+module.exports = GenericOptions;
+</code></pre>
+
+</div>
+
+<footer class="footer">
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(0.4.8)</span></a>
+</footer>
+
+<script src="script/search_index.js"></script>
+<script src="script/search.js"></script>
+<script src="script/pretty-print.js"></script>
+<script src="script/inherited-summary.js"></script>
+<script src="script/test-summary.js"></script>
+<script src="script/inner-link.js"></script>
+<script src="script/patch-for-local.js"></script>
+</body>
+</html>
