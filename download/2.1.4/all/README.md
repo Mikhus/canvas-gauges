@@ -45,6 +45,13 @@ You can find complete docs on the canvas gauges web-site:
  * [Developer's Docs](http://canvas-gauges.com/documentation/api/)
  * [Examples](http://canvas-gauges.com/documentation/examples/)
 
+## Add-Ons
+
+Here are some third-party libraries which are developed and delivered to use canvas-gauges as components for a different popular frameworks:
+
+ - [Angular gauge components](https://github.com/MeetmeLeave/ng-canvas-gauges)
+ - [VueJs gauge components](https://github.com/vue-bulma/canvas-gauges)
+
 ## Special Thanks
 
 [![Lohika](http://www.lohika.com/wp-content/themes/gridalicious/images/lohika_full.svg)](http://www.lohika.com/)
