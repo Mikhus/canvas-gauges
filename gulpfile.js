@@ -91,6 +91,7 @@ function wrap(stream) {
             'BaseGauge: BaseGauge,' +
             'drawings: drawings,' +
             'SmartCanvas: SmartCanvas,' +
+            'DomObserver: DomObserver,' +
             'vendorize: vendorize' +
             '});' +
             '}(typeof module !== "undefined" ? ' +
