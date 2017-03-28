@@ -74,6 +74,13 @@ Use right-click and "Save link as..." to download minified packages to your loca
  * [Fork to your account on github](https://github.com/Mikhus/canvas-gauges)
  * Clone repository locally  
    ```$ git clone git@github.com:Mikhus/canvas-gauges.git```
+   
+## Other Related Packages
+
+There are plenty of third-party packages available to use canvas-gauges as a components for a different frameworks. Please, refer to a corresponding repository for installation and usage details:
+
+ - [Angular gauge components](https://github.com/MeetmeLeave/ng-canvas-gauges)
+ - [VueJs gauge components](https://github.com/vue-bulma/canvas-gauges)
 
 </div><!-- /.medium-8.columns -->
 </div><!-- /.row -->

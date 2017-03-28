@@ -182,3 +182,51 @@ img.lazy {
   cursor: pointer;
   cursor:hand;
 }
+
+.frontpage-components {
+  text-align: center;
+  background: #efefef;
+  margin-top: 280px;
+  display: block;
+  padding-top: 20px;
+  padding-bottom: 40px;
+
+  h3 {
+    font-weight: normal;
+    text-transform: uppercase;
+    background:#fff;
+    padding: 10px 0;
+    font-size: 2em;
+    color: #327ac0;
+  }
+
+  a {
+    display: inline-block;
+    width: 40%;
+    margin-top: 30px;
+    -webkit-filter: grayscale(100%);
+    filter: grayscale(100%);
+    -webkit-transition: all .5s ease;
+    -moz-transition: all .5s ease;
+    -o-transition: all .5s ease;
+    transition: all .5s ease;
+    padding: 10px;
+
+    &#ng-component {
+      height: 180px;
+      background: url(/images/logos/angular.svg) no-repeat center center;
+    }
+
+    &#vue-component {
+      height: 220px;
+      background: url(/images/logos/vuejs.svg) no-repeat center center;
+      transform: scale(.75, .75);
+      margin-bottom: -20px;
+    }
+
+    &:hover {
+      -webkit-filter: grayscale(0) drop-shadow(0 0 10px rgba(50, 50, 50, .75));
+      filter: grayscale(0) drop-shadow(0 0 10px rgba(50, 50, 50, .75));
+    }
+  }
+}

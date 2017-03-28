@@ -34,3 +34,4 @@ examples:
 {% include _frontpage-widget.html widget=page.examples %}
 {% endif %}
 
+{% include _frontpage-components.html %}
