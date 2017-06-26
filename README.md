@@ -51,6 +51,7 @@ Here are some third-party libraries which are developed and delivered to use can
 
  - [Angular gauge components](https://github.com/MeetmeLeave/ng-canvas-gauges)
  - [VueJs gauge components](https://github.com/vue-bulma/canvas-gauges)
+ - [React gage component](https://github.com/1995parham/react-canvas-gauges)
 
 ## Special Thanks
 
