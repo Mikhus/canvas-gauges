@@ -8,6 +8,7 @@
 
 - [Installation](#installation)
 - [Documentation](#documentation)
+- [Add-Ons](#add-ons)
 - [Special Thanks](#special-thanks)
 - [License](#license)
 

@@ -1,6 +1,6 @@
 {
   "name": "canvas-gauges",
-  "version": "2.1.4",
+  "version": "2.1.5",
   "description": "Minimalist HTML5 Canvas Gauges",
   "main": "gauge.min.js",
   "directories": {
@@ -67,6 +67,14 @@
     {
       "name": "migeruhito",
       "url": "https://github.com/migeruhito"
+    },
+    {
+      "name": "brblord",
+      "url": "https://github.com/brblord"
+    },
+    {
+      "name": "piglione73",
+      "url": "https://github.com/piglione73"
     }
   ],
   "license": "MIT",
