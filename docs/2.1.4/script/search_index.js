@@ -654,6 +654,12 @@ window.esdocSearchIndex = [
     "method"
   ],
   [
+    "lib/basegauge.js~basegauge.mod",
+    "class/lib/BaseGauge.js~BaseGauge.html#static-method-mod",
+    "lib/BaseGauge.js~BaseGauge.mod",
+    "method"
+  ],
+  [
     "lib/basegauge.js~basegauge.version",
     "class/lib/BaseGauge.js~BaseGauge.html#static-get-version",
     "lib/BaseGauge.js~BaseGauge.version",
@@ -913,13 +919,13 @@ window.esdocSearchIndex = [
   ],
   [
     "lib/radialgauge.js~radialgauge#value",
-    "class/lib/RadialGauge.js~RadialGauge.html#instance-set-value",
+    "class/lib/RadialGauge.js~RadialGauge.html#instance-get-value",
     "lib/RadialGauge.js~RadialGauge#value",
     "member"
   ],
   [
     "lib/radialgauge.js~radialgauge#value",
-    "class/lib/RadialGauge.js~RadialGauge.html#instance-get-value",
+    "class/lib/RadialGauge.js~RadialGauge.html#instance-set-value",
     "lib/RadialGauge.js~RadialGauge#value",
     "member"
   ],

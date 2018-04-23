@@ -10,7 +10,8 @@
     "gulp-sourcemaps": "^1.6.0"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "bundle exec jekyll serve --config _config.yml,_config_dev.yml"
   },
   "repository": {
     "type": "git",

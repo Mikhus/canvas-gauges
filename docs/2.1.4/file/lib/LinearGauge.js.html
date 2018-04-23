@@ -846,10 +846,12 @@ function drawLinearMinorTicks(context, options) {
 
     if (minTicks) {
         if (options.exactTicks) {
-            let delta = (options.majorTicks[0] % minTicks) || 0;
+            let delta = BaseGauge.mod(options.majorTicks[0], minTicks) || 0;
 
             for (; i &lt; options.maxValue; i += minTicks) {
-                ticks.push(delta + i);
+                if ((delta+i) &lt; options.maxValue) {
+                    ticks.push(delta + i);
+                }
             }
         }
 
