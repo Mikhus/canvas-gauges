@@ -1,0 +1,1091 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <base data-ice="baseUrl" href="../../">
+  <title data-ice="title">lib/RadialGauge.js | HTML5 Canvas Gauges API Documentation API Document</title>
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
+  <script src="script/prettify/prettify.js"></script>
+  
+  
+  <script src="script/manual.js"></script>
+<link data-ice="userStyle" rel="stylesheet" href="user/css/0-docs.css">
+</head>
+<body class="layout-container" data-ice="rootContainer">
+
+<header>
+  <a href="./">Home</a>
+  
+  <a href="identifiers.html">Reference</a>
+  <a href="source.html">Source</a>
+  
+  
+  <div class="search-box">
+  <span>
+    <img src="./image/search.png">
+    <span class="search-input-edge"></span><input class="search-input"><span class="search-input-edge"></span>
+  </span>
+    <ul class="search-result"></ul>
+  </div>
+</header>
+
+<nav class="navigation" data-ice="nav"><div>
+  <ul>
+    
+  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/Animation.js~Animation.html">Animation</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/BaseGauge.js~BaseGauge.html">BaseGauge</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/DomObserver.js~DomObserver.html">DomObserver</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/EventEmitter.js~EventEmitter.html">EventEmitter</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/LinearGauge.js~LinearGauge.html">LinearGauge</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/RadialGauge.js~RadialGauge.html">RadialGauge</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/SmartCanvas.js~SmartCanvas.html">SmartCanvas</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-Collection">Collection</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-drawShadow">drawShadow</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-drawValueBox">drawValueBox</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-font">font</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-formatMajorTickNumber">formatMajorTickNumber</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-linearGradient">linearGradient</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-normalizedValue">normalizedValue</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-padValue">padValue</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-radialPoint">radialPoint</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-radians">radians</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-roundRect">roundRect</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-verifyError">verifyError</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-vendorize">vendorize</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-EventEmitter">EventEmitter</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-GenericOptions">GenericOptions</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-drawings">drawings</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-AnimationRule">AnimationRule</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-AnimationRules">AnimationRules</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-DrawEventCallback">DrawEventCallback</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-EndEventCallback">EndEventCallback</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-GaugeInterface">GaugeInterface</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-Highlight">Highlight</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-RenderTarget">RenderTarget</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-LinearGaugeOptions">LinearGaugeOptions</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-RadialGaugeOptions">RadialGaugeOptions</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/JSON">JSON</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array/fill">Array.fill</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array/indexOf">Array.indexOf</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object/assign">Object.assign</a></span></span></li>
+</ul>
+</div>
+</nav>
+
+<div class="content" data-ice="content"><h1 data-ice="title">lib/RadialGauge.js</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">/*!
+ * The MIT License (MIT)
+ *
+ * Copyright (c) 2016 Mykhailo Stadnyk &lt;mikhus@gmail.com&gt;
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the &quot;Software&quot;), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
+require(&apos;./polyfill&apos;);
+
+const GenericOptions = require(&apos;./GenericOptions&apos;);
+const BaseGauge = require(&apos;./BaseGauge&apos;);
+const SmartCanvas = require(&apos;./SmartCanvas&apos;);
+const drawings = require(&apos;./drawings&apos;);
+
+const PI = Math.PI;
+const HPI = PI / 2;
+
+/**
+ * Gauge configuration options
+ *
+ * @typedef {GenericOptions|{exactTicks: boolean, ticksAngle: number, startAngle: number, colorNeedleCircleOuter: string, colorNeedleCircleOuterEnd: string, colorNeedleCircleInner: string, colorNeedleCircleInnerEnd: string, needleCircleSize: number, needleCircleInner: boolean, needleCircleOuter: boolean, animationTarget: string, useMinPath: boolean}} RadialGaugeOptions
+ */
+
+/**
+ * Default gauge configuration options
+ *
+ * @access private
+ * @type {RadialGaugeOptions}
+ */
+const defaultRadialGaugeOptions = Object.assign({}, GenericOptions, {
+    // basic options
+    ticksAngle: 270,
+    startAngle: 45,
+
+    // colors
+    colorNeedleCircleOuter: &apos;#f0f0f0&apos;,
+    colorNeedleCircleOuterEnd: &apos;#ccc&apos;,
+    colorNeedleCircleInner: &apos;#e8e8e8&apos;,
+    colorNeedleCircleInnerEnd: &apos;#f5f5f5&apos;,
+
+    // needle
+    needleCircleSize: 10,
+    needleCircleInner: true,
+    needleCircleOuter: true,
+    needleStart: 20,
+
+    // custom animations
+    animationTarget: &apos;needle&apos;, // &apos;needle&apos; or &apos;plate&apos;
+    useMinPath: false,
+
+    barWidth: 0
+});
+
+/* istanbul ignore next: private, not testable */
+/**
+ * Draws gradient-filled circle on a canvas
+ *
+ * @access private
+ * @param {number} radius
+ * @param {number} width
+ * @param {Canvas2DContext} context
+ * @param {string} start gradient start color
+ * @param {string} end gradient end color
+ */
+function drawRadialBorder(radius, width, context, start, end) {
+    context.beginPath();
+    //noinspection JSUnresolvedFunction
+    context.arc(0, 0, abs(radius), 0, PI * 2, true);
+    context.lineWidth = width;
+    context.strokeStyle = end ?
+        drawings.linearGradient(context, start, end, radius) :
+        start;
+    context.stroke();
+    context.closePath();
+}
+
+/* istanbul ignore next: private, not testable */
+/**
+ * Returns max radius without borders for the gauge
+ *
+ * @param {Canvas2DContext} context
+ * @param {RadialGaugeOptions} options
+ * @return {number}
+ */
+function maxRadialRadius(context, options) {
+    let pxRatio = SmartCanvas.pixelRatio;
+
+    if (!context.maxRadius) {
+        context.maxRadius = context.max
+            - options.borderShadowWidth
+            - options.borderOuterWidth * pxRatio
+            - options.borderMiddleWidth * pxRatio
+            - options.borderInnerWidth * pxRatio
+            + (options.borderOuterWidth ? 0.5 : 0)
+            + (options.borderMiddleWidth ? 0.5 : 0)
+            + (options.borderInnerWidth ? 0.5 : 0);
+    }
+
+    return context.maxRadius;
+}
+
+/* istanbul ignore next: private, not testable */
+/**
+ * Draws gauge plate on the canvas
+ *
+ * @access private
+ * @param {Canvas2DContext} context
+ * @param {RadialGaugeOptions} options
+ */
+function drawRadialPlate(context, options) {
+    let pxRatio = SmartCanvas.pixelRatio;
+    let d0 = options.borderShadowWidth * pxRatio;
+    let r0 = context.max - d0 - (options.borderOuterWidth * pxRatio) / 2;
+    let r1 = r0 - (options.borderOuterWidth * pxRatio) / 2 -
+        (options.borderMiddleWidth * pxRatio) / 2 + 0.5;
+    let r2 = r1 - (options.borderMiddleWidth * pxRatio) / 2 -
+        (options.borderInnerWidth * pxRatio) / 2 + 0.5;
+    let r3 = maxRadialRadius(context, options);
+    let grad;
+    let shadowDrawn = false;
+
+    context.save();
+
+    if (options.borderOuterWidth) {
+        shadowDrawn = drawings.drawShadow(context, options, shadowDrawn);
+        drawRadialBorder(r0,
+            options.borderOuterWidth * pxRatio,
+            context,
+            options.colorBorderOuter,
+            options.colorBorderOuterEnd);
+    }
+
+    if (options.borderMiddleWidth) {
+        shadowDrawn = drawings.drawShadow(context, options, shadowDrawn);
+        drawRadialBorder(r1,
+            options.borderMiddleWidth * pxRatio,
+            context,
+            options.colorBorderMiddle,
+            options.colorBorderMiddleEnd);
+    }
+
+    if (options.borderInnerWidth) {
+        shadowDrawn = drawings.drawShadow(context, options, shadowDrawn);
+        drawRadialBorder(r2,
+            options.borderInnerWidth * pxRatio,
+            context,
+            options.colorBorderInner,
+            options.colorBorderInnerEnd);
+    }
+
+    drawings.drawShadow(context, options, shadowDrawn);
+
+    context.beginPath();
+    //noinspection JSUnresolvedFunction
+    context.arc(0, 0, abs(r3), 0, PI * 2, true);
+
+    if (options.colorPlateEnd) {
+        grad = context.createRadialGradient(0, 0, r3 / 2, 0, 0, r3);
+        grad.addColorStop(0, options.colorPlate);
+        grad.addColorStop(1, options.colorPlateEnd);
+    }
+
+    else  {
+        grad = options.colorPlate;
+    }
+
+    context.fillStyle = grad;
+
+    context.fill();
+    context.closePath();
+
+    context.restore();
+}
+
+/* istanbul ignore next: private, not testable */
+/**
+ * Draws gauge highlight areas on a canvas
+ *
+ * @access private
+ * @param {Canvas2DContext} context
+ * @param {RadialGaugeOptions} options
+ */
+function drawRadialHighlights(context, options) {
+    let hlWidth = context.max *
+        (parseFloat(options.highlightsWidth) || 0) / 100;
+
+    if (!hlWidth) return;
+
+    //noinspection JSUnresolvedFunction
+    let r = abs(radialTicksRadius(context, options) - hlWidth / 2);
+    let i = 0, s = options.highlights.length;
+    let vd = (options.maxValue - options.minValue) / options.ticksAngle;
+
+    context.save();
+
+    for (; i &lt; s; i++) {
+        let hlt = options.highlights[i];
+
+        context.beginPath();
+
+        context.rotate(HPI);
+        context.arc(0, 0, r,
+            drawings.radians(options.startAngle +
+                (hlt.from - options.minValue) / vd),
+            drawings.radians(options.startAngle +
+                (hlt.to - options.minValue) / vd),
+            false
+        );
+        context.strokeStyle = hlt.color;
+        context.lineWidth = hlWidth;
+        context.stroke();
+        context.closePath();
+
+        context.restore();
+        context.save();
+    }
+}
+
+/* istanbul ignore next: private, not testable */
+/**
+ * Draws minor ticks bar on a canvas
+ *
+ * @access private
+ * @param {Canvas2DContext} context
+ * @param {RadialGaugeOptions} options
+ */
+function drawRadialMinorTicks(context, options) {
+    let radius = radialTicksRadius(context, options);
+    let s, range, angle;
+    let i = 0;
+    let delta = 0;
+    let minTicks = Math.abs(options.minorTicks) || 0;
+    let ratio = options.ticksAngle / (options.maxValue - options.minValue);
+
+    context.lineWidth = SmartCanvas.pixelRatio;
+    context.strokeStyle = options.colorMinorTicks || options.colorStrokeTicks;
+
+    context.save();
+
+    if (options.exactTicks) {
+        range = options.maxValue - options.minValue;
+        s = minTicks ? range / minTicks : 0;
+        delta = (BaseGauge.mod(options.majorTicks[0], minTicks) || 0)  * ratio;
+    }
+
+    else {
+        s = minTicks * (options.majorTicks.length - 1);
+    }
+
+    for (; i &lt; s; ++i) {
+        angle = options.startAngle + delta + i * (options.ticksAngle / s);
+        if (angle &lt;= (options.ticksAngle + options.startAngle )) {
+            context.rotate(drawings.radians(angle));
+
+            context.beginPath();
+            context.moveTo(0, radius);
+            context.lineTo(0, radius - context.max * 0.075);
+            closeStrokedPath(context);
+        }
+    }
+}
+
+/* istanbul ignore next: private, not testable */
+/**
+ * Returns ticks radius
+ *
+ * @access private
+ * @param context
+ * @param options
+ * @return {number}
+ */
+function radialTicksRadius(context, options) {
+    let unit = context.max / 100;
+
+    return maxRadialRadius(context, options) - 5 * unit -
+        (options.barWidth ?
+            ((parseFloat(options.barStrokeWidth) || 0) * 2 +
+            ((parseFloat(options.barWidth) || 0) + 5) * unit) :
+        0);
+}
+
+/* istanbul ignore next: private, not testable */
+/**
+ * Draws gauge major ticks bar on a canvas
+ *
+ * @param {Canvas2DContext} context
+ * @param {RadialGaugeOptions} options
+ */
+function drawRadialMajorTicks(context, options) {
+    drawings.prepareTicks(options);
+
+    //noinspection JSUnresolvedFunction
+    let r = abs(radialTicksRadius(context, options));
+    let i, colors;
+    let s = options.majorTicks.length;
+    let pixelRatio = SmartCanvas.pixelRatio;
+
+    context.lineWidth = 2 * pixelRatio;
+    context.save();
+
+    colors = options.colorMajorTicks instanceof Array ?
+        options.colorMajorTicks : new Array(s).fill(options.colorStrokeTicks ||
+            options.colorMajorTicks);
+
+    i = 0;
+    for (; i &lt; s; ++i) {
+        context.strokeStyle = colors[i];
+        context.rotate(drawings.radians(radialNextAngle(
+            options,
+            options.exactTicks ? options.majorTicks[i] : i,
+            s
+        )));
+
+        context.beginPath();
+        context.moveTo(0, r);
+        context.lineTo(0, r - context.max * 0.15);
+        closeStrokedPath(context);
+    }
+
+    if (options.strokeTicks) {
+        context.strokeStyle = options.colorStrokeTicks || colors[0];
+        context.rotate(HPI);
+
+        context.beginPath();
+        context.arc(0, 0, r,
+            drawings.radians(options.startAngle),
+            drawings.radians(options.startAngle + options.ticksAngle),
+            false
+        );
+        closeStrokedPath(context);
+    }
+}
+
+/* istanbul ignore next: private, not testable */
+function radialNextAngle(options, i, s) {
+    if (options.exactTicks) {
+        let ratio = options.ticksAngle / (options.maxValue - options.minValue);
+        return options.startAngle + ratio * (i - options.minValue);
+    }
+
+    return options.startAngle + i * (options.ticksAngle / (s - 1));
+}
+
+/* istanbul ignore next: private, not testable */
+/**
+ * Strokes, closes path and restores previous context state
+ *
+ * @param {Canvas2DContext} context
+ */
+function closeStrokedPath(context) {
+    context.stroke();
+    context.restore();
+    context.closePath();
+    context.save();
+}
+
+/* istanbul ignore next: private, not testable */
+/**
+ * Draws gauge bar numbers
+ *
+ * @access private
+ * @param {Canvas2DContext} context
+ * @param {RadialGaugeOptions} options
+ */
+function drawRadialNumbers(context, options) {
+    let radius = radialTicksRadius(context, options) - context.max * 0.15;
+    let points = {};
+    let i = 0;
+    let s = options.majorTicks.length;
+    let isAnimated = options.animationTarget !== &apos;needle&apos;;
+    let colors = options.colorNumbers instanceof Array ?
+        options.colorNumbers : new Array(s).fill(options.colorNumbers);
+
+    let plateValueAngle = isAnimated ? -(options.value - options.minValue) /
+        (options.maxValue - options.minValue) * options.ticksAngle : 0;
+
+    if (isAnimated) {
+        context.save();
+        context.rotate(-drawings.radians(plateValueAngle));
+    }
+
+    context.font = drawings.font(options, &apos;Numbers&apos;, context.max / 200);
+    context.lineWidth = 0;
+    context.textAlign = &apos;center&apos;;
+    context.textBaseline = &apos;middle&apos;;
+
+    for (; i &lt; s; ++i) {
+        let angle = plateValueAngle + radialNextAngle(options,
+            options.exactTicks ? options.majorTicks[i] : i, s);
+        let textWidth = context.measureText(options.majorTicks[i]).width;
+        let textHeight = options.fontNumbersSize;
+        let textRadius = Math.sqrt(textWidth * textWidth +
+            textHeight * textHeight) / 2;
+        let point = drawings.radialPoint(radius - textRadius -
+            options.numbersMargin / 100 * context.max,
+            drawings.radians(angle));
+
+        if (angle === 360) angle = 0;
+
+        if (points[angle]) {
+            continue; //already drawn at this place, skipping
+        }
+
+        points[angle] = true;
+
+        context.fillStyle = colors[i];
+        context.fillText(options.majorTicks[i], point.x, point.y);
+    }
+
+    isAnimated &amp;&amp; context.restore();
+}
+
+/* istanbul ignore next: private, not testable */
+/**
+ * Draws gauge title
+ *
+ * @access private
+ * @param {Canvas2DContext} context
+ * @param {RadialGaugeOptions} options
+ */
+function drawRadialTitle(context, options) {
+    if (!options.title) return;
+
+    context.save();
+    context.font = drawings.font(options, &apos;Title&apos;, context.max / 200);
+    context.fillStyle = options.colorTitle;
+    context.textAlign = &apos;center&apos;;
+    context.fillText(options.title, 0, -context.max / 4.25, context.max * 0.8);
+    context.restore();
+}
+
+/* istanbul ignore next: private, not testable */
+/**
+ * Draws units name on the gauge
+ *
+ * @access private
+ * @param {Canvas2DContext} context
+ * @param {RadialGaugeOptions} options
+ */
+function drawRadialUnits(context, options) {
+    if (!options.units) return;
+
+    context.save();
+    context.font = drawings.font(options, &apos;Units&apos;, context.max / 200);
+    context.fillStyle = options.colorUnits;
+    context.textAlign = &apos;center&apos;;
+    context.fillText(options.units, 0, context.max / 3.25, context.max * 0.8);
+    context.restore();
+}
+
+/* istanbul ignore next: private, not testable */
+/**
+ * Draws gauge needle
+ *
+ * @access private
+ * @param {Canvas2DContext} context
+ * @param {RadialGaugeOptions} options
+ */
+function drawRadialNeedle(context, options) {
+    if (!options.needle) return;
+
+    let value = options.ticksAngle &lt; 360 ?
+        drawings.normalizedValue(options).indented : options.value;
+    let max = maxRadialRadius(context, options);
+    //noinspection JSUnresolvedFunction
+    let r1 = abs(max / 100 * options.needleCircleSize);
+    //noinspection JSUnresolvedFunction
+    let r2 = abs(max / 100 * options.needleCircleSize * 0.75);
+    //noinspection JSUnresolvedFunction
+    let rIn = abs(max / 100 * options.needleEnd);
+    //noinspection JSUnresolvedFunction
+    let rStart = abs(options.needleStart ?
+            max / 100 * options.needleStart : 0);
+    //noinspection JSUnresolvedFunction
+    let pad1 = max / 100 * options.needleWidth;
+    let pad2 = max / 100 * options.needleWidth / 2;
+    let pixelRatio = SmartCanvas.pixelRatio;
+    let isFixed = options.animationTarget !== &apos;needle&apos;;
+
+    context.save();
+
+    drawings.drawNeedleShadow(context, options);
+
+    context.rotate(drawings.radians(isFixed ? options.startAngle :
+        (options.startAngle + (value -
+            options.minValue) / (options.maxValue - options.minValue) *
+            options.ticksAngle)));
+
+    context.fillStyle = drawings.linearGradient(
+        context,
+        options.colorNeedle,
+        options.colorNeedleEnd,
+        rIn - rStart);
+
+    if (options.needleType === &apos;arrow&apos;) {
+        context.beginPath();
+        context.moveTo(-pad2, -rStart);
+        context.lineTo(-pad1, 0);
+        context.lineTo(-1 * pixelRatio, rIn);
+        context.lineTo(pixelRatio, rIn);
+        context.lineTo(pad1, 0);
+        context.lineTo(pad2, -rStart);
+        context.closePath();
+        context.fill();
+
+        context.beginPath();
+        context.lineTo(-0.5 * pixelRatio, rIn);
+        context.lineTo(-1 * pixelRatio, rIn);
+        context.lineTo(-pad1, 0);
+        context.lineTo(-pad2, -rStart);
+        context.lineTo(pad2 / 2 * pixelRatio - 2 * pixelRatio, -rStart);
+        context.closePath();
+        context.fillStyle = options.colorNeedleShadowUp;
+        context.fill();
+    }
+
+    else { // simple line needle
+        context.beginPath();
+        context.moveTo(-pad2, rIn);
+        context.lineTo(-pad2, rStart);
+        context.lineTo(pad2, rStart);
+        context.lineTo(pad2, rIn);
+        context.closePath();
+        context.fill();
+    }
+
+    if (options.needleCircleSize) {
+        context.restore();
+
+        drawings.drawNeedleShadow(context, options);
+
+        if (options.needleCircleOuter) {
+            context.beginPath();
+            context.arc(0, 0, r1, 0, PI * 2, true);
+            context.fillStyle = drawings.linearGradient(
+                context,
+                options.colorNeedleCircleOuter,
+                options.colorNeedleCircleOuterEnd,
+                r1
+            );
+            context.fill();
+            context.closePath();
+        }
+
+        if (options.needleCircleInner) {
+            context.beginPath();
+            context.arc(0, 0, r2, 0, PI * 2, true);
+            context.fillStyle = drawings.linearGradient(
+                context,
+                options.colorNeedleCircleInner,
+                options.colorNeedleCircleInnerEnd,
+                r2
+            );
+            context.fill();
+            context.closePath();
+        }
+
+        context.restore();
+    }
+}
+
+/* istanbul ignore next: private, not testable */
+/**
+ * Draws gauge value box
+ *
+ * @param {Canvas2DContext} context
+ * @param {RadialGaugeOptions} options
+ * @param {number} value
+ */
+function drawRadialValueBox(context, options, value) {
+    drawings.drawValueBox(context, options, value, 0,
+        context.max - context.max * 0.33, context.max);
+}
+
+/* istanbul ignore next: private, not testable */
+/**
+ * Draws gauge progress bar
+ *
+ * @param {Canvas2DContext} context
+ * @param {RadialGaugeOptions} options
+ */
+function drawRadialProgressBar(context, options) {
+    let unit = context.max / 100;
+    let rMax = maxRadialRadius(context, options) - 5 * unit;
+    let sw = (parseFloat(options.barStrokeWidth) || 0);
+    let w = (parseFloat(options.barWidth) || 0) * unit;
+    let rMin = rMax - sw * 2 - w;
+    let half = (rMax- rMin) / 2;
+    let r = rMin + half;
+    let delta = sw / r;
+    let sa = options.startAngle;
+    let ea = options.startAngle + options.ticksAngle;
+
+    context.save();
+    context.rotate(HPI);
+
+    if (sw) {
+        // draw stroke
+        context.beginPath();
+        context.arc(0, 0, r, drawings.radians(sa) - delta,
+            drawings.radians(ea) + delta, false);
+        context.strokeStyle = options.colorBarStroke;
+        context.lineWidth = half * 2;
+        context.stroke();
+        context.closePath();
+    }
+
+    if (w) {
+        // draw bar
+        context.beginPath();
+        context.arc(0, 0, r, drawings.radians(sa), drawings.radians(ea), false);
+        context.strokeStyle = options.colorBar;
+        context.lineWidth = w;
+        context.stroke();
+        context.closePath();
+
+        if  (options.barShadow) {
+            // draw shadow
+            context.beginPath();
+            context.arc(0, 0, rMax, drawings.radians(sa), drawings.radians(ea),
+                false);
+            context.clip();
+
+            context.beginPath();
+            context.strokeStyle = options.colorBar;
+            context.lineWidth = 1;
+            context.shadowBlur = options.barShadow;
+            context.shadowColor = options.colorBarShadow;
+            context.shadowOffsetX = 0;
+            context.shadowOffsetY = 0;
+            context.arc(0, 0, rMax,
+                drawings.radians(options.startAngle),
+                drawings.radians(options.startAngle + options.ticksAngle),
+                false);
+            context.stroke();
+            context.closePath();
+
+            context.restore();
+            context.rotate(HPI);
+        }
+
+        // draw bar progress
+        if (options.barProgress) {
+            context.beginPath();
+            context.arc(0, 0, r,
+                drawings.radians(sa),
+                drawings.radians(sa +
+                    (drawings.normalizedValue(options).normal -
+                    options.minValue) / (options.maxValue - options.minValue) *
+                    options.ticksAngle),
+                false);
+            context.strokeStyle = options.colorBarProgress;
+            context.lineWidth = w;
+            context.stroke();
+            context.closePath();
+        }
+    }
+
+    context.restore();
+}
+
+/**
+ * Find and return gauge value to display
+ *
+ * @param {RadialGauge} gauge
+ */
+function displayValue(gauge) {
+    if (gauge.options.animatedValue) {
+        return gauge.options.value;
+    }
+
+    return gauge.value;
+}
+
+/**
+ * Minimalistic HTML5 Canvas Gauge
+ * @example
+ *  var gauge = new RadialGauge({
+ *     renderTo: &apos;gauge-id&apos;, // identifier of HTML canvas element or element itself
+ *     width: 400,
+ *     height: 400,
+ *     units: &apos;Km/h&apos;,
+ *     title: false,
+ *     value: 0,
+ *     minValue: 0,
+ *     maxValue: 220,
+ *     majorTicks: [
+ *         &apos;0&apos;,&apos;20&apos;,&apos;40&apos;,&apos;60&apos;,&apos;80&apos;,&apos;100&apos;,&apos;120&apos;,&apos;140&apos;,&apos;160&apos;,&apos;180&apos;,&apos;200&apos;,&apos;220&apos;
+ *     ],
+ *     minorTicks: 2,
+ *     strokeTicks: false,
+ *     highlights: [
+ *         { from: 0, to: 50, color: &apos;rgba(0,255,0,.15)&apos; },
+ *         { from: 50, to: 100, color: &apos;rgba(255,255,0,.15)&apos; },
+ *         { from: 100, to: 150, color: &apos;rgba(255,30,0,.25)&apos; },
+ *         { from: 150, to: 200, color: &apos;rgba(255,0,225,.25)&apos; },
+ *         { from: 200, to: 220, color: &apos;rgba(0,0,255,.25)&apos; }
+ *     ],
+ *     colorPlate: &apos;#222&apos;,
+ *     colorMajorTicks: &apos;#f5f5f5&apos;,
+ *     colorMinorTicks: &apos;#ddd&apos;,
+ *     colorTitle: &apos;#fff&apos;,
+ *     colorUnits: &apos;#ccc&apos;,
+ *     colorNumbers: &apos;#eee&apos;,
+ *     colorNeedleStart: &apos;rgba(240, 128, 128, 1)&apos;,
+ *     colorNeedleEnd: &apos;rgba(255, 160, 122, .9)&apos;,
+ *     valueBox: true,
+ *     animationRule: &apos;bounce&apos;
+ * });
+ * // draw initially
+ * gauge.draw();
+ * // animate
+ * setInterval(() =&gt; {
+ *    gauge.value = Math.random() * -220 + 220;
+ * }, 1000);
+ */
+export default class RadialGauge extends BaseGauge {
+
+    /**
+     * Fired each time before gauge plate is drawn
+     *
+     * @event RadialGauge#beforePlate
+     */
+
+    /**
+     * Fired each time before gauge highlight areas are drawn
+     *
+     * @event RadialGauge#beforeHighlights
+     */
+
+    /**
+     * Fired each time before gauge minor ticks are drawn
+     *
+     * @event RadialGauge#beforeMinorTicks
+     */
+
+    /**
+     * Fired each time before gauge major ticks are drawn
+     *
+     * @event RadialGauge#beforeMajorTicks
+     */
+
+    /**
+     * Fired each time before gauge tick numbers are drawn
+     *
+     * @event RadialGauge#beforeNumbers
+     */
+
+    /**
+     * Fired each time before gauge title is drawn
+     *
+     * @event RadialGauge#beforeTitle
+     */
+
+    /**
+     * Fired each time before gauge units text is drawn
+     *
+     * @event RadialGauge#beforeUnits
+     */
+
+    /**
+     * Fired each time before gauge progress bar is drawn
+     *
+     * @event RadialGauge#beforeProgressBar
+     */
+
+    /**
+     * Fired each time before gauge value box is drawn
+     *
+     * @event RadialGauge#beforeValueBox
+     */
+
+    /**
+     * Fired each time before gauge needle is drawn
+     *
+     * @event RadialGauge#beforeNeedle
+     */
+
+    /**
+     * @constructor
+     * @param {RadialGaugeOptions} options
+     */
+    constructor(options) {
+        options = Object.assign({}, defaultRadialGaugeOptions, options || {});
+        super(RadialGauge.configure(options));
+    }
+
+    /**
+     * Checks and updates gauge options properly
+     *
+     * @param {*} options
+     * @return {*}
+     * @access protected
+     */
+    static configure(options) {
+        if (options.barWidth &gt; 50) options.barWidth = 50;
+
+        /* istanbul ignore if */
+        if (isNaN(options.startAngle)) options.startAngle = 45;
+        /* istanbul ignore if */
+        if (isNaN(options.ticksAngle)) options.ticksAngle = 270;
+
+        /* istanbul ignore if */
+        if (options.ticksAngle &gt; 360) options.ticksAngle = 360;
+        /* istanbul ignore if */
+        if (options.ticksAngle &lt; 0) options.ticksAngle = 0;
+
+        /* istanbul ignore if */
+        if (options.startAngle &lt; 0) options.startAngle = 0;
+        /* istanbul ignore if */
+        if (options.startAngle &gt; 360) options.startAngle = 360;
+
+        return options;
+    }
+
+    /**
+     * Sets the value for radial gauge
+     *
+     * @param {number} value
+     */
+    set value(value) {
+        value = BaseGauge.ensureValue(value, this.options.minValue);
+
+        if (this.options.animation &amp;&amp;
+            this.options.ticksAngle === 360 &amp;&amp;
+            this.options.useMinPath
+        ) {
+            this._value = value;
+            value = this.options.value +
+                ((((value - this.options.value) % 360) + 540) % 360) - 180;
+        }
+
+        super.value = value;
+    }
+
+    /**
+     * Returns current gauge value
+     *
+     * @return {number}
+     */
+    get value() {
+        return super.value;
+    }
+
+    /**
+     * Triggering gauge render on a canvas.
+     *
+     * @returns {RadialGauge}
+     */
+    draw() {
+        try {
+            let canvas = this.canvas;
+            let [x, y, w, h] = [
+                -canvas.drawX,
+                -canvas.drawY,
+                canvas.drawWidth,
+                canvas.drawHeight
+            ];
+            let options = this.options;
+
+            if (options.animationTarget === &apos;needle&apos;) {
+                if (!canvas.elementClone.initialized) {
+                    let context = canvas.contextClone;
+
+                    // clear the cache
+                    context.clearRect(x, y, w, h);
+                    context.save();
+
+                    this.emit(&apos;beforePlate&apos;);
+                    drawRadialPlate(context, options);
+                    this.emit(&apos;beforeHighlights&apos;);
+                    drawRadialHighlights(context, options);
+                    this.emit(&apos;beforeMinorTicks&apos;);
+                    drawRadialMinorTicks(context, options);
+                    this.emit(&apos;beforeMajorTicks&apos;);
+                    drawRadialMajorTicks(context, options);
+                    this.emit(&apos;beforeNumbers&apos;);
+                    drawRadialNumbers(context, options);
+                    this.emit(&apos;beforeTitle&apos;);
+                    drawRadialTitle(context, options);
+                    this.emit(&apos;beforeUnits&apos;);
+                    drawRadialUnits(context, options);
+
+                    canvas.elementClone.initialized = true;
+                }
+
+                this.canvas.commit();
+
+                // clear the canvas
+                canvas.context.clearRect(x, y, w, h);
+                canvas.context.save();
+
+                canvas.context.drawImage(canvas.elementClone, x, y, w, h);
+                canvas.context.save();
+
+                this.emit(&apos;beforeProgressBar&apos;);
+                drawRadialProgressBar(canvas.context, options);
+                this.emit(&apos;beforeValueBox&apos;);
+                drawRadialValueBox(canvas.context, options, displayValue(this));
+                this.emit(&apos;beforeNeedle&apos;);
+                drawRadialNeedle(canvas.context, options);
+            }
+
+            else {
+                let plateValueAngle = -drawings.radians(
+                    (options.value - options.minValue) /
+                    (options.maxValue - options.minValue) *
+                    options.ticksAngle);
+
+                // clear the canvas
+                canvas.context.clearRect(x, y, w, h);
+                canvas.context.save();
+
+                this.emit(&apos;beforePlate&apos;);
+                drawRadialPlate(canvas.context, options);
+
+                canvas.context.rotate(plateValueAngle);
+
+                // animated
+                this.emit(&apos;beforeHighlights&apos;);
+                drawRadialHighlights(canvas.context, options);
+                this.emit(&apos;beforeMinorTicks&apos;);
+                drawRadialMinorTicks(canvas.context, options);
+                this.emit(&apos;beforeMajorTicks&apos;);
+                drawRadialMajorTicks(canvas.context, options);
+                this.emit(&apos;beforeNumbers&apos;);
+                drawRadialNumbers(canvas.context, options);
+                this.emit(&apos;beforeProgressBar&apos;);
+                drawRadialProgressBar(canvas.context, options);
+
+                // non-animated
+                canvas.context.rotate(-plateValueAngle);
+                canvas.context.save();
+
+                if (!canvas.elementClone.initialized) {
+                    let context = canvas.contextClone;
+
+                    // clear the cache
+                    context.clearRect(x, y, w, h);
+                    context.save();
+
+                    this.emit(&apos;beforeTitle&apos;);
+                    drawRadialTitle(context, options);
+                    this.emit(&apos;beforeUnits&apos;);
+                    drawRadialUnits(context, options);
+                    this.emit(&apos;beforeNeedle&apos;);
+                    drawRadialNeedle(context, options);
+
+                    canvas.elementClone.initialized = true;
+                }
+
+                canvas.context.drawImage(canvas.elementClone, x, y, w, h);
+            }
+
+            // value box animations
+            this.emit(&apos;beforeValueBox&apos;);
+            drawRadialValueBox(canvas.context, options, displayValue(this));
+
+            super.draw();
+        }
+
+        catch (err) {
+           drawings.verifyError(err);
+        }
+
+        return this;
+    }
+}
+
+
+/**
+ * @ignore
+ * @typedef {object} ns
+ */
+/* istanbul ignore if */
+if (typeof ns !== &apos;undefined&apos;) {
+    ns[&apos;RadialGauge&apos;] = RadialGauge;
+}
+
+BaseGauge.initialize(&apos;RadialGauge&apos;, defaultRadialGaugeOptions);
+
+module.exports = RadialGauge;
+</code></pre>
+
+</div>
+
+<footer class="footer">
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(0.4.8)</span></a>
+</footer>
+
+<script src="script/search_index.js"></script>
+<script src="script/search.js"></script>
+<script src="script/pretty-print.js"></script>
+<script src="script/inherited-summary.js"></script>
+<script src="script/test-summary.js"></script>
+<script src="script/inner-link.js"></script>
+<script src="script/patch-for-local.js"></script>
+</body>
+</html>

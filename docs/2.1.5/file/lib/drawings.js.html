@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <base data-ice="baseUrl" href="../../">
+  <title data-ice="title">lib/drawings.js | HTML5 Canvas Gauges API Documentation API Document</title>
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
+  <script src="script/prettify/prettify.js"></script>
+  
+  
+  <script src="script/manual.js"></script>
+<link data-ice="userStyle" rel="stylesheet" href="user/css/0-docs.css">
+</head>
+<body class="layout-container" data-ice="rootContainer">
+
+<header>
+  <a href="./">Home</a>
+  
+  <a href="identifiers.html">Reference</a>
+  <a href="source.html">Source</a>
+  
+  
+  <div class="search-box">
+  <span>
+    <img src="./image/search.png">
+    <span class="search-input-edge"></span><input class="search-input"><span class="search-input-edge"></span>
+  </span>
+    <ul class="search-result"></ul>
+  </div>
+</header>
+
+<nav class="navigation" data-ice="nav"><div>
+  <ul>
+    
+  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/Animation.js~Animation.html">Animation</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/BaseGauge.js~BaseGauge.html">BaseGauge</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/DomObserver.js~DomObserver.html">DomObserver</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/EventEmitter.js~EventEmitter.html">EventEmitter</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/LinearGauge.js~LinearGauge.html">LinearGauge</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/RadialGauge.js~RadialGauge.html">RadialGauge</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/SmartCanvas.js~SmartCanvas.html">SmartCanvas</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-Collection">Collection</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-drawShadow">drawShadow</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-drawValueBox">drawValueBox</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-font">font</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-formatMajorTickNumber">formatMajorTickNumber</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-linearGradient">linearGradient</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-normalizedValue">normalizedValue</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-padValue">padValue</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-radialPoint">radialPoint</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-radians">radians</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-roundRect">roundRect</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-verifyError">verifyError</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-vendorize">vendorize</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-EventEmitter">EventEmitter</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-GenericOptions">GenericOptions</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-drawings">drawings</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-AnimationRule">AnimationRule</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-AnimationRules">AnimationRules</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-DrawEventCallback">DrawEventCallback</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-EndEventCallback">EndEventCallback</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-GaugeInterface">GaugeInterface</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-Highlight">Highlight</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-RenderTarget">RenderTarget</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-LinearGaugeOptions">LinearGaugeOptions</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-RadialGaugeOptions">RadialGaugeOptions</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/JSON">JSON</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array/fill">Array.fill</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array/indexOf">Array.indexOf</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object/assign">Object.assign</a></span></span></li>
+</ul>
+</div>
+</nav>
+
+<div class="content" data-ice="content"><h1 data-ice="title">lib/drawings.js</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">/*!
+ * The MIT License (MIT)
+ *
+ * Copyright (c) 2016 Mykhailo Stadnyk &lt;mikhus@gmail.com&gt;
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the &quot;Software&quot;), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
+
+/**
+ * @access private
+ * @typedef {CanvasRenderingContext2D|{max: number, maxRadius: number, barDimensions: object}} Canvas2DContext
+ */
+
+/* istanbul ignore next: private, not testable */
+/**
+ * Examines if a given error is something to throw or to ignore
+ *
+ * @param {Error} err
+ */
+export function verifyError(err) {
+    // there is some unpredictable error in FF in some circumstances
+    // which we found simply safe to ignore than to fight with it
+    // noinspection JSUnresolvedVariable
+    if (err instanceof DOMException &amp;&amp; err.result === 0x8053000b) {
+        return ; // ignore it
+    }
+
+    throw err;
+}
+
+/* istanbul ignore next: private, not testable */
+/**
+ * Prepares major ticks data
+ *
+ * @access private
+ * @param {GenericOptions|{ tickSide: string }} options
+ * @return {[boolean, boolean]}
+ */
+export function prepareTicks(options) {
+    if (!(options.majorTicks instanceof Array)) {
+        options.majorTicks = options.majorTicks ? [options.majorTicks] : [];
+    }
+
+    if (!options.majorTicks.length) {
+        options.majorTicks.push(drawings.formatMajorTickNumber(
+            options.minValue, options));
+        options.majorTicks.push(drawings.formatMajorTickNumber(
+            options.maxValue, options));
+    }
+
+    return [options.tickSide !== &apos;right&apos;, options.tickSide !== &apos;left&apos;];
+}
+
+/* istanbul ignore next: private, not testable */
+/**
+ * Draws rounded corners rectangle
+ *
+ * @param {Canvas2DContext} context
+ * @param {number} x
+ * @param {number} y
+ * @param {number} w
+ * @param {number} h
+ * @param {number} r
+ */
+export function roundRect(context, x, y, w, h, r) {
+    context.beginPath();
+
+    context.moveTo(x + r, y);
+    context.lineTo(x + w - r, y);
+
+    context.quadraticCurveTo(x + w, y, x + w, y + r);
+    context.lineTo(x + w, y + h - r);
+
+    context.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+    context.lineTo(x + r, y + h);
+
+    context.quadraticCurveTo(x, y + h, x, y + h - r);
+    context.lineTo(x, y + r);
+
+    context.quadraticCurveTo(x, y, x + r, y);
+
+    context.closePath();
+}
+
+/* istanbul ignore next: private, not testable */
+/**
+ * Pads a given value with leading zeros using the given options
+ *
+ * @param {number} val
+ * @param {RadialGaugeOptions|{valueInt: number, valueDec: number}} options
+ * @returns {string}
+ */
+export function padValue(val, options) {
+    let dec = options.valueDec;
+    let int = options.valueInt;
+    let i = 0;
+    let s, strVal, n;
+
+    val = parseFloat(val);
+    n = (val &lt; 0);
+    val = Math.abs(val);
+
+    if (dec &gt; 0) {
+        strVal = val.toFixed(dec).toString().split(&apos;.&apos;);
+        s = int - strVal[0].length;
+
+        for (; i &lt; s; ++i) {
+            strVal[0] = &apos;0&apos; + strVal[0];
+        }
+
+        strVal = (n ? &apos;-&apos; : &apos;&apos;) + strVal[0] + &apos;.&apos; + strVal[1];
+    }
+
+    else {
+        strVal = Math.round(val).toString();
+        s = int - strVal.length;
+
+        for (; i &lt; s; ++i) {
+            strVal = &apos;0&apos; + strVal;
+        }
+
+        strVal = (n ? &apos;-&apos; : &apos;&apos;) + strVal;
+    }
+
+    return strVal;
+}
+
+/* istanbul ignore next: private, not testable */
+/**
+ * Formats a number for display on the dial&apos;s plate using the majorTicksFormat
+ * config option.
+ *
+ * @param {number} num number to format
+ * @param {object} options
+ * @returns {string} formatted number
+ */
+export function formatMajorTickNumber(num, options) {
+    let right, hasDec = false;
+
+    // First, force the correct number of digits right of the decimal.
+    if (options.majorTicksDec === 0) {
+        right = Math.round(num).toString();
+    }
+
+    else {
+        right = num.toFixed(options.majorTicksDec);
+    }
+
+    // Second, force the correct number of digits left of the decimal.
+    if (options.majorTicksInt &gt; 1) {
+        // Does this number have a decimal?
+        hasDec = ~right.indexOf(&apos;.&apos;);
+
+        // Is this number a negative number?
+        if (~right.indexOf(&apos;-&apos;)) {
+            return &apos;-&apos; + [
+                    options.majorTicksInt +
+                    options.majorTicksDec +
+                    2 + (hasDec ? 1 : 0) - right.length
+                ].join(&apos;0&apos;) + right.replace(&apos;-&apos;, &apos;&apos;);
+        }
+
+        else {
+            return [
+                    options.majorTicksInt +
+                    options.majorTicksDec +
+                    1 + (hasDec ? 1 : 0) - right.length
+                ].join(&apos;0&apos;) + right;
+        }
+    }
+
+    return right;
+}
+
+/* istanbul ignore next: private, not testable */
+/**
+ * Transforms degrees to radians
+ *
+ * @param {number} degrees
+ * @returns {number}
+ */
+export function radians(degrees) {
+    return degrees * Math.PI / 180;
+}
+
+/* istanbul ignore next: private, not testable */
+/**
+ * Calculates and returns radial point coordinates
+ *
+ * @param {number} radius
+ * @param {number} angle
+ * @returns {{x: number, y: number}}
+ */
+export function radialPoint(radius, angle) {
+    return { x: -radius * Math.sin(angle), y: radius * Math.cos(angle) };
+}
+
+/* istanbul ignore next: private, not testable */
+/**
+ * Creates and returns linear gradient canvas object
+ *
+ * @param {Canvas2DContext} context
+ * @param {string} colorFrom
+ * @param {string} colorTo
+ * @param {number} length
+ * @param {boolean} [isVertical]
+ * @param {number} [from]
+ * @returns {CanvasGradient}
+ */
+export function linearGradient(context, colorFrom, colorTo, length,
+                               isVertical = true, from = 0)
+{
+    let grad = context.createLinearGradient(
+        isVertical ? 0 : from,
+        isVertical ? from : 0,
+        isVertical ? 0 : length,
+        isVertical ? length : 0);
+
+    grad.addColorStop(0, colorFrom);
+    grad.addColorStop(1, colorTo);
+
+    return grad;
+}
+
+/* istanbul ignore next: private, not testable */
+/**
+ * Draws the shadow if it was not drawn
+ *
+ * @param {Canvas2DContext} context
+ * @param {GenericOptions} options
+ * @param {boolean} shadowDrawn
+ * @return {boolean}
+ */
+export function drawShadow(context, options, shadowDrawn = false) {
+    if (shadowDrawn) {
+        context.restore();
+        return true;
+    }
+
+    context.save();
+
+    let w =  options.borderShadowWidth;
+
+    if (w) {
+        context.shadowBlur = w;
+        context.shadowColor = options.colorBorderShadow;
+    }
+
+    return true;
+}
+
+/* istanbul ignore next: private, not testable */
+/**
+ * Draws gauge needle shadow
+ *
+ * @access private
+ * @param {Canvas2DContext} context
+ * @param {RadialGaugeOptions} options
+ */
+export function drawNeedleShadow(context, options) {
+    if (!options.needleShadow) return;
+
+    context.shadowOffsetX = 2;
+    context.shadowOffsetY = 2;
+    context.shadowBlur = 10;
+    context.shadowColor = options.colorNeedleShadowDown;
+}
+
+/* istanbul ignore next: private, not testable */
+/**
+ * Constructs font styles for canvas fonts
+ *
+ * @param {GenericOptions} options
+ * @param {string} target
+ * @param {number} baseSize
+ */
+export function font(options, target, baseSize) {
+    return options[&apos;font&apos; + target + &apos;Style&apos;] + &apos; &apos; +
+        options[&apos;font&apos; + target + &apos;Weight&apos;] + &apos; &apos; +
+        options[&apos;font&apos; + target + &apos;Size&apos;] * baseSize + &apos;px &apos; +
+        options[&apos;font&apos; + target];
+}
+
+/* istanbul ignore next: private, not testable */
+/**
+ * Resets some context settings
+ *
+ * @param {Canvas2DContext} context
+ */
+function reset(context) {
+    context.shadowOffsetX = null;
+    context.shadowOffsetY = null;
+    context.shadowBlur = null;
+    context.shadowColor = &apos;&apos;;
+    context.strokeStyle = null;
+    context.lineWidth = 0;
+    context.save();
+}
+
+/* istanbul ignore next: private, not testable */
+/**
+ * Declares to drow value text shadow if configured
+ *
+ * @param context
+ * @param options
+ * @param offset
+ * @param blur
+ */
+function drawValueTextShadow(context, options, offset, blur) {
+    if (options.valueTextShadow) {
+        context.shadowOffsetX = offset;
+        context.shadowOffsetY = offset;
+        context.shadowBlur = blur;
+        context.shadowColor = options.colorValueTextShadow;
+    }
+}
+
+/* istanbul ignore next: private, not testable */
+/**
+ * Draws value box at given position
+ *
+ * @param {Canvas2DContext} context
+ * @param {GenericOptions} options
+ * @param {number|string} value
+ * @param {number} x
+ * @param {number} y
+ * @param {number} max
+ */
+export function drawValueBox(context, options, value, x, y, max) {
+    if (!options.valueBox) return;
+
+    reset(context);
+
+    let addLength = (options.valueDec ? 1 + options.valueDec : 0);
+    let maxValueWidth = &apos;9&apos;.repeat(Math.max.apply(null,
+        [String(parseInt(value)).length + addLength]
+        .concat(options.majorTicks.map(val =&gt;
+            String(parseInt(val, 10)).length + addLength
+        ))));
+    let text = options.valueText || padValue(value, options);
+    let tunit = max / 200;
+    let runit = max / 100;
+    let offset = 0.4 * runit;
+    let blur = 1.2 * runit;
+
+    context.font = font(options, &apos;Value&apos;, tunit);
+    drawValueTextShadow(context, options, offset, blur);
+
+    let tw = context.measureText(options.valueText ?
+        text : (&apos;-&apos; + padValue(Number(maxValueWidth), options))).width;
+
+    reset(context);
+
+    let th = parseFloat(options.fontValueSize) * tunit + offset + blur;
+    let sw = runit * parseFloat(options.valueBoxStroke);
+    let bmax = max * 2 - sw * 2;
+
+    let bw = tw + 10 * runit;
+    let bh = 1.1 * th + offset + blur;
+    let br = runit * options.valueBoxBorderRadius;
+    let obw = (parseFloat(options.valueBoxWidth) || 0) / 100 * bmax;
+
+    (obw &gt; bw) &amp;&amp; (bw = obw);
+    (bw &gt; bmax) &amp;&amp; (bw = bmax);
+
+    let bx = x - bw / 2;
+    let by = y - bh / 2;
+    let gy = y - 5.75 * runit;
+
+    context.beginPath();
+
+    if (br) roundRect(context, bx, by, bw, bh, br);
+    else  context.rect(bx, by, bw, bh);
+
+    if (sw) {
+        let grd = context.createRadialGradient(
+            x, gy, runit * 10, x, gy, runit * 20);
+
+        grd.addColorStop(0, options.colorValueBoxRect);
+        grd.addColorStop(1, options.colorValueBoxRectEnd);
+
+        context.strokeStyle = grd;
+        context.lineWidth = sw;
+        context.stroke();
+    }
+
+    if (options.colorValueBoxShadow) {
+        context.shadowBlur = 1.2 * runit;
+        context.shadowColor = options.colorValueBoxShadow;
+    }
+
+    if (options.colorValueBoxBackground) {
+        context.fillStyle = options.colorValueBoxBackground;
+        context.fill();
+    }
+
+    context.closePath();
+    context.restore();
+
+    drawValueTextShadow(context, options, offset, blur);
+
+    context.fillStyle = options.colorValueText;
+    context.textAlign = &apos;center&apos;;
+    context.textBaseline = &apos;alphabetic&apos;;
+    context.fillText(text, bx + bw / 2, y + bh / 2 - th / 3);
+    context.restore();
+}
+
+/* istanbul ignore next: private, not testable */
+/**
+ * Returns normalized value
+ *
+ * @param {GenericOptions} options
+ * @return {{normal: number, indented: number}}
+ */
+export function normalizedValue(options) {
+    let value = options.value;
+    let min = options.minValue;
+    let max = options.maxValue;
+    let dt = (max - min) * 0.01;
+
+    return {
+        normal: value &lt; min ? min : value &gt; max ? max : value,
+        indented: value &lt; min ? min - dt : value &gt; max ? max + dt : value
+    };
+}
+
+const drawings = {
+    roundRect: roundRect,
+    padValue: padValue,
+    formatMajorTickNumber: formatMajorTickNumber,
+    radians: radians,
+    radialPoint: radialPoint,
+    linearGradient: linearGradient,
+    drawNeedleShadow: drawNeedleShadow,
+    drawValueBox: drawValueBox,
+    verifyError: verifyError,
+    prepareTicks: prepareTicks,
+    drawShadow: drawShadow,
+    font: font,
+    normalizedValue: normalizedValue
+};
+
+export default drawings;
+
+module.exports = drawings;
+</code></pre>
+
+</div>
+
+<footer class="footer">
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(0.4.8)</span></a>
+</footer>
+
+<script src="script/search_index.js"></script>
+<script src="script/search.js"></script>
+<script src="script/pretty-print.js"></script>
+<script src="script/inherited-summary.js"></script>
+<script src="script/test-summary.js"></script>
+<script src="script/inner-link.js"></script>
+<script src="script/patch-for-local.js"></script>
+</body>
+</html>
