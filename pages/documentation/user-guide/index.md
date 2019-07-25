@@ -200,6 +200,7 @@ var gauge = new LinearGauge({
 });
 
 document.body.appendChild(gauge.options.renderTo);
+gauge.draw();
 ~~~
 
 Read more: [Gauges Scripting API]({{site.url}}/documentation/user-guide/scripting-api)
