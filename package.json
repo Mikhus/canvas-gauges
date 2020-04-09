@@ -7,14 +7,14 @@
     "example": "examples"
   },
   "scripts": {
-    "test": "./node_modules/.bin/gulp test --silent",
+    "test": "gulp test --silent",
     "test:headless": "xvfb-run npm test --silent",
-    "start": "./node_modules/.bin/gulp watch",
-    "build": "./node_modules/.bin/gulp build --silent",
-    "doc": "npm run toc && ./node_modules/.bin/gulp doc --silent",
-    "commit": "npm run build && npm run doc && npm test && ./node_modules/.bin/gulp build:prod && git add --all . && git commit",
-    "toc": "./node_modules/.bin/markdown-toc -i README.md",
-    "build:all": "npm run build && npm run doc && npm run test:headless && ./node_modules/.bin/gulp build:prod"
+    "start": "gulp watch",
+    "build": "gulp build --silent",
+    "doc": "npm run toc && gulp doc --silent",
+    "commit": "npm run build && npm run doc && npm test && gulp build:prod && git add --all . && git commit",
+    "toc": "markdown-toc -i README.md",
+    "build:all": "npm run build && npm run doc && npm run test:headless && gulp build:prod"
   },
   "repository": {
     "type": "git",

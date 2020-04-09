@@ -416,8 +416,7 @@ gulp.task('doc', gulp.series('clean:docs', done => {
  */
 gulp.task('build', gulp.series(
     'build:' + (yargs.argv.target || 'es5'),
-    done => done(),
-));
+    done => done()));
 
 /**
  * Watch for source code changes and automatically re-build
