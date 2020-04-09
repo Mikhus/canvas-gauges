@@ -304,13 +304,36 @@ gulp.task('build:es6', done => {
 });
 
 /**
+ * Clean-ups files from previous build.
+ *
+ * @task {clean}
+ * @order {1}
+ */
+gulp.task('clean', done => {
+    rimraf('gauge.js', () =>
+        rimraf('gauge.min.js', () =>
+            rimraf('gauge.min.js.map', () =>
+                rimraf('gauge.min.js.gz', done))));
+});
+
+/**
+ * Cleans docs directory
+ *
+ * @task {clean:docs}
+ * @order {6}
+ */
+gulp.task('clean:docs', done => {
+    rimraf('docs', done);
+});
+
+/**
  * Builds and minifies es5 code
  *
  * @task {build:es5}
  * @arg {type} build type: 'radial' - Gauge object only, 'linear' - LinearGauge object only, 'all' - everything (default)
  * @order {3}
  */
-gulp.task('build:es5', ['clean'], done => {
+gulp.task('build:es5', gulp.series('clean', done => {
     es5transpile(yargs.argv.type || 'all')
         .pipe(gulp.dest('.'))
         .on('end', () => {
@@ -329,30 +352,7 @@ gulp.task('build:es5', ['clean'], done => {
 
             done();
         });
-});
-
-/**
- * Clean-ups files from previous build.
- *
- * @task {clean}
- * @order {1}
- */
-gulp.task('clean', done => {
-    rimraf('gauge.js', () =>
-    rimraf('gauge.min.js', () =>
-    rimraf('gauge.min.js.map', () =>
-    rimraf('gauge.min.js.gz', done))));
-});
-
-/**
- * Cleans docs directory
- *
- * @task {clean:docs}
- * @order {6}
- */
-gulp.task('clean:docs', done => {
-    rimraf('docs', done);
-});
+}));
 
 /**
  * Automatically generates API documentation for this project
@@ -361,7 +361,7 @@ gulp.task('clean:docs', done => {
  * @task {doc}
  * @order {7}
  */
-gulp.task('doc', ['clean:docs'], done => {
+gulp.task('doc', gulp.series('clean:docs', done => {
     gulp.src('./lib')
         .pipe(esdoc({
             destination: './docs',
@@ -404,7 +404,7 @@ gulp.task('doc', ['clean:docs'], done => {
 
             rimraf(target, () => fs.rename('docs', target, done));
         });
-});
+}));
 
 /**
  * Transpiles, combines and minifies JavaScript code.
@@ -425,23 +425,23 @@ gulp.task('build', () => {
  *
  * @task {watch}
  */
-gulp.task('watch', ['build'], () => {
+gulp.task('watch', gulp.series('build', () => {
     gulp.watch('lib/**/*.js', () => gulp.start('build'));
-});
+}));
 
 /**
  * Runs gzipping for minified file.
  *
  * @task {gzip}
  */
-gulp.task('gzip', ['build:prod'], done => {
+gulp.task('gzip', gulp.series('build:prod', done => {
     Promise.all(types.map(type => new Promise(resolve => {
         gulp.src('dist/' + type + '/gauge.min.js')
             .pipe(gzip({ gzipOptions: { level: 9 } }))
             .pipe(gulp.dest('dist/' + type))
             .on('end', resolve);
     }))).then(() => done());
-});
+}));
 
 /**
  * Performs JavaScript syntax check.
@@ -564,7 +564,7 @@ gulp.task('selenium', done => {
  *     drawing, most probably expected pixels won't match the expected specs,
  *     so we can automatically figure something is broken.
  */
-gulp.task('test:e2e', ['selenium'], done => {
+gulp.task('test:e2e', gulp.series('selenium', done => {
     console.log(chalk.bold.green('\nStarting end-to-end tests...\n'));
 
     gulp.src(['test/e2e/**/*.e2e.js'])
@@ -578,13 +578,13 @@ gulp.task('test:e2e', ['selenium'], done => {
             cp.execSync('pkill -f selenium-standalone');
             done();
         });
-});
+}));
 
 /**
  * Runs all tests and checks.
  *
  * @task {test}
  */
-gulp.task('test', ['lint', 'test:spec'/*, 'test:e2e'*/]);
+gulp.task('test', gulp.series('lint', 'test:spec'/*, 'test:e2e'*/));
 
-gulp.task('default', ['help']);
+gulp.task('default', gulp.series('help'));
