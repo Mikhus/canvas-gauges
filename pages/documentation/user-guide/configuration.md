@@ -100,15 +100,19 @@ JSON notations:
 ></canvas>
 ~~~
 
-All available options for configuring gauges are listed below.
+All available options for configuring gauges listed below.
 
 ## Common Configuration options
 
-Common configuration options are spread across all type of the gauges means they are applicable to any gauge type. For been more informative and easy-to-find we split those options into groups below.
+Common configuration options spread across all type of the gauges and means they
+are applicable to any gauge type. For been more informative and easy-to-find we
+ split those options into groups below.
 
 ### Mandatory Options
 
- - **renderTo**: render target in DOM tree. It is expected to be a canvas element or it's identifier in a DOM tree. This option is not required when the gauge injected as a web-component on the page.
+ - **renderTo**: render target in DOM tree. It is expected to be a canvas 
+ element, or its identifier in a DOM tree. This option is not required when the
+  gauge injected as a web-component on the page.
 
 ### Basic Options
 
@@ -138,40 +142,40 @@ var gauge = new RadialGauge({
 
 ### Ticks Bar Options
 
-Tick bars on a gauge representing the measuring system which visualize the gauge measuring intervals and the currently upset value. It should be upset in mind that ticks configuration must be relied properly on a given *minValue* and *maxValue* or you could get confusing display result otherwise.
+Tick bars on a gauge representing the measuring system which visualize the gauge measuring intervals, and the currently upset value. It should be upset in mind that ticks configuration must be relied properly on a given *minValue* and *maxValue* or you could get confusing display result otherwise.
 
- - **exactTicks**: boolean flag which switch ticks drawing modes. By default is turned off (false), meaning the tick bar will be drown by the following rules:
+ - **exactTicks**: a boolean flag, which switch ticks drawing modes. By default, is turned off (false), meaning the tick bar will be draw by the following rules:
    a) majorTicks array will define a number of **equal by length** sections;
    b) minorTicks will define a number of ticks to draw between 2 nearest majorTicks.
  If the value set to true the rules are following:
    a) majorTicks array will define exact values where major ticks should be drawn (it should be an array of exact values, not arbitrary labels);
    b) minorTicks defines a value step for drawing minor tick on a bar.
    See this [example](https://rawgit.com/Mikhus/canvas-gauges/master/examples/exact-ticks-bar.html) [[Source](https://github.com/Mikhus/canvas-gauges/blob/master/examples/exact-ticks-bar.html)] for exact ticks bar configuration and behavior.
- - **majorTicks**: expected to be an array of numeric or string values which will be displayed on a gauge bar as major ticks. This array defines a labels for the ticks. Array length defines a number of sections on a ticks bar. 
+ - **majorTicks**: expected to be an array of numeric or string values which will be displayed on a gauge bar as major ticks. This array defines labels for the ticks. Array length defines a number of sections on a ticks bar. 
  - **minorTicks**: is an integer number which defines how many minor ticks have to be drawn between two neighbour major ticks.
- - **strokeTicks**: boolean value defining if ticks bar of the gauge should be stroked or not. This relies only to a visual effect.
+ - **strokeTicks**: boolean value defining if ticks bar of the gauge should be stroked or not. This only relies on a visual effect.
  - **majorTicksInt**: integer which defines how many numeric positions should be used to display integer part of the tick number.
  - **majorTicksDec**: integer which defines how many positions should be used to display decimal part of the tick number.
  - **highlights**: an array of highlights objects, which configures color-highlighted areas on a ticks bar. Each highlight object defines an area to colorize starting **from** value **to** value and using a given **color**, like this: ```{ from: number, to: number, color: string }```
   - **highlightsWidth**: sets the width of highlights area in relative units.
-  - **numbersMargin**: defines a margin for tick labels (numbers) in relative units. By default is 1.
+  - **numbersMargin**: defines a margin for tick labels (numbers) in relative units. By default, is 1.
 
 ### Progress Bar Options
 
  - **barWidth**: bar width in percents in relation to overall width of the gauge. It is limited to 50% anyway.
  - **barStrokeWidth**: defines a width of a bar stroke. If set to zero - stroke won't be drawn.
  - **barProgress**: flag, defines if a progress bar should be drawn within this gauge.
- - **barShadow**: number, length of the inner bar shadow if required. By default is 0.
+ - **barShadow**: number, length of the inner bar shadow if required. By default, is 0.
 
 ### Animation Options
 
-Animations on the gauge can be turned on or off. Whenever the animation is turned on it will automatically run each time gauge changing it's value. During the animation gauge will animate its needle or progress bar from the old value to a new value it has been upset. If *animatedValue* option is turned on it will also constantly update the value displayed in a value box on each animation step.
+Animations on the gauge can be turned on or off. Whenever the animation is turned on it will automatically run each time gauge changing its value. During the animation gauge will animate its needle or progress bar from the old value to a new value it has been upset. If *animatedValue* option is turned on it will also constantly update the value displayed in a value box on each animation step.
 
  - **animation**: boolean flag signaling whenever the animation is possible on the gauge or not.
  - **animationDuration**: time in milliseconds of the animation duration.
- - **animationRule**: defines a type of animation behavior for the gauge. Canvas gauges already knows the most used types of animation rules or you can define your own animation rule providing the animation rule function within this option. Known rules could be bypassed as string names, which are: *"linear", "quad", "quint", "cycle", "bounce", "elastic"* and their opposites: *"dequad", "dequint", "decycle", "debounce", "delastic"*.
- - **animatedValue**: boolean flag specifies if a value displayed in a value box of the gauge should be constantly updated during animation run. By default it is falsy, so the upset gauge value will be shown immediately and animation will run visually only on the gauge needle or progress bar.
- - **animateOnInit**: boolean flag, which specifies if gauge should be animated on the first draw, by default is false.
+ - **animationRule**: defines a type of animation behavior for the gauge. Canvas gauges already knows the most used types of animation rules, or you can define your own animation rule providing the animation rule function within this option. Known rules could be bypassed as string names, which are: *"linear", "quad", "quint", "cycle", "bounce", "elastic"* and their opposites: *"dequad", "dequint", "decycle", "debounce", "delastic"*.
+ - **animatedValue**: a boolean flag, specifies if a value displayed in a value box of the gauge should be constantly updated during animation run. By default, it is falsy, so the upset gauge value will be shown immediately and animation will run visually only on the gauge needle or progress bar.
+ - **animateOnInit**: a boolean flag, which specifies if gauge should be animated on the first draw, by default is false.
 
 ### Coloring Options
 
@@ -181,12 +185,12 @@ Canvas gauge provides highly customizable coloring options for the majority of g
  - **colorPlateEnd**: if specified wil use gradient fill for the plate.
  - **colorMajorTicks**: color of the major ticks lines (also applied to stroke if *strokeTicks* option is true). It can be an array of colors, for each major tick it is possible to specify specific color. In this case if *strokeTicks* enabled, the first color from this array will be used for stroking.
  - **colorMinorTicks**: color of the minor ticks lines.
- - **colorStrokeTicks**: defines a static color for all ticks lines. By default is not specified. If set to some color value will override major ticks stroke color for lines, but will not influence numbers colors. For minor ticks will be used if colorMinorTicks is not specified. 
+ - **colorStrokeTicks**: defines a static color for all ticks lines. By default, is not specified. If set to some color value will override major ticks stroke color for lines, but will not influence numbers colors. For minor ticks will be used if colorMinorTicks is not specified. 
  - **colorTitle**: color of the title text.
  - **colorUnits**: color of the units text.
  - **colorNumbers**: color of the text for the tick numbers. It can be an array of colors, containing specific color for each number.
  - **colorNeedle**: defines color of the gauge needle.
- - **colorNeedleEnd**: if defined it enables use of gradient for the gauge needle. If this is falsy, needle will be drown using solid color.
+ - **colorNeedleEnd**: if defined it enables use of gradient for the gauge needle. If this is falsy, needle will be draw using solid color.
  - **colorValueText**: defines a color of the text in a value box.
  - **colorValueTextShadow**: defines a color of a text in a value box. If this value is falsy shadow won't be drawn.
  - **colorBorderShadow**: defines a shadow color of the gauge plate. If is falsy the shadow won't be drawn.
@@ -204,24 +208,25 @@ Canvas gauge provides highly customizable coloring options for the majority of g
  - **colorNeedleShadowDown**: defines drop shadow needle color.
  - **colorBarStroke**: color of a bar stroke.
  - **colorBar**: defines a bar background color.
- - **colorBarProgress**: defines a progress bar color;
+ - **colorBarProgress**: defines a progress bar color.
+ - **highlightsLineCap**:  ‘round’, ‘square’ or ‘butt’. Default is 'butt'. It sets the context.lineCap within the drawRadialHighLights function of the RadialGauge object. Then format option to set the “units” attribute. For example “{value} % {title}” which replaces the attributes inside {} to the same member in the option object. So if title set to “Hour” and value to “50” the units will be “50% Hour”.
 
 ### Needle Configuration Options
 
-Gauge needle is an element which visualize the current position of the gauge value on a measuring bar. Currently canvas gauge supports drawing of two different types of the needles for each gauge - "line" needle and "arrow" needle. By the way, whenever it may be required, needle may be not drawn at all.
+Gauge needle is an element which visualize the current position of the gauge value on a measuring bar. Currently, canvas gauge supports drawing of two different types of the needles for each gauge - "line" needle and "arrow" needle. By the way, whenever it may be required, needle may be not drawn at all.
 
  - **needle**: boolean, specifies if gauge should draw the needle or not.
  - **needleShadow**: boolean, specifies if needle should drop shadow or not.
  - **needleType**: string, one of "arrow" or "line" supported.
  - **needleStart**: tail part of the needle length, in relative units.
  - **needleEnd**: main needle length in relative units.
- - **needleWidth**: max width of the needle in the most wide needle place.
+ - **needleWidth**: max width of the needle in the widest needle place.
 
 ### Borders Options
 
-Canvas gauge plate provides a way to define the borders. There are 3 borders availabe to draw on the edge of the gauge plate. It is possible to combine the borders display options, their widths and colors to achieve exclusive visual look & feel of your gauges.
+Canvas gauge plate provides a way to define the borders. There are 3 borders available to draw on the edge of the gauge plate. It is possible to combine the borders display options, their widths and colors to achieve exclusive visual look & feel of your gauges.
 
- - **borders**: boolean, defines if a borders should be drawn or not.
+ - **borders**: boolean, defines if borders should be drawn or not.
  - **borderOuterWidth**: specifies a width in pixels of the outer border. If set to zero - border won't be drawn at all.
  - **borderMiddleWidth**: specifies a width in pixels of the middle border. If set to zero - border won't be drawn at all.
  - **borderInnerWidth**: specifies a width in pixels of the inner border. If set to zero - border won't be drawn at all.
@@ -229,7 +234,7 @@ Canvas gauge plate provides a way to define the borders. There are 3 borders ava
 
 ### Value Box Options
 
-Value box element on the gauge is intended to display the digital representation of the current value. it is the most accurate visualisation of the exact value shawn by the gauge on the measuring bar. Whenever it is not required it may be turned off and not drawn.
+Value box element on the gauge intended to display the digital representation of the current value. it is the most accurate visualisation of the exact value shawn by the gauge on the measuring bar. Whenever it is not required it may be turned off and not drawn.
 
  - **valueBox**: boolean, defines if the value box should be drawn or not on the gauge.
  - **valueBoxStroke**: number in relative units which defines the width of stroke of the value box element.
@@ -268,15 +273,15 @@ Since version 2.0.6 there is added more advanced font styling features. Now it i
 
 ## Gauge-Specific Configuration Options
 
-Each type of the gauge in this library also has it's own specific configuration optoins available for customization.
+Each type of the gauge in this library also has its own specific configuration options available for customization.
 
 ### Linear Gauge Options
 
-Linear gauge has some specific options for customization and some drawing rules which is good to know.
+Linear gauge has some specific options for customization, and some drawing rules which is good to know.
 
 First of all it can be drawn vertically or horizontally, depending on the upset width and height options for the canvas element. If width greater than height the gauge will be treated as horizontal, otherwise - as vertical.
 
-Horizontal gauge drawing has a limitation of drawing value box. In this orientation value box rendering is disabled as far as it is not possible to find a good place for it within the current design. So it has to be kept im mind when the horizontal orientation is selected to draw the gauge.
+Horizontal gauge drawing has a limitation of drawing value box. In this orientation value box rendering disabled as far as it is not possible to find a good place for it within the current design. So it has to be kept im mind when the horizontal orientation is selected to draw the gauge.
 
 #### Borders Options
 
@@ -310,8 +315,9 @@ Radial gauge controls has their specific customization options, which are enable
 
 #### Ticks Bar Options 
  
- - **ticksAngle**: defines a max angle for ticks bar. By default is 270 degrees. If 360 degrees specified ticks bar fills the whole circle.
- - **startAngle**: defines a start angle using which ticks bar starts. By default is 45 degrees.
+ - **ticksAngle**: defines a max angle for ticks bar. By default, is 270 degrees. If 360 degrees specified ticks bar fills the whole circle.
+ - **startAngle**: defines a start angle using which ticks bar starts. By default, is 45 degrees.
+ - **barStartPosition**: 'left' | 'right'. By default, is 'left'. Enable anti-clockwise progress bars and middle start point progress bars.
 
 #### Coloring Options
 
@@ -323,13 +329,13 @@ Radial gauge controls has their specific customization options, which are enable
 #### Needle Options
 
  - **needleCircleSize**: defines the size in relative units of the decorative circles element of the gauge.
- - **needleCircleInner**: boolean flag, turns on/off inner decorative circle element drawing.
- - **needleCircleOuter**: boolean flag, turns on/off outer decorative circle element drawing.
+ - **needleCircleInner**: a boolean flag, turns on/off inner decorative circle element drawing.
+ - **needleCircleOuter**: a boolean flag, turns on/off outer decorative circle element drawing.
 
 #### Animation Options
 
  - **animationTarget**: defines which part of the gauge should be animated when changing the value. Could be one of 'needle' (default) or 'plate' values. When 'plate' is selected then gauge will animate ticks bar instead of animating the needle.
- - **useMinPath** - boolean. Applicable only to radial gauges which have full 360-degree ticks plate. If set to true for these kind of gauges will rotate needle/plate by a minimal rotation path.
+ - **useMinPath** - boolean. Applicable only to radial gauges which have full 360-degree ticks plate. If set to true for this kind of gauges will rotate needle/plate by a minimal rotation path.
 
 </div><!-- /.medium-8.columns -->
 </div><!-- /.row -->
