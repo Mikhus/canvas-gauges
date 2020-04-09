@@ -414,10 +414,10 @@ gulp.task('doc', gulp.series('clean:docs', done => {
  * @arg {type} build type: 'radial' - Gauge object only, 'linear' - LinearGauge object only, 'all' - everything (default)
  * @order {2}
  */
-gulp.task('build', () => {
-    //noinspection JSUnresolvedVariable
-    gulp.start('build:' + (yargs.argv.target || 'es5'));
-});
+gulp.task('build', gulp.series(
+    'build:' + (yargs.argv.target || 'es5'),
+    done => done(),
+));
 
 /**
  * Watch for source code changes and automatically re-build
@@ -425,9 +425,9 @@ gulp.task('build', () => {
  *
  * @task {watch}
  */
-gulp.task('watch', gulp.series('build', () => {
-    gulp.watch('lib/**/*.js', () => gulp.start('build'));
-}));
+gulp.task('watch', () => {
+    gulp.watch('lib/**/*.js', gulp.series('build'));
+});
 
 /**
  * Runs gzipping for minified file.
