@@ -71,8 +71,8 @@
     border-bottom: 1px solid #fff;
   }
   .alert-box.terminal {
-    background: $grey-12; 
-    color: #fff; 
+    background: $grey-12;
+    color: #fff;
     border-color: scale-color($grey-12, $lightness: -14%);
     font-family: $font-family-monospace;
   }
@@ -202,7 +202,7 @@ img.lazy {
 
   a {
     display: inline-block;
-    width: 40%;
+    width: 33%;
     margin-top: 30px;
     -webkit-filter: grayscale(100%);
     filter: grayscale(100%);
@@ -221,6 +221,12 @@ img.lazy {
       height: 220px;
       background: url(/images/logos/vuejs.svg) no-repeat center center;
       transform: scale(.75, .75);
+      margin-bottom: -20px;
+    }
+
+    &#react-component {
+      height: 220px;
+      background: url(/images/logos/react.svg) no-repeat center center;
       margin-bottom: -20px;
     }
 
