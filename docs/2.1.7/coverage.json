@@ -1,0 +1,73 @@
+{
+  "coverage": "94.23%",
+  "expectCount": 104,
+  "actualCount": 98,
+  "files": {
+    "lib/Animation.js": {
+      "expectCount": 10,
+      "actualCount": 9,
+      "undocumentLines": [
+        291
+      ]
+    },
+    "lib/BaseGauge.js": {
+      "expectCount": 20,
+      "actualCount": 19,
+      "undocumentLines": [
+        30
+      ]
+    },
+    "lib/Collection.js": {
+      "expectCount": 1,
+      "actualCount": 1,
+      "undocumentLines": []
+    },
+    "lib/DomObserver.js": {
+      "expectCount": 17,
+      "actualCount": 17,
+      "undocumentLines": []
+    },
+    "lib/EventEmitter.js": {
+      "expectCount": 10,
+      "actualCount": 8,
+      "undocumentLines": [
+        35,
+        36
+      ]
+    },
+    "lib/GenericOptions.js": {
+      "expectCount": 1,
+      "actualCount": 1,
+      "undocumentLines": []
+    },
+    "lib/LinearGauge.js": {
+      "expectCount": 5,
+      "actualCount": 4,
+      "undocumentLines": [
+        1262
+      ]
+    },
+    "lib/RadialGauge.js": {
+      "expectCount": 6,
+      "actualCount": 6,
+      "undocumentLines": []
+    },
+    "lib/SmartCanvas.js": {
+      "expectCount": 20,
+      "actualCount": 20,
+      "undocumentLines": []
+    },
+    "lib/drawings.js": {
+      "expectCount": 13,
+      "actualCount": 12,
+      "undocumentLines": [
+        480
+      ]
+    },
+    "lib/vendorize.js": {
+      "expectCount": 1,
+      "actualCount": 1,
+      "undocumentLines": []
+    }
+  }
+}

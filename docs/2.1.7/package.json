@@ -1,0 +1,149 @@
+{
+  "name": "canvas-gauges",
+  "version": "2.1.7",
+  "description": "Minimalist HTML5 Canvas Gauges",
+  "main": "gauge.min.js",
+  "directories": {
+    "example": "examples"
+  },
+  "scripts": {
+    "test": "gulp test --silent",
+    "test:headless": "xvfb-run npm test --silent",
+    "start": "gulp watch",
+    "build": "gulp build --silent",
+    "doc": "npm run toc && gulp doc --silent",
+    "commit": "npm run build && npm run doc && npm test && gulp build:prod && git add --all . && git commit",
+    "toc": "markdown-toc -i README.md",
+    "build:all": "npm run build && npm run doc && npm run test:headless && gulp build:prod"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/Mikhus/canvas-gauges.git"
+  },
+  "keywords": [
+    "gauge",
+    "canvas",
+    "html5",
+    "javascript"
+  ],
+  "author": "Mykhailo Stadnyk <mikhus@gmail.com>",
+  "contributors": [
+    {
+      "name": "Chris Poile",
+      "email": "poile@edwards.usask.ca"
+    },
+    {
+      "name": "Luca Invernizzi",
+      "url": "http://www.lucainvernizzi.net"
+    },
+    {
+      "name": "Rhys Lloyd",
+      "url": "http://rhyslloyd.me"
+    },
+    {
+      "name": "Robert Blackburn",
+      "url": "http://www.rwblackburn.com"
+    },
+    {
+      "name": "Charles Galpin",
+      "url": "https://github.com/cgalpin"
+    },
+    {
+      "name": "Luca Ghio",
+      "url": "https://github.com/cassiodoroVicinetti"
+    },
+    {
+      "name": "Greg",
+      "url": "https://github.com/gregroper"
+    },
+    {
+      "name": "David Esperalta",
+      "email": "info@davidesperalta.com"
+    },
+    {
+      "name": "Gwenaël",
+      "url": "https://thegtricks.thegounet.fr"
+    },
+    {
+      "name": "migeruhito",
+      "url": "https://github.com/migeruhito"
+    },
+    {
+      "name": "brblord",
+      "url": "https://github.com/brblord"
+    },
+    {
+      "name": "piglione73",
+      "url": "https://github.com/piglione73"
+    },
+    {
+      "name": "Edwin Kofler",
+      "url": "https://github.com/eankeen"
+    },
+    {
+      "name": "Efstathios Oikonomou",
+      "url": "https://github.com/eusoikonomou"
+    },
+    {
+      "name": "TamarLahav",
+      "url": "https://github.com/TamarLahav"
+    }
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Mikhus/canvas-gauges/issues"
+  },
+  "devDependencies": {
+    "babel": "^6.5.2",
+    "babel-cli": "^6.11.4",
+    "babel-plugin-transform-object-assign": "^6.8.0",
+    "babel-preset-es2015": "^6.13.2",
+    "babelify": "^7.3.0",
+    "brfs": "^1.4.3",
+    "browserify": "^13.1.0",
+    "browserify-istanbul": "^2.0.0",
+    "chai": "^3.5.0",
+    "chalk": "^1.1.3",
+    "eslint": "^3.3.1",
+    "fs-cli": "^0.1.1",
+    "gulp": "^4.0.2",
+    "gulp-babel": "^6.1.2",
+    "gulp-concat": "^2.6.0",
+    "gulp-esdoc": "^0.2.0",
+    "gulp-eslint": "^3.0.1",
+    "gulp-gzip": "^1.4.0",
+    "gulp-help-doc": "^1.0.7",
+    "gulp-inject-string": "^1.1.0",
+    "gulp-mocha": "^3.0.1",
+    "gulp-plato": "^1.0.2",
+    "gulp-rename": "^1.2.2",
+    "gulp-replace": "^0.5.4",
+    "gulp-sourcemaps": "^1.6.0",
+    "gulp-uglify": "^2.0.0",
+    "gulp-util": "^3.0.7",
+    "karma": "^1.2.0",
+    "karma-babel-preprocessor": "^6.0.1",
+    "karma-browserify": "^5.1.0",
+    "karma-chai": "^0.1.0",
+    "karma-chrome-launcher": "^1.0.1",
+    "karma-coverage": "^1.1.1",
+    "karma-firefox-launcher": "^1.0.0",
+    "karma-mocha": "^1.1.1",
+    "karma-mocha-reporter": "^2.1.0",
+    "karma-sinon": "^1.0.5",
+    "karma-threshold-reporter": "^0.1.15",
+    "markdown-toc": "^0.12.16",
+    "rimraf": "^2.5.4",
+    "selenium-standalone": "^5.5.0",
+    "semver": "^5.3.0",
+    "sinon": "^1.17.5",
+    "uglify-js-harmony": "^2.6.2",
+    "utils-merge": "^1.0.0",
+    "vinyl-buffer": "^1.0.0",
+    "vinyl-source-stream": "^1.1.0",
+    "watchify": "^3.7.0",
+    "webdriverio": "^4.2.7",
+    "webpack": "^1.13.2",
+    "yargs": "^5.0.0"
+  }
+}
