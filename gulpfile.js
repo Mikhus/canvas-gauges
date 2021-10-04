@@ -44,7 +44,6 @@ let types = ['all', 'radial', 'linear'];
 
 function es6concat(type = 'all', clean = false) {
     let bundle = [
-        'lib/polyfill.js',
         'lib/vendorize.js',
         'lib/EventEmitter.js',
         'lib/Animation.js',
